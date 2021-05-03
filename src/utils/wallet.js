@@ -31,9 +31,20 @@ function createRandomWallet(walletPath = defaultWalletPath, bip39Passphrase = ""
 }
 
 function createWallet(mnemonic, walletPath = defaultWalletPath, bip39Passphrase = "") {
-    let validateMnemonic = bip39.validateMnemonic(mnemonic);
+    let mnemonicList = mnemonic.replace(/\s/g, " ").split(/\s/g);
+    let mnemonicWords = [];
+    for (let word of mnemonicList) {
+        if (word === "") {
+            console.log();
+        } else {
+            let trimmedWord = word.replace(/\s/g, "");
+            mnemonicWords.push(trimmedWord);
+        }
+    }
+    mnemonicWords = mnemonicWords.join(" ");
+    let validateMnemonic = bip39.validateMnemonic(mnemonicWords);
     if (validateMnemonic) {
-        return getWallet(mnemonic, walletPath, bip39Passphrase);
+        return getWallet(mnemonicWords, walletPath, bip39Passphrase);
     } else {
         return {
             success: false,
