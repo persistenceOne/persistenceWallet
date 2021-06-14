@@ -9,7 +9,7 @@
   "mainNetChannels": [
     {
       "name": "cosmos",
-      "id": "cosmos/channel-1",
+      "id": "cosmos/channel-110",
       "port": "transfer"
     }
   ]
