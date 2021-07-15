@@ -16,5 +16,6 @@
   "version": "v0.1.9",
   "timeoutTimestamp": 1000,
   "ibcRevisionHeightIncrement": 1000,
+  "ibcRemoteHeightIncrement": 150,
   "valoperAddressPrefix": "persistence"
 }

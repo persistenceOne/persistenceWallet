@@ -43,11 +43,6 @@ async function KeplrWallet(chainID = configChainID) {
     return [offlineSigner, accounts[0].address];
 }
 
-async function TransactionWithLedger(msgs, fee, memo = "",  hdpath = makeHdPath(), prefix = addressPrefix) {
-    const [wallet, address] = await LedgerWallet(hdpath, prefix);
-    return Transaction(wallet, address, msgs, fee, memo);
-}
-
 async function LedgerWallet(hdpath, prefix) {
     const interactiveTimeout = 120_000;
     async function createTransport() {
@@ -187,13 +182,22 @@ async function MakeIBCTransferMsg(channel, fromAddress, toAddress, amount, timeo
             revisionHeight: clientStateResponseDecoded.latestHeight.revisionHeight.add(config.ibcRevisionHeightIncrement),
             revisionNumber: clientStateResponseDecoded.latestHeight.revisionNumber
         };
+        if (url === undefined){
+            const consensusStateResponse = await ibcExtension.ibc.channel.consensusState(port, channel,
+                clientStateResponseDecoded.latestHeight.revisionNumber.toInt(), clientStateResponseDecoded.latestHeight.revisionHeight.toInt());
+            const consensusStateResponseDecoded = decodeTendermintConsensusStateAny(consensusStateResponse.consensusState);
 
-        const consensusStateResponse = await ibcExtension.ibc.channel.consensusState(port, channel,
-            clientStateResponseDecoded.latestHeight.revisionNumber.toInt(), clientStateResponseDecoded.latestHeight.revisionHeight.toInt());
-        const consensusStateResponseDecoded = decodeTendermintConsensusStateAny(consensusStateResponse.consensusState);
+            const timeoutTime = Long.fromNumber(consensusStateResponseDecoded.timestamp.getTime() / 1000).add(timeoutTimestamp).multiply(1000000000); //get time in nanoesconds
+            return TransferMsg(channel, fromAddress, toAddress, amount, timeoutHeight, timeoutTime, denom, port);
+        }else{
+            const remoteTendermintClient = await tmRPC.Tendermint34Client.connect(url);
+            const latestBlockHeight = (await remoteTendermintClient.status()).syncInfo.latestBlockHeight;
+            timeoutHeight.revisionHeight = Long.fromNumber(latestBlockHeight).add(config.ibcRemoteHeightIncrement);
+            const timeoutTime = Long.fromNumber(0);
+            return TransferMsg(channel, fromAddress, toAddress, amount, timeoutHeight, timeoutTime, denom, port);
+        }
 
-        const timeoutTime = Long.fromNumber(consensusStateResponseDecoded.timestamp.getTime() / 1000).add(timeoutTimestamp).multiply(1000000000); //get time in nanoesconds
-        return TransferMsg(channel, fromAddress, toAddress, amount, timeoutHeight, timeoutTime, denom, port);
+
     }).catch(error => {
         throw error;
     });
@@ -252,7 +256,6 @@ async function getTransactionResponse(address, data, fee, gas, mnemonic="", acco
 export default {
     TransactionWithKeplr,
     TransactionWithMnemonic,
-    TransactionWithLedger,
     makeHdPath,
     getAccountNumberAndSequence,
     updateFee,
