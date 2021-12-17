@@ -7,7 +7,7 @@ import TokenInfo from "../Common/TokenInfo";
 import InfoRefresh from "../Refresh";
 import SendIbc from "./SendIbc/index";
 import Icon from "../../components/Icon";
-import ModalWithdraw from "./ModalWithDraw";
+import ModalWithdraw from "./ModalWithdraw";
 import ModalSetWithdrawAddress from "./ModalSetWithdrawAddress";
 import FeeModal from "../Common/Fee/Modal";
 import KeyStoreModal from "../Common/KeyStore/Modal";
