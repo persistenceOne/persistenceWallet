@@ -20,7 +20,8 @@ export const fetchAddress = async (accountNumber = "0", addressIndex = "0") => {
     const signer = new LedgerSigner(transport, {
         testModeAllowed: true,
         hdPaths: [transactions.makeHdPath(accountNumber, addressIndex)],
-        prefix: config.addressPrefix
+        prefix: config.addressPrefix,
+        ledgerAppName:config.persistenceLedgerAppName
     });
     const [firstAccount] = await signer.getAccounts();
     return firstAccount.address;
