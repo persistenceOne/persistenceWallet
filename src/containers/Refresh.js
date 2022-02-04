@@ -21,10 +21,12 @@ const InfoRefresh = (props) => {
             category: `Refresh`,
             action: `Clicked on Refresh`
         });
+        
         setInProgress(true);
         setTimeout(() => {
             setInProgress(false);
         }, 1000);
+        
         await Promise.all([
             props.fetchDelegationsCount(loginInfo.address),
             props.fetchBalance(loginInfo.address),
