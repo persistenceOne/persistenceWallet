@@ -19,11 +19,11 @@ const configChainID = process.env.REACT_APP_CHAIN_ID;
 const tendermintRPCURL = process.env.REACT_APP_TENDERMINT_RPC_ENDPOINT;
 
 async function Transaction(wallet, signerAddress, msgs, fee, memo = "") {
-    const cosmJS = await SigningStargateClient.connectWithSigner(
+    const client = await SigningStargateClient.connectWithSigner(
         tendermintRPCURL,
         wallet,
     );
-    return await cosmJS.signAndBroadcast(signerAddress, msgs, fee, memo);
+    return await client.signAndBroadcast(signerAddress, msgs, fee, memo);
 }
 
 async function TransactionWithKeplr(msgs, fee, memo = "", chainID = configChainID) {
