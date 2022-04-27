@@ -3,7 +3,8 @@ import {
     SET_LEDGER_ACCOUNT_NUMBER,
     SET_LEDGER_INFO,
     SIGN_IN_LEDGER_MODAL_HIDE,
-    SIGN_IN_LEDGER_MODAL_SHOW
+    SIGN_IN_LEDGER_MODAL_SHOW,
+    SET_LEDGER_APP_NAME
 } from "../../../constants/signIn/ledger";
 import {combineReducers} from "redux";
 
@@ -101,9 +102,27 @@ const ledgerInfo = (state = {
     }
 };
 
+const ledgerAppName = (state = {
+    value: '',
+}, {
+    type,
+    data,
+}) => {
+    switch (type) {
+    case SET_LEDGER_APP_NAME:
+        return {
+            ...state,
+            value: data.value,
+        };
+    default:
+        return state;
+    }
+};
+
 export default combineReducers({
     ledgerModal,
     ledgerInfo,
     accountIndex,
-    accountNumber
+    accountNumber,
+    ledgerAppName
 });

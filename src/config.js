@@ -133,12 +133,13 @@ export const ExternalChains = [
             coinGeckoId: 'cosmos',
         },
         coinType: 118,
+        ledgerAppName: 'Cosmos'
     },
     {
         rpc: 'https://api.gravity.audit.one/rpc/',
         rest: 'https://api.gravity.audit.one/lcd/',
-        chainId: 'cosmoshub-4',
-        chainName: 'Cosmos',
+        chainId: 'gravity-bridge-3',
+        chainName: 'Gravity',
         currency: {
             coinDenom: 'GRAV',
             coinMinimalDenom: 'ugraviton',
@@ -173,5 +174,6 @@ export const MainNetFoundationNodes = [
     "persistencevaloper1emrvay43wy7f4ylwen3yxhm9qxddy8zc9zdk5y",
     "persistencevaloper13dv6h3wtmhmt0jprhaw9pv343qanttkty4685v"
 ];
+
 
 

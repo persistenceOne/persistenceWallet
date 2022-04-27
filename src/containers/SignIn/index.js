@@ -7,10 +7,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {hideSignInModal} from "../../store/actions/signIn/modal";
 import LedgerModal from "./Ledger/LedgerModal";
 import Keplr from "./Keplr";
-import {showLedgerModal} from "../../store/actions/signIn/ledger";
+import {setLedgerAppName, showLedgerModal} from "../../store/actions/signIn/ledger";
 import {showAddressModal} from "../../store/actions/signIn/address";
 import Address from "./Address";
 import {showKeplrModal} from "../../store/actions/signIn/keplr";
+import {DefaultChainInfo, ExternalChains} from "../../config";
 
 const SignIn = (props) => {
     const {t} = useTranslation();
@@ -26,7 +27,7 @@ const SignIn = (props) => {
         props.setRoutName("");
     };
 
-    const handleRoute = async (key) => {
+    const handleRoute = async (key, ledgerAppName) => {
         if (key === "withAddress") {
             dispatch(showAddressModal());
             dispatch(hideSignInModal());
@@ -36,6 +37,7 @@ const SignIn = (props) => {
             dispatch(hideSignInModal());
             dispatch(showLedgerModal());
             setWithLedger(true);
+            dispatch(setLedgerAppName({value: ledgerAppName}));
         }
         if (key === "withKeyStore") {
             dispatch(showKeyStoreModal());
@@ -49,6 +51,9 @@ const SignIn = (props) => {
         }
     };
 
+    const cosmos = ExternalChains.find(chain => chain.chainName === 'Cosmos');
+
+    console.log(cosmos, "Cosmos");
     return (
         <>
             <Modal backdrop="static" show={show} onHide={handleClose} centered
@@ -60,7 +65,12 @@ const SignIn = (props) => {
                     <Modal.Body className="create-wallet-body create-wallet-form-body sign-in-buttons">
                         <div className="buttons">
                             <button className="button button-primary large"
-                                onClick={() => handleRoute("ledger")}>{t("USE_LEDGER")}
+                                onClick={() => handleRoute("ledger", cosmos && cosmos.ledgerAppName)}>{t("USE_COSMO_LEDGER")}
+                            </button>
+                        </div>
+                        <div className="buttons">
+                            <button className="button button-primary large"
+                                onClick={() => handleRoute("ledger", DefaultChainInfo && DefaultChainInfo.ledgerAppName)}>{t("USE_PERSISTENCE_LEDGER")}
                             </button>
                         </div>
                         <div className="buttons">

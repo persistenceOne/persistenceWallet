@@ -3,7 +3,8 @@ import {
     SET_LEDGER_ACCOUNT_NUMBER,
     SET_LEDGER_INFO,
     SIGN_IN_LEDGER_MODAL_HIDE,
-    SIGN_IN_LEDGER_MODAL_SHOW
+    SIGN_IN_LEDGER_MODAL_SHOW,
+    SET_LEDGER_APP_NAME
 } from "../../../constants/signIn/ledger";
 import {fetchAddress} from "../../../utils/ledger";
 import {setLoginInfo} from "../transactions/common";
@@ -36,6 +37,14 @@ export const setLedgerInfo = (data) => {
     };
 };
 
+export const setLedgerAppName = (data) => {
+    return {
+        type: SET_LEDGER_APP_NAME,
+        data,
+    };
+};
+
+
 export const setAccountNumber = (data) => {
     return {
         type: SET_LEDGER_ACCOUNT_NUMBER,
@@ -52,9 +61,10 @@ export const setAccountIndex = (data) => {
 
 
 export const fetchLedgerAddress = (accountNumber = "0", addressIndex = "0") => {
-    return async (dispatch) => {
+    return async (dispatch, getState) => {
         try {
-            let ledgerResponse = fetchAddress(accountNumber, addressIndex);
+            const ledgerApp = getState().signInLedger.ledgerAppName.value;
+            let ledgerResponse = fetchAddress(accountNumber, addressIndex, ledgerApp);
             ledgerResponse.then(function (result) {
                 dispatch(setLedgerInfo({
                     value: result,
@@ -90,6 +100,7 @@ export const fetchLedgerAddress = (accountNumber = "0", addressIndex = "0") => {
 export const ledgerLogin = (history) => {
     return async (dispatch, getState) => {
         const address = getState().signInLedger.ledgerInfo.value;
+        const ledgerApp = getState().signInLedger.ledgerAppName.value;
         const loginInfo = {
             fee: '',
             account: '',
@@ -124,6 +135,7 @@ export const ledgerLogin = (history) => {
         loginInfo.accountNumber = helper.getAccountNumber(getState().signInLedger.accountNumber.value);
         loginInfo.accountIndex = helper.getAccountNumber(getState().signInLedger.accountIndex.value);
 
+        localStorage.setItem('ledgerAppName',ledgerApp);
         localStorage.setItem(LOGIN_INFO, JSON.stringify(loginInfo));
 
         dispatch(setLoginInfo({

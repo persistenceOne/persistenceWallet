@@ -172,6 +172,8 @@ let English = {
         "TO_DATE": "To Date",
         "CONTINUE_WITH_LEDGER": "Continue With Ledger",
         "USE_LEDGER": "Use Ledger",
+        "USE_COSMO_LEDGER": "Use Cosmos Ledger",
+        "USE_PERSISTENCE_LEDGER": "Use Persistence Ledger",
         "VIEW_DELEGATIONS": "View Delegations",
         "MONIKER": "Moniker",
         "VALIDATOR_ADDRESS": "Validator Address",
