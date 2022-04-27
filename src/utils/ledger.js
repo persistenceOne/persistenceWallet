@@ -3,7 +3,7 @@ import {LedgerSigner} from "@cosmjs/ledger-amino";
 import {makeHdPath} from "./helper";
 import * as Sentry from "@sentry/browser";
 import {userLogout} from "../store/actions/logout";
-import {DefaultChainInfo} from "../config";
+import {DefaultChainInfo, ExternalChains} from "../config";
 
 const interactiveTimeout = 120_000;
 
@@ -12,13 +12,15 @@ export async function createTransport() {
     return ledgerTransport;
 }
 
-export const fetchAddress = async (accountNumber = "0", addressIndex = "0") => {
+export const fetchAddress = async (accountNumber = "0", addressIndex = "0", ledgerApp) => {
     let transport = await createTransport();
+    const cosmos = ExternalChains.find(chain => chain.chainName === 'Cosmos');
+    const coinType = ledgerApp === cosmos.ledgerAppName ? cosmos.coinType : DefaultChainInfo.coinType;
     const signer = new LedgerSigner(transport, {
         testModeAllowed: true,
-        hdPaths: [makeHdPath(accountNumber, addressIndex)],
+        hdPaths: [makeHdPath(accountNumber, addressIndex, coinType)],
         prefix: DefaultChainInfo.prefix,
-        ledgerAppName:DefaultChainInfo.ledgerAppName
+        ledgerAppName:ledgerApp
     });
     const [firstAccount] = await signer.getAccounts();
     return firstAccount.address;

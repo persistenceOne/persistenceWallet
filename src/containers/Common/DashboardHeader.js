@@ -16,7 +16,7 @@ import {stringTruncate} from "../../utils/scripts";
 import {makeHdPath} from "../../utils/helper";
 import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
 import ReactGA from 'react-ga';
-import {DefaultChainInfo} from "../../config";
+import {DefaultChainInfo, ExternalChains} from "../../config";
 
 const EXPLORER_API = process.env.REACT_APP_EXPLORER_API;
 
@@ -63,8 +63,11 @@ const DashboardHeader = () => {
     const ledgerShowAddress = async () => {
         const accountNumber = loginInfo && loginInfo.accountNumber;
         const addressIndex = loginInfo && loginInfo.accountIndex;
-        const [wallet] = await transactions.LedgerWallet(makeHdPath(accountNumber, addressIndex), DefaultChainInfo.prefix);
-        await wallet.showAddress(makeHdPath(accountNumber, addressIndex));
+        const ledgerApp = localStorage.getItem('ledgerAppName');
+        const cosmos = ExternalChains.find(chain => chain.chainName === 'Cosmos');
+        const coinType = ledgerApp === cosmos.ledgerAppName ? cosmos.coinType : DefaultChainInfo.coinType;
+        const [wallet] = await transactions.LedgerWallet(makeHdPath(accountNumber, addressIndex, coinType), DefaultChainInfo.prefix);
+        await wallet.showAddress(makeHdPath(accountNumber, addressIndex, coinType));
     };
 
     const onClick = (name) => {

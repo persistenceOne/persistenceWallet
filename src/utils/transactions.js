@@ -15,6 +15,7 @@ const tmRPC = require("@cosmjs/tendermint-rpc");
 const {TransferMsg} = require("./protoMsgHelper");
 const addressPrefix = DefaultChainInfo.prefix;
 const configChainID = process.env.REACT_APP_CHAIN_ID;
+const configCoinType = DefaultChainInfo.coinType;
 
 const tendermintRPCURL = process.env.REACT_APP_TENDERMINT_RPC_ENDPOINT;
 
@@ -45,6 +46,7 @@ async function TransactionWithLedger(msgs, fee, memo = "", hdpath = makeHdPath()
 }
 
 async function LedgerWallet(hdpath, prefix) {
+    const ledgerApp = localStorage.getItem('ledgerAppName');
     const interactiveTimeout = 120_000;
 
     async function createTransport() {
@@ -57,7 +59,7 @@ async function LedgerWallet(hdpath, prefix) {
         testModeAllowed: true,
         hdPaths: [hdpath],
         prefix: prefix,
-        ledgerAppName:DefaultChainInfo.ledgerAppName
+        ledgerAppName:ledgerApp
     });
     const [firstAccount] = await signer.getAccounts();
     return [signer, firstAccount.address];
@@ -128,33 +130,33 @@ async function RpcClient() {
 }
 
 
-async function getTransactionResponse(address, data, feeAmount, gas, mnemonic = "", txName, accountNumber = 0, addressIndex = 0, bip39Passphrase = "") {
+async function getTransactionResponse(address, data, feeAmount, gas, mnemonic = "", txName, accountNumber = 0, addressIndex = 0, bip39Passphrase = "", coinType = configCoinType) {
     switch (txName) {
     case "send":
         return TransactionWithMnemonic(data.message, fee(Math.trunc(feeAmount), gas), data.memo,
-            mnemonic, makeHdPath(accountNumber, addressIndex), bip39Passphrase, address);
+            mnemonic, makeHdPath(accountNumber, addressIndex, coinType), bip39Passphrase, address);
     case "delegate":
         return TransactionWithMnemonic(data.message, fee(Math.trunc(feeAmount), gas), data.memo,
-            mnemonic, makeHdPath(accountNumber, addressIndex), bip39Passphrase, address);
+            mnemonic, makeHdPath(accountNumber, addressIndex, coinType), bip39Passphrase, address);
     case "withdrawMultiple":
         return TransactionWithMnemonic(data.message, fee(Math.trunc(feeAmount), gas), data.memo,
-            mnemonic, makeHdPath(accountNumber, addressIndex), bip39Passphrase, address);
+            mnemonic, makeHdPath(accountNumber, addressIndex, coinType), bip39Passphrase, address);
     case "withdrawAddress":
         return TransactionWithMnemonic(data.message, fee(Math.trunc(feeAmount), gas), data.memo,
-            mnemonic, makeHdPath(accountNumber, addressIndex), bip39Passphrase, address);
+            mnemonic, makeHdPath(accountNumber, addressIndex, coinType), bip39Passphrase, address);
     case "reDelegate":
         return TransactionWithMnemonic(data.message, fee(Math.trunc(feeAmount), gas), data.memo,
-            mnemonic, makeHdPath(accountNumber, addressIndex), bip39Passphrase, address);
+            mnemonic, makeHdPath(accountNumber, addressIndex, coinType), bip39Passphrase, address);
     case  "unbond":
         return TransactionWithMnemonic(data.message, fee(Math.trunc(feeAmount), gas), data.memo,
-            mnemonic, makeHdPath(accountNumber, addressIndex), bip39Passphrase, address);
+            mnemonic, makeHdPath(accountNumber, addressIndex, coinType), bip39Passphrase, address);
     case "withdrawValidatorRewards":
         return TransactionWithMnemonic(data.message, fee(Math.trunc(feeAmount), gas), data.memo,
-            mnemonic, makeHdPath(accountNumber, addressIndex), bip39Passphrase, address);
+            mnemonic, makeHdPath(accountNumber, addressIndex, coinType), bip39Passphrase, address);
     case "ibc":
         return TransactionWithMnemonic(data.message,
             fee(Math.trunc(feeAmount), gas), data.memo, mnemonic,
-            makeHdPath(accountNumber, addressIndex), bip39Passphrase, address);
+            makeHdPath(accountNumber, addressIndex, coinType), bip39Passphrase, address);
     }
     
 }

@@ -4,6 +4,7 @@ import {hideFeeModal} from "./fee";
 import * as Sentry from "@sentry/browser";
 import helper, {privateKeyReader} from "../../../utils/helper";
 import {LOGIN_INFO} from "../../../constants/localStorage";
+import {DefaultChainInfo, ExternalChains} from "../../../config";
 
 export const ledgerSubmit = (loginAddress, loginMode) => {
     return async (dispatch, getState) => {
@@ -23,11 +24,15 @@ export const ledgerSubmit = (loginAddress, loginMode) => {
         const fee = getState().fee.fee.value.fee;
         const gas = getState().gas.gas.value;
 
+        const ledgerApp = localStorage.getItem('ledgerAppName');
+        const cosmos = ExternalChains.find(chain => chain.chainName === 'Cosmos');
+        const coinType = ledgerApp === cosmos.ledgerAppName ? cosmos.coinType : DefaultChainInfo.coinType;
+
         let mnemonic = "";
         if (loginMode !== "ledger") {
             mnemonic = await privateKeyReader(keyStoreData.value, password.value, loginAddress);
         }
-        let response = transactions.getTransactionResponse(loginAddress, formData, fee, gas, mnemonic, txName, accountNumber, accountIndex, bip39PassPhrase);
+        let response = transactions.getTransactionResponse(loginAddress, formData, fee, gas, mnemonic, txName, accountNumber, accountIndex, bip39PassPhrase, coinType);
         response.then(result => {
             if (result.code !== undefined) {
                 dispatch(hideFeeModal());
