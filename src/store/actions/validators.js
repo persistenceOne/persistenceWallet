@@ -248,6 +248,12 @@ export const fetchValidatorRewards = (address, validatorAddress) => {
                 }
             }
         }).catch(error => {
+            dispatch(setValidatorRewards({
+                value: 0,
+                error: {
+                    message: ''
+                }
+            }));
             Sentry.captureException(error.response
                 ? error.response.data.message
                 : error.message);
