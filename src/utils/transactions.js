@@ -24,7 +24,10 @@ async function Transaction(wallet, signerAddress, msgs, fee, memo = "") {
         tendermintRPCURL,
         wallet,
     );
-    return await cosmJS.signAndBroadcast(signerAddress, msgs, fee, memo);
+    const clientResult = await cosmJS.signAndBroadcast(signerAddress, msgs, fee, memo);
+    cosmJS.disconnect();
+    return clientResult;
+
 }
 
 async function TransactionWithKeplr(msgs, fee, memo = "", chainID = configChainID) {
