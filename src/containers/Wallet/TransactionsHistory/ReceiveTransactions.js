@@ -66,7 +66,7 @@ const ReceiveTransactions = (props) => {
         ?
         props.list.map((stxn, index) => [
             <a key={index}
-                href={`${EXPLORER_API}/transactions/${stxn.hash}`}
+                href={`${EXPLORER_API}/txs/${stxn.hash}`}
                 target="_blank" className="tx-hash" rel="noopener noreferrer">
                 {stringTruncate(stxn.hash)}
             </a>,
