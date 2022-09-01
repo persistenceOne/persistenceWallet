@@ -11,7 +11,10 @@ import Advanced from "../Advanced";
 import {setLoginInfo, txFailed} from "../../../store/actions/transactions/common";
 import {useTranslation} from "react-i18next";
 import {setAccountIndex, setAccountNumber, setBip39Passphrase} from "../../../store/actions/transactions/advanced";
-import {ENCRYPTED_MNEMONIC} from "../../../constants/localStorage";
+import {COIN_TYPE, ENCRYPTED_MNEMONIC} from "../../../constants/localStorage";
+import CoinType from "./CoinType";
+import {setCoinType} from "../../../store/actions/signIn/keyStore";
+import {DefaultChainInfo} from "../../../config";
 
 const Modal = () => {
     const {t} = useTranslation();
@@ -20,8 +23,11 @@ const Modal = () => {
     const response = useSelector((state) => state.common.error);
     const dispatch = useDispatch();
     const encryptedMnemonic = localStorage.getItem(ENCRYPTED_MNEMONIC);
+    const coinType = localStorage.getItem(COIN_TYPE);
+
     useEffect(() => {
         if (encryptedMnemonic !== null) {
+            dispatch(setCoinType(parseInt(coinType)));
             dispatch(setLoginInfo({
                 encryptedSeed: true,
                 error: {
@@ -29,6 +35,7 @@ const Modal = () => {
                 }
             }));
         } else {
+            dispatch(setCoinType(DefaultChainInfo.coinType));
             dispatch(setLoginInfo({
                 encryptedSeed: false,
                 error: {
@@ -99,6 +106,10 @@ const Modal = () => {
                     : null
                 }
                 <Password/>
+                {!encryptedSeed ?
+                    <CoinType/>
+                    : null
+                }
                 <Advanced/>
                 {
                     response.error.message !== "" ?

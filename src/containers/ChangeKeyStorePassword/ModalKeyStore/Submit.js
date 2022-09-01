@@ -13,6 +13,7 @@ import {fileTypeCheck, mnemonicTrim} from "../../../utils/scripts";
 const Submit = () => {
     const password = useSelector((state) => state.keyStore.password);
     const keyStore = useSelector((state) => state.keyStore.keyStore);
+    const {coinType} = useSelector((state) => state.changePassword);
 
     const accountNumber = useSelector((state) => state.advanced.accountNumber);
     const accountIndex = useSelector((state) => state.advanced.accountIndex);
@@ -39,7 +40,7 @@ const Submit = () => {
                         }));
                 } else {
                     let mnemonic = mnemonicTrim(decryptedData.mnemonic);
-                    const walletPath = makeHdPath(helper.getAccountNumber(accountNumber.value), helper.getAccountNumber(accountIndex.value));
+                    const walletPath = makeHdPath(helper.getAccountNumber(accountNumber.value), helper.getAccountNumber(accountIndex.value), coinType);
                     const responseData = await wallet.createWallet(mnemonic, walletPath, bip39PassPhrase.value);
                     dispatch(setResult(
                         {

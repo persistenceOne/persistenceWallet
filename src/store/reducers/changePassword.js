@@ -6,9 +6,11 @@ import {
     CHANGE_KEYSTORE_RESULT_MODAL_HIDE,
     CHANGE_KEYSTORE_RESULT_MODAL_SHOW,
     CHANGE_KEYSTORE_RESULT_SET,
-    KEYSTORE_NEW_PASSWORD_SET
+    KEYSTORE_NEW_PASSWORD_SET,
+    CHANGE_KEYSTORE_SET_COIN_TYPE
 } from "../../constants/changePassword";
 import {combineReducers} from "redux";
+import {DefaultChainInfo} from "../../config";
 
 const newPassword = (state = {
     value: '',
@@ -71,6 +73,15 @@ const newPasswordModal = (state = false, {
     }
 };
 
+const coinType = (state = DefaultChainInfo.coinType , {type, data}) => {
+    switch (type) {
+    case CHANGE_KEYSTORE_SET_COIN_TYPE:
+        return data;
+    default:
+        return state;
+    }
+};
+
 const resultModal = (state = false, {
     type,
 }) => {
@@ -123,5 +134,6 @@ export default combineReducers({
     resultModal,
     keyStoreModal,
     newPasswordModal,
-    response
+    response,
+    coinType
 });

@@ -94,7 +94,34 @@ html, body {
   padding: 30px; }
 
 .modal-content {
-  border: 0px solid !important; }
+  border: 0px solid !important;
+  /* simulate radiobutton appearance using pseudoselector */ }
+  .modal-content .form-check {
+    padding: 0; }
+    .modal-content .form-check label {
+      display: flex;
+      align-items: center; }
+  .modal-content input[type="radio"] {
+    display: none; }
+  .modal-content input[type="checkbox"] {
+    transform: scale(1.2); }
+  .modal-content input[type="radio"] + label:before {
+    content: "";
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    padding: 3px;
+    margin-right: 5px;
+    background-clip: content-box;
+    border: 1.2px solid #bbbbbb;
+    background-color: #e7e6e7;
+    border-radius: 50%; }
+  .modal-content input[type="radio"]:checked + label:before {
+    background-color: #E50913; }
+  .modal-content *,
+  .modal-content *:before,
+  .modal-content *:after {
+    box-sizing: border-box; }
 
 .modal-custom .modal-header {
   border: 0px solid;
@@ -124,6 +151,10 @@ html, body {
   border-radius: 0;
   border: 0px solid;
   color: #8D9CB5; }
+  .modal-custom .modal-body input.form-check-input {
+    height: auto;
+    margin-top: 0.3rem;
+    margin-left: -1.25rem; }
   .modal-custom .modal-body input::placeholder {
     font-size: 14px;
     color: #8D9CB5; }
