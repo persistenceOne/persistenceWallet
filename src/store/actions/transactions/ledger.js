@@ -30,7 +30,7 @@ export const ledgerSubmit = (loginAddress, loginMode) => {
 
         let mnemonic = "";
         if (loginMode !== "ledger") {
-            mnemonic = await privateKeyReader(keyStoreData.value, password.value, loginAddress);
+            mnemonic = await privateKeyReader(keyStoreData.value, password.value, loginAddress, coinType);
         }
         let response = transactions.getTransactionResponse(loginAddress, formData, fee, gas, mnemonic, txName, accountNumber, accountIndex, bip39PassPhrase, coinType);
         response.then(result => {

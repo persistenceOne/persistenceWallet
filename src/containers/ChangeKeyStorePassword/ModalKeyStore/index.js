@@ -9,6 +9,7 @@ import Submit from "./Submit";
 import Icon from "../../../components/Icon";
 import Advanced from "../../Common/Advanced";
 import {useTranslation} from "react-i18next";
+import CoinType from "./CoinType";
 
 const ModalKeyStore = () => {
     const {t} = useTranslation();
@@ -48,6 +49,7 @@ const ModalKeyStore = () => {
             <ReactModal.Body className="create-wallet-body import-wallet-body">
                 <FileInput/>
                 <Password/>
+                <CoinType/>
                 <Advanced/>
                 {
                     response.error.message !== "" ?

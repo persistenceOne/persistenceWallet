@@ -8,7 +8,8 @@ import {
     CHANGE_KEYSTORE_RESULT_SET,
     KEYSTORE_NEW_PASSWORD_SET,
     CHANGE_KEYSTORE_MODAL_NEXT,
-    CHANGE_KEYSTORE_NEW_PASSWORD_MODAL_NEXT
+    CHANGE_KEYSTORE_NEW_PASSWORD_MODAL_NEXT,
+    CHANGE_KEYSTORE_SET_COIN_TYPE
 } from "../../constants/changePassword";
 
 export const setKeyStoreNewPassword = (data) => {
@@ -77,6 +78,13 @@ export const hideResultModal = (data) => {
 export const setResult = (data) => {
     return {
         type: CHANGE_KEYSTORE_RESULT_SET,
+        data,
+    };
+};
+
+export const setCoinType = (data) => {
+    return {
+        type: CHANGE_KEYSTORE_SET_COIN_TYPE,
         data,
     };
 };

@@ -4,9 +4,10 @@ import {
     SIGN_IN_KEYSTORE_MODAL_SHOW,
     SIGN_IN_KEYSTORE_RESULT_MODAL_HIDE,
     SIGN_IN_KEYSTORE_RESULT_MODAL_SHOW,
-    SIGN_IN_KEYSTORE_MODAL_NEXT
+    SIGN_IN_KEYSTORE_MODAL_NEXT, SET_COIN_TYPE
 } from "../../../constants/signIn/keyStore";
 import {combineReducers} from "redux";
+import {DefaultChainInfo} from "../../../config";
 
 const keyStoreModal = (state = false, {
     type,
@@ -69,9 +70,18 @@ const response = (state = {
     }
 };
 
+const coinType = (state = DefaultChainInfo.coinType , {type, data}) => {
+    switch (type) {
+    case SET_COIN_TYPE:
+        return data;
+    default:
+        return state;
+    }
+};
 
 export default combineReducers({
     keyStoreModal,
     keyStoreResultModal,
-    response
+    response,
+    coinType
 });

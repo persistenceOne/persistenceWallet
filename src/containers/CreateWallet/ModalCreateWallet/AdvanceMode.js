@@ -259,7 +259,7 @@ const AdvanceMode = (props) => {
                         </Modal.Header>
                         <div className="create-wallet-body create-wallet-form-body">
                             <p className="mnemonic-result"><b>{t("WALLET_PATH")}: </b>{response.walletPath}</p>
-                            <p className="mnemonic-result"><b>{t("ADDRESS")}: </b>{response.address}</p>
+                            <p className="mnemonic-result"><b>{t("ADDRESS")} generated with Coin Type 118: </b>{response.address}</p>
                             <div className="buttons">
                                 <button className="button button-primary" onClick={handleLogin}>Login</button>
                             </div>

@@ -15,7 +15,7 @@ export async function createTransport() {
 export const fetchAddress = async (accountNumber = "0", addressIndex = "0", ledgerApp) => {
     let transport = await createTransport();
     const cosmos = ExternalChains.find(chain => chain.chainName === 'Cosmos');
-    const coinType = ledgerApp === cosmos.ledgerAppName ? cosmos.coinType : DefaultChainInfo.coinType;
+    const coinType = ledgerApp === cosmos.ledgerAppName ? cosmos.coinType : DefaultChainInfo.deprecatedCoinType;
     const signer = new LedgerSigner(transport, {
         testModeAllowed: true,
         hdPaths: [makeHdPath(accountNumber, addressIndex, coinType)],

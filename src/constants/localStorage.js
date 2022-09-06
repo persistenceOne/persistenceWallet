@@ -14,4 +14,5 @@ export const LOGIN_TOKEN = "loginToken";
 export const THEME = "theme";
 export const ACCOUNT_NUMBER = "accountNumber";
 export const LEDGER = "ledger";
-export const ADDRESS_INDEX = "addressIndex";
+export const COIN_TYPE = "coinType";
+

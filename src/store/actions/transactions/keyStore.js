@@ -8,7 +8,7 @@ import transactions from "../../../utils/transactions";
 import {setLoginInfo, showTxResultModal, txFailed, txInProgress, txResponse, txSuccess} from "./common";
 import helper, {decryptKeyStore, privateKeyReader} from "../../../utils/helper";
 import * as Sentry from "@sentry/browser";
-import {ENCRYPTED_MNEMONIC} from "../../../constants/localStorage";
+import {COIN_TYPE, ENCRYPTED_MNEMONIC, LOGIN_INFO} from "../../../constants/localStorage";
 
 export const setTxKeyStore = (data) => {
     return {
@@ -42,8 +42,16 @@ export const keyStoreSubmit = (loginAddress) => {
     return async (dispatch, getState) => {
         dispatch(txInProgress());
         try {
+            const loginInfo = JSON.parse(localStorage.getItem(LOGIN_INFO));
             const password = getState().keyStore.password;
             const keyStoreData = getState().keyStore.keyStore;
+            let loginCoinType;
+            if (loginInfo && loginInfo?.addressLogin){
+                const {coinType} =  getState().signInKeyStore;
+                loginCoinType = coinType;
+            }else {
+                loginCoinType = JSON.parse(localStorage.getItem(COIN_TYPE));
+            }
 
             const accountNumber = helper.getAccountNumber(getState().advanced.accountNumber.value);
             const accountIndex = helper.getAccountNumber(getState().advanced.accountIndex.value);
@@ -67,11 +75,12 @@ export const keyStoreSubmit = (loginAddress) => {
                 }
                 mnemonic = decryptedData.mnemonic;
             } else {
-                mnemonic = await privateKeyReader(keyStoreData.value, password.value, loginAddress, accountNumber, accountIndex);
+                mnemonic = await privateKeyReader(keyStoreData.value, password.value, loginAddress, accountNumber, accountIndex, loginCoinType);
             }
 
-            let result = await transactions.getTransactionResponse(loginAddress, formData, fee, gas, mnemonic, txName, accountNumber, accountIndex, bip39PassPhrase);
+            let result = await transactions.getTransactionResponse(loginAddress, formData, fee, gas, mnemonic, txName, accountNumber, accountIndex, bip39PassPhrase, loginCoinType);
             if (result.code !== undefined) {
+                localStorage.setItem(COIN_TYPE, loginCoinType);
                 dispatch(setLoginInfo({
                     encryptedSeed: true,
                     error: {

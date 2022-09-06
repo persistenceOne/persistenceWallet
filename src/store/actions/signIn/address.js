@@ -44,7 +44,8 @@ export const addressLogin = (history) => {
             loginMode: '',
             version: '',
             accountNumber: '',
-            accountIndex: ''
+            accountIndex: '',
+            addressLogin:false,
         };
         const accountNumber = helper.getAccountNumber(getState().advanced.accountNumber.value);
         const accountIndex = helper.getAccountNumber(getState().advanced.accountIndex.value);
@@ -71,6 +72,7 @@ export const addressLogin = (history) => {
             loginInfo.version = packageJson.version;
             loginInfo.accountNumber = accountNumber;
             loginInfo.accountIndex = accountIndex;
+            loginInfo.addressLogin = true;
             dispatch(setLoginInfo({
                 encryptedSeed: false,
                 error: {

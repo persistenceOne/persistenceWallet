@@ -9,7 +9,8 @@ export const DefaultChainInfo = {
         coinDecimals: 6,
         coinGeckoId: 'persistence',
     },
-    coinType: 750,
+    deprecatedCoinType: 750,
+    coinType: 118,
     uTokenValue:1000000,
 };
 
@@ -105,7 +106,7 @@ export const ExternalChains = [
             coinDecimals: 6,
             coinGeckoId: 'persistence',
         },
-        coinType: 750,
+        coinType: 118,
     },
     {
         rpc: 'https://rpc.osmosis-1.audit.one/',

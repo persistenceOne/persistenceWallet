@@ -262,7 +262,7 @@ export const tokenValueConversion = (data) => {
     return data / DefaultChainInfo.uTokenValue;
 };
 
-export const privateKeyReader = (file, password, loginAddress, accountNumber = "0", addressIndex = "0",) => {
+export const privateKeyReader = (file, password, loginAddress, accountNumber = "0", addressIndex = "0", coinType = configCoinType) => {
     return new Promise(function (resolve, reject) {
         const fileReader = new FileReader();
         fileReader.readAsText(file, "UTF-8");
@@ -274,7 +274,7 @@ export const privateKeyReader = (file, password, loginAddress, accountNumber = "
                     reject(new Error(decryptedData.error));
                 } else {
                     let mnemonic = mnemonicTrim(decryptedData.mnemonic);
-                    const accountData = await transactions.MnemonicWalletWithPassphrase(mnemonic, makeHdPath(accountNumber, addressIndex));
+                    const accountData = await transactions.MnemonicWalletWithPassphrase(mnemonic, makeHdPath(accountNumber, addressIndex, coinType));
                     const address = accountData[1];
                     if (address === loginAddress) {
                         resolve(mnemonic);

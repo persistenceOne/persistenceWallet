@@ -128,6 +128,44 @@ html, body {
 
 .modal-content {
   border: 0px solid !important;
+  .form-check{
+    padding: 0;
+    label{
+      display: flex;
+      align-items: center;
+    }
+  }
+  input[type="radio"] {
+    display: none;
+  }
+
+  input[type="checkbox"] {
+    transform: scale(1.2);
+  }
+
+  /* simulate radiobutton appearance using pseudoselector */
+  input[type="radio"] + label:before {
+    content: "";
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    padding: 3px;
+    margin-right: 5px;
+    background-clip: content-box;
+    border: 1.2px solid #bbbbbb;
+    background-color: #e7e6e7;
+    border-radius: 50%;
+  }
+
+  input[type="radio"]:checked + label:before {
+    background-color: #E50913;
+  }
+
+  *,
+  *:before,
+  *:after {
+    box-sizing: border-box;
+  }
 }
 
 .modal-custom {
@@ -159,6 +197,7 @@ html, body {
   }
 
   .modal-body {
+
     input {
       margin: 0;
       font-size: 14px;
@@ -167,7 +206,11 @@ html, body {
       border-radius: 0;
       border: 0px solid;
       color: #8D9CB5;
-
+      &.form-check-input{
+        height: auto;
+        margin-top: 0.3rem;
+        margin-left: -1.25rem;
+      }
       &::placeholder {
         font-size: 14px;
         color: #8D9CB5;
