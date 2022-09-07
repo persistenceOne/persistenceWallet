@@ -12,6 +12,7 @@ import GenerateKeyStore from "../../containers/GenerateKeyStore";
 import {showKeyStoreMnemonicModal} from "../../store/actions/generateKeyStore";
 import ChangeKeyStorePassword from "../../containers/ChangeKeyStorePassword";
 import KeyStore from "../../containers/DecryptKeyStore";
+import Banner from "../../components/Banner";
 // import {showKeyStoreModal} from "../../store/actions/signIn/keyStore";
 
 const Homepage = () => {
@@ -33,6 +34,7 @@ const Homepage = () => {
 
     return (
         <div className="home-page">
+            <Banner/>
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
                 <div className="container">
                     <Navbar.Brand><Nav.Link>

@@ -82,3 +82,37 @@
     }
   }
 }
+
+
+.top-banner-section{
+  background: #e50913;
+  text-align: center;
+  padding: 5px 40px 5px 0;
+  position: relative;
+  .content{
+    color: #FFFFFF;
+    font-size: 12px;
+    margin: 0;
+    &:hover{
+      text-decoration: underline;
+    }
+    .icon{
+      margin-left: 10px;
+      fill: #FFFFFF;
+      width: 16px;
+    }
+    .logo{
+      width: 16px;
+      margin-right: 10px;
+    }
+  }
+  .icon-close{
+    width: 10px;
+    fill: #FFFFFF;
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 7px;
+  }
+
+}
