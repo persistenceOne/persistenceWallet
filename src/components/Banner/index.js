@@ -9,9 +9,11 @@ const Banner = () => {
     };
     return (
         <div className={!banner ? 'd-none' : "top-banner-section"}>
-            <p className="content">
+            <a className="content" href="https://forum.persistence.one/t/discussion-migrating-to-coin-type-118-from-coin-type-750-for-persistence-core-1-chain-xprt/72" target="_blank"
+                rel="noopener noreferrer">
                 <b>Note:</b> The support for 750 coin-type wallets is proposed to deprecate in December 2024
-            </p>
+                <Icon viewClass="right-arrow" icon="right-arrow"/>
+            </a>
             <div onClick={closeBanner}>
                 <Icon viewClass="close" icon="close"/>
             </div>
