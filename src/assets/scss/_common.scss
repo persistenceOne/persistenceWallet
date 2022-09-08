@@ -993,3 +993,49 @@ ul li em {
   }
 
 }
+
+.maintainence-page{
+  .info-container{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    padding: 30px;
+    .heading{
+      font-size: 22px;
+      color: #212529;
+      margin: 15px 0;
+      text-align: center;
+    }
+    img{
+      width:  200px
+    }
+    p{
+      width: 400px;
+      margin:0 auto;
+      color: #6c757d;
+      text-align: center;
+    }
+  }
+  .social-icons{
+    margin-top: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .icon-box{
+      margin: 0px 10px;
+      background: #3D292A;
+      padding: 5px;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .icon{
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+}
