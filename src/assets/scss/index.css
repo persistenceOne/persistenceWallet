@@ -696,6 +696,43 @@ ul li em {
   .password-field .password-field-container .icon {
     width: 24px; }
 
+.maintainence-page .info-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  padding: 30px; }
+  .maintainence-page .info-container .heading {
+    font-size: 22px;
+    color: #212529;
+    margin: 15px 0;
+    text-align: center; }
+  .maintainence-page .info-container img {
+    width: 200px; }
+  .maintainence-page .info-container p {
+    width: 400px;
+    margin: 0 auto;
+    color: #6c757d;
+    text-align: center; }
+.maintainence-page .social-icons {
+  margin-top: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  .maintainence-page .social-icons .icon-box {
+    margin: 0px 10px;
+    background: #3D292A;
+    padding: 5px;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center; }
+    .maintainence-page .social-icons .icon-box .icon {
+      width: 18px;
+      height: 18px; }
+
 /*--------------------------------------------------------------
 # main styles
 --------------------------------------------------------------*/
