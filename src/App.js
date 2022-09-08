@@ -25,6 +25,7 @@ import ReactGA from 'react-ga';
 import {userLogout} from "./store/actions/logout";
 import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
 import packageJson from "../package.json";
+import ModalMaintenance from "./containers/Common/ModalMaintenance";
 
 const SENTRY_API = process.env.REACT_APP_SENTRY_API;
 const GOOGLE_ANALYTICS = process.env.REACT_APP_GA_TRACKING_ID;
@@ -201,6 +202,7 @@ const App = () => {
                 }
                 <Route component={RouteNotFound}/>
             </Switch>
+            <ModalMaintenance/>
         </>
     );
 };
