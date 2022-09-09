@@ -26,7 +26,7 @@ export const ledgerSubmit = (loginAddress, loginMode) => {
 
         const ledgerApp = localStorage.getItem('ledgerAppName');
         const cosmos = ExternalChains.find(chain => chain.chainName === 'Cosmos');
-        const coinType = ledgerApp === cosmos.ledgerAppName ? cosmos.coinType : DefaultChainInfo.coinType;
+        const coinType = ledgerApp === cosmos.ledgerAppName ? cosmos.coinType : DefaultChainInfo.deprecatedCoinType;
 
         let mnemonic = "";
         if (loginMode !== "ledger") {
