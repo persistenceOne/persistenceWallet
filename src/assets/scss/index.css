@@ -2872,6 +2872,32 @@ ul li em {
   .light-mode .navbar .nav-menu-icon svg {
     fill: #2E3239; }
 
+.top-banner-section {
+  background: #e50913;
+  text-align: center;
+  padding: 5px 40px 5px 0;
+  position: relative; }
+  .top-banner-section .content {
+    color: #FFFFFF;
+    font-size: 12px;
+    margin: 0; }
+    .top-banner-section .content:hover {
+      text-decoration: underline; }
+    .top-banner-section .content .icon {
+      margin-left: 10px;
+      fill: #FFFFFF;
+      width: 16px; }
+    .top-banner-section .content .logo {
+      width: 16px;
+      margin-right: 10px; }
+  .top-banner-section .icon-close {
+    width: 10px;
+    fill: #FFFFFF;
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 7px; }
+
 /*--------------------------------------------------------------
 # header styles
 --------------------------------------------------------------*/

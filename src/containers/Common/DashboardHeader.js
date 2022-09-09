@@ -17,6 +17,7 @@ import {makeHdPath} from "../../utils/helper";
 import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
 import ReactGA from 'react-ga';
 import {DefaultChainInfo, ExternalChains} from "../../config";
+import Banner from "../../components/Banner";
 
 const EXPLORER_API = process.env.REACT_APP_EXPLORER_API;
 
@@ -81,6 +82,7 @@ const DashboardHeader = () => {
 
     return (
         <div className="header dashboard">
+            <Banner/>
             <Navbar collapseOnSelect expand="lg">
                 <div className="container">
                     <div className="nav-menu-icon">
