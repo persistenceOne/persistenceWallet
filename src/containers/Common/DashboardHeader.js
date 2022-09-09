@@ -66,7 +66,7 @@ const DashboardHeader = () => {
         const addressIndex = loginInfo && loginInfo.accountIndex;
         const ledgerApp = localStorage.getItem('ledgerAppName');
         const cosmos = ExternalChains.find(chain => chain.chainName === 'Cosmos');
-        const coinType = ledgerApp === cosmos.ledgerAppName ? cosmos.coinType : DefaultChainInfo.coinType;
+        const coinType = ledgerApp === cosmos.ledgerAppName ? cosmos.coinType : DefaultChainInfo.deprecatedCoinType;
         const [wallet] = await transactions.LedgerWallet(makeHdPath(accountNumber, addressIndex, coinType), DefaultChainInfo.prefix);
         await wallet.showAddress(makeHdPath(accountNumber, addressIndex, coinType));
     };
