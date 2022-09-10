@@ -53,7 +53,6 @@ const SignIn = (props) => {
 
     const cosmos = ExternalChains.find(chain => chain.chainName === 'Cosmos');
 
-    console.log(cosmos, "Cosmos");
     return (
         <>
             <Modal backdrop="static" show={show} onHide={handleClose} centered
