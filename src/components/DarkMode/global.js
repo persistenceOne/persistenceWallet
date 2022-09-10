@@ -230,6 +230,8 @@ export const GlobalStyles = createGlobalStyle`
    .MuiPaper-root.MuiMenu-paper .validator-item, .MuiListItem-root.Mui-selected, .MuiListItem-root.Mui-selected:hover, .MuiMenuItem-root{
      border-bottom: 1px solid ${({theme}) => theme.selectItemBorderColor} !important;
      color: ${({theme}) => theme.infoHeadingColor};
+   };
+   .modal-content .form-check label{
+     color: ${({theme}) => theme.selectIconColor};
    }
-
 `;

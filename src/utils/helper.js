@@ -262,19 +262,22 @@ export const tokenValueConversion = (data) => {
     return data / DefaultChainInfo.uTokenValue;
 };
 
-export const privateKeyReader = (file, password, loginAddress, accountNumber = "0", addressIndex = "0", coinType = configCoinType) => {
+export const privateKeyReader = (file, password, loginAddress, accountNumber = "0", addressIndex = "0", bip39PassPhrase='', coinType = configCoinType) => {
+    console.log(file, password, loginAddress, accountNumber, addressIndex, coinType, "prrrr");
     return new Promise(function (resolve, reject) {
         const fileReader = new FileReader();
         fileReader.readAsText(file, "UTF-8");
         fileReader.onload = async event => {
             if (event.target.result !== '') {
+                console.log(event.target.result, 'event.target.result');
                 const res = JSON.parse(event.target.result);
+                console.log(res, 'event.target.result');
                 const decryptedData = decryptKeyStore(res, password);
                 if (decryptedData.error != null) {
                     reject(new Error(decryptedData.error));
                 } else {
                     let mnemonic = mnemonicTrim(decryptedData.mnemonic);
-                    const accountData = await transactions.MnemonicWalletWithPassphrase(mnemonic, makeHdPath(accountNumber, addressIndex, coinType));
+                    const accountData = await transactions.MnemonicWalletWithPassphrase(mnemonic, makeHdPath(accountNumber, addressIndex, coinType), bip39PassPhrase);
                     const address = accountData[1];
                     if (address === loginAddress) {
                         resolve(mnemonic);
@@ -291,6 +294,7 @@ export const privateKeyReader = (file, password, loginAddress, accountNumber = "
 };
 
 export const makeHdPath = (accountNumber = "0", addressIndex = "0", coinType = configCoinType) => {
+    console.log(accountNumber, addressIndex, coinType);
     return stringToPath("m/44'/" + coinType + "'/" + accountNumber + "'/0/" + addressIndex);
 };
 

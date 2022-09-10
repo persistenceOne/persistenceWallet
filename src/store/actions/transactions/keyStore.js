@@ -53,6 +53,7 @@ export const keyStoreSubmit = (loginAddress) => {
                 loginCoinType = JSON.parse(localStorage.getItem(COIN_TYPE));
             }
 
+            console.log(loginCoinType, "loginCoinType",keyStoreData);
             const accountNumber = helper.getAccountNumber(getState().advanced.accountNumber.value);
             const accountIndex = helper.getAccountNumber(getState().advanced.accountIndex.value);
             const bip39PassPhrase = getState().advanced.bip39PassPhrase.value;
@@ -75,7 +76,9 @@ export const keyStoreSubmit = (loginAddress) => {
                 }
                 mnemonic = decryptedData.mnemonic;
             } else {
-                mnemonic = await privateKeyReader(keyStoreData.value, password.value, loginAddress, accountNumber, accountIndex, loginCoinType);
+                console.log(loginCoinType, "loginCoinType");
+                mnemonic = await privateKeyReader(keyStoreData.value, password.value, loginAddress, accountNumber, accountIndex, bip39PassPhrase, loginCoinType);
+                console.log(mnemonic, "mnemonic");
             }
 
             let result = await transactions.getTransactionResponse(loginAddress, formData, fee, gas, mnemonic, txName, accountNumber, accountIndex, bip39PassPhrase, loginCoinType);
