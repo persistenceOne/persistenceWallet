@@ -89,7 +89,7 @@ const Fee = () => {
                             value={formatNumber(tokenValueConversion((gas.value) * FeeInfo.highFee) * tokenPrice)}/>$
                         </p>
                         <p className="token"><NumberView
-                            value={formatNumber(tokenValueConversion((gas.value) * FeeInfo.highFee))}/>
+                            value={formatNumber(tokenValueConversion(FeeInfo.highFee))}/>
                         {DefaultChainInfo.currency.coinDenom}
                         </p>
                     </div>
