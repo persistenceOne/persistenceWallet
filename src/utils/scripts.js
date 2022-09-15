@@ -49,9 +49,9 @@ export const randomNum = (min, max) => {
     return randomNumbers;
 };
 
-export const stringTruncate = (str) => {
+export const stringTruncate = (str, length = 7) => {
     if (str.length > 30) {
-        return str.substr(0, 10) + '...' + str.substr(str.length - 10, str.length);
+        return str.substr(0, length) + '...' + str.substring(str.length - length, str.length);
     }
     return str;
 };
