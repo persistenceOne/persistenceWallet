@@ -12,7 +12,6 @@ const FileInput = () => {
     const dispatch = useDispatch();
     const onChange = (event) => {
         const file = event.target.files[0];
-        console.log(file,  "sss");
         if(file) {
             setFileName(file.name);
             dispatch(setTxKeyStore(
