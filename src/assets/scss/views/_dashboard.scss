@@ -542,8 +542,8 @@
     align-items: center;
 
     .icon {
-      width: 20px;
-      height: 20px;
+      width: 16px;
+      height: 16px;
     }
 
     .profile-dropdown {
@@ -582,13 +582,13 @@
 
 
         .qr-box {
-          width: 80px;
-          height: 80px;
+          width: 60px;
+          height: 60px;
           margin: auto;
 
           canvas {
-            width: 80px !important;
-            height: 80px !important;
+            width: 60px !important;
+            height: 60px !important;
             padding: 5px;
             background: #FFFFFF;
           }
@@ -596,10 +596,9 @@
 
         .info {
           text-align: center;
-          padding: 20px 70px;
 
           .key {
-            margin: 10px 0;
+            margin: 0;
             font-family: 'Poppins', sans-serif;
             font-weight: 500;
             font-size: 12px;
@@ -610,7 +609,17 @@
           p {
             text-align: center;
           }
-
+        .address-list {
+          .address-box{
+            cursor: pointer;
+            padding:10px 20px;
+            &.active{
+              background-color: #f0f0f2;
+            }
+            &:hover{
+              background-color: #f0f0f2;
+            }
+          }
           .address {
             display: flex;
             display: -webkit-flex;
@@ -619,7 +628,25 @@
             font-size: 12px;
             line-height: 150%;
             color: #1A73B4;
+            margin: 0;
+            &.keystore{
+              justify-content: space-between;
+            }
+            .icon-success{
+              margin-left: 40px;
+            }
           }
+
+          .wallet-path {
+            font-weight: 500;
+            font-size: 10px;
+            line-height: 150%;
+            color: #8d9cb5;
+            text-align: left;
+            white-space: nowrap;
+            margin: 0;
+          }
+        }
         }
 
         .dropdown-footer {
@@ -632,6 +659,7 @@
             cursor: pointer;
           }
 
+
           p {
             flex: 1;
             font-weight: 500;
@@ -641,7 +669,7 @@
             margin: 0;
             padding: 10px 10px;
             cursor: pointer;
-
+            white-space: nowrap;
             &:first-child {
               border-right: 1px solid;
             }
@@ -661,12 +689,66 @@
     padding-top: 15px;
   }
 
-  .info-heading {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 150%;
-    margin: 0;
+  .heading-section{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .info-heading {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 150%;
+      margin: 0;
+    }
+
+    .address-section{
+      .dropdown-toggle{
+        all: unset;
+        box-shadow: none !important;
+        cursor: pointer;
+      }
+      .copy-section .copy-result{
+        text-align: center;
+      }
+      .address{
+        font-weight: 600;
+        color: #2E3239;
+      }
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 150%;
+      color: #646971;
+      margin: 0;
+      .dropdown-item{
+        padding: 10px 20px;
+        .address-truncate{
+          font-size: 14px;
+          display: block;
+        }
+        &.active, &:active{
+          background-color: #f0f0f2;
+          color: #2E3239;
+          .icon-success{
+            margin-left: 30px;
+          }
+        }
+        .rec{
+          font-size: 10px;
+        }
+        .label{
+          display: inline-block;
+          font-size: 10px;
+          background: #1c9e61;
+          color: #e1f0e7;
+          padding:0 5px;
+          margin-right: 3px;
+        }
+        .icon{
+          width: 16px;
+        }
+      }
+    }
   }
 
   .info-box {

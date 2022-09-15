@@ -1,8 +1,7 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import Icon from "../../components/Icon";
 import {NavLink, useHistory} from 'react-router-dom';
 import {Nav, Navbar, NavDropdown} from "react-bootstrap";
-import ReactQRCode from "qrcode.react";
 import Copy from "../../components/Copy";
 import {useTranslation} from "react-i18next";
 import Darktheme from "../DarkTheme";
@@ -18,6 +17,7 @@ import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
 import ReactGA from 'react-ga';
 import {DefaultChainInfo, ExternalChains} from "../../config";
 import Banner from "../../components/Banner";
+import {keyStoreLogin} from "../../store/actions/signIn/keyStore";
 
 const EXPLORER_API = process.env.REACT_APP_EXPLORER_API;
 
@@ -26,11 +26,7 @@ const DashboardHeader = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const loginInfo = JSON.parse(localStorage.getItem(LOGIN_INFO));
-    let addressTruncate;
-
-    if (loginInfo && loginInfo.address !== null) {
-        addressTruncate = stringTruncate(loginInfo && loginInfo.address);
-    }
+    const [activeWallet, setActiveWallet] = useState('');
 
     useEffect(() => {
         const localTheme = window.localStorage.getItem(THEME);
@@ -45,6 +41,9 @@ const DashboardHeader = () => {
                 document.getElementById('root').classList.remove('light-mode');
             }
         }
+        setActiveWallet(loginInfo && loginInfo?.coin118Response?.address === loginInfo?.address  ?
+            '118' :
+            '750');
     }, []);
 
     const closeWallet = () => {
@@ -76,6 +75,11 @@ const DashboardHeader = () => {
             category: name,
             action: `Clicked on ${name}`
         });
+    };
+
+    const handleAddressChange = (response, walletType) => {
+        dispatch(keyStoreLogin(history, response.address, loginInfo?.coin118Response, loginInfo?.coin750Response, walletType));
+        setActiveWallet(walletType);
     };
 
     const ProfileIcon = <Icon viewClass="profile" icon="profile"/>;
@@ -118,7 +122,7 @@ const DashboardHeader = () => {
                             </NavLink>
                         </li>
                         <li className="nav-item link mobile-nav-item">
-                            <a className="nav-link primary-medium-color" href={EXPLORER_API}
+                            <a className="nav-link primary-medium-color" href={`${EXPLORER_API}/account/${loginInfo?.address}`}
                                 rel="noopener noreferrer" target="_blank" onClick={() => onClick(t("EXPLORER"))}>
                                 <div className="icon-box">
                                     <Icon
@@ -148,19 +152,57 @@ const DashboardHeader = () => {
                         <li className="profile-section">
                             <NavDropdown title={ProfileIcon} id="basic-nav-dropdown" className="profile-dropdown">
                                 <div className="info">
-                                    <div className="qr-box">
-                                        <ReactQRCode value={loginInfo ? loginInfo.address : ''}/>
-                                    </div>
-
-                                    <p className="key"> {t("WALLET_ADDRESS")}
+                                    <p className="key">
                                         {
                                             loginInfo && loginInfo.loginMode === 'ledger' ?
                                                 <button className="ledger-verify"
                                                     onClick={ledgerShowAddress}>{t("VERIFY")}</button>
                                                 : ""
-                                        }</p>
-                                    <div className="address"><span>{addressTruncate}</span> <Copy id={loginInfo && loginInfo.address}/>
-                                    </div>
+                                        }
+                                    </p>
+                                    {loginInfo && loginInfo?.keyStoreLogin ?
+                                        <div className='address-list'>
+                                            <div className={`${activeWallet === '118' ? 'active': ''} address-box`} onClick={()=> handleAddressChange(loginInfo?.coin118Response, '118')}>
+                                                <div className="address keystore">
+                                                    <div className='d-flex align-items-center'>
+                                                        <span>{stringTruncate(loginInfo && loginInfo?.coin118Response?.address)}</span>
+                                                    </div>
+                                                    {activeWallet === '118' ?
+                                                        <Icon viewClass="success" icon="success-small"/> : ''
+                                                    }
+                                                </div>
+                                                <p className='wallet-path'>
+                                                    <span>{t("Path")}: </span>
+                                                    {loginInfo && loginInfo?.coin118Response?.walletPath}
+                                                </p>
+                                            </div>
+                                            <div className={`${activeWallet === '750' ? 'active': ''} address-box`} onClick={()=> handleAddressChange(loginInfo?.coin750Response, '750')}>
+                                                <div className="address keystore">
+                                                    <div className='d-flex align-items-center'>
+                                                        <span>{stringTruncate(loginInfo && loginInfo?.coin750Response?.address)}</span>
+                                                    </div>
+                                                    {activeWallet === '750' ?
+                                                        <Icon viewClass="success" icon="success-small"/> : ''
+                                                    }
+                                                </div>
+                                                <p className='wallet-path'>
+                                                    <span>{t("Path")}: </span>
+                                                    {loginInfo && loginInfo?.coin750Response?.walletPath}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        :
+                                        <div className='address-list'>
+                                            <div className='address-box'>
+                                                <div className='address-box'>
+                                                    <div className="address">
+                                                        <span>{stringTruncate(loginInfo && loginInfo?.address)}</span>
+                                                        <Copy id={loginInfo && loginInfo?.address}/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
                                 </div>
                                 <div className="dropdown-footer">
                                     <p onClick={closeWallet} className="link-close">{t("LOGOUT")}</p>
@@ -175,4 +217,5 @@ const DashboardHeader = () => {
         </div>
     );
 };
+
 export default DashboardHeader;

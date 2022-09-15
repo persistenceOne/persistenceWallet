@@ -1,40 +1,79 @@
 import {Modal as ReactModal} from 'react-bootstrap';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {
     hideKeyStoreResultModal,
-    keyStoreLogin, setCoinType,
+    keyStoreLogin,
     showKeyStoreModal
 } from "../../../../store/actions/signIn/keyStore";
 import Icon from "../../../../components/Icon";
 import {useTranslation} from "react-i18next";
 import {useHistory} from "react-router-dom";
+import {QueryClientImpl} from "cosmjs-types/cosmos/bank/v1beta1/query";
+import {DefaultChainInfo} from "../../../../config";
+import {stringToNumber} from "../../../../utils/scripts";
+import {getAccount, tokenValueConversion} from "../../../../utils/helper";
+import * as Sentry from "@sentry/browser";
+import {Tendermint34Client} from "@cosmjs/tendermint-rpc";
+import {createProtobufRpcClient, QueryClient} from "@cosmjs/stargate";
+import vestingAccount from "../../../../utils/vestingAmount";
+const tendermintRPCURL = process.env.REACT_APP_TENDERMINT_RPC_ENDPOINT;
+
+const fetchBalance = async (address) => {
+    try {
+        const vestingAmountData = await getAccount(address);
+        let transferableAmount = 0;
+        if (vestingAmountData !== undefined) {
+            const tendermintClient = await Tendermint34Client.connect(tendermintRPCURL);
+            const queryClient = new QueryClient(tendermintClient);
+            const rpcClient = createProtobufRpcClient(queryClient);
+            const stakingQueryService = new QueryClientImpl(rpcClient);
+            const response = await stakingQueryService.AllBalances({address: address});
+            for (let item of response.balances) {
+                if (item.denom === DefaultChainInfo.currency.coinMinimalDenom) {
+                    item.ibcBalance = false;
+                    const balance = tokenValueConversion(stringToNumber(item.amount));
+                    const vestingBalance = await vestingAccount.getTransferableVestingAmount(address, balance);
+                    transferableAmount = vestingBalance[1];
+                } else {
+                    transferableAmount = 0;
+                }
+            }
+        }
+        return transferableAmount;
+    } catch (error) {
+        Sentry.captureException(error.response
+            ? error.response.data.message
+            : error.message);
+        console.log(error, "error");
+    }
+};
 
 const ModalAddress = () => {
     const {t} = useTranslation();
     const history = useHistory();
-    const {coinType} = useSelector((state) => state.signInKeyStore);
     const show = useSelector((state) => state.signInKeyStore.keyStoreResultModal);
     const response = useSelector((state) => state.signInKeyStore.response.value);
-    // const [newCoinType, setNewCoinType] = useState('118');
+    const [coin118Balance, setCoin118Balance] = useState(0);
+    const [coin750Balance, setCoin750Balance] = useState(0);
     const dispatch = useDispatch();
+
+    useEffect(async () => {
+        setCoin750Balance(await fetchBalance(response?.coin750Data?.address));
+        setCoin118Balance(await fetchBalance(response?.coin118Data?.address));
+    },[response]);
 
     const handleClose = () => {
         dispatch(hideKeyStoreResultModal());
     };
 
     const handleLogin = () => {
-        const address = coinType === 118 ? response.coin118Response?.address : response.coin750Response?.address ;
-        dispatch(keyStoreLogin(history, address));
+        dispatch(keyStoreLogin(history, response.coin750Data.address, response.coin118Data, response.coin750Data, '750'));
     };
 
     const keyStorePrevious = () => {
         dispatch(hideKeyStoreResultModal());
         dispatch(showKeyStoreModal());
-    };
-
-    const handleChange = (event) => {
-        dispatch(setCoinType(parseInt(event.target.value)));
     };
 
     return (
@@ -60,19 +99,12 @@ const ModalAddress = () => {
             <ReactModal.Body className="create-wallet-body import-wallet-body">
                 <div className="form-field radio">
                     <div className="d-flex mb-3">
-                        <input
-                            type='checkbox'
-                            id='type118'
-                            name='type118'
-                            value="118"
-                            onChange={handleChange}
-                            className='mr-3'
-                            checked={coinType === 118}
-                        />
                         <div>
+                            <p className="mnemonic-result text-left p-0">
+                                <b>{t("WALLET_PATH")}: </b>{response?.coin118Data?.walletPath}</p>
                             <p className="mnemonic-result text-left">
-                                <b>{t("WALLET_PATH")}: </b>{response.coin118Response?.walletPath}</p>
-                            <p className="mnemonic-result text-left p-0"><b>{t("ADDRESS")}: </b>{response.coin118Response?.address}
+                                <b>{t("Balance")}: </b>{coin118Balance} XPRT</p>
+                            <p className="mnemonic-result text-left p-0"><b>{t("ADDRESS")}: </b>{response?.coin118Data?.address}
                             </p>
                         </div>
                     </div>
@@ -80,19 +112,12 @@ const ModalAddress = () => {
 
                 <div className="form-field radio">
                     <div className="d-flex mb-3">
-                        <input
-                            type='checkbox'
-                            id='type750'
-                            name='type750'
-                            value="750"
-                            onChange={handleChange}
-                            className='mr-3'
-                            checked={coinType === 750}
-                        />
                         <div>
+                            <p className="mnemonic-result text-left p-0">
+                                <b>{t("WALLET_PATH")}: </b>{response?.coin750Data?.walletPath}</p>
                             <p className="mnemonic-result text-left">
-                                <b>{t("WALLET_PATH")}: </b>{response.coin750Response?.walletPath}</p>
-                            <p className="mnemonic-result text-left p-0"><b>{t("ADDRESS")} : </b>{response.coin750Response?.address}
+                                <b>{t("Balance")}: </b>{coin750Balance} XPRT</p>
+                            <p className="mnemonic-result text-left p-0"><b>{t("ADDRESS")} : </b>{response?.coin750Data?.address}
                             </p>
                         </div>
                     </div>

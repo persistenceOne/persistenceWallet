@@ -13,7 +13,6 @@ import {showKeyStoreMnemonicModal} from "../../store/actions/generateKeyStore";
 import ChangeKeyStorePassword from "../../containers/ChangeKeyStorePassword";
 import KeyStore from "../../containers/DecryptKeyStore";
 import Banner from "../../components/Banner";
-// import {showKeyStoreModal} from "../../store/actions/signIn/keyStore";
 
 const Homepage = () => {
     const {t} = useTranslation();
@@ -27,9 +26,6 @@ const Homepage = () => {
         if (name === "signIn") {
             dispatch(showSignInModal());
         }
-        // if (name === "decryptKeyStore") {
-        //     dispatch(showKeyStoreModal());
-        // }
     };
 
     return (

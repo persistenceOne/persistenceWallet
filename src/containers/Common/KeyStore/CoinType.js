@@ -16,24 +16,24 @@ const CoinType = () => {
             <div className="d-flex mb-3">
                 <Form.Check
                     type='radio'
+                    label='Coin Type 750'
+                    id='type750'
+                    name='type750'
+                    value="750"
+                    aria-label="radio 2"
+                    className='mr-3'
+                    onChange={handleChange}
+                    checked={coinType === 750}
+                />
+                <Form.Check
+                    type='radio'
                     label='Coin Type 118'
                     id='type118'
                     name='type118'
                     value="118"
                     aria-label="radio 1"
                     onChange={handleChange}
-                    className='mr-3'
                     checked={coinType === 118}
-                />
-                <Form.Check
-                    type='radio'
-                    label='Coin Type 750'
-                    id='type750'
-                    name='type750'
-                    value="750"
-                    aria-label="radio 2"
-                    onChange={handleChange}
-                    checked={coinType === 750}
                 />
             </div>
         </div>

@@ -35,7 +35,7 @@ const Modal = () => {
                 }
             }));
         } else {
-            dispatch(setCoinType(DefaultChainInfo.coinType));
+            dispatch(setCoinType(DefaultChainInfo.deprecatedCoinType));
             dispatch(setLoginInfo({
                 encryptedSeed: false,
                 error: {

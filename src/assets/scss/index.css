@@ -66,7 +66,7 @@ html, body {
   border: 0px solid;
   width: 28px;
   height: 28px;
-  background: #EAEBF6;
+  background: none;
   display: flex;
   display: -webkit-flex;
   align-items: center;
@@ -1876,8 +1876,8 @@ ul li em {
   display: -webkit-flex;
   align-items: center; }
   .header .profile-section .icon {
-    width: 20px;
-    height: 20px; }
+    width: 16px;
+    height: 16px; }
   .header .profile-section .profile-dropdown .ledger-verify {
     background-color: #8d9cb5 !important;
     padding: 2px 10px !important;
@@ -1905,19 +1905,18 @@ ul li em {
     bottom: auto !important;
     transform: translate(-215px, 42px) !important; }
     .header .profile-section .profile-dropdown .dropdown-menu .qr-box {
-      width: 80px;
-      height: 80px;
+      width: 60px;
+      height: 60px;
       margin: auto; }
       .header .profile-section .profile-dropdown .dropdown-menu .qr-box canvas {
-        width: 80px !important;
-        height: 80px !important;
+        width: 60px !important;
+        height: 60px !important;
         padding: 5px;
         background: #FFFFFF; }
     .header .profile-section .profile-dropdown .dropdown-menu .info {
-      text-align: center;
-      padding: 20px 70px; }
+      text-align: center; }
       .header .profile-section .profile-dropdown .dropdown-menu .info .key {
-        margin: 10px 0;
+        margin: 0;
         font-family: 'Poppins', sans-serif;
         font-weight: 500;
         font-size: 12px;
@@ -1925,14 +1924,34 @@ ul li em {
         color: #8D9CB5; }
       .header .profile-section .profile-dropdown .dropdown-menu .info p {
         text-align: center; }
-      .header .profile-section .profile-dropdown .dropdown-menu .info .address {
+      .header .profile-section .profile-dropdown .dropdown-menu .info .address-list .address-box {
+        cursor: pointer;
+        padding: 10px 20px; }
+        .header .profile-section .profile-dropdown .dropdown-menu .info .address-list .address-box.active {
+          background-color: #f0f0f2; }
+        .header .profile-section .profile-dropdown .dropdown-menu .info .address-list .address-box:hover {
+          background-color: #f0f0f2; }
+      .header .profile-section .profile-dropdown .dropdown-menu .info .address-list .address {
         display: flex;
         display: -webkit-flex;
         align-items: center;
         font-weight: 500;
         font-size: 12px;
         line-height: 150%;
-        color: #1A73B4; }
+        color: #1A73B4;
+        margin: 0; }
+        .header .profile-section .profile-dropdown .dropdown-menu .info .address-list .address.keystore {
+          justify-content: space-between; }
+        .header .profile-section .profile-dropdown .dropdown-menu .info .address-list .address .icon-success {
+          margin-left: 40px; }
+      .header .profile-section .profile-dropdown .dropdown-menu .info .address-list .wallet-path {
+        font-weight: 500;
+        font-size: 10px;
+        line-height: 150%;
+        color: #8d9cb5;
+        text-align: left;
+        white-space: nowrap;
+        margin: 0; }
     .header .profile-section .profile-dropdown .dropdown-menu .dropdown-footer {
       display: flex;
       display: -webkit-flex;
@@ -1948,7 +1967,8 @@ ul li em {
         text-align: center;
         margin: 0;
         padding: 10px 10px;
-        cursor: pointer; }
+        cursor: pointer;
+        white-space: nowrap; }
         .header .profile-section .profile-dropdown .dropdown-menu .dropdown-footer p:first-child {
           border-right: 1px solid; }
 
@@ -1958,12 +1978,53 @@ ul li em {
     display: flex;
     display: -webkit-flex;
     padding-top: 15px; }
-  .token-info-section .info-heading {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 150%;
-    margin: 0; }
+  .token-info-section .heading-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; }
+    .token-info-section .heading-section .info-heading {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 150%;
+      margin: 0; }
+    .token-info-section .heading-section .address-section {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 150%;
+      color: #646971;
+      margin: 0; }
+      .token-info-section .heading-section .address-section .dropdown-toggle {
+        all: unset;
+        box-shadow: none !important;
+        cursor: pointer; }
+      .token-info-section .heading-section .address-section .copy-section .copy-result {
+        text-align: center; }
+      .token-info-section .heading-section .address-section .address {
+        font-weight: 600;
+        color: #2E3239; }
+      .token-info-section .heading-section .address-section .dropdown-item {
+        padding: 10px 20px; }
+        .token-info-section .heading-section .address-section .dropdown-item .address-truncate {
+          font-size: 14px;
+          display: block; }
+        .token-info-section .heading-section .address-section .dropdown-item.active, .token-info-section .heading-section .address-section .dropdown-item:active {
+          background-color: #f0f0f2;
+          color: #2E3239; }
+          .token-info-section .heading-section .address-section .dropdown-item.active .icon-success, .token-info-section .heading-section .address-section .dropdown-item:active .icon-success {
+            margin-left: 30px; }
+        .token-info-section .heading-section .address-section .dropdown-item .rec {
+          font-size: 10px; }
+        .token-info-section .heading-section .address-section .dropdown-item .label {
+          display: inline-block;
+          font-size: 10px;
+          background: #1c9e61;
+          color: #e1f0e7;
+          padding: 0 5px;
+          margin-right: 3px; }
+        .token-info-section .heading-section .address-section .dropdown-item .icon {
+          width: 16px; }
   .token-info-section .info-box {
     flex: 1;
     display: flex;
@@ -2896,7 +2957,7 @@ ul li em {
     cursor: pointer;
     position: absolute;
     right: 20px;
-    top: 7px; }
+    top: 12px; }
 
 /*--------------------------------------------------------------
 # header styles

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {connect, useDispatch} from 'react-redux';
 import {fetchDelegationsCount} from "../../store/actions/delegations";
 import {fetchBalance, fetchTransferableVestingAmount} from "../../store/actions/balance";
@@ -10,17 +10,30 @@ import ModalViewUnbondDetails from "./ModalViewUnbondDetails";
 import ModalViewVestingDetails from "./ModalViewVestingDetails";
 import ModalViewAmountDetails from "./ModalVIewAmountDetails";
 import Icon from "../../components/Icon";
-import {OverlayTrigger, Popover} from "react-bootstrap";
+import {Dropdown, OverlayTrigger, Popover} from "react-bootstrap";
 import ModalViewDelegationDetails from "./ModalViewDelegationDetails";
 import {fetchValidators} from "../../store/actions/validators";
 import NumberView from "../../components/NumberView";
-import {formatNumber} from "../../utils/scripts";
+import {formatNumber, stringTruncate} from "../../utils/scripts";
 import {showTxWithDrawTotalModal} from "../../store/actions/transactions/withdrawTotalRewards";
 import ReactGA from "react-ga";
 import {DefaultChainInfo} from "../../config";
+import {LOGIN_INFO} from "../../constants/localStorage";
+import {keyStoreLogin} from "../../store/actions/signIn/keyStore";
+import {useHistory} from "react-router-dom";
+import Copy from "../../components/Copy";
 const TokenInfo = (props) => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
+    const loginInfo = JSON.parse(localStorage.getItem(LOGIN_INFO));
+    const history = useHistory();
+    const [activeWallet, setActiveWallet] = useState('');
+
+    useEffect(()=>{
+        setActiveWallet(loginInfo && loginInfo?.coin118Response?.address === loginInfo?.address  ?
+            '118' :
+            '750');
+    }, []);
 
     const handleRewards = (key) => {
         ReactGA.event({
@@ -31,6 +44,7 @@ const TokenInfo = (props) => {
             dispatch(showTxWithDrawTotalModal());
         }
     };
+
     const popoverVesting = (
         <Popover id="popover-vesting">
             <Popover.Content>
@@ -61,12 +75,58 @@ const TokenInfo = (props) => {
         </Popover>
     );
 
+    const handleDropdown = (walletType) => {
+        const address = loginInfo && loginInfo?.coin118Response?.address === loginInfo?.address  ?
+            loginInfo?.coin750Response.address :
+            loginInfo?.coin118Response.address;
+        dispatch(keyStoreLogin(history, address, loginInfo?.coin118Response, loginInfo?.coin750Response, walletType ));
+    };
 
     return (
         <div className="token-info-section">
-            <p className="info-heading">Wallet Balances</p>
-            <div className="token-info-section-body">
+            <div className="heading-section">
+                <p className="info-heading">Wallet Balances</p>
+                {loginInfo && loginInfo?.keyStoreLogin ?
+                    <div className="address-section d-flex align-items-center">
+                        <Dropdown>
+                            <Dropdown.Toggle variant="success" id="dropdown-basic" title={loginInfo?.address}>
+                                <span className='address'>Address:</span>
+                                &nbsp;{stringTruncate(loginInfo && loginInfo?.address, 10)}
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu>
+                                <Dropdown.Item onClick={() => handleDropdown('118')}
+                                    className={`${activeWallet === '118' ? 'active' : ''} d-flex align-items-center justify-content-between`}>
+                                    <div>
+                                        <span
+                                            className='address-truncate'>{stringTruncate(loginInfo?.coin118Response?.address, 10)}</span>
+                                        <><span className='label'>118 Coin-type wallet</span>
+                                            <span className='rec'>(Recommended)</span></>
 
+                                    </div>
+                                    {activeWallet === '118' ?
+                                        <Icon viewClass="success" icon="success-small"/> : ''
+                                    }
+                                </Dropdown.Item>
+                                <Dropdown.Item onClick={() => handleDropdown('750')}
+                                    className={`${activeWallet === '750' ? 'active' : ''} d-flex align-items-center justify-content-between`}>
+                                    <div className="">
+                                        <span
+                                            className='address-truncate'>{stringTruncate(loginInfo?.coin750Response?.address, 10)}</span>
+                                        <span className='label'>750 Coin-type wallet</span>
+                                    </div>
+                                    {activeWallet === '750' ?
+                                        <Icon viewClass="success" icon="success-small"/> : ''
+                                    }
+                                </Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
+                        <Copy id={loginInfo && loginInfo?.address}/>
+                    </div>
+                    : null
+                }
+            </div>
+
+            <div className="token-info-section-body">
                 <div className="token-info info-box">
                     <div className="inner-box">
                         <div className="line">

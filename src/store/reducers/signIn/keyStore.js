@@ -70,7 +70,7 @@ const response = (state = {
     }
 };
 
-const coinType = (state = DefaultChainInfo.coinType , {type, data}) => {
+const coinType = (state = DefaultChainInfo.deprecatedCoinType , {type, data}) => {
     switch (type) {
     case SET_COIN_TYPE:
         return data;

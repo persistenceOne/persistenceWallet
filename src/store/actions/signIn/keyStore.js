@@ -70,54 +70,79 @@ export const setCoinType = (data) => {
 
 export const keyStoreSubmit = () => {
     return async (dispatch, getState) => {
-        const password = getState().keyStore.password;
-        const keyStoreData = getState().keyStore.keyStore;
-        const fileReader = new FileReader();
-        let mnemonic = "";
-        fileReader.readAsText(keyStoreData.value, "UTF-8");
-        fileReader.onload = async event => {
-            localStorage.setItem(ENCRYPTED_MNEMONIC, event.target.result);
-            const res = JSON.parse(event.target.result);
-            const decryptedData = decryptKeyStore(res, password.value);
-            if (decryptedData.error != null) {
-                dispatch(setKeyStoreResult(
-                    {
-                        value: "",
-                        error: {
-                            message: decryptedData.error,
-                        },
-                    }));
-            } else {
-                mnemonic = mnemonicTrim(decryptedData.mnemonic);
-                const accountNumber = helper.getAccountNumber(getState().advanced.accountNumber.value);
-                const accountIndex = helper.getAccountNumber(getState().advanced.accountIndex.value);
-                const bip39PassPhrase = getState().advanced.bip39PassPhrase.value;
+        try {
+            const password = getState().keyStore.password;
+            const keyStoreData = getState().keyStore.keyStore;
+            const fileReader = new FileReader();
+            let mnemonic = "";
+            fileReader.readAsText(keyStoreData.value, "UTF-8");
+            fileReader.onload = async event => {
+                localStorage.setItem(ENCRYPTED_MNEMONIC, event.target.result);
+                const res = JSON.parse(event.target.result);
+                const decryptedData = decryptKeyStore(res, password.value);
+                if (decryptedData.error != null) {
+                    dispatch(setKeyStoreResult(
+                        {
+                            value: "",
+                            error: {
+                                message: decryptedData.error,
+                            },
+                        }));
+                } else {
+                    mnemonic = mnemonicTrim(decryptedData.mnemonic);
+                    const accountNumber = helper.getAccountNumber(getState().advanced.accountNumber.value);
+                    const accountIndex = helper.getAccountNumber(getState().advanced.accountIndex.value);
+                    const bip39PassPhrase = getState().advanced.bip39PassPhrase.value;
 
-                const walletPath118 = makeHdPath(accountNumber, accountIndex, 118);
-                const walletPath750 = makeHdPath(accountNumber, accountIndex, 750);
+                    const walletPath118 = makeHdPath(accountNumber, accountIndex, 118);
+                    const walletPath750 = makeHdPath(accountNumber, accountIndex, 750);
 
-                const coin118Response = await wallet.createWallet(mnemonic, walletPath118, bip39PassPhrase);
-                const coin750Response = await wallet.createWallet(mnemonic, walletPath750, bip39PassPhrase);
-                dispatch(keyStoreModalNext());
-                dispatch(showKeyStoreResultModal());
-                dispatch(setKeyStoreResult(
-                    {
-                        value: {coin118Response, coin750Response},
-                        error: {
-                            message: "",
-                        }
-                    }));
-            }
-        };
+                    const coin118Response = await wallet.createWallet(mnemonic, walletPath118, bip39PassPhrase);
+                    const coin750Response = await wallet.createWallet(mnemonic, walletPath750, bip39PassPhrase);
+
+                    const coin118Data = {
+                        address: coin118Response.address,
+                        walletPath: coin118Response.walletPath
+                    };
+
+                    const coin750Data = {
+                        address: coin750Response.address,
+                        walletPath: coin750Response.walletPath
+                    };
+
+                    dispatch(keyStoreModalNext());
+                    dispatch(showKeyStoreResultModal());
+                    dispatch(setKeyStoreResult(
+                        {
+                            value: {coin118Data, coin750Data},
+                            error: {
+                                message: "",
+                            }
+                        }));
+                }
+            };
+        }catch (error) {
+            Sentry.captureException(error.response
+                ? error.response.data.message
+                : error.message);
+            console.log("in error");
+            dispatch(setKeyStoreResult(
+                {
+                    value: "",
+                    error: {
+                        message: error.message,
+                    },
+                }));
+        }
     };
 };
 
 
-export const keyStoreLogin = (history, address) => {
+export const keyStoreLogin = (history, address, coin118Response, coin750Response, coinType) => {
     return async (dispatch, getState) => {
-        const {coinType} = getState().signInKeyStore;
         const accountNumber = helper.getAccountNumber(getState().advanced.accountNumber.value);
         const accountIndex = helper.getAccountNumber(getState().advanced.accountIndex.value);
+
         const loginInfo = {
             fee: '',
             account: '',
@@ -128,7 +153,11 @@ export const keyStoreLogin = (history, address) => {
             accountNumber: '',
             accountIndex: '',
             coinType:'',
+            coin118Response:'',
+            coin750Response:'',
+            keyStoreLogin:false,
         };
+
         const res = await getAccount(address).catch(error => {
             Sentry.captureException(error.response
                 ? error.response.data.message
@@ -137,7 +166,6 @@ export const keyStoreLogin = (history, address) => {
             loginInfo.fee = FeeInfo.defaultFee;
             loginInfo.account = "non-vesting";
         });
-
         const accountType = await vestingAccountCheck(res && res.typeUrl);
         if (accountType) {
             loginInfo.fee = FeeInfo.vestingAccountFee;
@@ -153,6 +181,9 @@ export const keyStoreLogin = (history, address) => {
         loginInfo.accountNumber = accountNumber;
         loginInfo.accountIndex = accountIndex;
         loginInfo.coinType = coinType;
+        loginInfo.coin118Response = coin118Response;
+        loginInfo.coin750Response = coin750Response;
+        loginInfo.keyStoreLogin = true;
         localStorage.setItem(LOGIN_INFO, JSON.stringify(loginInfo));
         localStorage.setItem(COIN_TYPE, coinType);
         dispatch(setLoginInfo({
@@ -163,6 +194,5 @@ export const keyStoreLogin = (history, address) => {
         }));
         history.push('/dashboard/wallet');
         window.location.reload();
-        
     };
 };

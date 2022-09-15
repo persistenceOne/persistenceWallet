@@ -35,7 +35,7 @@ export const ValidateFee = (transferableAmount, feeValue, type, amount, tokenDen
             return new Error('');
         }else {
             if ((transferableAmount - (stringToNumber(amount))).toFixed(6) < tokenValueConversion(feeValue)) {
-                return new Error('Insufficient wallet balance to process the transaction.11');
+                return new Error('Insufficient wallet balance to process the transaction.');
             }
             return new Error('');
         }

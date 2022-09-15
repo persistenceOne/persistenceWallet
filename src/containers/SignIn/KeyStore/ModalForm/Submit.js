@@ -2,12 +2,14 @@ import React from 'react';
 import Button from "../../../../components/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {keyStoreSubmit} from "../../../../store/actions/signIn/keyStore";
+import {useHistory} from "react-router-dom";
 
 const Submit = () => {
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const onClick = () => {
-        dispatch(keyStoreSubmit());
+        dispatch(keyStoreSubmit(history));
     };
 
     const accountNumber = useSelector((state) => state.advanced.accountNumber);
