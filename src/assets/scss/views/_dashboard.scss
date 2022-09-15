@@ -707,8 +707,13 @@
         box-shadow: none !important;
         cursor: pointer;
       }
-      .copy-section .copy-result{
-        text-align: center;
+      .copy-section {
+        .copy-button{
+          margin: 0;
+        }
+        .copy-result{
+          text-align: center;
+        }
       }
       .address{
         font-weight: 600;
