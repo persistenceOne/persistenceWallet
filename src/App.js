@@ -114,7 +114,6 @@ const App = () => {
             dispatch(userLogout());
             localStorage.clear();
             history.push('/');
-            window.location.reload();
             if(loginInfo && loginInfo.loginMode==="ledger"){
                 TransportWebUSB.close();
             }
