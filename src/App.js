@@ -22,8 +22,6 @@ import { KEPLR_ADDRESS, LOGIN_INFO} from "./constants/localStorage";
 import {updateFee} from "./utils/helper";
 import {ledgerDisconnect} from "./utils/ledger";
 import ReactGA from 'react-ga';
-import {userLogout} from "./store/actions/logout";
-import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
 import packageJson from "../package.json";
 
 const SENTRY_API = process.env.REACT_APP_SENTRY_API;
@@ -107,17 +105,6 @@ const App = () => {
             window.removeEventListener("offline", updateNetwork);
             window.removeEventListener("online", updateNetwork);
         };
-    });
-
-    window.addEventListener('storage', () => {
-        if (JSON.parse(localStorage.getItem(LOGIN_INFO)) === null){
-            dispatch(userLogout());
-            localStorage.clear();
-            history.push('/');
-            if(loginInfo && loginInfo.loginMode==="ledger"){
-                TransportWebUSB.close();
-            }
-        }
     });
 
     window.addEventListener("keplr_keystorechange", () => {
