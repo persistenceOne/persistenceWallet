@@ -41,7 +41,7 @@ const Amount = () => {
                 dispatch(
                     setTxSendAmount({
                         value: evt.target.value,
-                        error: new Error('Insufficient funds to pay fee')
+                        error: new Error(t("MAX_AMOUNT_ERROR"))
                     })
                 );
             }

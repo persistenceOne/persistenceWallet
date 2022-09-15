@@ -127,6 +127,7 @@ let English = {
         "ADDRESS_NOT_MATCHED_ERROR": "Your sign in address and keystore file don’t match. Please try again or else sign in again.",
         "KEY_STORE_PASSWORD": "KeyStore file password",
         "AMOUNT_ERROR_MESSAGE": "Insufficient wallet balance to process the transaction.",
+        "MAX_AMOUNT_ERROR": "Insufficient funds to pay fee",
         "AMOUNT_WARNING_MESSAGE": "Insufficient wallet balance for your future transactions",
         "TOTAL_BALANCE_NOTE": `Delegatable ${DefaultChainInfo.currency.coinDenom} + Delegated ${DefaultChainInfo.currency.coinDenom} + Unbonded ${DefaultChainInfo.currency.coinDenom}`,
         "MEMO_MNEMONIC_CHECK_ERROR": "Entered secret passphrase(mnemonic) in memo field. Don't input any secrete information.",
