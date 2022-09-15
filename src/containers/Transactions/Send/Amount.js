@@ -6,31 +6,42 @@ import {formatNumber, removeCommas, stringToNumber} from "../../../utils/scripts
 import NumberView from "../../../components/NumberView";
 import {ValidateSendAmount, ValidateSpecialCharacters} from "../../../utils/validations";
 import {useTranslation} from "react-i18next";
-import helper from "../../../utils/helper";
-import {DefaultChainInfo, PstakeInfo} from "../../../config";
+import helper, {tokenValueConversion} from "../../../utils/helper";
+import {DefaultChainInfo, FeeInfo, PstakeInfo} from "../../../config";
 
 const Amount = () => {
     const {t} = useTranslation();
     const amount = useSelector((state) => state.send.amount);
     const token = useSelector((state) => state.send.token.value);
     const transferableAmount = useSelector((state) => state.balance.transferableAmount);
-
+    const gas = useSelector((state) => state.gas.gas);
     const dispatch = useDispatch();
+    const fee = tokenValueConversion(gas.value * FeeInfo.averageFee);
 
     const onChange = (evt) => {
         let rex = /^\d*\.?\d{0,6}$/;
         if (rex.test(evt.target.value)) {
-            if (token.tokenDenom === DefaultChainInfo.currency.coinMinimalDenom) {
-                dispatch(setTxSendAmount({
-                    value: evt.target.value,
-                    error: ValidateSendAmount(transferableAmount, (stringToNumber(evt.target.value)))
-                }));
+            const sendAmount = stringToNumber(transferableAmount)-stringToNumber(fee);
+            if(stringToNumber(evt.target.value) <= sendAmount) {
+                if (token.tokenDenom === DefaultChainInfo.currency.coinMinimalDenom) {
+                    dispatch(setTxSendAmount({
+                        value: evt.target.value,
+                        error: ValidateSendAmount(transferableAmount, (stringToNumber(evt.target.value)))
+                    }));
 
-            } else {
+                } else {
+                    dispatch(
+                        setTxSendAmount({
+                            value: evt.target.value,
+                            error: ValidateSendAmount(token.transferableAmount, (stringToNumber(evt.target.value)))
+                        })
+                    );
+                }
+            }else{
                 dispatch(
                     setTxSendAmount({
                         value: evt.target.value,
-                        error: ValidateSendAmount(token.transferableAmount, (stringToNumber(evt.target.value)))
+                        error: new Error('Insufficient funds to pay fee')
                     })
                 );
             }
@@ -40,12 +51,22 @@ const Amount = () => {
     };
 
     const selectTotalBalanceHandler = (value) => {
-        dispatch(
-            setTxSendAmount({
-                value: value,
-                error: ValidateSendAmount(value, (stringToNumber(value )))
-            })
-        );
+        if( transferableAmount > stringToNumber(fee) ) {
+            const sendAmount = stringToNumber(transferableAmount) - stringToNumber(fee);
+            dispatch(
+                setTxSendAmount({
+                    value: sendAmount,
+                    error: ValidateSendAmount(sendAmount, (stringToNumber(sendAmount)))
+                })
+            );
+        }else {
+            dispatch(
+                setTxSendAmount({
+                    value: value,
+                    error: ValidateSendAmount(value, (stringToNumber(value)))
+                })
+            );
+        }
     };
 
 

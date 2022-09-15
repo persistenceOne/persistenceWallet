@@ -142,6 +142,10 @@ export const fetchTransferableVestingAmount = (address) => {
                                 }
                             }
                             dispatch(fetchTokenListSuccess(tokenList));
+                        }else {
+                            dispatch(fetchTransferableBalanceSuccess(0));
+                            dispatch(fetchVestingBalanceSuccess(0));
+                            dispatch(fetchTokenListSuccess([]));
                         }
                     }).catch((error) => {
                         Sentry.captureException(error.response

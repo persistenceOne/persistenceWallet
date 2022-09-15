@@ -57,7 +57,7 @@ export const GlobalStyles = createGlobalStyle`
     border-color: ${({theme}) => theme.tableRowBorder};
      color: ${({theme}) => theme.lineValueColor};
     }
-    .token-info-section .info-heading{
+    .token-info-section .info-heading, .token-info-section .heading-section .address-section .address{
     color: ${({theme}) => theme.infoHeadingColor};
     }
     .token-info-section .info-box, .advanced-wallet-accordion .card .collapse.show{
@@ -67,7 +67,7 @@ export const GlobalStyles = createGlobalStyle`
     .wallet-main-section .tabs-section .tab-content .tab-header .left .nav-pills .nav-link{
       border-color:${({theme}) => theme.tableBorderColor};
     }
-    .token-info-section .info-box .line .value{
+    .token-info-section .info-box .line .value, .token-info-section .heading-section .address-section .dropdown-toggle{
      color: ${({theme}) => theme.lineValueColor};
     }
     .header{
@@ -212,7 +212,7 @@ export const GlobalStyles = createGlobalStyle`
     .available-tokens .info-data{
       color: ${({theme}) => theme.lineValueColor};
     }
-    .header .profile-section .profile-dropdown .copy-button .icon{
+    .header .profile-section .profile-dropdown .copy-button .icon, .copy-button .icon{
       fill:${({theme}) => theme.copyIconColor};
     }
     .fee-container .fee-box{
