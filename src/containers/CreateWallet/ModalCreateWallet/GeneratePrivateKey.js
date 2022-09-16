@@ -72,6 +72,7 @@ const GeneratePrivateKey = (props) => {
                                 type="password"
                                 name="password"
                                 placeholder={t("ENTER_PASSWORD")}
+                                autoComplete={"new-password"}
                                 required={true}
                             />
                         </div>
