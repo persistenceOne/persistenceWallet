@@ -7,7 +7,8 @@ export const GlobalStyles = createGlobalStyle`
     .header .navbar{
     background: ${({theme}) => theme.navigationBackground};
     }
-    .header .navbar .navbar-nav li a:hover, .header .navbar .navbar-nav li a.active, .header .navbar .navbar-nav li a:focus{
+    .header .navbar .navbar-nav li a:hover, .header .navbar .navbar-nav li a.active, .header .navbar .navbar-nav li a:focus,
+    .navbar-light .navbar-nav .active>.nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show>.nav-link{
     color: ${({theme}) => theme.navItemActiveColor};
     }
    .txns-container .MuiPaper-root{
@@ -187,7 +188,8 @@ export const GlobalStyles = createGlobalStyle`
     .navigate-buttons .button-secondary .icon, .modal-header .previous-section .button .icon{
     fill:${({theme}) => theme.refreshButtonColor} !important;
     }
-    .header .profile-section .profile-dropdown .dropdown-menu{
+    .header .profile-section .profile-dropdown .dropdown-menu,
+    .header .help-section .profile-dropdown .dropdown-menu{
      background: ${({theme}) => theme.tableBackground};
       border-color: ${({theme}) => theme.profileDropDownBorder};
     }

@@ -137,17 +137,31 @@ const DashboardHeader = () => {
                                 </div>
                             </a>
                         </li>
-                        <li className="nav-item link mobile-nav-item">
-                            <a className="nav-link primary-medium-color"
-                                href="https://notes.persistence.one/s/9l80_chis" rel="noopener noreferrer"
-                                target="_blank" onClick={() => onClick(t("HELP"))}>
+                        <li className="nav-item link help-section">
+                            <NavDropdown title={<>
                                 <div className="icon-box">
                                     <Icon
                                         viewClass="icon"
                                         icon="help"/>
                                 </div>
                                 {t("HELP")}
-                            </a>
+                            </>
+                            }
+                            id="basic-nav-dropdown"
+                            className="profile-dropdown">
+                                <div className="info p-3">
+                                    <a className="nav-link primary-medium-color pb-2 pl-2"
+                                        href="https://blog.persistence.one/coin-type-migration-faqs/" rel="noopener noreferrer"
+                                        target="_blank" onClick={() => onClick(t("HELP"))}>
+                                        {t("FAQs")}
+                                    </a>
+                                    <a className="nav-link primary-medium-color pl-2"
+                                        href="https://notes.persistence.one/s/9l80_chis" rel="noopener noreferrer"
+                                        target="_blank" onClick={() => onClick(t("HELP"))}>
+                                        {t("Guide")}
+                                    </a>
+                                </div>
+                            </NavDropdown>
                         </li>
                         <li className="profile-section">
                             <NavDropdown title={ProfileIcon} id="basic-nav-dropdown" className="profile-dropdown">

@@ -39,6 +39,7 @@ const Password = () => {
                     placeholder={t("ENTER_PASSWORD")}
                     autofocus={false}
                     onChange={onChange}
+                    autoComplete={"new-password"}
                 />
                 <span className="password-icon-section" onClick={handleShowPassword}
                 >

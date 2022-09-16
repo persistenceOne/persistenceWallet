@@ -535,7 +535,33 @@
     }
   }
 
-  .profile-section {
+
+  .help-section {
+    cursor: auto !important;
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+
+    .icon {
+      width: 16px;
+      height: 16px;
+    }
+
+    .profile-dropdown {
+      .dropdown-toggle::after {
+        display: none;
+      }
+
+      .dropdown-menu {
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
+        border: 1px solid;
+        padding: 0;
+        border-radius: 0px;
+      }
+      }
+    }
+
+      .profile-section {
     cursor: auto !important;
     display: flex;
     display: -webkit-flex;
