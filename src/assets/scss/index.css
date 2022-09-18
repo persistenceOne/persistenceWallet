@@ -1878,8 +1878,6 @@ ul li em {
   .header .help-section .icon {
     width: 16px;
     height: 16px; }
-  .header .help-section .profile-dropdown .dropdown-toggle::after {
-    display: none; }
   .header .help-section .profile-dropdown .dropdown-menu {
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
     border: 1px solid;
