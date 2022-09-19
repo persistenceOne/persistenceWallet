@@ -715,6 +715,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+
     .info-heading {
       font-family: 'Poppins', sans-serif;
       font-weight: 600;

@@ -1999,7 +1999,8 @@ ul li em {
   .token-info-section .heading-section {
     display: flex;
     justify-content: space-between;
-    align-items: center; }
+    align-items: center;
+    flex-wrap: wrap; }
     .token-info-section .heading-section .info-heading {
       font-family: 'Poppins', sans-serif;
       font-weight: 600;
