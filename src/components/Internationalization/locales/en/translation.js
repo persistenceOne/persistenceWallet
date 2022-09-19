@@ -44,6 +44,8 @@ let English = {
         "BIP_PASSPHRASE_ERROR": "Length should be below 50 characters",
         "OPTIONAL": "Optional",
         "WALLET_PATH": "Wallet path",
+        "ORIGINAL_ADDRESS": "Original address",
+        "NEW_ADDRESS": 'New address',
         "WALLET_PATH_WARNING": "Please securely store the wallet path for future use",
         "USE_PRIVATE_KEY": "Use Private Key",
         "ENTER_MNEMONIC": "Enter Mnemonic (Seed Phrase)",

@@ -1473,9 +1473,14 @@ ul li em {
   .import-wallet-body .mnemonic-result {
     font-family: 'Poppins', sans-serif;
     padding: 10px 0;
+    font-size: 14px;
     word-break: break-word;
     margin: 0;
     text-align: center; }
+    .import-wallet-body .mnemonic-result .label {
+      font-weight: 700; }
+  .import-wallet-body .note {
+    font-size: 14px; }
   .import-wallet-body .download-section {
     padding-top: 20px; }
     .import-wallet-body .download-section .name {
@@ -1994,7 +1999,8 @@ ul li em {
   .token-info-section .heading-section {
     display: flex;
     justify-content: space-between;
-    align-items: center; }
+    align-items: center;
+    flex-wrap: wrap; }
     .token-info-section .heading-section .info-heading {
       font-family: 'Poppins', sans-serif;
       font-weight: 600;
