@@ -37,6 +37,13 @@
   .navbar .navbar-nav li .profile-dropdown, .header .navbar .navbar-nav li .dark-mode-button {
     padding: .5rem .7rem;
   }
+  .footer .footer-logo-section{
+    flex-wrap: wrap;
+    justify-content: center;
+    .social-links-section{
+      margin-top: 1rem;
+    }
+  }
 }
 
 @media (max-width: 576px) {

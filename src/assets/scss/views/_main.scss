@@ -4,7 +4,6 @@
   }
 
   background: #262B35 !important;
-  padding: 80px 0 0 0;
 
   .footer-list li a, .footer-list li .inactive {
     font-family: 'Poppins', sans-serif;
@@ -92,11 +91,9 @@
     ul {
       display: flex;
       display: -webkit-flex;
-      margin-top: 20px;
       flex-wrap: wrap;
+      margin: 0;
     }
-
-    padding-top: 15px;
 
     a {
       width: 28px;

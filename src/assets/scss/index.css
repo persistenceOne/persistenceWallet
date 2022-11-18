@@ -731,8 +731,7 @@ ul li em {
 # main styles
 --------------------------------------------------------------*/
 .footer {
-  background: #262B35 !important;
-  padding: 80px 0 0 0; }
+  background: #262B35 !important; }
   .footer .resources {
     margin-top: 30px; }
   .footer .footer-list li a, .footer .footer-list li .inactive {
@@ -793,28 +792,26 @@ ul li em {
     font-size: 14px;
     line-height: 1.31;
     color: #70747C; }
-  .footer .social-links-section {
-    padding-top: 15px; }
-    .footer .social-links-section ul {
-      display: flex;
-      display: -webkit-flex;
-      margin-top: 20px;
-      flex-wrap: wrap; }
-    .footer .social-links-section a {
-      width: 28px;
-      height: 28px;
-      margin-right: 10px;
-      display: flex;
-      display: -webkit-flex;
-      align-items: center;
-      border-radius: 50%;
-      justify-content: center;
-      background: #363B46; }
-      .footer .social-links-section a .icon {
-        width: 12px;
-        fill: #FFFFFF; }
-      .footer .social-links-section a:hover {
-        background: #525967; }
+  .footer .social-links-section ul {
+    display: flex;
+    display: -webkit-flex;
+    flex-wrap: wrap;
+    margin: 0; }
+  .footer .social-links-section a {
+    width: 28px;
+    height: 28px;
+    margin-right: 10px;
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+    border-radius: 50%;
+    justify-content: center;
+    background: #363B46; }
+    .footer .social-links-section a .icon {
+      width: 12px;
+      fill: #FFFFFF; }
+    .footer .social-links-section a:hover {
+      background: #525967; }
   .footer .footer-bottom-section {
     margin-top: 20px;
     border-top: 1px solid #313238; }
@@ -2709,7 +2706,13 @@ ul li em {
     text-align: left; }
 
   .navbar .navbar-nav li .profile-dropdown, .header .navbar .navbar-nav li .dark-mode-button {
-    padding: .5rem .7rem; } }
+    padding: .5rem .7rem; }
+
+  .footer .footer-logo-section {
+    flex-wrap: wrap;
+    justify-content: center; }
+    .footer .footer-logo-section .social-links-section {
+      margin-top: 1rem; } }
 @media (max-width: 576px) {
   .modal-custom .modal-header {
     padding: 20px 0px; }
