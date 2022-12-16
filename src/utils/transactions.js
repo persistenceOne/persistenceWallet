@@ -156,6 +156,9 @@ async function getTransactionResponse(address, data, feeAmount, gas, mnemonic = 
         return TransactionWithMnemonic(data.message,
             fee(Math.trunc(feeAmount), gas), data.memo, mnemonic,
             makeHdPath(accountNumber, addressIndex, coinType), bip39Passphrase, address);
+    case "migrateAssets":
+        return TransactionWithMnemonic(data.message, fee(Math.trunc(feeAmount), gas), data.memo,
+            mnemonic, makeHdPath(accountNumber, addressIndex, coinType), bip39Passphrase, address);
     }
     
 }

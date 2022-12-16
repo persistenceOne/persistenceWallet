@@ -9,6 +9,7 @@ import tokenPrice from "./tokenPrice";
 import withdrawAddress from "./withdrawAddress";
 import common from "./transactions/common";
 import send from "./transactions/send";
+import migrateAssets from "./transactions/migrateAssets";
 import fee from "./transactions/fee";
 import gas from "./transactions/gas";
 import keyStore from "./transactions/keyStore";
@@ -56,7 +57,8 @@ const appReducer = combineReducers({
     unbondTx,
     withdrawValidatorRewards,
     generateKeyStore,
-    changePassword
+    changePassword,
+    migrateAssets
 });
 
 export const rootReducer = (state, action) => {

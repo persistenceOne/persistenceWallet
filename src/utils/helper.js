@@ -1,5 +1,12 @@
 import transactions from "./transactions";
-import {COIN_ATOM, COIN_ATOM_DENOM, COIN_GRAVITY, COIN_GRAVITY_DENOM, COIN_PSTAKE} from "../constants/keyWords";
+import {
+    COIN_ATOM,
+    COIN_ATOM_DENOM,
+    COIN_GRAVITY,
+    COIN_GRAVITY_DENOM,
+    COIN_OSMO, COIN_OSMO_DENOM,
+    COIN_PSTAKE
+} from "../constants/keyWords";
 import {
     ADDRESS,
     ENCRYPTED_MNEMONIC,
@@ -114,8 +121,10 @@ function denomChange(denom) {
         return COIN_PSTAKE;
     case COIN_GRAVITY_DENOM:
         return COIN_GRAVITY;
+    case COIN_OSMO_DENOM:
+        return COIN_OSMO;
     default:
-        return null;
+        return "Unknown";
     }
 }
 

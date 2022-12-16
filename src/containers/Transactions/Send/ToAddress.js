@@ -23,7 +23,7 @@ const ToAddress = () => {
     const onBlur = (evt) => {
         dispatch(setTxSendAddress({
             value: evt.target.value.toString(),
-            error: validateAddress(evt.target.value, ),
+            error: validateAddress(evt.target.value),
         }));
     };
 

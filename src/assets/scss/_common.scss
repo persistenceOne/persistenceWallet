@@ -94,7 +94,7 @@ html, body {
 
 .list-modal.modal-custom {
   .modal-dialog {
-    max-width: 600px;
+    max-width: 700px;
   }
 
   .list-modal-body {
@@ -994,3 +994,53 @@ ul li em {
 
 }
 
+.migrate-modal{
+  .address-container{
+    width: 510px;
+    display: flex;
+    align-items: center;
+    background: #e8e8e88a;
+    padding: 0 10px 0 0;
+    input{
+      outline: none !important;
+      width: 100%;
+      background: transparent;
+      font-size: 14px;
+      line-height: 150%;
+      border-radius: 0;
+      border: 0px solid;
+      color: #8D9CB5;
+      padding: 5px 20px;
+      //&.edit{
+      //  box-shadow: 0 0 0 0.2rem RGB(0 123 255 / 25%);
+      //}
+      //&:focus{
+      //  box-shadow: #007bff40 !important;
+      //}
+    }
+    .edit-button{
+      all:unset;
+      width: 50px;
+      background-color: #8D9CB5;
+      color: #f5f6fa;
+      text-align: center;
+      padding:3px 7px;
+      border-radius: 10px;
+      cursor: pointer;
+      .icon{
+        width: 20px;
+        fill: #8D9CB5;
+      }
+    }
+    &.edit{
+      background-color: #F5F6FA;
+      box-shadow: 0 0 0 0.2rem RGB(0 123 255 / 25%);
+    }
+  }
+  .buttons{
+    text-align: center;
+    button{
+      width: 200px;
+    }
+  }
+}

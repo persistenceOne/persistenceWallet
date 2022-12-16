@@ -22,6 +22,7 @@ import {LOGIN_INFO} from "../../constants/localStorage";
 import {keyStoreLogin} from "../../store/actions/signIn/keyStore";
 import {useHistory} from "react-router-dom";
 import Copy from "../../components/Copy";
+import ModalMigrateBalance from "../Transactions/ModalMigrateBalance";
 const TokenInfo = (props) => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
@@ -118,6 +119,10 @@ const TokenInfo = (props) => {
                                         <Icon viewClass="success" icon="success-small"/> : ''
                                     }
                                 </Dropdown.Item>
+                                {activeWallet === '750' ?
+                                    <ModalMigrateBalance/>
+                                    : null
+                                }
                             </Dropdown.Menu>
                         </Dropdown>
                         <Copy id={loginInfo && loginInfo?.address}/>
@@ -259,7 +264,6 @@ const TokenInfo = (props) => {
                             </span>
                             </p>
                         </div>
-
                     </div>
                 </div>
             </div>

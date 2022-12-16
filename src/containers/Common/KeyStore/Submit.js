@@ -6,7 +6,6 @@ import {LOGIN_INFO} from "../../../constants/localStorage";
 
 const Submit = () => {
     const loginInfo = JSON.parse(localStorage.getItem(LOGIN_INFO));
-    const type = useSelector((state) => state.common.txName.value.name);
     const password = useSelector((state) => state.keyStore.password);
     const accountNumber = useSelector((state) => state.advanced.accountNumber);
     const accountIndex = useSelector((state) => state.advanced.accountIndex);
@@ -17,7 +16,7 @@ const Submit = () => {
     const dispatch = useDispatch();
 
     const onClick = () => {
-        dispatch(keyStoreSubmit(loginInfo && loginInfo.address, type));
+        dispatch(keyStoreSubmit(loginInfo && loginInfo.address));
     };
 
     const fee = useSelector((state) => state.fee.fee);
