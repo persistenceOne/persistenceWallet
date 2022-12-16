@@ -44,12 +44,6 @@ const ModalMigrateBalance = () => {
 
     const handleAddressEdit = () => {
         setEditMode(!editMode);
-        // dispatch(setTxSendAddress({
-        //     value: "",
-        //     error: {
-        //         message: 'empty address'
-        //     }
-        // }));
     };
 
     const dispatch = useDispatch();

@@ -10,7 +10,7 @@ import {showTxReDelegateModal} from "../../../../store/actions/transactions/rede
 import {showTxUnbondModal} from "../../../../store/actions/transactions/unbond";
 import {showTxWithdrawValidatorRewardsModal} from "../../../../store/actions/transactions/withdrawValidatorRewards";
 import {decimalize} from "../../../../utils/scripts";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 
 const ModalValidator = () => {
     const {t} = useTranslation();

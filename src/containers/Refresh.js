@@ -10,7 +10,7 @@ import RefreshIcon from '@material-ui/icons/Refresh';
 import {fetchReceiveTransactions, fetchTransactions} from "../store/actions/transactionHistory";
 import {LOGIN_INFO} from "../constants/localStorage";
 import {updateFee} from "../utils/helper";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 
 const InfoRefresh = (props) => {
     const [inProgress, setInProgress] = useState(false);

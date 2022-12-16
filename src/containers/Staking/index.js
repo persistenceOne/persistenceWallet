@@ -16,7 +16,7 @@ import ModalValidatorWithdraw from "../Transactions/ModalWithdrawValidatorReward
 import ModalWithDraw from "../Transactions/ModalWithDrawAllRewards";
 import ModalSetWithdrawAddress from "../Transactions/ModalSetWithdrawAddress";
 import Loader from "../../components/Loader";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 
 const Staking = () => {
     const {t} = useTranslation();

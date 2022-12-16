@@ -14,7 +14,7 @@ import {LOGIN_INFO, THEME} from "../../constants/localStorage";
 import {stringTruncate} from "../../utils/scripts";
 import {makeHdPath} from "../../utils/helper";
 import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import {DefaultChainInfo, ExternalChains} from "../../config";
 import Banner from "../../components/Banner";
 import {keyStoreLogin} from "../../store/actions/signIn/keyStore";

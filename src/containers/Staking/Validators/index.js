@@ -3,7 +3,7 @@ import {Nav, Tab,} from "react-bootstrap";
 import ValidatorsTable from "./ValidatorsTable";
 import {connect} from "react-redux";
 import {useTranslation} from "react-i18next";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 import loader from "../../../assets/images/loader.svg";
 
 const Validators = (props) => {

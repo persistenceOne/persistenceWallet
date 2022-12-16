@@ -14,7 +14,7 @@ import {
     showTxWithDrawAddressModal
 } from "../../../store/actions/transactions/setWithdrawAddress";
 import {LOGIN_INFO} from "../../../constants/localStorage";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 import {DefaultChainInfo} from "../../../config";
 
 const ModalWithdraw = () => {

@@ -12,7 +12,7 @@ import Memo from "./Memo";
 import ButtonNext from "./ButtonNext";
 import Icon from "../../../components/Icon";
 import {LOGIN_INFO} from "../../../constants/localStorage";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 import {DefaultChainInfo, PstakeInfo} from "../../../config";
 
 const ModalWithDraw = () => {

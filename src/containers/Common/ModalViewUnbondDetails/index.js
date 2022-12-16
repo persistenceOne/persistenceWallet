@@ -5,7 +5,7 @@ import {useTranslation} from "react-i18next";
 import NumberView from "../../../components/NumberView";
 import {formatNumber, localTime, stringToNumber} from "../../../utils/scripts";
 import {tokenValueConversion} from "../../../utils/helper";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 import {DefaultChainInfo} from "../../../config";
 
 const ModalViewUnbondDetails = (props) => {
