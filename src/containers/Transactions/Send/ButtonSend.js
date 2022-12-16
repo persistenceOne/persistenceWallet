@@ -18,9 +18,9 @@ const ButtonSend = () => {
     const memo = useSelector((state) => state.send.memo);
 
     let sendAmount;
-
     if(token.value.tokenDenom === PstakeInfo.coinMinimalDenom){
-        sendAmount = unDecimalize(amount.value).toString();
+        sendAmount = unDecimalize((amount.value).toString()).toString();
+
     }else {
         sendAmount = (amount.value * 1000000).toFixed(0);
     }

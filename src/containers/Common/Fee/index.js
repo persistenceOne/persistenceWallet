@@ -20,11 +20,11 @@ const Fee = () => {
     const tokenIbc = useSelector((state) => state.sendIbc.token.value);
 
     let denom;
-    if(type === "send" || type === "ibc"){
+    if(type === "send" || type === "ibc" || type === "migrateAssets"){
         amount = formData.amount;
         if(type === "send"){
             denom = token.tokenDenom;
-        }else {
+        }else if(type === "ibc"){
             denom = tokenIbc.tokenDenom;
         }
     }
@@ -56,21 +56,17 @@ const Fee = () => {
         <>
             <div className="fee-container">
                 <>
-                    {
-                        transferableAmount < FeeInfo.averageFee ?
-                            <div className={activeFeeState === "Low" ? "fee-box active" : "fee-box"}
-                                onClick={() => handleFee("Low", FeeInfo.lowFee)}>
-                                <p className="title">Zero</p>
-                                <p className="gas"><NumberView
-                                    value={formatNumber(tokenValueConversion((gas.value) * FeeInfo.lowFee) * tokenPrice)}/>$
-                                </p>
-                                <p className="token"><NumberView
-                                    value={formatNumber(tokenValueConversion((gas.value) * FeeInfo.lowFee))}/>
-                                {DefaultChainInfo.currency.coinDenom}
-                                </p>
-                            </div>
-                            : null
-                    }
+                    <div className={activeFeeState === "Low" ? "fee-box active" : "fee-box"}
+                        onClick={() => handleFee("Low", FeeInfo.lowFee)}>
+                        <p className="title">Zero</p>
+                        <p className="gas"><NumberView
+                            value={formatNumber(tokenValueConversion((gas.value) * FeeInfo.lowFee) * tokenPrice)}/>$
+                        </p>
+                        <p className="token"><NumberView
+                            value={formatNumber(tokenValueConversion((gas.value) * FeeInfo.lowFee))}/>
+                        {DefaultChainInfo.currency.coinDenom}
+                        </p>
+                    </div>
                     <div className={activeFeeState === "Average" ? "fee-box active" : "fee-box"}
                         onClick={() => handleFee("Average", FeeInfo.averageFee)}>
                         <p className="title">Low</p>

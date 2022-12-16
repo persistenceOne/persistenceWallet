@@ -77,7 +77,7 @@ html, body {
     width: 16px; }
 
 .list-modal.modal-custom .modal-dialog {
-  max-width: 600px; }
+  max-width: 700px; }
 .list-modal.modal-custom .list-modal-body {
   padding: 0px 60px 30px 60px; }
 
@@ -726,6 +726,42 @@ ul li em {
     right: 15px; }
   .password-field .password-field-container .icon {
     width: 24px; }
+
+.migrate-modal .address-container {
+  width: 510px;
+  display: flex;
+  align-items: center;
+  background: #e8e8e88a;
+  padding: 0 10px 0 0; }
+  .migrate-modal .address-container input {
+    outline: none !important;
+    width: 100%;
+    background: transparent;
+    font-size: 14px;
+    line-height: 150%;
+    border-radius: 0;
+    border: 0px solid;
+    color: #8D9CB5;
+    padding: 5px 20px; }
+  .migrate-modal .address-container .edit-button {
+    all: unset;
+    width: 50px;
+    background-color: #8D9CB5;
+    color: #f5f6fa;
+    text-align: center;
+    padding: 3px 7px;
+    border-radius: 10px;
+    cursor: pointer; }
+    .migrate-modal .address-container .edit-button .icon {
+      width: 20px;
+      fill: #8D9CB5; }
+  .migrate-modal .address-container.edit {
+    background-color: #F5F6FA;
+    box-shadow: 0 0 0 0.2rem RGB(0 123 255/25%); }
+.migrate-modal .buttons {
+  text-align: center; }
+  .migrate-modal .buttons button {
+    width: 200px; }
 
 /*--------------------------------------------------------------
 # main styles
@@ -2040,6 +2076,12 @@ ul li em {
           background: #1c9e61;
           color: #e1f0e7;
           padding: 0 5px;
+          margin-right: 3px; }
+        .token-info-section .heading-section .address-section .dropdown-item .migrate {
+          display: inline-block;
+          font-size: 12px;
+          color: #E50913;
+          font-weight: 600;
           margin-right: 3px; }
         .token-info-section .heading-section .address-section .dropdown-item .icon {
           width: 16px; }

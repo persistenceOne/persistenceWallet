@@ -149,7 +149,7 @@ export const GlobalStyles = createGlobalStyle`
     .react-select__menu .react-select__menu-list .react-select__option{
      color: #8D9CB5 !important;
     }
-    .list-modal-body .unbonding-schedule-list p{
+    .list-modal-body .unbonding-schedule-list p, .list-modal-body .list-item{
       color: ${({theme}) => theme.infoHeadingColor};
     }   
     .claim-rewards-modal .rewards-modal-body .available-tokens .tokens, .result-container p{

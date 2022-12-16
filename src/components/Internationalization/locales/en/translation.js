@@ -211,7 +211,8 @@ let English = {
         "TOTAL_TOKENS_MODAL_VIEW":"Total tokens modal",
         "CLICK_TOTAL_TOKENS_MODAL_VIEW":"Clicked on Total tokens modal",
         "IBC_REWARDS":"IBC Rewards",
-        "DECRYPT_KEY_STORE":"Decrypt KeyStore"
+        "DECRYPT_KEY_STORE":"Decrypt KeyStore",
+        "MIGRATE_TOKENS": "Migrate Tokens From 750 wallet to 118 wallet"
 
     }
 };
