@@ -13,7 +13,7 @@ import FeeModal from "../Common/Fee/Modal";
 import KeyStoreModal from "../Common/KeyStore/Modal";
 import Loader from "../../components/Loader";
 import ModalViewTxnResponse from "../Common/ModalViewTxnResponse";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 
 const Wallet = () => {
 

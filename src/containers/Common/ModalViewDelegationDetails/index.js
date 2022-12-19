@@ -5,7 +5,7 @@ import {useTranslation} from "react-i18next";
 import helper, {tokenValueConversion} from "../../../utils/helper";
 import {formatNumber, stringToNumber, stringTruncate} from "../../../utils/scripts";
 import NumberView from "../../../components/NumberView";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 import {DefaultChainInfo} from "../../../config";
 
 const ModalViewDelegationDetails = (props) => {

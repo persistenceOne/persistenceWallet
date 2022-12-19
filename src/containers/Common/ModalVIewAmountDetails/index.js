@@ -5,7 +5,7 @@ import helper, {tokenValueConversion} from "../../../utils/helper";
 import {useTranslation} from "react-i18next";
 import {decimalize, formatNumber} from "../../../utils/scripts";
 import NumberView from "../../../components/NumberView";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 import {DefaultChainInfo, PstakeInfo} from "../../../config";
 const tmRPC = require("@cosmjs/tendermint-rpc");
 const {QueryClient, setupIbcExtension} = require("@cosmjs/stargate");

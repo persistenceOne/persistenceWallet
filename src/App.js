@@ -21,7 +21,7 @@ import {keplrLogin, setKeplrInfo} from "./store/actions/signIn/keplr";
 import { KEPLR_ADDRESS, LOGIN_INFO} from "./constants/localStorage";
 import {updateFee} from "./utils/helper";
 import {ledgerDisconnect} from "./utils/ledger";
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import packageJson from "../package.json";
 
 const SENTRY_API = process.env.REACT_APP_SENTRY_API;
@@ -31,7 +31,7 @@ ReactGA.initialize(GOOGLE_ANALYTICS);
 
 const trackPage = page => {
     ReactGA.set({ page });
-    ReactGA.pageview(page);
+    ReactGA.send(page);
 };
 
 //Update the package.json version everytime whenever new deployment happened to production to clear the browser cache.

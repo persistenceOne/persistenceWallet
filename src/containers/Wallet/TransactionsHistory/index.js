@@ -2,7 +2,7 @@ import React from "react";
 import {Nav, Tab,} from "react-bootstrap";
 import SendTransactions from "./SendTransactions";
 import ReceiveTransactions from "./ReceiveTransactions";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 
 const Transactions = () => {
     const onClick = (key) => {

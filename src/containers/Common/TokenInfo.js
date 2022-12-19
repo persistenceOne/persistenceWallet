@@ -16,7 +16,7 @@ import {fetchValidators} from "../../store/actions/validators";
 import NumberView from "../../components/NumberView";
 import {formatNumber, stringTruncate} from "../../utils/scripts";
 import {showTxWithDrawTotalModal} from "../../store/actions/transactions/withdrawTotalRewards";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 import {DefaultChainInfo} from "../../config";
 import {LOGIN_INFO} from "../../constants/localStorage";
 import {keyStoreLogin} from "../../store/actions/signIn/keyStore";
