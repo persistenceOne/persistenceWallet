@@ -1,12 +1,11 @@
 import React from 'react';
 import Button from "../../../components/Button";
 import {useDispatch, useSelector} from "react-redux";
-import {trimWhiteSpaces} from "../../../utils/scripts";
+import {trimWhiteSpaces, unDecimalize} from "../../../utils/scripts";
 import {LOGIN_INFO} from "../../../constants/localStorage";
 import {MsgSend} from "cosmjs-types/cosmos/bank/v1beta1/tx";
 import {setTxSendAmount, submitFormData} from "../../../store/actions/transactions/migrateAssets";
-import {DefaultChainInfo} from "../../../config";
-import {tokenValueConversion} from "../../../utils/helper";
+import {DefaultChainInfo, PstakeInfo} from "../../../config";
 const msgSendTypeUrl = "/cosmos.bank.v1beta1.MsgSend";
 
 const SendMsg =  (fromAddress, toAddress, amount) => {
@@ -22,40 +21,47 @@ const SendMsg =  (fromAddress, toAddress, amount) => {
 
 const ButtonMigrate = () => {
     const dispatch = useDispatch();
-    const tokenList = useSelector((state) => state.balance.tokenList);
+    const {migrationTokenList, buttonStatus, toAddress} = useSelector((state) => state.migrateAssets);
     const loginInfo = JSON.parse(localStorage.getItem(LOGIN_INFO));
 
     const onClick = () => {
         let balance = [];
-        tokenList.forEach((item) => {
+        migrationTokenList.list.forEach((item) => {
             let denom;
             if ( item.denom === DefaultChainInfo.currency.coinMinimalDenom) {
                 dispatch(
                     setTxSendAmount({
-                        value: tokenValueConversion(item.amount),
+                        value: item.amount,
                         error: ""
                     })
                 );
             }
+            let sendAmount;
+            if( item.denom === PstakeInfo.coinMinimalDenom){
+                sendAmount = unDecimalize((item.amount).toString()).toString();
+            }else {
+                sendAmount = (item.amount * 1000000).toFixed(0);
+            }
             denom = item.denom;
             balance.push({
                 denom:denom,
-                amount:item.amount
+                amount:sendAmount
             });
         });
 
         dispatch(submitFormData([SendMsg(
-            loginInfo && loginInfo.address,   loginInfo?.coin118Response.address, balance)]
+            loginInfo && loginInfo.address,  toAddress.value, balance)]
         ));
     };
 
+    const disable = buttonStatus.includes(true);
     return (
         <div className="buttons">
             <div className="button-section">
                 <Button
                     className="button button-primary"
                     type="button"
-                    disable={false}
+                    disable={disable}
                     value="Migrate"
                     onClick={onClick}
                 />

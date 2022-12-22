@@ -727,11 +727,65 @@ ul li em {
   .password-field .password-field-container .icon {
     width: 24px; }
 
+.migrate-modal .token-list {
+  width: 100%;
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px; }
+  .migrate-modal .token-list .label {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 150%;
+    margin: 0; }
+  .migrate-modal .token-list .amount {
+    font-weight: 500; }
+.migrate-modal .input-label {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 150%;
+  margin: 0; }
+  .migrate-modal .input-label:hover {
+    text-decoration: underline;
+    cursor: pointer; }
+.migrate-modal .amount-container .input-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; }
+  .migrate-modal .amount-container .input-container input {
+    width: 100px;
+    outline: none !important;
+    background: #cecaca7a;
+    font-size: 14px;
+    line-height: 150%;
+    border-radius: 0;
+    border: 0px solid;
+    color: #8D9CB5;
+    padding: 5px 20px;
+    height: 36px; }
+    .migrate-modal .amount-container .input-container input:focus {
+      background-color: #F5F6FA;
+      box-shadow: 0 0 0 0.2rem RGB(0 123 255/25%); }
+  .migrate-modal .amount-container .input-container .edit-button {
+    all: unset;
+    width: 50px;
+    background-color: #8D9CB5;
+    color: #f5f6fa;
+    text-align: center;
+    padding: 3px 7px;
+    border-radius: 10px;
+    cursor: pointer; }
+    .migrate-modal .amount-container .input-container .edit-button .icon {
+      width: 20px;
+      fill: #8D9CB5; }
 .migrate-modal .address-container {
   width: 510px;
   display: flex;
   align-items: center;
-  background: #e8e8e88a;
+  background: #cecaca7a;
   padding: 0 10px 0 0; }
   .migrate-modal .address-container input {
     outline: none !important;

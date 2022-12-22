@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {connect, useDispatch} from 'react-redux';
+import {connect, useDispatch, useSelector} from 'react-redux';
 import {fetchDelegationsCount} from "../../store/actions/delegations";
 import {fetchBalance, fetchTransferableVestingAmount} from "../../store/actions/balance";
 import {fetchRewards, fetchTotalRewards} from "../../store/actions/rewards";
@@ -14,18 +14,21 @@ import {Dropdown, OverlayTrigger, Popover} from "react-bootstrap";
 import ModalViewDelegationDetails from "./ModalViewDelegationDetails";
 import {fetchValidators} from "../../store/actions/validators";
 import NumberView from "../../components/NumberView";
-import {formatNumber, stringTruncate} from "../../utils/scripts";
+import {decimalize, formatNumber, stringTruncate} from "../../utils/scripts";
 import {showTxWithDrawTotalModal} from "../../store/actions/transactions/withdrawTotalRewards";
 import ReactGA from "react-ga4";
-import {DefaultChainInfo} from "../../config";
+import {DefaultChainInfo, PstakeInfo} from "../../config";
 import {LOGIN_INFO} from "../../constants/localStorage";
 import {keyStoreLogin} from "../../store/actions/signIn/keyStore";
 import {useHistory} from "react-router-dom";
 import Copy from "../../components/Copy";
 import ModalMigrateBalance from "../Transactions/ModalMigrateBalance";
+import {tokenValueConversion} from "../../utils/helper";
+import {setTxMigrateTokens} from "../../store/actions/transactions/migrateAssets";
 const TokenInfo = (props) => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
+    const tokenList = useSelector((state) => state.balance.tokenList);
     const loginInfo = JSON.parse(localStorage.getItem(LOGIN_INFO));
     const history = useHistory();
     const [activeWallet, setActiveWallet] = useState('');
@@ -35,6 +38,22 @@ const TokenInfo = (props) => {
             '118' :
             '750');
     }, []);
+
+    useEffect(() => {
+        let balance = [];
+        tokenList.forEach((item) => {
+            let denom;
+            denom = item.denom;
+            balance.push({
+                denom:denom,
+                amount: item.denom === PstakeInfo.coinMinimalDenom ?
+                    decimalize(item.amount)
+                    :
+                    tokenValueConversion(item.amount)
+            });
+        });
+        dispatch(setTxMigrateTokens(balance));
+    }, [tokenList]);
 
     const handleRewards = (key) => {
         ReactGA.event({
@@ -119,8 +138,8 @@ const TokenInfo = (props) => {
                                         <Icon viewClass="success" icon="success-small"/> : ''
                                     }
                                 </Dropdown.Item>
-                                {activeWallet === '750' ?
-                                    <ModalMigrateBalance/>
+                                {activeWallet === '750' && tokenList.length > 0?
+                                    <ModalMigrateBalance />
                                     : null
                                 }
                             </Dropdown.Menu>

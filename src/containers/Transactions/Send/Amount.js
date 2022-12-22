@@ -68,7 +68,7 @@ const Amount = () => {
                             </span>
                             :
                             (token.tokenDenom === PstakeInfo.coinMinimalDenom) ?
-                                <span className={transferableAmount === 0 ? "empty info-data" : "info-data info-link"}
+                                <span className={token.transferableAmount === 0 ? "empty info-data" : "info-data info-link"}
                                     onClick={() => selectTotalBalanceHandler(token.transferableAmount)}>
                                     <span
                                         className="title">{t("TRANSFERABLE_BALANCE")}:</span>
