@@ -1,21 +1,26 @@
 import {Modal} from 'react-bootstrap';
 import React, {useEffect, useState} from 'react';
 import {connect, useDispatch, useSelector} from "react-redux";
-import helper, {tokenValueConversion} from "../../../utils/helper";
+import helper, {tokenValueConversion, truncateToFixedDecimalPlaces} from "../../../utils/helper";
 import {useTranslation} from "react-i18next";
 import {DefaultChainInfo, PstakeInfo} from "../../../config";
-import {decimalize} from "../../../utils/scripts";
+import {decimalize, stringToNumber} from "../../../utils/scripts";
 import ButtonMigrate from "./ButtonSubmit";
 import {LOGIN_INFO} from "../../../constants/localStorage";
-import {hideTxMigrateModal, showTxMigrateModal} from "../../../store/actions/transactions/migrateAssets";
+import {
+    hideTxMigrateModal, setTxAmountError, setTxButtonStatus, setTxMigrateTokens,
+    showTxMigrateModal
+} from "../../../store/actions/transactions/migrateAssets";
 import {setTxSendAddress} from "../../../store/actions/transactions/migrateAssets";
 import {validateAddress} from "../../../utils/validations";
 
 const ModalMigrateBalance = () => {
     const tokenList = useSelector((state) => state.balance.tokenList);
-    const {modal, toAddress} = useSelector((state) => state.migrateAssets);
+    const {modal, toAddress, migrationTokenList, buttonStatus} = useSelector((state) => state.migrateAssets);
     const loginInfo = JSON.parse(localStorage.getItem(LOGIN_INFO));
     const [editMode, setEditMode] = useState(false);
+    const [localMigrationTokenList, setLocalMigrationTokenList] = useState([]);
+
 
     useEffect(() => {
         dispatch(setTxSendAddress({
@@ -25,6 +30,10 @@ const ModalMigrateBalance = () => {
             }
         }));
     }, []);
+
+    useEffect(() => {
+        setLocalMigrationTokenList(migrationTokenList.list);
+    }, [migrationTokenList]);
 
     const onChange = (evt) => {
         dispatch(setTxSendAddress({
@@ -54,6 +63,42 @@ const ModalMigrateBalance = () => {
     const handleModal =  () => {
         dispatch(showTxMigrateModal());
     };
+
+    const onChangeAmount =  (denom, amount, e) => {
+        let rex = /^\d*\.?\d{0,6}$/;
+        if (rex.test(e.target.value) ) {
+            let balance = migrationTokenList.list;
+            let buttonStatusList = buttonStatus.length === 0 ? new Array(migrationTokenList.list.length).fill(false) : buttonStatus;
+            let status;
+            status = e.target.value === '' || stringToNumber(e.target.value) <= 0;
+            let amountCheck;
+            amountCheck = stringToNumber(amount) < stringToNumber(e.target.value);
+            balance.forEach((item, index) => {
+                if (item.denom === denom) {
+                    buttonStatusList[index] = status || amountCheck;
+                    item.amount = e.target.value;
+                }
+            });
+            dispatch(setTxAmountError(amountCheck));
+            dispatch(setTxButtonStatus(buttonStatusList));
+            dispatch(setTxMigrateTokens(balance));
+        } else{
+            return false;
+        }
+    };
+
+    const handleMaxAmount =  (denom, amount) => {
+        let balance = migrationTokenList.list;
+        let buttonStatusList = new Array(migrationTokenList.list.length).fill(false);
+        balance.forEach((item) => {
+            if (item.denom === denom){
+                item.amount = amount;
+            }
+        });
+        dispatch(setTxButtonStatus(buttonStatusList));
+        dispatch(setTxMigrateTokens(balance));
+    };
+
     return (
         <>
             <Modal
@@ -75,30 +120,50 @@ const ModalMigrateBalance = () => {
                     <p className="list-item">Note that staked, vesting, and unbonding tokens, as well as unclaimed
                         staking rewards are not transferable yet.</p>
                     <p className="list-item"> The following assets will be transferred</p>
-                    {tokenList ?
-                        tokenList.map((item, index) => {
+                    {localMigrationTokenList.length ?
+                        localMigrationTokenList.map((item, index) => {
                             return(
-                                <div className="unbonding-schedule-list" key={index}>
-                                    <p><span className="amount">
-                                        {item.denom === DefaultChainInfo.currency.coinMinimalDenom ?
-                                            helper.denomChange(item.denom) :
-                                            <span>
-                                                {
-                                                    helper.denomChange(item.denomTrace.baseDenom)
-                                                }
-                                                <span className="small">&nbsp;(IBC Token)</span>
-                                            </span>
-                                        }
-                                    </span></p>
-                                    <p><span
-                                        className="date">
-                                        {item.denom === PstakeInfo.coinMinimalDenom ?
-                                            decimalize(item.amount)
+                                <div className="token-list" key={index}>
+                                    <div className="left">
+                                        <p className="label"><span>
+                                            {item.denom === DefaultChainInfo.currency.coinMinimalDenom ?
+                                                helper.denomChange(item.denom) :
+                                                <span>
+                                                    {
+                                                        helper.denomChange(tokenList[index]?.denomTrace?.baseDenom)
+                                                    }
+                                                    <span className="small">&nbsp;(IBC Token)</span>
+                                                </span>
+                                            }
+                                        </span></p>
+                                        <p className="input-label" onClick={()=>{handleMaxAmount(item.denom, tokenList[index]?.denom === PstakeInfo.coinMinimalDenom ?
+                                            decimalize(tokenList[index]?.amount)
                                             :
-                                            tokenValueConversion(item.amount)
-                                        }
-                                    </span>
-                                    </p>
+                                            tokenValueConversion(tokenList[index].amount)
+                                        );}}>
+                                            <span>
+                                                {tokenList[index]?.denom === PstakeInfo.coinMinimalDenom ?
+                                                    truncateToFixedDecimalPlaces(decimalize(tokenList[index]?.amount))
+                                                    :
+                                                    truncateToFixedDecimalPlaces(tokenValueConversion(tokenList[index]?.amount))
+                                                }
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div className="amount-container">
+                                        <div className="input-container">
+                                            <input
+                                                type="text"
+                                                placeholder="amount"
+                                                value={item.amount}
+                                                onChange={(e)=>{onChangeAmount(item.denom, tokenList[index]?.denom === PstakeInfo.coinMinimalDenom ?
+                                                    decimalize(tokenList[index]?.amount)
+                                                    :
+                                                    tokenValueConversion(tokenList[index].amount), e);}}
+                                            />
+                                        </div>
+                                    </div>
+
                                 </div>
                             );
                         }) : null

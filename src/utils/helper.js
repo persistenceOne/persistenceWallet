@@ -333,6 +333,19 @@ export const decodeTendermintConsensusStateAny = (consensusState) => {
     return tendermint_1.ConsensusState.decode(consensusState.value);
 };
 
+export const truncateToFixedDecimalPlaces = (
+    num,
+    decimalPlaces = 6
+) => {
+    const regexString = "^-?\\d+(?:\\.\\d{0,dp})?";
+    const regexToMatch = regexString.replace("dp", `${decimalPlaces}`);
+    const regex = new RegExp(regexToMatch);
+    const matched = num.toString().match(regex);
+    if (matched) {
+        return parseFloat(matched[0]);
+    }
+    return 0;
+};
 
 export default {
     isActive,
