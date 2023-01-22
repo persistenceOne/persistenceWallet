@@ -9,7 +9,6 @@ import ButtonMigrate from "./ButtonSubmit";
 import {LOGIN_INFO} from "../../../constants/localStorage";
 import {
     hideTxMigrateModal, setTxAmountError, setTxButtonStatus, setTxMigrateTokens,
-    showTxMigrateModal
 } from "../../../store/actions/transactions/migrateAssets";
 import {setTxSendAddress} from "../../../store/actions/transactions/migrateAssets";
 import {validateAddress} from "../../../utils/validations";
@@ -60,9 +59,9 @@ const ModalMigrateBalance = () => {
     const handleClose = () => {
         dispatch(hideTxMigrateModal());
     };
-    const handleModal =  () => {
-        dispatch(showTxMigrateModal());
-    };
+    // const handleModal =  () => {
+    //     dispatch(showTxMigrateModal());
+    // };
 
     const onChangeAmount =  (denom, amount, e) => {
         let rex = /^\d*\.?\d{0,6}$/;
@@ -195,9 +194,9 @@ const ModalMigrateBalance = () => {
                     <ButtonMigrate/>
                 </Modal.Body>
             </Modal>
-            <div role="button" className="dropdown-item" onClick={handleModal}>
-                <span className='migrate'>Migrate Tokens from 750 to 118 </span>
-            </div>
+            {/*<div role="button" className="dropdown-item" onClick={handleModal}>*/}
+            {/*    <span className='migrate'>Migrate Tokens from 750 to 118 </span>*/}
+            {/*</div>*/}
         </>
 
     );
