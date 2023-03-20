@@ -137,8 +137,8 @@ export const ExternalChains = [
         ledgerAppName: 'Cosmos'
     },
     {
-        rpc: 'https://api.gravity.audit.one/rpc/',
-        rest: 'https://api.gravity.audit.one/lcd/',
+        rpc: 'https://rpc.gravity.audit.one',
+        rest: 'https://rest.gravity.audit.one',
         chainId: 'gravity-bridge-3',
         chainName: 'Gravity',
         currency: {
