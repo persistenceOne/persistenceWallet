@@ -33,6 +33,7 @@ module.exports = {
       "red-light": "#cb575bfa",
     },
     backgroundImage: {
+      "homepage-bg":"radial-gradient(99.06% 99.06% at 49.65% .94%,#222426 0,#282932 100%)",
       "body-bg":
           "radial-gradient(150.28% 150.28% at 50% -50.28%, #372627 0%, #030303 55.21%)",
       atomBanner:
