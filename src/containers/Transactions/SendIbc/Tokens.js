@@ -5,8 +5,8 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import {useTranslation} from "react-i18next";
 import {decimalize, stringToNumber} from "../../../utils/scripts";
-import helper, {tokenValueConversion} from "../../../utils/helper";
-import {DefaultChainInfo, PstakeInfo} from "../../../config";
+import helper, {denomChange, tokenValueConversion} from "../../../utils/helper";
+import {DefaultChainInfo, PstakeInfo, stkATOMInfo} from "../../../config";
 
 const Tokens = () => {
     const {t} = useTranslation();
@@ -74,13 +74,13 @@ const Tokens = () => {
                     onChange={onTokenChangeSelect} displayEmpty disabled={disable}>
                     {
                         tokenList.map((item, index) => {
-                            if (item.denom === DefaultChainInfo.currency.coinMinimalDenom && !item.ibcBalance) {
+                            if (item.denom === DefaultChainInfo.currency.coinMinimalDenom && !item.ibcBalance || item.denom === stkATOMInfo.coinMinimalDenom) {
                                 return (
                                     <MenuItem
                                         key={index + 1}
                                         className=""
                                         value={item.denom}>
-                                        {DefaultChainInfo.currency.coinDenom}
+                                        {denomChange(item.denom)}
                                     </MenuItem>
                                 );
                             }else {

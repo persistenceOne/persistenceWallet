@@ -25,7 +25,14 @@ import {
 } from "cosmjs-types/cosmos/vesting/v1beta1/vesting";
 import * as Sentry from "@sentry/browser";
 import {mnemonicTrim} from "./scripts";
-import {DefaultChainInfo, FeeInfo, MainNetFoundationNodes, PstakeInfo, TestNetFoundationNodes} from "../config";
+import {
+    DefaultChainInfo,
+    FeeInfo,
+    MainNetFoundationNodes,
+    PstakeInfo,
+    stkATOMInfo,
+    TestNetFoundationNodes
+} from "../config";
 
 const tendermint_1 = require("cosmjs-types/ibc/lightclients/tendermint/v1/tendermint");
 const encoding = require("@cosmjs/encoding");
@@ -111,7 +118,7 @@ function accountChangeCheck(errorMessage) {
     }
 }
 
-function denomChange(denom) {
+export const denomChange = (denom) => {
     switch (denom) {
     case DefaultChainInfo.currency.coinMinimalDenom:
         return DefaultChainInfo.currency.coinDenom;
@@ -123,10 +130,12 @@ function denomChange(denom) {
         return COIN_GRAVITY;
     case COIN_OSMO_DENOM:
         return COIN_OSMO;
+    case stkATOMInfo.coinMinimalDenom:
+        return stkATOMInfo.coinDenom;
     default:
         return "Unknown";
     }
-}
+};
 
 
 function denomModify(amount) {

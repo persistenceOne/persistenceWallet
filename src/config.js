@@ -26,6 +26,13 @@ export const PstakeInfo = {
     coinDecimals: 18,
 };
 
+export const stkATOMInfo = {
+    coinDenom: "STKATOM",
+    coinMinimalDenom: "stk/uatom",
+    coinDecimals: 6,
+    coinGeckoId: "persistence"
+};
+
 export const GasInfo ={
     gas: 250000,
     minGas: 80000,

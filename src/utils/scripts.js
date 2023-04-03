@@ -105,6 +105,7 @@ export const mnemonicTrim = (mnemonic) => {
 };
 
 export const decimalize = (valueString, decimals = 18) => {
+    console.log(valueString, decimals, "testing");
     return Decimal.fromAtomics(valueString.toString(), decimals).toString();
 };
 

@@ -6,8 +6,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import {useTranslation} from "react-i18next";
 import {Decimal} from "@cosmjs/math";
 import {decimalize, stringToNumber, unDecimalize} from "../../../utils/scripts";
-import {PstakeInfo, DefaultChainInfo} from "../../../config";
-import helper, {tokenValueConversion} from "../../../utils/helper";
+import {PstakeInfo, DefaultChainInfo, stkATOMInfo} from "../../../config";
+import helper, {denomChange, tokenValueConversion} from "../../../utils/helper";
 
 const Tokens = () => {
     const {t} = useTranslation();
@@ -43,16 +43,23 @@ const Tokens = () => {
         if (evt.target.value === DefaultChainInfo.currency.coinMinimalDenom) {
             tokenDataObject.tokenDenom = evt.target.value;
             tokenDataObject.transferableAmount = transferableAmount;
-        } else {
+        }
+        else {
             tokenList.forEach((item) => {
                 if (evt.target.value === item.denom) {
-                    if(item.denom === PstakeInfo.coinMinimalDenom) {
-                        tokenDataObject.transferableAmount = decimalize(item.amount, PstakeInfo.coinDecimals);
-                    } else {
+                    if (evt.target.value === stkATOMInfo.coinMinimalDenom) {
+                        tokenDataObject.tokenDenom = evt.target.value;
                         tokenDataObject.transferableAmount = tokenValueConversion(stringToNumber(item.amount));
+                    } else {
+                        console.log(evt.target.value, item, "Sdasfasdf");
+                        if (item.denom === PstakeInfo.coinMinimalDenom) {
+                            tokenDataObject.transferableAmount = decimalize(item.amount, PstakeInfo.coinDecimals);
+                        } else {
+                            tokenDataObject.transferableAmount = tokenValueConversion(stringToNumber(item.amount));
+                        }
+                        tokenDataObject.tokenDenom = item.denom;
+                        tokenDataObject.tokenItem = item;
                     }
-                    tokenDataObject.tokenDenom = item.denom;
-                    tokenDataObject.tokenItem = item;
                 }
             });
         }
@@ -76,13 +83,13 @@ const Tokens = () => {
                     onChange={onChangeSelect}>
                     {
                         tokenList.map((item, index) => {
-                            if (item.denom === DefaultChainInfo.currency.coinMinimalDenom) {
+                            if (item.denom === DefaultChainInfo.currency.coinMinimalDenom || item.denom === stkATOMInfo.coinMinimalDenom) {
                                 return (
                                     <MenuItem
                                         key={index + 1}
                                         className=""
                                         value={item.denom}>
-                                        {DefaultChainInfo.currency.coinDenom}
+                                        {denomChange(item.denom)}
                                     </MenuItem>
                                 );
                             }
