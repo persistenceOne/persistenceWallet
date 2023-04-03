@@ -6,6 +6,8 @@ import { Primitive } from "@sentry/types";
 import { displayToast } from "../components/molecules/toast";
 import { ToastType } from "../components/molecules/toast/types";
 import {useAppStore} from "../../store/store";
+import { Coin } from "@cosmjs/proto-signing";
+import {DefaultChainInfo, MainNetFoundationNodes, TestNetFoundationNodes} from "./config";
 
 export const emptyFunc = () => ({});
 
@@ -123,7 +125,7 @@ export const exceptionHandle = (
     },
     ToastType.ERROR
   );
-  useAppStore.getState().setTxnInfo(false, null, "failed");
+  // useAppStore.getState().setTxnInfo(false, null, "failed");
   const customScope = new Scope();
   customScope.setLevel("fatal");
   customScope.setTags(sentryTag);
@@ -136,8 +138,56 @@ export const sentryReport = (exception: any, context: CaptureContext) => {
 };
 
 export const resetStore = () => {
-  useAppStore.getState().resetWalletSlice();
-  useAppStore.getState().resetBalanceSlice();
-  useAppStore.getState().resetInitialDataSlice();
-  useAppStore.getState().resetTxnSlice();
+  // useAppStore.getState().resetWalletSlice();
+  // useAppStore.getState().resetBalanceSlice();
+  // useAppStore.getState().resetInitialDataSlice();
+  // useAppStore.getState().resetTxnSlice();
 };
+
+function isActive(item:any) {
+  return item.jailed === false && item.status === 3;
+}
+
+function checkLastPage(pageNumber:number, limit:number, totalTransactions:number) {
+  return totalTransactions / limit <= pageNumber;
+}
+
+export const tokenValueConversion = (data:string) => {
+  return Number(data) / DefaultChainInfo.uTokenValue;
+};
+
+export const denomModify = (amount:Coin)=> {
+  if (Array.isArray(amount)) {
+    if (amount.length) {
+      if (amount[0].denom === DefaultChainInfo.currency.coinMinimalDenom) {
+        return [tokenValueConversion(amount[0].amount), DefaultChainInfo.currency.coinDenom];
+      } else {
+        return [amount[0].amount, amount[0].denom];
+      }
+    } else {
+      return '';
+    }
+  } else {
+    if (amount.denom === DefaultChainInfo.currency.coinMinimalDenom) {
+      return [tokenValueConversion(amount.amount), DefaultChainInfo.currency.coinDenom];
+    } else {
+      return [amount.amount, amount.denom];
+    }
+  }
+}
+
+const  foundationNodeCheck = (validatorAddress:string) => {
+  if (NODE_CONF === "ibcStaging.json") {
+    if (TestNetFoundationNodes.includes(validatorAddress)) {
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    if (MainNetFoundationNodes.includes(validatorAddress)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
