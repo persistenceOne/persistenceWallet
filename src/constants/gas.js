@@ -1,0 +1,1 @@
+export const TX_GAS_SET = 'TX_GAS_SET';

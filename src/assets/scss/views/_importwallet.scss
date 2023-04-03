@@ -1,0 +1,196 @@
+
+.import-wallet-body {
+  padding: 0 50px 40px 50px;
+
+  .buttons {
+    padding-top: 30px;
+    text-align: center;
+
+    .button-secondary {
+      float: left;
+      padding: .375rem 0.8rem;
+      background: #F0F1F2;
+      border-color: transparent;
+
+      .icon {
+        width: 20px;
+      }
+    }
+
+    .button.button-primary.large {
+      width: auto;
+    }
+
+    .button.button-primary {
+      width: 200px;
+    }
+  }
+
+  .heading {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 27px;
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    color: #313238;
+    padding-bottom: 30px;
+  }
+
+  form {
+    .form-field.upload {
+      padding-top: 10px;
+      align-items: baseline;
+    }
+
+    .form-field {
+      justify-content: center;
+    }
+
+    .label {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 150%;
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      color: #2E3239;
+    }
+
+    textarea {
+      background: #F5F6FA;
+      border: 0px solid;
+    }
+
+    .form-control-file {
+      background: transparent;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    input {
+      max-width: 300px;
+      background: #F5F6FA;
+      font-size: 14px;
+      line-height: 150%;
+      height: calc(2.3em + .75rem + 2px);
+      border-radius: 0;
+      border: 0px solid;
+      color: #8D9CB5;
+
+      &::placeholder {
+        font-size: 14px;
+        color: #8D9CB5;
+      }
+    }
+  }
+
+  .menmonic-list {
+    padding-bottom: 10px;
+  }
+
+  .mnemonic-result {
+    font-family: 'Poppins', sans-serif;
+    padding: 10px 0;
+    font-size: 14px;
+    word-break: break-word;
+    margin: 0;
+    text-align: center;
+    .label{
+      font-weight: 700;
+    }
+  }
+
+  .note{
+    font-size: 14px;
+  }
+
+  .download-section {
+    padding-top: 20px;
+
+    .name {
+      text-align: center;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 150%;
+      color: #2E3239;
+      margin: 0;
+    }
+
+    .key-download {
+      text-align: center;
+      padding: 10px;
+      background: rgba(233, 114, 28, 0.07);
+      max-width: 350px;
+      margin: auto;
+
+      a {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 150%;
+        color: #E9721C !important;
+      }
+
+      .icon.icon-download-icon {
+        width: 20px;
+        transform: rotate(0) !important;
+        margin-bottom: -6px;
+        margin-left: 10px;
+      }
+
+      .icon {
+        width: 16px;
+        margin-left: 10px;
+        fill: #E9721C;
+        transform: rotate(180deg);
+      }
+    }
+  }
+}
+
+.advanced-wallet-accordion {
+  .accordion-body {
+    height: auto;
+    max-height: 0px;
+    overflow: hidden;
+    transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+  }
+
+  .accordion-body.show {
+    padding: 0 4px;
+    max-height: 400px;
+    //border: 1px solid #E3E5F4;
+  }
+
+  .card {
+    border: 0px solid;
+    background: transparent;
+
+    .card-header {
+      background: transparent;
+      padding: 0 0 10px 0;
+      display: flex;
+      display: -webkit-flex;
+      align-items: center;
+      justify-content: center;
+      border: 0;
+
+      p {
+        margin: 0;
+      }
+
+      button {
+        border: 0px;
+        background: transparent;
+        outline: none;
+
+        .icon {
+          width: 20px;
+        }
+      }
+    }
+
+
+  }
+}

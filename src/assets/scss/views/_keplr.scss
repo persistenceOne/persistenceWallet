@@ -1,0 +1,69 @@
+.keplr-section {
+  background: radial-gradient(99.06% 99.06% at 49.65% .94%, #222426 0, #282932 100%);
+}
+
+.keplr-container {
+  height: calc(100vh - 62px);
+  overflow: auto;
+  padding-top: 170px;
+
+  .info {
+    max-width: 650px;
+    background: #FFFFFF;
+    margin: auto;
+
+    .text {
+      padding: 20px 0;
+
+      p {
+        margin-bottom: 10px;
+      }
+    }
+
+    h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 24px;
+      padding-bottom: 20px;
+    }
+
+    .buttons-list {
+      display: flex;
+      display: -webkit-flex;
+      align-content: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+
+      p {
+        margin: 0;
+      }
+
+      .button {
+        line-height: 1.3;
+      }
+    }
+
+    .header-info {
+      position: relative;
+      display: flex;
+      display: -webkit-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 30px 30px 0 30px;
+
+      .previous-section .button {
+        position: absolute;
+        left: 30px;
+        top: 30px;
+
+        .icon {
+          width: 20px;
+        }
+      }
+    }
+
+    .info-body {
+      padding: 30px;
+
+    }
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "name": "pwallet",
+  "version": "3.1.1",
+  "private": true,
+  "dependencies": {
+    "@cosmjs/crypto": "^0.28.11",
+    "@cosmjs/encoding": "^0.28.11",
+    "@cosmjs/ledger-amino": "^0.28.11",
+    "@cosmjs/math": "^0.28.11",
+    "@cosmjs/proto-signing": "^0.28.11",
+    "@cosmjs/stargate": "^0.28.11",
+    "@cosmjs/tendermint-rpc": "^0.28.11",
+    "@ledgerhq/hw-transport-webusb": "^5.53.1",
+    "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2",
+    "@sentry/browser": "^6.17.4",
+    "@sentry/react": "^6.17.4",
+    "@sentry/tracing": "^6.17.4",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "@types/create-hash": "^1.2.2",
+    "@types/secp256k1": "^4.0.1",
+    "axios": "^0.21.1",
+    "bip39": "^3.0.2",
+    "bootstrap": "^4.6.0",
+    "coingecko-api": "^1.0.10",
+    "cosmjs-types": "^0.4.1",
+    "i18next": "^19.8.7",
+    "i18next-browser-languagedetector": "^6.0.1",
+    "is-empty": "^1.2.0",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.1",
+    "mui-datatables": "^3.7.6",
+    "qrcode.react": "^1.0.1",
+    "react": "^17.0.1",
+    "react-bootstrap": "^1.4.3",
+    "react-copy-to-clipboard": "^5.0.3",
+    "react-dom": "^17.0.1",
+    "react-ga4": "^1.4.1",
+    "react-i18next": "^11.8.6",
+    "react-mailchimp-subscribe": "^2.1.0",
+    "react-redux": "^7.2.2",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "4.0.3",
+    "react-select": "^5.2.2",
+    "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-thunk": "^2.3.0",
+    "styled-components": "^5.1.1",
+    "web-vitals": "^1.0.1"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "eslint": "^7.24.0",
+    "eslint-plugin-react": "^7.23.2",
+    "long": "^5.2.0"
+  }
+}

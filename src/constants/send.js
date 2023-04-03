@@ -1,0 +1,4 @@
+export const TX_SEND_AMOUNT_SET = 'TX_SEND_AMOUNT_SET';
+export const TX_SEND_TOKEN_SET = 'TX_SEND_TOKEN_SET';
+export const TX_SEND_ADDRESS_SET = 'TX_SEND_ADDRESS_SET';
+export const TX_SEND_MEMO_SET = 'TX_SEND_MEMO_SET';

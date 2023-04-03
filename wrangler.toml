@@ -1,0 +1,17 @@
+name = "persistence-wallet"
+type = "webpack"
+zone_id = '000fde296cba847a78e918414382ba7a'
+usage_model = ''
+compatibility_flags = []
+workers_dev = true
+site = {bucket = "./build",entry-point = "workers-site"}
+compatibility_date = "2021-10-08"
+
+[env.testnet-staging]
+routes = ["https://test-core-1.wallet.persistence.one/*"]
+
+[env.mainnet-staging]
+routes = ["https://staging.wallet.persistence.one/*"]
+
+[env.release]
+routes = ["https://wallet.persistence.one/*"]

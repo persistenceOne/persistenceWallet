@@ -1,0 +1,118 @@
+.header .navbar .header-logo {
+  width: 120px;
+  height: 30px;
+  display: block;
+}
+
+.dark-mode .header .navbar .header-logo {
+  background: url(../../../src/assets/images/logo_bold.svg) no-repeat;
+}
+
+.light-mode .header .navbar .header-logo {
+  background: url(../../../src/assets/images/logo_bold_dark.svg) no-repeat;
+}
+
+.dashboard .navbar-expand-lg .navbar-nav, .dashboard .navbar-nav {
+  flex-direction: row !important;
+}
+
+.sidebar-section {
+  height: 100%;
+
+  .mobile-sidebar-container {
+    .nav-item {
+      .nav-link {
+        width: 100%;
+        display: flex;
+        display: -webkit-flex;
+        position: relative;
+        box-sizing: border-box;
+        text-align: left;
+        align-items: center;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        justify-content: flex-start;
+        text-decoration: none;
+        font-family: "Poppins", sans-serif;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 1.5;
+        letter-spacing: .1em;
+        color: #5F646C;
+
+        .icon {
+          fill: #5F646C;
+        }
+      }
+
+      a:hover, a.active, a:focus {
+        color: #e50913 !important;
+
+        .icon {
+          fill: #e50913;
+        }
+      }
+    }
+
+    .icon-container {
+      color: rgba(0, 0, 0, 0.54);
+      display: inline-flex;
+      min-width: 56px;
+      flex-shrink: 0;
+    }
+  }
+}
+
+.dark-mode .navbar {
+  .nav-menu-icon {
+    outline: none !important;
+
+    svg {
+      fill: #ffffff;
+    }
+  }
+}
+
+.light-mode .navbar {
+  .nav-menu-icon {
+    outline: none !important;
+
+    svg {
+      fill: #2E3239;
+    }
+  }
+}
+
+
+.top-banner-section{
+  background: #e50913;
+  text-align: center;
+  padding: 5px 40px 5px 0;
+  position: relative;
+  .content{
+    color: #FFFFFF;
+    font-size: 12px;
+    margin: 0;
+    &:hover{
+      text-decoration: underline;
+    }
+    .icon{
+      margin-left: 10px;
+      fill: #FFFFFF;
+      width: 16px;
+    }
+    .logo{
+      width: 16px;
+      margin-right: 10px;
+    }
+  }
+  .icon-close{
+    width: 10px;
+    fill: #FFFFFF;
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 12px;
+  }
+
+}
