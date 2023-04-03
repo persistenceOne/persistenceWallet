@@ -1,0 +1,39 @@
+.appButton {
+    text-align: center;
+    box-sizing: border-box;
+    box-shadow: none;
+    border-radius: 6px;
+}
+
+.primary {
+    background: #c73238;
+    color: #fcfcfc;
+    border: 0 solid;
+}
+
+.primary:hover{
+    background: #cb575bfa;
+}
+
+.secondary {
+    background: transparent;
+    color: #fcfcfc;
+    border: 3px solid #C73238;
+}
+
+.secondary:hover{
+    background: #C73238;
+}
+
+.tertiary {
+    background: transparent;
+    color: #fcfcfc;
+    border: 2px solid #00FFA3;
+}
+
+.primary:disabled, .secondary:disabled, .tertiary:disabled{
+    color: #787878;
+    background: #4A2A2A;
+}
+
+

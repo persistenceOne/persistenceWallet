@@ -1,0 +1,32 @@
+.modal{
+
+}
+
+.backDrop{
+    opacity: 0.5;
+    background: #000;
+}
+.modalDialog{
+    max-width: 500px;
+}
+
+.modalContent{
+    background: #282828;
+    box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
+}
+
+.buttonClose{
+    position: absolute;
+    top: 35px;
+    right: 30px;
+    width: 1em;
+    height: 1em;
+}
+
+.buttonCloseIcon{
+    fill:#A6A6A6;
+}
+
+.buttonCloseIcon:hover{
+    fill:#ECECEC;
+}

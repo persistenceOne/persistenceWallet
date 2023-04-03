@@ -1,0 +1,18 @@
+
+.copyResult{
+    top: -15px;
+    width: auto;
+    right: 50%;
+    font-size: 10px;
+}
+
+.copyButton {
+    outline: none !important;
+    border: 0 solid;
+    background: none;
+}
+
+.copyIcon {
+    width: 16px;
+    height: 16px;
+}
