@@ -6,9 +6,10 @@ export type CoinType = 118 | 750;
 export interface WalletSliceState {
   wallet: {
     advancedInfo: {
-      accountNumber: number | string;
-      accountIndex: number | string;
+      accountNumber: number;
+      accountIndex: number;
       bip39Passphrase: string;
+      active: boolean;
     };
     keyStore: {
       file: any;
@@ -19,8 +20,9 @@ export interface WalletSliceState {
 }
 
 export interface WalletSliceActions {
-  handleWalletAccountNumber: (value: number | string) => void;
-  handleWalletAccountIndex: (value: number | string) => void;
+  handleWalletAdvanceMode: (value: boolean) => void;
+  handleWalletAccountNumber: (value: number) => void;
+  handleWalletAccountIndex: (value: number) => void;
   handleWalletAccountPassPhrase: (value: string) => void;
   handleWalletKeyStoreFile: (value: any) => void;
   handleWalletKeyStoreFilePassword: (value: any) => void;
@@ -32,9 +34,10 @@ export type WalletSlice = WalletSliceState & WalletSliceActions;
 const initialState = {
   wallet: {
     advancedInfo: {
-      accountNumber: "",
-      accountIndex: "",
+      accountNumber: 0,
+      accountIndex: 0,
       bip39Passphrase: "",
+      active: false,
     },
     keyStore: {
       file: null,
@@ -46,16 +49,22 @@ const initialState = {
 
 export const createWalletSlice: StateCreator<WalletSlice> = (set) => ({
   ...initialState,
-  handleWalletAccountNumber: (value: number | string) =>
+  handleWalletAccountNumber: (value: number) =>
     set(
       produce((state: WalletSlice) => {
         state.wallet.advancedInfo.accountNumber = value;
       })
     ),
-  handleWalletAccountIndex: (value: number | string) =>
+  handleWalletAccountIndex: (value: number) =>
     set(
       produce((state: WalletSlice) => {
         state.wallet.advancedInfo.accountIndex = value;
+      })
+    ),
+  handleWalletAdvanceMode: (value: boolean) =>
+    set(
+      produce((state: WalletSlice) => {
+        state.wallet.advancedInfo.active = value;
       })
     ),
   handleWalletAccountPassPhrase: (value: string) =>

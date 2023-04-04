@@ -4,9 +4,11 @@ import Modal from "../../molecules/modal";
 import Button from "../../atoms/button";
 import { CreateWalletSteps } from "./types";
 import SeedCreation from "./seed-creation";
+import AccountInfo from "./account-info";
 
 const CreateWallet = () => {
   const [steps, setSteps] = useState<CreateWalletSteps>("1");
+
   const handleCreateWalletModal = useAppStore(
     (state) => state.handleCreateWalletModal
   );
