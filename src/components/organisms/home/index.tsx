@@ -18,8 +18,8 @@ const HomeContainer = () => {
                     <p className={"text-base text-light-emphasis font-medium text-center"}>Earn upto 35% annual rewards by staking your XPRT</p>
                 <div className="pt-8">
                     <Button
-                        className="button w-full md:text-sm flex items-center
-            justify-center w-[150px] md:w-[200px] mx-auto mb-4"
+                        className="button md:text-sm flex items-center
+            justify-center w-[150px] mx-auto mb-4"
                         type="primary"
                         size="medium"
                         content="Create Wallet"

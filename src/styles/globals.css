@@ -9,3 +9,22 @@ body {
 html, body{
     height: 100%;
 }
+
+
+.collapseMenu {
+    max-height: 0;
+    -moz-transition: all 0.5s ease-out;
+    -ms-transition: all 0.5s ease-out;
+    -o-transition: all 0.5s ease-out;
+    transition: all 0.5s ease-out;
+    overflow: hidden;
+}
+
+.collapseMenu.active {
+    max-height: 400px;
+    height: auto;
+    -moz-transition: all 0.5s ease-in;
+    -ms-transition: all 0.5s ease-in;
+    -o-transition: all 0.5s ease-in;
+    transition: all 0.5s ease-in;
+}
