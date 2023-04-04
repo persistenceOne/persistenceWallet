@@ -1,0 +1,14 @@
+.DropdownMenu{
+    inset: 0 auto auto 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 200ms ease, transform 200ms ease, visibility 200ms;
+    right: 0;
+    top: 100%;
+}
+
+.DropdownMenuActive{
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0px);
+}

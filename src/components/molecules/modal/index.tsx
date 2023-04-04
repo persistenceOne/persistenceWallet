@@ -12,7 +12,9 @@ const Modal = ({
   onClose = emptyFunc,
   className,
   staticBackDrop = true,
-  closeButton = true
+  closeButton = true,
+    modalBodyClassName,
+    modalDialogClassName
 }: ModalTypes) => {
   const modalRef = useRef<HTMLDivElement>(null);
   useOnClickOutside(modalRef, onClose);
@@ -32,7 +34,7 @@ const Modal = ({
         }
       >
         <div
-          className={`${styles.modalDialog} flex items-center min-h-full w-auto m-auto relative modalDialog`}
+          className={`${styles.modalDialog} flex items-center min-h-full w-auto m-auto relative modalDialog ${modalDialogClassName}`}
         >
           <div
             className={`${styles.modalContent} relative flex flex-col w-full rounded-lg text-light-mid modalContent`}
@@ -57,7 +59,7 @@ const Modal = ({
             ) : (
               ""
             )}
-            <div className="modalBody p-8 space-y-6 md:p-6">{children}</div>
+            <div className={`modalBody p-8 md:p-6 ${modalBodyClassName}`}>{children}</div>
           </div>
         </div>
       </div>

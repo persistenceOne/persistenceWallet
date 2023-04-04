@@ -1,7 +1,9 @@
 import {DirectSecp256k1HdWallet} from "@cosmjs/proto-signing";
-import {HdPath, stringToPath} from "@cosmjs/crypto";
+import {HdPath, pathToString, stringToPath} from "@cosmjs/crypto";
 import crypto from "crypto";
 const passwordHashAlgorithm = "sha512";
+const bip39 = require("bip39");
+const prefix = "persistence"
 
 export const makeHdPath = (accountNumber = "0", addressIndex = "0", coinType = 118):HdPath => {
     return stringToPath("m/44'/" + coinType + "'/" + accountNumber + "'/0/" + addressIndex);
@@ -68,3 +70,45 @@ export const decryptKeyStore = (fileData:any, password:any) => {
         };
     }
 };
+
+export const getWallet = async (mnemonic:string, walletPath = makeHdPath(), bip39Passphrase = "") => {
+    try {
+        const [wallet, address]:any = await MnemonicWalletWithPassphrase(mnemonic, walletPath, bip39Passphrase, prefix);
+        return {
+            success: true,
+            address: address,
+            mnemonic: wallet.mnemonic!,
+            walletPath: pathToString(walletPath)
+        };
+    } catch (e:any) {
+        return {
+            success: false,
+            error: e.message
+        };
+    }
+}
+
+export const createRandomWallet = async (walletPath = makeHdPath(), bip39Passphrase = "") => {
+    return await getWallet(bip39.generateMnemonic(256), walletPath, bip39Passphrase);
+}
+
+export const createWallet = async (mnemonic:string, walletPath = makeHdPath(), bip39Passphrase = "") => {
+    let mnemonicList = mnemonic.replace(/\s/g, " ").split(/\s/g);
+    let mnemonicWords:any = [];
+    for (let word of mnemonicList) {
+        if (word === "") {
+            console.log();
+        } else {
+            let trimmedWord = word.replace(/\s/g, "");
+            mnemonicWords.push(trimmedWord);
+        }
+    }
+    mnemonicWords = mnemonicWords.join(" ");
+    let validateMnemonic = bip39.validateMnemonic(mnemonicWords);
+    if (validateMnemonic) {
+        return await getWallet(mnemonicWords, walletPath, bip39Passphrase);
+    } else {
+        return new Error('Invalid mnemonic.');
+    }
+}
+

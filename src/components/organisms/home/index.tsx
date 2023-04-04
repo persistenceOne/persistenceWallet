@@ -1,8 +1,14 @@
 import React from "react";
 import Button from "../../atoms/button";
 import NavigationBar from "../homePageNav";
+import {useAppStore} from "../../../../store/store";
+import CreateWallet from "./create-wallet";
 
 const HomeContainer = () => {
+    const handleCreateWalletModal = useAppStore((state) => state.handleCreateWalletModal);
+    const createWalletHandler = () =>{
+        handleCreateWalletModal(true)
+    }
     return (
         <div className="bg-homepage-bg h-screen">
             <NavigationBar/>
@@ -17,12 +23,13 @@ const HomeContainer = () => {
                         type="primary"
                         size="medium"
                         content="Create Wallet"
-                        onClick={()=>{}}
+                        onClick={createWalletHandler}
                     />
                     <p className={"text-base text-light-emphasis text-center underline cursor-pointer"}>Generate KeyStore File</p>
                 </div>
                 </div>
             </div>
+            <CreateWallet/>
         </div>
     );
 };

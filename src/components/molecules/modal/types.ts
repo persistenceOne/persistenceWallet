@@ -7,5 +7,7 @@ export interface ModalTypes {
   closeButton?: boolean;
   show: boolean;
   className?: string;
+  modalDialogClassName?:string;
+  modalBodyClassName?:string;
   staticBackDrop?: boolean;
 }
