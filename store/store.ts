@@ -6,6 +6,7 @@ import {
   CreateWalletSlice,
 } from "./slices/create-wallet";
 import { WalletSlice, createWalletSlice } from "./slices/wallet";
+import { persist } from "zustand/middleware";
 
 type StoreState = SidebarSlice & CreateWalletSlice & WalletSlice;
 
@@ -14,5 +15,18 @@ export const useAppStore = create<StoreState>()((...a) => ({
   ...createCreateWalletSlice(...a),
   ...createWalletSlice(...a),
 }));
+//
+// export const useAppStore = create<StoreState>()(
+//     persist(
+//         (...a) => ({
+//             ...createSidebarSlice(...a),
+//             ...createCreateWalletSlice(...a),
+//             ...createWalletSlice(...a),
+//         }),
+//         {
+//             name: "auth",
+//         }
+//     )
+// );
 
 mountStoreDevtool("Store", useAppStore);

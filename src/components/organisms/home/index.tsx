@@ -5,6 +5,8 @@ import { useAppStore } from "../../../../store/store";
 import CreateWallet from "./create-wallet";
 import GenerateKeyStore from "./genarate-keystore";
 import UpdateKeyStore from "../common/updatePassword";
+import SignIn from "../common/signIn";
+import SignInKeyStore from "../common/signIn/keyStore/key-store";
 
 const HomeContainer = () => {
   const handleCreateWalletModal = useAppStore(
@@ -62,6 +64,8 @@ const HomeContainer = () => {
       <CreateWallet />
       <GenerateKeyStore />
       <UpdateKeyStore />
+      <SignIn />
+      <SignInKeyStore />
     </div>
   );
 };

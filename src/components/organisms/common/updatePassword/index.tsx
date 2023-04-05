@@ -18,6 +18,7 @@ const UpdateKeyStore = () => {
   const [steps, setSteps] = useState<CreateWalletSteps>("1");
   const [errorMessage, setErrorMessage] = useState("");
   const [response, setResponse] = useState("");
+  console.log("test123");
 
   const [
     accountNumber,
@@ -61,7 +62,6 @@ const UpdateKeyStore = () => {
       fileReader.readAsText(file, "UTF-8");
       fileReader.onload = async (event: any) => {
         const res = JSON.parse(event.target.result);
-
         const decryptedData = decryptKeyStore(res, password);
         if (decryptedData.error != null) {
           setErrorMessage(decryptedData.error);
