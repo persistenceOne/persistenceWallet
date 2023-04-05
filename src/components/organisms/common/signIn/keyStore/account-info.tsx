@@ -2,6 +2,12 @@ import React, { useEffect } from "react";
 import { Spinner } from "../../../../atoms/spinner";
 import Button from "../../../../atoms/button";
 import { useAppStore } from "../../../../../../store/store";
+import { useRouter } from "next/router";
+import {
+  AccountDetails,
+  KeyStoreLoginDetails,
+} from "../../../../../../store/slices/wallet";
+import useLocalStorage from "../../../../../customHooks/useLocalStorage";
 
 export interface AccountInfoProps {
   coin118Data: any;
@@ -13,6 +19,12 @@ export interface AccountInfoProps {
 }
 
 const AccountInfo: React.FC<AccountInfoProps> = ({ ...Props }) => {
+  const router = useRouter();
+  const [accountInfo, setAccountInfo] = useLocalStorage("accountDetails", "");
+  const [keyStoreDetails, setKeyStoreDetails] = useLocalStorage(
+    "accountKeyStoreDetails",
+    ""
+  );
   const {
     coin118Data,
     accountIndex,
@@ -29,16 +41,16 @@ const AccountInfo: React.FC<AccountInfoProps> = ({ ...Props }) => {
     (state) => state.handleWalletKeyStoreLoginDetails
   );
 
-  const handleSubmit = () => {
-    handleWalletAccountDetails({
+  const handleSubmit = async () => {
+    const accountDetails: AccountDetails = {
       accountType: "vesting",
       address: coin750Data.address,
       loginType: "keyStore",
       accountIndex: accountIndex,
       accountNumber: accountNumber,
       bipPasPhrase: bip39Passphrase,
-    });
-    handleWalletKeyStoreLoginDetails({
+    };
+    const accountKeyStoreDetails: KeyStoreLoginDetails = {
       coin118Info: {
         walletPath: coin118Data.walletPath,
         address: coin118Data.address,
@@ -48,7 +60,12 @@ const AccountInfo: React.FC<AccountInfoProps> = ({ ...Props }) => {
         address: coin750Data.address,
       },
       encryptedSeed: encryptedMnemonic,
-    });
+    };
+    setAccountInfo(accountDetails);
+    setKeyStoreDetails(accountKeyStoreDetails);
+    handleWalletAccountDetails(accountDetails);
+    handleWalletKeyStoreLoginDetails(accountKeyStoreDetails);
+    await router.push("/dashboard");
   };
 
   return (

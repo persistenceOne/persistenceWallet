@@ -7,7 +7,7 @@ import { Icon } from "../../atoms/icon";
 import BalanceList from "./balanceList";
 import Tooltip from "rc-tooltip";
 import { useAppStore } from "../../../../store/store";
-import {emptyFunc} from "../../../helpers/utils";
+import { emptyFunc } from "../../../helpers/utils";
 
 const socialList = [
   {
@@ -44,12 +44,12 @@ const SidebarContent = () => {
     {
       icon: "staking",
       text: "Dashboard",
-      path: "/",
+      path: "/dashboard",
     },
     {
       icon: "bridge",
       text: "Staking",
-      path: "/bridge",
+      path: "/staking",
     },
     {
       icon: "defi",
@@ -104,12 +104,10 @@ const SidebarContent = () => {
                 </Link>
               </li>
             ))}
-            {wallet  ? (
+            {wallet ? (
               <li className={`list-none`}>
                 <Link
-                  href={`url/address/${
-                    "wallet.account"
-                  }`}
+                  href={`url/address/${"wallet.account"}`}
                   className="nav-link"
                   passHref
                   target={"_blank"}
