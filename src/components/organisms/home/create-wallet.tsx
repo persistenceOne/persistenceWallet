@@ -28,7 +28,7 @@ const CreateWallet = () => {
         className="text-light-high text-center font-semibold text-lg leading normal px-8 pt-8 md:px-6 md:pt-6
        md:text-base"
       >
-        Bond LP Tokens
+        About Persistence Wallet
       </p>
       <div className={`px-8 py-6 m-0`}>
         <div className="p-6 bg-[#383838] mb-6">
@@ -47,7 +47,7 @@ const CreateWallet = () => {
           </ul>
         </div>
         <Button
-          className="button w-full md:text-sm flex items-center
+          className="button md:text-sm flex items-center
             justify-center w-[150px] md:w-[200px] mx-auto mb-4"
           type="primary"
           size="medium"

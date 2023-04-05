@@ -76,6 +76,14 @@ const SeedCreation = ({ handleSteps }: any) => {
     }
   };
 
+  const previousHandler = () => {
+    if (quiz) {
+      setQuiz(false);
+    } else {
+      handleSteps("1");
+    }
+  };
+
   return (
     <>
       {!seedStatus ? (
@@ -83,9 +91,9 @@ const SeedCreation = ({ handleSteps }: any) => {
           <div className="px-8 pt-8 md:px-6 md:pt-6">
             <button
               className="absolute left-[50px] top-[40px]"
-              onClick={() => handleSteps("1")}
+              onClick={previousHandler}
             >
-              <Icon viewClass="arrow-right" iconName="left-arrow" />
+              <Icon viewClass="arrow-right fill-[#fff]" iconName="left-arrow" />
             </button>
             <p className="text-center text-light-high font-semibold text-2xl leading-normal">
               Create Wallet
