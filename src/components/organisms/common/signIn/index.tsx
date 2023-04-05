@@ -39,7 +39,7 @@ const SignIn = () => {
       onClose={handleClose}
       header=""
       modalBodyClassName={"!p-0"}
-      modalDialogClassName={"!max-w-[650px]"}
+      modalDialogClassName={"!max-w-[600px]"}
       staticBackDrop={true}
       closeButton={true}
     >
@@ -94,18 +94,6 @@ const SignIn = () => {
               />
               <p className="group-hover:text-[#ececec] text-[#A6A6A6] font-medium">
                 Use KeyStore
-              </p>
-            </div>
-            <div className="p-4 rounded-md bg-[#383838] w-[170px] text-center cursor-pointer group m-2">
-              <img
-                src={"/images/keplr.svg"}
-                width={22}
-                height={22}
-                className={"mx-auto mb-2"}
-                alt="ledger"
-              />
-              <p className="group-hover:text-[#ececec] text-[#A6A6A6] font-medium">
-                Use Address
               </p>
             </div>
           </div>

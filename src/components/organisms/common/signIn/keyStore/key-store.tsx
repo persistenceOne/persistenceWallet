@@ -16,11 +16,11 @@ import { ENCRYPTED_MNEMONIC } from "../../../../../../appConstants";
 import { displayToast } from "../../../../molecules/toast";
 import { ToastType } from "../../../../molecules/toast/types";
 import AdvancedOptions from "../../advanced";
-import AccountInfo from "./account-info";
+import AccountInfo, { AccountInfoProps } from "./account-info";
 
 const SignInKeyStore = () => {
   const [errorMessage, setErrorMessage] = useState("");
-  const [response, setResponse] = useState<any>("");
+  const [response, setResponse] = useState<AccountInfoProps | null>(null);
   const keyStoreModal = useAppStore(
     (state) => state.wallet.signIn.keyStoreModal
   );
@@ -39,24 +39,17 @@ const SignInKeyStore = () => {
     handleWalletSignInKeyStoreModal(false);
   };
 
-  const [
-    accountNumber,
-    accountIndex,
-    bip39Passphrase,
-    file,
-    password,
-    coinType,
-  ] = useAppStore(
-    (state) => [
-      state.wallet.advancedInfo.accountNumber,
-      state.wallet.advancedInfo.accountIndex,
-      state.wallet.advancedInfo.bip39Passphrase,
-      state.wallet.keyStore.file,
-      state.wallet.keyStore.password,
-      state.wallet.keyStore.coinType,
-    ],
-    shallow
-  );
+  const [accountNumber, accountIndex, bip39Passphrase, file, password] =
+    useAppStore(
+      (state) => [
+        state.wallet.advancedInfo.accountNumber,
+        state.wallet.advancedInfo.accountIndex,
+        state.wallet.advancedInfo.bip39Passphrase,
+        state.wallet.keyStore.file,
+        state.wallet.keyStore.password,
+      ],
+      shallow
+    );
 
   const handleSubmit = () => {
     try {
@@ -64,7 +57,7 @@ const SignInKeyStore = () => {
       let mnemonic = "";
       fileReader.readAsText(file, "UTF-8");
       fileReader.onload = async (event: any) => {
-        localStorage.setItem(ENCRYPTED_MNEMONIC, event.target.result);
+        const encryptedMnemonic = event.target.result;
         const res = JSON.parse(event.target.result);
         const decryptedData = decryptKeyStore(res, password);
         if (decryptedData.error != null) {
@@ -102,7 +95,14 @@ const SignInKeyStore = () => {
             address: coin750Response.address,
             walletPath: coin750Response.walletPath,
           };
-          setResponse({ coin118Data, coin750Data });
+          setResponse({
+            coin118Data,
+            coin750Data,
+            accountNumber,
+            accountIndex,
+            bip39Passphrase,
+            encryptedMnemonic,
+          });
         }
       };
     } catch (e: any) {
@@ -126,7 +126,7 @@ const SignInKeyStore = () => {
       staticBackDrop={true}
       closeButton={true}
     >
-      {response === "" ? (
+      {response === null ? (
         <>
           <div className="px-8 pt-8 md:px-6 md:pt-6">
             <p className="text-center text-light-high font-semibold text-2xl leading-normal">
@@ -150,7 +150,7 @@ const SignInKeyStore = () => {
           </div>
         </>
       ) : (
-        <AccountInfo accountResponse={response} />
+        <AccountInfo {...response} />
       )}
     </Modal>
   );

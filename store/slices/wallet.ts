@@ -2,11 +2,37 @@ import { StateCreator } from "zustand";
 import produce from "immer";
 export type CoinType = 118 | 750;
 
+export type loginType = "keplr" | "keyStore" | "ledger";
+
+export type accountType = "vesting" | "non-vesting";
+
+export type AccountDetails = {
+  loginType: loginType | null;
+  accountType: accountType | null;
+  address: string | null;
+  accountNumber?: string | null;
+  accountIndex?: string | null;
+  bipPasPhrase?: string | null;
+  defaultFee?: string | null;
+};
+
+export type KeyStoreLoginDetails = {
+  coin118Info: {
+    address: string | null;
+    walletPath: string | null;
+  };
+  coin750Info: {
+    address: string | null;
+    walletPath: string | null;
+  };
+  encryptedSeed?: string | null;
+};
+
 export interface WalletSliceState {
   wallet: {
     advancedInfo: {
-      accountNumber: number;
-      accountIndex: number;
+      accountNumber: string;
+      accountIndex: string;
       bip39Passphrase: string;
       active: boolean;
     };
@@ -22,20 +48,24 @@ export interface WalletSliceState {
       modal: boolean;
       keyStoreModal: boolean;
     };
+    accountDetails: AccountDetails;
+    keyStoreLoginDetails: KeyStoreLoginDetails;
   };
 }
 
 export interface WalletSliceActions {
   handleWalletChangePassWordModal: (value: boolean) => void;
   handleWalletAdvanceMode: (value: boolean) => void;
-  handleWalletAccountNumber: (value: number) => void;
-  handleWalletAccountIndex: (value: number) => void;
+  handleWalletAccountNumber: (value: string) => void;
+  handleWalletAccountIndex: (value: string) => void;
   handleWalletAccountPassPhrase: (value: string) => void;
   handleWalletKeyStoreFile: (value: any) => void;
   handleWalletKeyStoreFilePassword: (value: any) => void;
   handleWalletKeyStoreCoinType: (value: CoinType) => void;
   handleWalletSignInModal: (value: boolean) => void;
   handleWalletSignInKeyStoreModal: (value: boolean) => void;
+  handleWalletAccountDetails: (value: AccountDetails) => void;
+  handleWalletKeyStoreLoginDetails: (value: KeyStoreLoginDetails) => void;
 }
 
 export type WalletSlice = WalletSliceState & WalletSliceActions;
@@ -43,8 +73,8 @@ export type WalletSlice = WalletSliceState & WalletSliceActions;
 const initialState = {
   wallet: {
     advancedInfo: {
-      accountNumber: 0,
-      accountIndex: 0,
+      accountNumber: "0",
+      accountIndex: "0",
       bip39Passphrase: "",
       active: false,
     },
@@ -60,18 +90,38 @@ const initialState = {
       modal: false,
       keyStoreModal: false,
     },
+    accountDetails: {
+      accountType: null,
+      loginType: null,
+      address: null,
+      accountNumber: null,
+      accountIndex: null,
+      bipPasPhrase: null,
+      defaultFee: null,
+    },
+    keyStoreLoginDetails: {
+      coin118Info: {
+        address: null,
+        walletPath: null,
+      },
+      coin750Info: {
+        address: null,
+        walletPath: null,
+      },
+      encryptedSeed: null,
+    },
   },
 };
 
 export const createWalletSlice: StateCreator<WalletSlice> = (set) => ({
   ...initialState,
-  handleWalletAccountNumber: (value: number) =>
+  handleWalletAccountNumber: (value: string) =>
     set(
       produce((state: WalletSlice) => {
         state.wallet.advancedInfo.accountNumber = value;
       })
     ),
-  handleWalletAccountIndex: (value: number) =>
+  handleWalletAccountIndex: (value: string) =>
     set(
       produce((state: WalletSlice) => {
         state.wallet.advancedInfo.accountIndex = value;
@@ -123,6 +173,18 @@ export const createWalletSlice: StateCreator<WalletSlice> = (set) => ({
     set(
       produce((state: WalletSlice) => {
         state.wallet.signIn.keyStoreModal = value;
+      })
+    ),
+  handleWalletAccountDetails: (value: AccountDetails) =>
+    set(
+      produce((state: WalletSlice) => {
+        state.wallet.accountDetails = value;
+      })
+    ),
+  handleWalletKeyStoreLoginDetails: (value: KeyStoreLoginDetails) =>
+    set(
+      produce((state: WalletSlice) => {
+        state.wallet.keyStoreLoginDetails = value;
       })
     ),
 });
