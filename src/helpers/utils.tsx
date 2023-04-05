@@ -6,6 +6,7 @@ import { Primitive } from "@sentry/types";
 import { displayToast } from "../components/molecules/toast";
 import { ToastType } from "../components/molecules/toast/types";
 const encoding = require("@cosmjs/encoding");
+const bip39 = require("bip39");
 import { Coin } from "@cosmjs/proto-signing";
 import {
   DefaultChainInfo,
@@ -231,9 +232,9 @@ const foundationNodeCheck = (validatorAddress: string) => {
   }
 };
 
-function getAccountNumber(value: string) {
+export const getAccountNumber = (value: string) => {
   return value === "" ? "0" : value;
-}
+};
 
 export const addrToValoper = (address: string) => {
   let data = encoding.Bech32.decode(address).data;
@@ -326,6 +327,44 @@ export async function getAccount(address: string) {
     console.log(error.message);
   }
 }
+
+export const mnemonicTrim = (mnemonic: string) => {
+  let mnemonicList = mnemonic.replace(/\s/g, " ").split(/\s/g);
+  let mnemonicWords: any = [];
+  for (let word of mnemonicList) {
+    if (word === "") {
+      console.log();
+    } else {
+      let trimmedWord = word.replace(/\s/g, "");
+      mnemonicWords.push(trimmedWord);
+    }
+  }
+  mnemonicWords = mnemonicWords.join(" ");
+  return mnemonicWords;
+};
+
+export const validateMnemonic = (mnemonic: string) => {
+  const mnemonicWords = mnemonicTrim(mnemonic);
+  return bip39.validateMnemonic(mnemonicWords);
+};
+
+export const fileTypeCheck = (filePath: string) => {
+  let allowedExtensions = /(\.json)$/i;
+  return allowedExtensions.exec(filePath);
+};
+
+export const downloadFile = async (jsonContent: any) => {
+  const json = jsonContent;
+  const fileName = "KeyStore";
+  const blob = new Blob([json], { type: "application/json" });
+  const href = await URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = href;
+  link.download = fileName + ".json";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
 
 export const updateFee = (address: string) => {
   const loginInfo = JSON.parse(localStorage.getItem(LOGIN_INFO)!);

@@ -15,6 +15,7 @@ const CreateWallet = () => {
   const modal = useAppStore((state) => state.createWallet.modal.show);
 
   const handleClose = () => {
+    setSteps("1");
     handleCreateWalletModal(false);
   };
 

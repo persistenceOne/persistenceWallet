@@ -1,5 +1,6 @@
 import { StateCreator } from "zustand";
 import produce from "immer";
+import { CreateWalletSlice } from "./create-wallet";
 
 export type CoinType = 118 | 750;
 
@@ -16,10 +17,14 @@ export interface WalletSliceState {
       password: any;
       coinType: number;
     };
+    changePassword: {
+      modal: boolean;
+    };
   };
 }
 
 export interface WalletSliceActions {
+  handleWalletChangePassWordModal: (value: boolean) => void;
   handleWalletAdvanceMode: (value: boolean) => void;
   handleWalletAccountNumber: (value: number) => void;
   handleWalletAccountIndex: (value: number) => void;
@@ -43,6 +48,9 @@ const initialState = {
       file: null,
       password: null,
       coinType: 750,
+    },
+    changePassword: {
+      modal: false,
     },
   },
 };
@@ -89,6 +97,12 @@ export const createWalletSlice: StateCreator<WalletSlice> = (set) => ({
     set(
       produce((state: WalletSlice) => {
         state.wallet.keyStore.coinType = value;
+      })
+    ),
+  handleWalletChangePassWordModal: (value: boolean) =>
+    set(
+      produce((state: WalletSlice) => {
+        state.wallet.changePassword.modal = value;
       })
     ),
 });

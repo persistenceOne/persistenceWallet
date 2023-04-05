@@ -15,7 +15,7 @@ const CoinType = () => {
   };
 
   return (
-    <div className="flex">
+    <div className="flex my-4">
       <Radio
         checked={coinType === 750}
         label="Coin Type 750"
