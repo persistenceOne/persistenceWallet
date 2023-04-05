@@ -7,15 +7,18 @@ const AdvancedOptions = () => {
   const handleWalletAccountIndex = useAppStore(
     (state) => state.handleWalletAccountIndex
   );
+  const handleWalletAdvanceMode = useAppStore(
+    (state) => state.handleWalletAdvanceMode
+  );
   const handleWalletAccountNumber = useAppStore(
     (state) => state.handleWalletAccountNumber
   );
   const handleWalletAccountPassPhrase = useAppStore(
     (state) => state.handleWalletAccountPassPhrase
   );
-  const [activeKey, setActiveKey] = useState<boolean>(false);
+  const advancedInfo = useAppStore((state) => state.wallet.advancedInfo.active);
   const handleAccordion = () => {
-    setActiveKey(!activeKey);
+    handleWalletAdvanceMode(!advancedInfo);
   };
 
   const handleAccountNumber = (e: any) => {
@@ -38,7 +41,7 @@ const AdvancedOptions = () => {
         onClick={handleAccordion}
       >
         <span className="mr-2">Advanced</span>
-        {activeKey ? (
+        {advancedInfo ? (
           <Icon viewClass="arrow-right" iconName="up-arrow" />
         ) : (
           <Icon viewClass="arrow-right" iconName="down-arrow" />
@@ -46,7 +49,7 @@ const AdvancedOptions = () => {
       </button>
       <div
         className={`${
-          activeKey ? "active" : ""
+          advancedInfo ? "active" : ""
         } collapseMenu ease-in overflow-hidden relative`}
       >
         <div className="mb-2">
