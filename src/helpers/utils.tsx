@@ -10,6 +10,7 @@ const bip39 = require("bip39");
 import { Coin } from "@cosmjs/proto-signing";
 import {
   DefaultChainInfo,
+  ExternalChains,
   FeeInfo,
   MainNetFoundationNodes,
   TestNetFoundationNodes,
@@ -22,11 +23,19 @@ import {
   PeriodicVestingAccount,
 } from "cosmjs-types/cosmos/vesting/v1beta1/vesting";
 import { decryptKeyStore } from "./wallet";
-import { ENCRYPTED_MNEMONIC, LOGIN_INFO } from "../../appConstants";
+import {
+  ENCRYPTED_MNEMONIC,
+  LOGIN_INFO,
+  PERSISTENCE,
+} from "../../appConstants";
 
 const valoperAddressPrefix = DefaultChainInfo.prefix;
 const addressPrefix = DefaultChainInfo.prefix;
 const configCoinType = DefaultChainInfo.coinType;
+
+export const persistenceChain = ExternalChains["Mainnet"].find(
+  (chain) => chain.chainName === PERSISTENCE
+);
 
 export const emptyFunc = () => ({});
 
@@ -518,4 +527,8 @@ export const decodeTendermintConsensusStateAny = (consensusState) => {
     );
   }
   return tendermint_1.ConsensusState.decode(consensusState.value);
+};
+
+export const getChain = (chainId: string) => {
+  return ExternalChains["Mainnet"].find((chain) => chain.chainId === chainId);
 };

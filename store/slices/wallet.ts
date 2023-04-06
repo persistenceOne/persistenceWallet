@@ -1,10 +1,19 @@
 import { StateCreator } from "zustand";
 import produce from "immer";
+import { toPrettyCoin } from "../../src/helpers/coin";
+import { DefaultChainInfo } from "../../src/helpers/config";
+import { CoinPretty } from "@keplr-wallet/unit";
 export type CoinType = 118 | 750;
 
 export type loginType = "keplr" | "keyStore" | "ledger";
 
 export type accountType = "vesting" | "non-vesting";
+
+const emptyPrettyCoin = toPrettyCoin(
+  "0",
+  DefaultChainInfo.currency.coinMinimalDenom,
+  DefaultChainInfo.counterpartyChainId
+);
 
 export type AccountDetails = {
   loginType: loginType | null;
@@ -50,6 +59,9 @@ export interface WalletSliceState {
     };
     accountDetails: AccountDetails;
     keyStoreLoginDetails: KeyStoreLoginDetails;
+    balances: {
+      totalXprt: CoinPretty;
+    };
   };
 }
 
@@ -109,6 +121,9 @@ const initialState = {
         walletPath: null,
       },
       encryptedSeed: null,
+    },
+    balances: {
+      totalXprt: emptyPrettyCoin,
     },
   },
 };

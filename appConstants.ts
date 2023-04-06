@@ -15,4 +15,4 @@ export const THEME = "theme";
 export const ACCOUNT_NUMBER = "accountNumber";
 export const LEDGER = "ledger";
 export const COIN_TYPE = "coinType";
-
+export const PERSISTENCE = "Persistence";
