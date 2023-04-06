@@ -47,7 +47,7 @@ const SidebarContent = () => {
       path: "/dashboard",
     },
     {
-      icon: "bridge",
+      icon: "staking",
       text: "Staking",
       path: "/staking",
     },
@@ -61,19 +61,9 @@ const SidebarContent = () => {
   return (
     <aside className="w-[284px] md:w-[220px]">
       <div
-        className={`${Styles.sideBarContent} flex flex-col justify-between overflow-y-auto sticky`}
+        className={`${Styles.sideBarContent} h-[calc(100vh-84px)] flex flex-col justify-between overflow-y-auto sticky`}
       >
-        <div>
-          <div className="text-center pt-8 pb-[1.9rem]">
-            <Link href="/" className="nav-link" passHref>
-              <img
-                src={"/images/logo.svg"}
-                alt={"logo"}
-                className="m-auto"
-                width={isMobile ? 90 : 124}
-              />
-            </Link>
-          </div>
+        <div className="pt-8">
           <div className="pb-4">
             {routeList.map((item, index) => (
               <li className={`list-none`} key={index}>
@@ -81,7 +71,7 @@ const SidebarContent = () => {
                   <p
                     className={`${
                       router.pathname == item.path
-                        ? `border-r-[3px] border-[#c73238] bg-black-700 navItemActive`
+                        ? `bg-black-700 navItemActive`
                         : "group"
                     } 
                 py-[0.625rem] px-8 flex items-center cursor-pointer`}
@@ -141,7 +131,6 @@ const SidebarContent = () => {
           </div>
         </div>
         <div className="border-t border-solid border-[#2b2b2b]">
-          <BalanceList />
           <div className={`socialLinks flex py-3 px-8`}>
             {socialList.map((item, index) => (
               <Tooltip placement="bottom" overlay={item.tooltip} key={index}>

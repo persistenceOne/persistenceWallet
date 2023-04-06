@@ -16,29 +16,30 @@ const NavigationBar = () => {
 
   // loading exchangeRate before connecting wallet
   useEffect(() => {
-    const fetchInitialInstances = async () => {
-    };
+    const fetchInitialInstances = async () => {};
     console.log("fetchInitialInstances");
     fetchInitialInstances();
   }, []);
 
   return (
-    <div className="flex mb-10 py-6 pl-7 pr-14 md:px-3">
-      <div className="flex items-center flex-1">
-        <div className="hidden md:block">
-          <Link href="/" className="nav-link" passHref>
-            <img
-              src={"/images/logo.svg"}
-              alt={"logo"}
-              width={isMobile ? 90 : 124}
-            />
-          </Link>
-        </div>
-        <div className="flex ml-auto">
-          <p>sdfdsf</p>
-          <button className="md:block hidden pl-2" onClick={handleMenu}>
-            <Icon iconName="menu" viewClass="menu" />
-          </button>
+    <div className="border-b border-solid border-[#2b2b2b]">
+      <div className="flex py-6 mx-8">
+        <div className="flex items-center flex-1">
+          <div className="">
+            <Link href="/" className="nav-link" passHref>
+              <img
+                src={"/images/logo.svg"}
+                alt={"logo"}
+                width={isMobile ? 90 : 124}
+              />
+            </Link>
+          </div>
+          <div className="flex ml-auto">
+            <p>sdfdsf</p>
+            <button className="md:block hidden pl-2" onClick={handleMenu}>
+              <Icon iconName="menu" viewClass="menu" />
+            </button>
+          </div>
         </div>
       </div>
     </div>

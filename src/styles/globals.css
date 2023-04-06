@@ -79,3 +79,12 @@ html, body{
     -webkit-transform: scale(1);
     transform: scale(1);
 }
+
+.sendTabs .tabItem.active {
+    background-color: #ececec;
+    color: #181818;
+}
+
+.stakingTabs .tabItem.active {
+    color: #fcfcfc;
+}

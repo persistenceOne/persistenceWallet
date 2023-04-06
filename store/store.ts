@@ -6,14 +6,22 @@ import {
   CreateWalletSlice,
 } from "./slices/create-wallet";
 import { WalletSlice, createWalletSlice } from "./slices/wallet";
-import { persist } from "zustand/middleware";
+import {
+  TransactionSlice,
+  createTransactionSlice,
+} from "./slices/transactions";
+// import { persist } from "zustand/middleware";
 
-type StoreState = SidebarSlice & CreateWalletSlice & WalletSlice;
+type StoreState = SidebarSlice &
+  CreateWalletSlice &
+  WalletSlice &
+  TransactionSlice;
 
 export const useAppStore = create<StoreState>()((...a) => ({
   ...createSidebarSlice(...a),
   ...createCreateWalletSlice(...a),
   ...createWalletSlice(...a),
+  ...createTransactionSlice(...a),
 }));
 //
 // export const useAppStore = create<StoreState>()(
