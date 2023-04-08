@@ -7,6 +7,7 @@ import useLocalStorage, {
 import { useAppStore } from "../../../store/store";
 import { useRouter } from "next/router";
 import FeeOptions from "../organisms/common/fee";
+import { persistenceChain } from "../../helpers/utils";
 
 const env: string = process.env.NEXT_PUBLIC_ENVIRONMENT!;
 
@@ -25,6 +26,16 @@ export const Template = ({
   const handleWalletKeyStoreLoginDetails = useAppStore(
     (state) => state.handleWalletKeyStoreLoginDetails
   );
+
+  const fetchWalletBalances = useAppStore((state) => state.fetchWalletBalances);
+
+  useEffect(() => {
+    fetchWalletBalances(
+      persistenceChain!.rpc,
+      "persistence1g8v9tfy9lpwwdfjc9ylp68zexzt66sek6t4jnu"
+    );
+  }, []);
+
   useEffect(() => {
     const accountInfo = getStorageValue("accountDetails", "");
     const accountKeyStoreDetails = getStorageValue(

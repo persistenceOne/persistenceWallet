@@ -3,13 +3,17 @@ import produce from "immer";
 import { toPrettyCoin } from "../../src/helpers/coin";
 import { DefaultChainInfo } from "../../src/helpers/config";
 import { CoinPretty } from "@keplr-wallet/unit";
+import { fetchAllBalances } from "../../src/pages/api/rpcQueries";
+import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
+import { QueryDenomTraceResponse } from "cosmjs-types/ibc/applications/transfer/v1/query";
+import { BalanceList } from "../../src/helpers/types";
 export type CoinType = 118 | 750;
 
 export type loginType = "keplr" | "keyStore" | "ledger";
 
 export type accountType = "vesting" | "non-vesting";
 
-const emptyPrettyCoin = toPrettyCoin(
+export const emptyPrettyCoin = toPrettyCoin(
   "0",
   DefaultChainInfo.currency.coinMinimalDenom,
   DefaultChainInfo.counterpartyChainId
@@ -37,6 +41,13 @@ export type KeyStoreLoginDetails = {
   encryptedSeed?: string | null;
 };
 
+export interface Balances {
+  totalXprt: CoinPretty;
+  vestingAmount: CoinPretty;
+  transferableAmount: CoinPretty;
+  allBalances: BalanceList[];
+}
+
 export interface WalletSliceState {
   wallet: {
     advancedInfo: {
@@ -59,9 +70,7 @@ export interface WalletSliceState {
     };
     accountDetails: AccountDetails;
     keyStoreLoginDetails: KeyStoreLoginDetails;
-    balances: {
-      totalXprt: CoinPretty;
-    };
+    balances: Balances;
   };
 }
 
@@ -78,6 +87,7 @@ export interface WalletSliceActions {
   handleWalletSignInKeyStoreModal: (value: boolean) => void;
   handleWalletAccountDetails: (value: AccountDetails) => void;
   handleWalletKeyStoreLoginDetails: (value: KeyStoreLoginDetails) => void;
+  fetchWalletBalances: (rpc: string, address: string) => void;
 }
 
 export type WalletSlice = WalletSliceState & WalletSliceActions;
@@ -124,6 +134,9 @@ const initialState = {
     },
     balances: {
       totalXprt: emptyPrettyCoin,
+      vestingAmount: emptyPrettyCoin,
+      transferableAmount: emptyPrettyCoin,
+      allBalances: [],
     },
   },
 };
@@ -202,4 +215,12 @@ export const createWalletSlice: StateCreator<WalletSlice> = (set) => ({
         state.wallet.keyStoreLoginDetails = value;
       })
     ),
+  fetchWalletBalances: async (rpc: string, address: string) => {
+    const response: Balances = await fetchAllBalances(rpc, address);
+    set(
+      produce((state: WalletSlice) => {
+        state.wallet.balances = response;
+      })
+    );
+  },
 });

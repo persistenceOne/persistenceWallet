@@ -23,8 +23,8 @@ const AccountInfo = ({ mnemonic }: any) => {
   );
 
   const handleSubmit = async () => {
-    let defaultAccountNumber = 0;
-    let defaultAddressIndex = 0;
+    let defaultAccountNumber = "0";
+    let defaultAddressIndex = "0";
     let defaultBip39Passphrase = "";
 
     if (active) {

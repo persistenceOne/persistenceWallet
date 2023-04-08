@@ -16,3 +16,11 @@ export const ACCOUNT_NUMBER = "accountNumber";
 export const LEDGER = "ledger";
 export const COIN_TYPE = "coinType";
 export const PERSISTENCE = "Persistence";
+
+export const BASE_ACCOUNT = "/cosmos.auth.v1beta1.BaseAccount";
+export const PERIODIC_VESTING_ACCOUNT =
+  "/cosmos.vesting.v1beta1.PeriodicVestingAccount";
+export const DELAYED_VESTING_ACCOUNT =
+  "/cosmos.vesting.v1beta1.DelayedVestingAccount";
+export const CONTINUOUS_VESTING_ACCOUNT =
+  "/cosmos.vesting.v1beta1.ContinuousVestingAccount";

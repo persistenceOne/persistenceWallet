@@ -1,5 +1,5 @@
 import { ChainInfo } from "@keplr-wallet/types";
-import {GasPrice} from "@cosmjs/stargate";
+import { GasPrice } from "@cosmjs/stargate";
 import { Bech32Address } from "@keplr-wallet/cosmos";
 
 const env: string = process.env.NEXT_PUBLIC_ENVIRONMENT!;
@@ -28,7 +28,6 @@ export interface WalletProviderProps {
 
 export type walletType = "keplr" | "cosmosStation";
 
-
 interface ExternalChainData {
   [index: string]: ChainInfo[];
 }
@@ -38,19 +37,19 @@ export type IBCChainData = {
 };
 
 export const DefaultChainInfo = {
-  counterpartyChainId: 'core-1',
-  chainName:'Persistence',
-  prefix:'persistence',
-  ledgerAppName:'Persistence',
+  counterpartyChainId: "core-1",
+  chainName: "Persistence",
+  prefix: "persistence",
+  ledgerAppName: "Persistence",
   currency: {
-    coinDenom: 'XPRT',
-    coinMinimalDenom: 'uxprt',
+    coinDenom: "XPRT",
+    coinMinimalDenom: "uxprt",
     coinDecimals: 6,
-    coinGeckoId: 'persistence',
+    coinGeckoId: "persistence",
   },
   deprecatedCoinType: 750,
   coinType: 118,
-  uTokenValue:1000000,
+  uTokenValue: 1000000,
 };
 
 export const AccountInfo = {
@@ -59,9 +58,10 @@ export const AccountInfo = {
 };
 
 export const PstakeInfo = {
-  coinDenom: 'PSTAKE',
-  coinMinimalDenom: 'ibc/A6E3AF63B3C906416A9AF7A556C59EA4BD50E617EFFE6299B99700CCB780E444',
-  baseDenom: 'gravity0xfB5c6815cA3AC72Ce9F5006869AE67f18bF77006',
+  coinDenom: "PSTAKE",
+  coinMinimalDenom:
+    "ibc/A6E3AF63B3C906416A9AF7A556C59EA4BD50E617EFFE6299B99700CCB780E444",
+  baseDenom: "gravity0xfB5c6815cA3AC72Ce9F5006869AE67f18bF77006",
   coinDecimals: 18,
 };
 
@@ -69,13 +69,13 @@ export const stkATOMInfo = {
   coinDenom: "STKATOM",
   coinMinimalDenom: "stk/uatom",
   coinDecimals: 6,
-  coinGeckoId: "persistence"
+  coinGeckoId: "persistence",
 };
 
 export const GasInfo = {
   gas: 250000,
   minGas: 80000,
-  maxGas: 2000000
+  maxGas: 2000000,
 };
 
 export const FeeInfo = {
@@ -83,100 +83,100 @@ export const FeeInfo = {
   averageFee: 0.025,
   highFee: 0.04,
   defaultFee: "5000",
-  vestingAccountFee: "0"
+  vestingAccountFee: "0",
 };
 
 export const IBCConfiguration = {
   timeoutTimestamp: 1000,
   ibcRevisionHeightIncrement: 1000,
   ibcRemoteHeightIncrement: 150,
-  ibcDefaultPort: "transfer"
+  ibcDefaultPort: "transfer",
 };
 
 export const CHAIN_ID: any = {
   Devnet: {
     cosmosChainID: "gaiad-1",
-    persistenceChainID: "pstaked-1"
+    persistenceChainID: "pstaked-1",
   },
   Testnet: {
     cosmosChainID: "theta-testnet-001",
-    persistenceChainID: "test-core-1"
+    persistenceChainID: "test-core-1",
   },
   Mainnet: {
     cosmosChainID: "cosmoshub-4",
-    persistenceChainID: "core-1"
-  }
+    persistenceChainID: "core-1",
+  },
 };
 
 export const IBCChainInfos: IBCChainData = {
   Testnet: [
     {
-      counterpartyChainId: 'osmosis-1',
-      chainName:'Osmosis',
-      sourceChannelId: 'channel-6',
-      portID:'transfer',
-      coinMinimalDenom: 'uatom',
-      prefix:'osmo'
+      counterpartyChainId: "osmosis-1",
+      chainName: "Osmosis",
+      sourceChannelId: "channel-6",
+      portID: "transfer",
+      coinMinimalDenom: "uatom",
+      prefix: "osmo",
     },
     {
-      counterpartyChainId: 'cosmoshub-4',
-      chainName:'Cosmos',
-      sourceChannelId: 'channel-24',
-      portID:'transfer',
-      coinMinimalDenom: 'uatom',
-      prefix:'cosmos'
+      counterpartyChainId: "cosmoshub-4",
+      chainName: "Cosmos",
+      sourceChannelId: "channel-24",
+      portID: "transfer",
+      coinMinimalDenom: "uatom",
+      prefix: "cosmos",
     },
     {
-      counterpartyChainId: 'juno-1',
-      chainName:'Juno',
-      sourceChannelId: 'channel-37',
-      portID:'transfer',
-      coinMinimalDenom: 'ujuno',
-      prefix:'juno'
+      counterpartyChainId: "juno-1",
+      chainName: "Juno",
+      sourceChannelId: "channel-37",
+      portID: "transfer",
+      coinMinimalDenom: "ujuno",
+      prefix: "juno",
     },
     {
-      counterpartyChainId: 'gravity-bridge-3',
-      chainName:'Gravity',
-      sourceChannelId: 'channel-38',
-      portID:'transfer',
-      coinMinimalDenom: 'ugraviton',
-      prefix:'gravity'
+      counterpartyChainId: "gravity-bridge-3",
+      chainName: "Gravity",
+      sourceChannelId: "channel-38",
+      portID: "transfer",
+      coinMinimalDenom: "ugraviton",
+      prefix: "gravity",
     },
   ],
   Mainnet: [
     {
-      counterpartyChainId: 'osmosis-1',
-      chainName:'Osmosis',
-      sourceChannelId: 'channel-6',
-      portID:'transfer',
-      coinMinimalDenom: 'uatom',
-      prefix:'osmo'
+      counterpartyChainId: "osmosis-1",
+      chainName: "Osmosis",
+      sourceChannelId: "channel-6",
+      portID: "transfer",
+      coinMinimalDenom: "uatom",
+      prefix: "osmo",
     },
     {
-      counterpartyChainId: 'cosmoshub-4',
-      chainName:'Cosmos',
-      sourceChannelId: 'channel-24',
-      portID:'transfer',
-      coinMinimalDenom: 'uatom',
-      prefix:'cosmos'
+      counterpartyChainId: "cosmoshub-4",
+      chainName: "Cosmos",
+      sourceChannelId: "channel-24",
+      portID: "transfer",
+      coinMinimalDenom: "uatom",
+      prefix: "cosmos",
     },
     {
-      counterpartyChainId: 'juno-1',
-      chainName:'Juno',
-      sourceChannelId: 'channel-37',
-      portID:'transfer',
-      coinMinimalDenom: 'ujuno',
-      prefix:'juno'
+      counterpartyChainId: "juno-1",
+      chainName: "Juno",
+      sourceChannelId: "channel-37",
+      portID: "transfer",
+      coinMinimalDenom: "ujuno",
+      prefix: "juno",
     },
     {
-      counterpartyChainId: 'gravity-bridge-3',
-      chainName:'Gravity',
-      sourceChannelId: 'channel-38',
-      portID:'transfer',
-      coinMinimalDenom: 'ugraviton',
-      prefix:'gravity'
+      counterpartyChainId: "gravity-bridge-3",
+      chainName: "Gravity",
+      sourceChannelId: "channel-38",
+      portID: "transfer",
+      coinMinimalDenom: "ugraviton",
+      prefix: "gravity",
     },
-  ]
+  ],
 };
 
 export const ExternalChains: ExternalChainData = {
@@ -190,32 +190,32 @@ export const ExternalChains: ExternalChainData = {
         coinDenom: "XPRT",
         coinMinimalDenom: "uxprt",
         coinDecimals: 6,
-        coinGeckoId: "persistence"
+        coinGeckoId: "persistence",
       },
       bip44: {
-        coinType: 118
+        coinType: 118,
       },
       currencies: [
         {
           coinDenom: "XPRT",
           coinMinimalDenom: "uxprt",
           coinDecimals: 6,
-          coinGeckoId: "persistence"
+          coinGeckoId: "persistence",
         },
         {
           coinDenom: "STKATOM",
           coinMinimalDenom: "stk/uatom",
           coinDecimals: 6,
-          coinGeckoId: "persistence"
-        }
+          coinGeckoId: "persistence",
+        },
       ],
       feeCurrencies: [
         {
           coinDenom: "XPRT",
           coinMinimalDenom: "uxprt",
           coinDecimals: 6,
-          coinGeckoId: "persistence"
-        }
+          coinGeckoId: "persistence",
+        },
       ],
       bech32Config: {
         bech32PrefixAccAddr: "persistence",
@@ -223,13 +223,13 @@ export const ExternalChains: ExternalChainData = {
         bech32PrefixValAddr: "persistencevaloper",
         bech32PrefixValPub: "persistencevaloperpub",
         bech32PrefixConsAddr: "persistencevalcons",
-        bech32PrefixConsPub: "persistencevalconspub"
+        bech32PrefixConsPub: "persistencevalconspub",
       },
       gasPriceStep: {
         low: 0.0,
         average: 0.01,
-        high: 0.025
-      }
+        high: 0.025,
+      },
     },
     {
       rpc: "https://rpc.testnet-cosmos.audit.one",
@@ -240,26 +240,26 @@ export const ExternalChains: ExternalChainData = {
         coinDenom: "ATOM",
         coinMinimalDenom: "uatom",
         coinDecimals: 6,
-        coinGeckoId: "cosmos"
+        coinGeckoId: "cosmos",
       },
       bip44: {
-        coinType: 118
+        coinType: 118,
       },
       currencies: [
         {
           coinDenom: "ATOM",
           coinMinimalDenom: "uatom",
           coinDecimals: 6,
-          coinGeckoId: "cosmos"
-        }
+          coinGeckoId: "cosmos",
+        },
       ],
       feeCurrencies: [
         {
           coinDenom: "ATOM",
           coinMinimalDenom: "uatom",
           coinDecimals: 6,
-          coinGeckoId: "cosmos"
-        }
+          coinGeckoId: "cosmos",
+        },
       ],
       bech32Config: {
         bech32PrefixAccAddr: "cosmos",
@@ -267,12 +267,12 @@ export const ExternalChains: ExternalChainData = {
         bech32PrefixValAddr: "cosmosvaloper",
         bech32PrefixValPub: "cosmosvaloperpub",
         bech32PrefixConsAddr: "cosmosvalcons",
-        bech32PrefixConsPub: "persistencevalconspub"
-      }
+        bech32PrefixConsPub: "persistencevalconspub",
+      },
     },
     {
       rpc: "https://rpc.osmosis-1.audit.one",
-      rest:"https://rest.osmosis-1.audit.one",
+      rest: "https://rest.osmosis-1.audit.one",
       chainId: "osmosis-1",
       chainName: "Osmosis",
       bip44: {
@@ -284,7 +284,7 @@ export const ExternalChains: ExternalChainData = {
         bech32PrefixValAddr: "persistencevaloper",
         bech32PrefixValPub: "persistencevaloperpub",
         bech32PrefixConsAddr: "persistencevalcons",
-        bech32PrefixConsPub: "persistencevalconspub"
+        bech32PrefixConsPub: "persistencevalconspub",
       },
       currencies: [
         {
@@ -307,7 +307,7 @@ export const ExternalChains: ExternalChainData = {
       gasPriceStep: {
         low: 0.0,
         average: 0.0,
-        high: 0.0
+        high: 0.0,
       },
       feeCurrencies: [
         {
@@ -316,9 +316,9 @@ export const ExternalChains: ExternalChainData = {
           coinDecimals: 6,
           // coinGeckoId: "osmosis",
           coinGeckoId: "pool:uosmo",
-        }
+        },
       ],
-      stakeCurrency:  {
+      stakeCurrency: {
         coinDenom: "OSMO",
         coinMinimalDenom: "uosmo",
         coinDecimals: 6,
@@ -337,26 +337,26 @@ export const ExternalChains: ExternalChainData = {
         coinDenom: "ATOM",
         coinMinimalDenom: "uatom",
         coinDecimals: 6,
-        coinGeckoId: "cosmos"
+        coinGeckoId: "cosmos",
       },
       bip44: {
-        coinType: 118
+        coinType: 118,
       },
       currencies: [
         {
           coinDenom: "ATOM",
           coinMinimalDenom: "uatom",
           coinDecimals: 6,
-          coinGeckoId: "cosmos"
-        }
+          coinGeckoId: "cosmos",
+        },
       ],
       feeCurrencies: [
         {
           coinDenom: "ATOM",
           coinMinimalDenom: "uatom",
           coinDecimals: 6,
-          coinGeckoId: "cosmos"
-        }
+          coinGeckoId: "cosmos",
+        },
       ],
       bech32Config: Bech32Address.defaultBech32Config("cosmos"),
     },
@@ -369,43 +369,50 @@ export const ExternalChains: ExternalChainData = {
         coinDenom: "XPRT",
         coinMinimalDenom: "uxprt",
         coinDecimals: 6,
-        coinGeckoId: "persistence"
+        coinGeckoId: "persistence",
       },
       bip44: {
-        coinType: 750
+        coinType: 750,
       },
       currencies: [
         {
           coinDenom: "XPRT",
           coinMinimalDenom: "uxprt",
           coinDecimals: 6,
-          coinGeckoId: "persistence"
+          coinGeckoId: "persistence",
+        },
+        {
+          coinDenom: "PSTAKE",
+          coinMinimalDenom:
+            "ibc/A6E3AF63B3C906416A9AF7A556C59EA4BD50E617EFFE6299B99700CCB780E444",
+          coinDecimals: 18,
+          coinGeckoId: "pstake-finance",
         },
         {
           coinDenom: "STKATOM",
           coinMinimalDenom: "stk/uatom",
           coinDecimals: 6,
-          coinGeckoId: "persistence"
-        }
+          coinGeckoId: "persistence",
+        },
       ],
       feeCurrencies: [
         {
           coinDenom: "XPRT",
           coinMinimalDenom: "uxprt",
           coinDecimals: 6,
-          coinGeckoId: "persistence"
-        }
+          coinGeckoId: "persistence",
+        },
       ],
       bech32Config: Bech32Address.defaultBech32Config("persistence"),
       gasPriceStep: {
         low: 0.0,
         average: 0.0,
-        high: 0.0
-      }
+        high: 0.0,
+      },
     },
     {
       rpc: "https://rpc.osmosis-1.audit.one",
-      rest:"https://rest.osmosis-1.audit.one",
+      rest: "https://rest.osmosis-1.audit.one",
       chainId: "osmosis-1",
       chainName: "Osmosis",
       bip44: {
@@ -433,7 +440,7 @@ export const ExternalChains: ExternalChainData = {
       gasPriceStep: {
         low: 0.0,
         average: 0.0,
-        high: 0.0
+        high: 0.0,
       },
       feeCurrencies: [
         {
@@ -442,9 +449,9 @@ export const ExternalChains: ExternalChainData = {
           coinDecimals: 6,
           // coinGeckoId: "osmosis",
           coinGeckoId: "pool:uosmo",
-        }
+        },
       ],
-      stakeCurrency:  {
+      stakeCurrency: {
         coinDenom: "OSMO",
         coinMinimalDenom: "uosmo",
         coinDecimals: 6,
@@ -480,17 +487,17 @@ export const ExternalChains: ExternalChainData = {
       ],
       feeCurrencies: [
         {
-          coinDenom: 'GRAV',
-          coinMinimalDenom: 'ugraviton',
+          coinDenom: "GRAV",
+          coinMinimalDenom: "ugraviton",
           coinDecimals: 6,
-          coinGeckoId: '',
-        }
+          coinGeckoId: "",
+        },
       ],
-      stakeCurrency:  {
-        coinDenom: 'GRAV',
-        coinMinimalDenom: 'ugraviton',
+      stakeCurrency: {
+        coinDenom: "GRAV",
+        coinMinimalDenom: "ugraviton",
         coinDecimals: 6,
-        coinGeckoId: '',
+        coinGeckoId: "",
       },
       gasPriceStep: {
         low: 0,
@@ -499,17 +506,17 @@ export const ExternalChains: ExternalChainData = {
       },
       features: ["ibc-transfer", "ibc-go"],
     },
-  ]
+  ],
 };
 
 export const PollingConfig = {
   initialTxHashQueryDelay: 5000,
   scheduledTxHashQueryDelay: 5000,
-  numberOfRetries: 60
+  numberOfRetries: 60,
 };
 
 export const TestNetFoundationNodes = [
-  "persistencevaloper1xepyv8lf99pa4x0w2ptr3vx3rr7wfs6msh2m76"
+  "persistencevaloper1xepyv8lf99pa4x0w2ptr3vx3rr7wfs6msh2m76",
 ];
 
 export const MainNetFoundationNodes = [
@@ -517,6 +524,5 @@ export const MainNetFoundationNodes = [
   "persistencevaloper1hndk2s0dx9p0pxd9pxwmls3eywpdu5ha76kpqs",
   "persistencevaloper1ve9ls5wnczj72mxldewze8u46sarlatmgmp3nd",
   "persistencevaloper1emrvay43wy7f4ylwen3yxhm9qxddy8zc9zdk5y",
-  "persistencevaloper13dv6h3wtmhmt0jprhaw9pv343qanttkty4685v"
+  "persistencevaloper13dv6h3wtmhmt0jprhaw9pv343qanttkty4685v",
 ];
-

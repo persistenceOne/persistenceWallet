@@ -12,7 +12,9 @@ export const toPrettyCoin = (
       (currency) => currency.coinMinimalDenom === denom
     ) || chainInfo.currencies[0],
     new Dec(amount.toString())
-  );
+  )
+    .trim(true)
+    .hideDenom(true);
 };
 
 export const getUnDecimaliedValue = (
