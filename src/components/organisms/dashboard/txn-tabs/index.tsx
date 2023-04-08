@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import TabItem from "../../molecules/tabs/tabItem";
-import TabContent from "../../molecules/tabs/tabContent";
+import TabItem from "../../../molecules/tabs/tabItem";
+import TabContent from "../../../molecules/tabs/tabContent";
+import Send from "./send";
 
-const Send = () => {
+const TxnTabs = () => {
   const [activeTab, setActiveTab] = useState("Send");
   const tabItemClasses =
     "cursor-pointer w-full" +
@@ -32,9 +33,9 @@ const Send = () => {
           <TabContent
             id="Send"
             activeTab={activeTab}
-            className="p-6 md:p-4 bg-tabContent rounded-md"
+            className="p-6 md:p-4 rounded-md"
           >
-            <p>send</p>
+            <Send />
           </TabContent>
           <TabContent
             id="SendIbc"
@@ -49,4 +50,4 @@ const Send = () => {
   );
 };
 
-export default Send;
+export default TxnTabs;

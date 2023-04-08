@@ -8,6 +8,7 @@ import {
   PERIODIC_VESTING_ACCOUNT,
 } from "../../appConstants";
 import { GetAccount } from "./types";
+import { Dec } from "@keplr-wallet/unit";
 
 const periodicVesting = "/cosmos.vesting.v1beta1.PeriodicVestingAccount";
 const baseAccount = "/cosmos.auth.v1beta1.BaseAccount";
@@ -114,29 +115,31 @@ function getAccountVestingAmount(account: any, currentEpochTime: number) {
 export const getTransferableAmount = async (
   address: string,
   accountData: any,
-  balance: number
+  balance: string
 ) => {
   try {
-    let transferableAmount = 0;
-    const amount = accountData.vestingBalance;
-    let delegatedVesting = 0;
+    const balanceDec = new Dec(balance);
+    let transferableAmount: Dec;
+    const amount = new Dec(accountData.vestingBalance);
+    let delegatedVesting = new Dec(0);
     if (accountData.typeUrl !== BASE_ACCOUNT) {
-      delegatedVesting = getDenomAmount(
-        accountData.accountData!.baseVestingAccount.delegatedVesting!
-      )!;
+      delegatedVesting = new Dec(
+        getDenomAmount(
+          accountData.accountData!.baseVestingAccount.delegatedVesting!
+        )!
+      );
     }
     console.log(delegatedVesting, "delegatedVesting", amount, balance);
-    transferableAmount = balance + delegatedVesting - amount;
-    if (transferableAmount < 0) {
-      transferableAmount = 0;
+    transferableAmount = balanceDec.add(delegatedVesting.sub(amount));
+    if (transferableAmount.lt(new Dec(0))) {
+      transferableAmount = new Dec(0);
     }
-    if (delegatedVesting > amount) {
-      transferableAmount = balance;
+    if (delegatedVesting.gt(amount)) {
+      transferableAmount = balanceDec;
     }
     return transferableAmount;
   } catch (error: any) {
-    console.log(error.message);
-    return 0;
+    return new Dec(0);
   }
 };
 

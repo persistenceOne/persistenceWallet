@@ -12,6 +12,7 @@ module.exports = {
         "white-800": "#FCFCFC",
         "white-700": "#ECECEC",
         "white-600": "#A6A6A6",
+        "white-500": "#d6d6d6",
       },
       transparent: "transparent",
       dark: {
@@ -24,7 +25,7 @@ module.exports = {
         "black-900": "#171717",
         "black-800": "#181818",
         "black-700": "#1b1b1b",
-        "black-600": "#1b1b1b99",
+        "black-600": "#212121",
         "black-500": "#17171799",
         "black-400": "#282828",
       },
@@ -33,13 +34,14 @@ module.exports = {
       "red-light": "#cb575bfa",
     },
     backgroundImage: {
-      "homepage-bg":"radial-gradient(99.06% 99.06% at 49.65% .94%,#222426 0,#282932 100%)",
+      "homepage-bg":
+        "radial-gradient(99.06% 99.06% at 49.65% .94%,#222426 0,#282932 100%)",
       "body-bg":
-          "radial-gradient(150.28% 150.28% at 50% -50.28%, #372627 0%, #030303 55.21%)",
+        "radial-gradient(150.28% 150.28% at 50% -50.28%, #372627 0%, #030303 55.21%)",
       atomBanner:
-          "url('/images/bg_images/atomBanner2.svg'), url('/images/bg_images/atomBanner1.svg') ",
+        "url('/images/bg_images/atomBanner2.svg'), url('/images/bg_images/atomBanner1.svg') ",
       Banner:
-          "url('/images/bg_images/binance_bg.svg'), radial-gradient(100% 311.1% at 97.81% 0,#fff 0,#fffef8 45.83%,#fffffd 100%)",
+        "url('/images/bg_images/binance_bg.svg'), radial-gradient(100% 311.1% at 97.81% 0,#fff 0,#fffef8 45.83%,#fffffd 100%)",
     },
     backgroundColor: {
       none: "none",
@@ -60,7 +62,7 @@ module.exports = {
       "black-900": "#171717",
       "black-800": "#181818",
       "black-700": "#1b1b1b",
-      "black-600": "#1b1b1b99",
+      "black-600": "#212121",
       "black-500": "#17171799",
       "black-400": "#282828",
       "white-full": "#ffffff",
@@ -68,6 +70,10 @@ module.exports = {
       "white-emphasis": "#ECECEC",
       "white-mid": "#A6A6A6",
       "white-low": "#787878",
+      "white-800": "#FCFCFC",
+      "white-700": "#ECECEC",
+      "white-600": "#A6A6A6",
+      "white-500": "#d6d6d6",
       disabled: "#A9A9A9",
     },
     fontFamily: {

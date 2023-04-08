@@ -3,10 +3,17 @@ import produce from "immer";
 import { toPrettyCoin } from "../../src/helpers/coin";
 import { DefaultChainInfo } from "../../src/helpers/config";
 import { CoinPretty } from "@keplr-wallet/unit";
-import { fetchAllBalances } from "../../src/pages/api/rpcQueries";
-import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
-import { QueryDenomTraceResponse } from "cosmjs-types/ibc/applications/transfer/v1/query";
-import { BalanceList } from "../../src/helpers/types";
+import {
+  fetchAllBalances,
+  fetchUnBondingList,
+  fetchValidatorsInfo,
+} from "../../src/pages/api/rpcQueries";
+import {
+  BalanceList,
+  Delegations,
+  UnBondingListInfo,
+  ValidatorsInfo,
+} from "../../src/helpers/types";
 export type CoinType = 118 | 750;
 
 export type loginType = "keplr" | "keyStore" | "ledger";
@@ -71,6 +78,8 @@ export interface WalletSliceState {
     accountDetails: AccountDetails;
     keyStoreLoginDetails: KeyStoreLoginDetails;
     balances: Balances;
+    validatorsInfo: ValidatorsInfo;
+    unBondingInfo: UnBondingListInfo;
   };
 }
 
@@ -88,6 +97,8 @@ export interface WalletSliceActions {
   handleWalletAccountDetails: (value: AccountDetails) => void;
   handleWalletKeyStoreLoginDetails: (value: KeyStoreLoginDetails) => void;
   fetchWalletBalances: (rpc: string, address: string) => void;
+  fetchWalletDelegations: (rpc: string, address: string) => void;
+  fetchWalletUnbonding: (rpc: string, address: string) => void;
 }
 
 export type WalletSlice = WalletSliceState & WalletSliceActions;
@@ -137,6 +148,17 @@ const initialState = {
       vestingAmount: emptyPrettyCoin,
       transferableAmount: emptyPrettyCoin,
       allBalances: [],
+    },
+    validatorsInfo: {
+      validators: [],
+      activeValidators: [],
+      inActiveValidators: [],
+      delegatedValidators: [],
+      totalDelegatedAmount: emptyPrettyCoin,
+    },
+    unBondingInfo: {
+      unBondingList: [],
+      totalAmount: 0,
     },
   },
 };
@@ -217,9 +239,28 @@ export const createWalletSlice: StateCreator<WalletSlice> = (set) => ({
     ),
   fetchWalletBalances: async (rpc: string, address: string) => {
     const response: Balances = await fetchAllBalances(rpc, address);
+    console.log(response, "response");
     set(
       produce((state: WalletSlice) => {
         state.wallet.balances = response;
+      })
+    );
+  },
+  fetchWalletDelegations: async (rpc: string, address: string) => {
+    const response: ValidatorsInfo = await fetchValidatorsInfo(rpc, address);
+    console.log(response, "fetchWalletDelegations");
+    set(
+      produce((state: WalletSlice) => {
+        state.wallet.validatorsInfo = response;
+      })
+    );
+  },
+  fetchWalletUnbonding: async (rpc: string, address: string) => {
+    const response: UnBondingListInfo = await fetchUnBondingList(rpc, address);
+    console.log(response, "fetchWalletUnbonding");
+    set(
+      produce((state: WalletSlice) => {
+        state.wallet.unBondingInfo = response;
       })
     );
   },

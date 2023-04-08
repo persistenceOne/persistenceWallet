@@ -58,36 +58,24 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
         }`}
         ref={staticBackDrop ? null : dropDownRef}
       >
-        <Button
-          className={`${
-            dropDownVariant !== "primary"
-              ? dropDownVariantBg
-                ? `${dropDownVariantBg}`
-                : "bg-black-800 text-light-high"
-              : ""
-          } ${dropDownButtonClass} button w-full md:py-2 md:text-sm flex items-center
-            justify-center`}
-          type="custom"
-          size="medium"
-          content={
-            <>
-              {dropdownLabel}
-              {dropDownIcon ? (
-                <Icon
-                  viewClass={`${
-                    !closeDropdown ? "rotate-360" : "rotate-360"
-                  } dropDownIcon mx-2 !w-[10px] ease-in duration-200  rotate-90 fill-[#fff]`}
-                  iconName="chevron"
-                />
-              ) : (
-                ""
-              )}
-            </>
-          }
+        <div
+          className={`${dropDownButtonClass} w-full md:text-sm flex items-center`}
           onClick={() => {
             closeHandler(!closeDropdown);
           }}
-        />
+        >
+          {dropdownLabel}
+          {dropDownIcon ? (
+            <Icon
+              viewClass={`${
+                !closeDropdown ? "rotate-360" : "rotate-360"
+              } dropDownIcon mx-2 !w-[10px] ease-in duration-200  rotate-90 fill-[#fff]`}
+              iconName="chevron"
+            />
+          ) : (
+            ""
+          )}
+        </div>
         <div
           className={`${dropDownContentClass} translate-y-0.5 dropDownContent min-w-full w-fit absolute opacity-0 transition-opacity transform ease duration-200 bg-dropDown left-0 right-0 ${
             closeDropdown ? "visible translate-y-0 opacity-100" : "invisible"

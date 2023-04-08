@@ -28,6 +28,7 @@ import {
   LOGIN_INFO,
   PERSISTENCE,
 } from "../../appConstants";
+import moment from "moment";
 
 const valoperAddressPrefix = DefaultChainInfo.prefix;
 const addressPrefix = DefaultChainInfo.prefix;

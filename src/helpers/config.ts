@@ -348,6 +348,7 @@ export const ExternalChains: ExternalChainData = {
           coinMinimalDenom: "uatom",
           coinDecimals: 6,
           coinGeckoId: "cosmos",
+          coinImageUrl: "/tokens/atom.png",
         },
       ],
       feeCurrencies: [
@@ -379,6 +380,7 @@ export const ExternalChains: ExternalChainData = {
           coinDenom: "XPRT",
           coinMinimalDenom: "uxprt",
           coinDecimals: 6,
+          coinImageUrl: "/tokens/xprt.png",
           coinGeckoId: "persistence",
         },
         {
@@ -386,12 +388,14 @@ export const ExternalChains: ExternalChainData = {
           coinMinimalDenom:
             "ibc/A6E3AF63B3C906416A9AF7A556C59EA4BD50E617EFFE6299B99700CCB780E444",
           coinDecimals: 18,
+          coinImageUrl: "/tokens/pstake.png",
           coinGeckoId: "pstake-finance",
         },
         {
           coinDenom: "STKATOM",
           coinMinimalDenom: "stk/uatom",
           coinDecimals: 6,
+          coinImageUrl: "/tokens/stkatom.svg",
           coinGeckoId: "persistence",
         },
       ],
@@ -427,14 +431,6 @@ export const ExternalChains: ExternalChainData = {
           // coinGeckoId: "osmosis",
           coinGeckoId: "pool:uosmo",
           coinImageUrl: "/tokens/osmo.svg",
-        },
-        {
-          coinDenom: "ION",
-          coinMinimalDenom: "uion",
-          coinDecimals: 6,
-          // coinGeckoId: "ion",
-          coinGeckoId: "pool:uion",
-          coinImageUrl: "/tokens/ion.png",
         },
       ],
       gasPriceStep: {
@@ -475,6 +471,7 @@ export const ExternalChains: ExternalChainData = {
           coinDecimals: 6,
           // coinGeckoId: "graviton",
           coinGeckoId: "pool:ugraviton",
+          coinImageUrl: "/tokens/grav.svg",
         },
         {
           coinDenom: "PSTAKE",

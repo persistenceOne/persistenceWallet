@@ -28,9 +28,16 @@ export const Template = ({
   );
 
   const fetchWalletBalances = useAppStore((state) => state.fetchWalletBalances);
+  const fetchWalletDelegations = useAppStore(
+    (state) => state.fetchWalletDelegations
+  );
 
   useEffect(() => {
     fetchWalletBalances(
+      persistenceChain!.rpc,
+      "persistence1g8v9tfy9lpwwdfjc9ylp68zexzt66sek6t4jnu"
+    );
+    fetchWalletDelegations(
       persistenceChain!.rpc,
       "persistence1g8v9tfy9lpwwdfjc9ylp68zexzt66sek6t4jnu"
     );

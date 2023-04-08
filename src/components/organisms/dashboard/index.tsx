@@ -1,6 +1,6 @@
 import React from "react";
 import Balances from "./balances";
-import Send from "./send";
+import TxnTabs from "./txn-tabs";
 
 const DashboardContainer = () => {
   return (
@@ -9,7 +9,7 @@ const DashboardContainer = () => {
         className="flex w-full flex-col items-center justify-start rounded-lg border border-gray-100 bg-gray-50
         dark:border-gray-900 dark:bg-gray-950 -lg:w-[calc((100%-32px)*0.58)]"
       >
-        <Send />
+        <TxnTabs />
       </div>
       <div
         className="flex max-h-full w-full flex-col items-center justify-start rounded-lg

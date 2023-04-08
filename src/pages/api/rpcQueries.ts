@@ -3,7 +3,7 @@ import {
   QueryClientImpl,
 } from "cosmjs-types/cosmos/auth/v1beta1/query";
 import { BaseAccount } from "cosmjs-types/cosmos/auth/v1beta1/auth";
-import { RpcClient } from "../../helpers/rpc";
+import { getDelegatedValidatorsInfo, RpcClient } from "../../helpers/rpc";
 import { persistenceChain } from "../../helpers/utils";
 import {
   ContinuousVestingAccount,
@@ -16,6 +16,12 @@ import {
   QueryAllBalancesResponse,
   QueryClientImpl as BankQueryClient,
 } from "cosmjs-types/cosmos/bank/v1beta1/query";
+import {
+  QueryClientImpl as StakingQueryClient,
+  QueryDelegatorDelegationsResponse,
+  QueryDelegatorUnbondingDelegationsResponse,
+  QueryValidatorsResponse,
+} from "cosmjs-types/cosmos/staking/v1beta1/query";
 import { toPrettyCoin } from "../../helpers/coin";
 import { Balances, emptyPrettyCoin } from "../../../store/slices/wallet";
 import { DefaultChainInfo } from "../../helpers/config";
@@ -31,11 +37,25 @@ import {
   getPeriodicVestingAmount,
   getTransferableAmount,
 } from "../../helpers/vestingAmount";
-import { BalanceList, GetAccount } from "../../helpers/types";
+import {
+  BalanceList,
+  GetAccount,
+  GetDelegatedValidatorInfo,
+  UnBondingListInfo,
+  ValidatorsInfo,
+} from "../../helpers/types";
 import { setupIbcExtension, QueryClient } from "@cosmjs/stargate";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { QueryDenomTraceResponse } from "cosmjs-types/ibc/applications/transfer/v1/query";
 import { Coin } from "@cosmjs/proto-signing";
+import { Dec } from "@keplr-wallet/unit";
+import Long from "long";
+import {
+  UnbondingDelegationEntry,
+  Validator,
+} from "cosmjs-types/cosmos/staking/v1beta1/staking";
+import { Timestamp } from "cosmjs-types/google/protobuf/timestamp";
+import moment from "moment";
 
 const currentEpochTime = Math.floor(new Date().getTime() / 1000);
 
@@ -119,7 +139,7 @@ export const fetchAllBalances = async (
       let balanceList: BalanceList[] = [];
       let xprtBalance: Coin;
       let vestingAmount = 0;
-      let transferableAmount = 0;
+      let transferableAmount: Dec = new Dec("0");
       for (const balance of response.balances) {
         // check fot ibc balance
         if (
@@ -155,7 +175,7 @@ export const fetchAllBalances = async (
         transferableAmount = await getTransferableAmount(
           address,
           account,
-          Number(xprtBalance!.amount!)
+          xprtBalance!.amount
         );
       }
       return {
@@ -194,16 +214,116 @@ export const fetchAllBalances = async (
   }
 };
 
-export const fetchVestingBalance = async (rpc: string, address: string) => {
+export const fetchValidatorsInfo = async (
+  rpc: string,
+  address: string
+): Promise<ValidatorsInfo> => {
   try {
-    const account: GetAccount = await getAccount(address);
-    // if (account) {
-    //   const transferrableAmount = getTransferableVestingAmount(
-    //     address,
-    //     account,
-    //   );
-    // }
+    const rpcClient = await RpcClient(rpc);
+    const stakingQueryService = new StakingQueryClient(rpcClient);
+    let key = new Uint8Array();
+    let validators: Validator[] = [];
+    do {
+      const response: QueryValidatorsResponse =
+        await stakingQueryService.Validators({
+          status: "",
+          pagination: {
+            key: key,
+            offset: Long.fromNumber(0, true),
+            limit: Long.fromNumber(0, true),
+            countTotal: true,
+            reverse: false,
+          },
+        });
+      key = response!.pagination!.nextKey;
+      validators.push(...response.validators);
+    } while (key.length !== 0);
+
+    const activeValidators = validators.filter(
+      (validator) => !validator.jailed && validator.status === 3
+    );
+    const inActiveValidators = validators.filter(
+      (validator) => validator.jailed || validator.status !== 3
+    );
+
+    const delegationsResponse: QueryDelegatorDelegationsResponse =
+      await stakingQueryService.DelegatorDelegations({
+        delegatorAddr: address,
+      });
+
+    let delegatedValidators: GetDelegatedValidatorInfo[] = [];
+    let totalDelegatedAmount = 0;
+    if (delegationsResponse.delegationResponses.length > 0) {
+      delegatedValidators = await getDelegatedValidatorsInfo(
+        validators,
+        delegationsResponse.delegationResponses
+      );
+
+      totalDelegatedAmount = delegationsResponse.delegationResponses.reduce(
+        (accumulator, object) => {
+          return accumulator + Number(object.balance?.amount);
+        },
+        0
+      );
+    }
+    return {
+      validators: validators,
+      activeValidators: activeValidators,
+      inActiveValidators: inActiveValidators,
+      delegatedValidators,
+      totalDelegatedAmount: toPrettyCoin(
+        totalDelegatedAmount.toString(),
+        DefaultChainInfo.currency.coinDenom,
+        persistenceChain!.chainId
+      ),
+    };
   } catch (e: any) {
-    console.log(e.message, "error in fetchAllBalances");
+    return {
+      validators: [],
+      activeValidators: [],
+      inActiveValidators: [],
+      delegatedValidators: [],
+      totalDelegatedAmount: emptyPrettyCoin,
+    };
+  }
+};
+
+export const fetchUnBondingList = async (
+  rpc: string,
+  address: string
+): Promise<UnBondingListInfo> => {
+  try {
+    const rpcClient = await RpcClient(rpc);
+    const stakingQueryService = new StakingQueryClient(rpcClient);
+    const unBondingResponse: QueryDelegatorUnbondingDelegationsResponse =
+      await stakingQueryService.DelegatorUnbondingDelegations({
+        delegatorAddr: address,
+      });
+    console.log(unBondingResponse, "unBondingResponse");
+    let totalAmount: number = 0;
+    let entries: { completionTime?: any; balance: string }[] = [];
+    if (unBondingResponse.unbondingResponses.length > 0) {
+      unBondingResponse.unbondingResponses.forEach((item) => {
+        item.entries.forEach((entry) => {
+          entries.push({
+            completionTime: moment(
+              entry["completionTime"]!.seconds.toNumber()! * 1000
+            ).format("DD MMM YYYY hh:mm A"),
+            balance: entry.balance,
+          });
+          totalAmount += Number(entry.balance);
+        });
+      });
+    }
+    console.log(totalAmount, "totalAmount", entries);
+    return {
+      unBondingList: entries,
+      totalAmount,
+    };
+  } catch (e: any) {
+    return {
+      unBondingList: [],
+      totalAmount: 0,
+    };
   }
 };
