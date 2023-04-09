@@ -121,7 +121,9 @@ export const getTransferableAmount = async (
   try {
     const balanceDec = toDec(balance);
     let transferableAmount: Dec;
-    const amount = toDec(accountData.vestingBalance);
+    console.log(accountData, "accountData231");
+
+    const amount = toDec(accountData.vestingBalance.toString());
     let delegatedVesting = new Dec(0);
     if (accountData.typeUrl !== BASE_ACCOUNT) {
       delegatedVesting = new Dec(
@@ -140,6 +142,7 @@ export const getTransferableAmount = async (
     }
     return transferableAmount;
   } catch (error: any) {
+    console.log(error, "getTransferableAmount");
     return new Dec(0);
   }
 };

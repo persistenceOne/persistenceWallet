@@ -198,6 +198,7 @@ export const fetchAllBalances = async (
         }
       }
       const account: GetAccount = await getAccount(address);
+
       if (account) {
         vestingAmount = account.vestingBalance;
         transferableAmount = await getTransferableAmount(
