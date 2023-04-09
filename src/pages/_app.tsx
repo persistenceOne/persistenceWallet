@@ -1,12 +1,26 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { useRouter } from "next/router";
-import { useAppStore } from "../../store/store";
-import { useEffect } from "react";
-import { getStorageValue } from "../customHooks/useLocalStorage";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "rc-tooltip/assets/bootstrap.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+  return (
+    <>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      <Component {...pageProps} />
+    </>
+  );
 }
 
 export default MyApp;

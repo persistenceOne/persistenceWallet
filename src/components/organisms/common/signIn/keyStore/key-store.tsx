@@ -95,6 +95,15 @@ const SignInKeyStore = () => {
             address: coin750Response.address,
             walletPath: coin750Response.walletPath,
           };
+          console.log(
+            coin118Data,
+            coin750Data,
+            accountNumber,
+            accountIndex,
+            bip39Passphrase,
+            encryptedMnemonic,
+            "coin118Data-test"
+          );
           setResponse({
             coin118Data,
             coin750Data,

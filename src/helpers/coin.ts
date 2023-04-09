@@ -25,7 +25,7 @@ export const getUnDecimalize = (value: string, precision: number) => {
   return toDec(value).mul(DecUtils.getTenExponentNInPrecisionRange(precision));
 };
 
-export const toDec = (value: string, test = "s123") => {
+export const toDec = (value: string) => {
   const valueTrim = value.replace(/,/g, "");
   return new Dec(valueTrim === "" ? "0" : valueTrim);
 };

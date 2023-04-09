@@ -373,7 +373,7 @@ export const ExternalChains: ExternalChainData = {
         coinGeckoId: "persistence",
       },
       bip44: {
-        coinType: 750,
+        coinType: 118,
       },
       currencies: [
         {

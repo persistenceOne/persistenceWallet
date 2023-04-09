@@ -28,6 +28,7 @@ import {
   LOGIN_INFO,
   PERSISTENCE,
 } from "../../appConstants";
+import { useAppStore } from "../../store/store";
 
 const encoding = require("@cosmjs/encoding");
 const bip39 = require("bip39");
@@ -167,7 +168,9 @@ export const exceptionHandle = (
     },
     ToastType.ERROR
   );
-  // useAppStore.getState().setTxnInfo(false, null, "failed");
+  useAppStore
+    .getState()
+    .setTxnInfo({ inProgress: false, name: null, failed: true });
   const customScope = new Scope();
   customScope.setLevel("fatal");
   customScope.setTags(sentryTag);

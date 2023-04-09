@@ -25,6 +25,7 @@ const AccountInfo: React.FC<AccountInfoProps> = ({ ...Props }) => {
     "accountKeyStoreDetails",
     ""
   );
+  console.log(Props, "Props");
   const {
     coin118Data,
     accountIndex,

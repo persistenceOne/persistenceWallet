@@ -69,6 +69,9 @@ export interface WalletSliceState {
       password: any;
       coinType: number;
     };
+    decryptKeyStore: {
+      modal: boolean;
+    };
     changePassword: {
       modal: boolean;
     };
@@ -94,6 +97,7 @@ export interface WalletSliceActions {
   handleWalletKeyStoreFilePassword: (value: any) => void;
   handleWalletKeyStoreCoinType: (value: CoinType) => void;
   handleWalletSignInModal: (value: boolean) => void;
+  handleDecryptKeystoreModal: (value: boolean) => void;
   handleWalletSignInKeyStoreModal: (value: boolean) => void;
   handleWalletAccountDetails: (value: AccountDetails) => void;
   handleWalletKeyStoreLoginDetails: (value: KeyStoreLoginDetails) => void;
@@ -116,6 +120,9 @@ const initialState = {
       file: null,
       password: null,
       coinType: 750,
+    },
+    decryptKeyStore: {
+      modal: false,
     },
     changePassword: {
       modal: false,
@@ -218,6 +225,12 @@ export const createWalletSlice: StateCreator<WalletSlice> = (set) => ({
     set(
       produce((state: WalletSlice) => {
         state.wallet.signIn.modal = value;
+      })
+    ),
+  handleDecryptKeystoreModal: (value: boolean) =>
+    set(
+      produce((state: WalletSlice) => {
+        state.wallet.decryptKeyStore.modal = value;
       })
     ),
   handleWalletSignInKeyStoreModal: (value: boolean) =>

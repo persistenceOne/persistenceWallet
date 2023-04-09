@@ -6,6 +6,7 @@ import useLocalStorage, {
 } from "../../customHooks/useLocalStorage";
 import { useAppStore } from "../../../store/store";
 import { persistenceChain } from "../../helpers/utils";
+import DecryptKeyStore from "../organisms/common/decrypt-keystore";
 
 const env: string = process.env.NEXT_PUBLIC_ENVIRONMENT!;
 
@@ -64,6 +65,7 @@ export const Template = ({
           {children}
         </div>
       </div>
+      <DecryptKeyStore />
     </div>
   );
 };

@@ -3,15 +3,51 @@ import Button from "../../../../atoms/button";
 import { useAppStore } from "../../../../../../store/store";
 import { Dec } from "@keplr-wallet/unit";
 import { DefaultChainInfo } from "../../../../../helpers/config";
-import { getDecimalize, toDec } from "../../../../../helpers/coin";
+import {
+  getDecimalize,
+  getUnDecimalize,
+  toDec,
+} from "../../../../../helpers/coin";
+import { sendMsg } from "../../../../../helpers/protoMsg";
+import { shallow } from "zustand/shallow";
+import { Spinner } from "../../../../atoms/spinner";
 
 const Submit = () => {
-  const [balances, token, amount, fee] = useAppStore((state) => [
-    state.wallet.balances,
-    state.transactions.send.token,
-    state.transactions.send.amount,
-    state.transactions.feeInfo.fee,
-  ]);
+  const handleDecryptKeystoreModal = useAppStore(
+    (state) => state.handleDecryptKeystoreModal
+  );
+  const setTxnMsgs = useAppStore((state) => state.setTxnMsgs);
+  const [
+    balances,
+    token,
+    amount,
+    fee,
+    accountDetails,
+    recipient,
+    transactionInfo,
+  ] = useAppStore(
+    (state) => [
+      state.wallet.balances,
+      state.transactions.send.token,
+      state.transactions.send.amount,
+      state.transactions.feeInfo.fee,
+      state.wallet.accountDetails,
+      state.transactions.send.recipient,
+      state.transactions.transactionInfo,
+    ],
+    shallow
+  );
+
+  const handleSubmit = () => {
+    const msg = sendMsg(
+      accountDetails!.address!,
+      recipient,
+      getUnDecimalize(amount.toString(), 6).truncate().toString(),
+      token!.minimalDenom!
+    );
+    setTxnMsgs([msg]);
+    handleDecryptKeystoreModal(true);
+  };
 
   const enable =
     balances.totalXprt.toDec().gt(new Dec("0")) &&
@@ -40,9 +76,18 @@ const Submit = () => {
             justify-center w-[250px] mx-auto mb-4"
         type="primary"
         size="medium"
-        disabled={!enable}
-        content="Send"
-        onClick={() => {}}
+        disabled={
+          !enable ||
+          (transactionInfo.name === "send" && transactionInfo.inProgress)
+        }
+        content={
+          transactionInfo.name === "send" && transactionInfo.inProgress ? (
+            <Spinner size={"medium"} />
+          ) : (
+            "Send"
+          )
+        }
+        onClick={handleSubmit}
       />
     </div>
   );

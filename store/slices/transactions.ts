@@ -39,8 +39,10 @@ export interface TransactionSliceState {
     send: {
       token: BalanceList | null;
       amount: Dec | string;
+      recipient: string;
     };
     transactionInfo: TransactionInfo;
+    txnMsgs: any[];
   };
 }
 
@@ -51,7 +53,9 @@ export interface TransactionSliceActions {
   handleTxnFeeValue: (value: Fee) => void;
   handleSendTxnToken: (value: any) => void;
   handleSendTxnAmount: (value: any) => void;
+  handleSendTxnRecipient: (value: string) => void;
   setTxnInfo: (value: TransactionInfo) => void;
+  setTxnMsgs: (value: any[]) => void;
 }
 
 export type TransactionSlice = TransactionSliceState & TransactionSliceActions;
@@ -72,7 +76,9 @@ const initialState = {
     send: {
       token: null,
       amount: "", //new Dec("0")
+      recipient: "",
     },
+    txnMsgs: [],
     transactionInfo: {
       inProgress: false,
       name: null,
@@ -121,10 +127,22 @@ export const createTransactionSlice: StateCreator<TransactionSlice> = (
         state.transactions.send.amount = value;
       })
     ),
+  handleSendTxnRecipient: (value: string) =>
+    set(
+      produce((state: TransactionSlice) => {
+        state.transactions.send.recipient = value;
+      })
+    ),
   setTxnInfo: (value: TransactionInfo) =>
     set(
       produce((state: TransactionSlice) => {
         state.transactions.transactionInfo = value;
+      })
+    ),
+  setTxnMsgs: (value: any[]) =>
+    set(
+      produce((state: TransactionSlice) => {
+        state.transactions.txnMsgs = value;
       })
     ),
 });
