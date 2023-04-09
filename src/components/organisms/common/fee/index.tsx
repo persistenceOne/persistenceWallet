@@ -45,29 +45,30 @@ const FeeOptions = ({ amount }: Props) => {
   };
 
   return (
-    <div className="pt-2">
+    <div className="">
+      <p className="mb-1 text-light-white-500">Fee</p>
       <div className="flex items-center justify-center">
         <div
           className={`p-4 flex-1 text-center  cursor-pointer shadow-lg rounded-md ${
-            fee.type === "low" ? "bg-black-900" : "bg-black-400"
+            fee.type === "low" ? "bg-black-600" : "bg-black-900"
           }`}
           onClick={() => {
             feeHandler(FeeInfo.lowFee, "low");
           }}
         >
-          <p className="text-sm">Low</p>
-          <p className="text-sm">0($0)</p>
+          <p className="text-sm text-light-mid ">Low</p>
+          <p className="text-sm text-light-mid ">0($0)</p>
         </div>
         <div
           className={`p-4 flex-1 text-center  cursor-pointer shadow-lg mx-4 rounded-md ${
-            fee.type === "average" ? "bg-black-900" : "bg-black-400"
+            fee.type === "average" ? "bg-black-600" : "bg-black-900"
           }`}
           onClick={() => {
             feeHandler(FeeInfo.averageFee, "average");
           }}
         >
-          <p className="text-sm">Avg</p>
-          <p className="text-sm">
+          <p className="text-sm text-light-mid ">Avg</p>
+          <p className="text-sm text-light-mid ">
             {Number(
               getDecimalize(
                 (FeeInfo.averageFee * Number(gas)).toString(),
@@ -80,14 +81,14 @@ const FeeOptions = ({ amount }: Props) => {
         </div>
         <div
           className={`p-4 flex-1 text-center  cursor-pointer shadow-lg rounded-md ${
-            fee.type === "high" ? "bg-black-900" : "bg-black-400"
+            fee.type === "high" ? "bg-black-600" : "bg-black-900"
           }`}
           onClick={() => {
             feeHandler(FeeInfo.highFee, "high");
           }}
         >
-          <p className="text-sm">High</p>
-          <p className="text-sm">
+          <p className="text-sm text-light-mid ">High</p>
+          <p className="text-sm text-light-mid ">
             {Number(
               getDecimalize(
                 (FeeInfo.highFee * Number(gas)).toString(),

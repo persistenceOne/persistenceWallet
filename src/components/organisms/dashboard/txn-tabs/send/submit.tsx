@@ -12,7 +12,7 @@ const Submit = () => {
     state.transactions.send.amount,
     state.transactions.feeInfo.fee,
   ]);
-  console.log("test enable", fee.value!.toString());
+
   const enable =
     balances.totalXprt.toDec().gt(new Dec("0")) &&
     (token!.denom === DefaultChainInfo.currency.coinDenom

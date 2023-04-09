@@ -19,7 +19,6 @@ const Amount = () => {
       return false;
     }
   };
-
   const maxHandler = (value: string) => {
     handleSendTxnAmount(value);
   };
