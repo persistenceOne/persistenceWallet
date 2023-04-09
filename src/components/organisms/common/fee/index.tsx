@@ -1,68 +1,107 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Gas from "./gas";
-import Button from "../../../atoms/button";
-import Modal from "../../../molecules/modal";
 import { useAppStore } from "../../../../../store/store";
 import { shallow } from "zustand/shallow";
+import { DefaultChainInfo, FeeInfo } from "../../../../helpers/config";
+import { FeeType } from "../../../../../store/slices/transactions";
+import { getDecimalize, toDec } from "../../../../helpers/coin";
 
-const FeeOptions = () => {
+interface Props {
+  amount: string;
+}
+
+const FeeOptions = ({ amount }: Props) => {
+  const [error, setError] = useState("");
   const handleTxnFeeModal = useAppStore((state) => state.handleTxnFeeModal);
+  const handleTxnFeeValue = useAppStore((state) => state.handleTxnFeeValue);
 
-  const [modal, fee] = useAppStore(
-    (state) => [state.transactions.fee.modal, state.transactions.fee.fee],
+  const [fee, gas, totalXprt, transactionInfo] = useAppStore(
+    (state) => [
+      state.transactions.feeInfo.fee,
+      state.transactions.gas.gas,
+      state.wallet.balances.totalXprt,
+      state.transactions.transactionInfo,
+    ],
     shallow
   );
 
-  const submitHandler = () => {};
-  const handleClose = () => {
-    handleTxnFeeModal(false);
+  useEffect(() => {
+    feeHandler(FeeInfo.averageFee, "average");
+  }, [gas]);
+
+  const feeHandler = (feeValue: any, feeType: FeeType) => {
+    const feeV = toDec(feeValue.toString()).mul(toDec(gas!.toString()));
+    handleTxnFeeValue({
+      value: feeV.toString(),
+      type: feeType,
+    });
+    if (
+      feeV.lte(totalXprt.toDec()) &&
+      transactionInfo.name === "send" &&
+      feeV.lte(totalXprt.toDec().sub(toDec(amount.toString())))
+    ) {
+      setError("Insufficient wallet balance to process the transaction");
+    }
   };
+
   return (
-    <Modal
-      show={modal}
-      onClose={handleClose}
-      header=""
-      modalBodyClassName={"!p-0"}
-      modalDialogClassName={"!max-w-[600px]"}
-      staticBackDrop={true}
-      closeButton={true}
-    >
-      <div className="px-8 pt-8 md:px-6 md:pt-6">
-        <p className="text-center text-light-high font-semibold text-2xl leading-normal">
-          Fee Options
-        </p>
-      </div>
-      <div className="px-8 py-6">
-        <div>
-          <div className="flex items-center justify-center">
-            <div className="p-4 flex-1 text-center cursor-pointer shadow-lg mx-2 bg-black-600">
-              <p>Low</p>
-              <p>0($0)</p>
-            </div>
-            <div className="p-4 flex-1 text-center  cursor-pointer shadow-lg mx-2 bg-black-600">
-              <p>Avg</p>
-              <p>2.23($4.5)</p>
-            </div>
-            <div className="p-4 bg-black-900 flex-1 text-center cursor-pointer shadow-lg mx-2">
-              <p>High</p>
-              <p>5($10)</p>
-            </div>
-          </div>
-          <Gas />
-          <div className={"mb-2 mt-6"}>
-            <Button
-              className="button md:text-sm flex items-center
-            justify-center w-[250px] md:w-[200px] mx-auto mb-4"
-              type="primary"
-              size="medium"
-              disabled={false}
-              content="Submit"
-              onClick={submitHandler}
-            />
-          </div>
+    <div className="pt-2">
+      <div className="flex items-center justify-center">
+        <div
+          className={`p-4 flex-1 text-center  cursor-pointer shadow-lg rounded-md ${
+            fee.type === "low" ? "bg-black-900" : "bg-black-400"
+          }`}
+          onClick={() => {
+            feeHandler(FeeInfo.lowFee, "low");
+          }}
+        >
+          <p className="text-sm">Low</p>
+          <p className="text-sm">0($0)</p>
+        </div>
+        <div
+          className={`p-4 flex-1 text-center  cursor-pointer shadow-lg mx-4 rounded-md ${
+            fee.type === "average" ? "bg-black-900" : "bg-black-400"
+          }`}
+          onClick={() => {
+            feeHandler(FeeInfo.averageFee, "average");
+          }}
+        >
+          <p className="text-sm">Avg</p>
+          <p className="text-sm">
+            {Number(
+              getDecimalize(
+                (FeeInfo.averageFee * Number(gas)).toString(),
+                DefaultChainInfo.currency.coinDecimals
+              ).toString()
+            ).toFixed(6)}{" "}
+            {DefaultChainInfo.currency.coinDenom}
+            ($4.5)
+          </p>
+        </div>
+        <div
+          className={`p-4 flex-1 text-center  cursor-pointer shadow-lg rounded-md ${
+            fee.type === "high" ? "bg-black-900" : "bg-black-400"
+          }`}
+          onClick={() => {
+            feeHandler(FeeInfo.highFee, "high");
+          }}
+        >
+          <p className="text-sm">High</p>
+          <p className="text-sm">
+            {Number(
+              getDecimalize(
+                (FeeInfo.highFee * Number(gas)).toString(),
+                DefaultChainInfo.currency.coinDecimals
+              ).toString()
+            ).toFixed(6)}{" "}
+            {DefaultChainInfo.currency.coinDenom}
+            ($10)
+          </p>
         </div>
       </div>
-    </Modal>
+      <Gas />
+      <p>{error}</p>
+    </div>
   );
 };
 

@@ -50,7 +50,6 @@ const GenerateKeyStore = () => {
   };
 
   const mnemonicHandler = (evt: any) => {
-    console.log(validateMnemonic(evt.target.value), "Asdfasd");
     if (validateMnemonic(evt.target.value)) {
       setMnemonic(evt.target.value);
     } else {

@@ -5,8 +5,6 @@ import useLocalStorage, {
   getStorageValue,
 } from "../../customHooks/useLocalStorage";
 import { useAppStore } from "../../../store/store";
-import { useRouter } from "next/router";
-import FeeOptions from "../organisms/common/fee";
 import { persistenceChain } from "../../helpers/utils";
 
 const env: string = process.env.NEXT_PUBLIC_ENVIRONMENT!;
@@ -66,7 +64,6 @@ export const Template = ({
           {children}
         </div>
       </div>
-      <FeeOptions />
     </div>
   );
 };

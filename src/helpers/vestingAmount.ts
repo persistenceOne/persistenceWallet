@@ -9,6 +9,7 @@ import {
 } from "../../appConstants";
 import { GetAccount } from "./types";
 import { Dec } from "@keplr-wallet/unit";
+import { toDec } from "./coin";
 
 const periodicVesting = "/cosmos.vesting.v1beta1.PeriodicVestingAccount";
 const baseAccount = "/cosmos.auth.v1beta1.BaseAccount";
@@ -118,9 +119,9 @@ export const getTransferableAmount = async (
   balance: string
 ) => {
   try {
-    const balanceDec = new Dec(balance);
+    const balanceDec = toDec(balance);
     let transferableAmount: Dec;
-    const amount = new Dec(accountData.vestingBalance);
+    const amount = toDec(accountData.vestingBalance);
     let delegatedVesting = new Dec(0);
     if (accountData.typeUrl !== BASE_ACCOUNT) {
       delegatedVesting = new Dec(

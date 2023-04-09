@@ -4,50 +4,48 @@ import { Icon } from "../../../atoms/icon";
 import { useAppStore } from "../../../../../store/store";
 
 const Gas = () => {
-  const handleWalletAdvanceMode = useAppStore(
-    (state) => state.handleWalletAdvanceMode
-  );
-  const handleWalletAccountNumber = useAppStore(
-    (state) => state.handleWalletAccountNumber
-  );
+  const handleTxnGasStatus = useAppStore((state) => state.handleTxnGasStatus);
+  const handleTxnGasValue = useAppStore((state) => state.handleTxnGasValue);
 
-  const advancedInfo = useAppStore((state) => state.wallet.advancedInfo.active);
+  const gas = useAppStore((state) => state.transactions.gas);
+
   const handleAccordion = () => {
-    handleWalletAdvanceMode(!advancedInfo);
+    handleTxnGasStatus(!gas.active);
   };
 
-  const handleAccountNumber = (e: any) => {
-    handleWalletAccountNumber(e.target.value);
+  const handleGas = (e: any) => {
+    handleTxnGasValue(e.target.value);
   };
 
   return (
     <div className="mt-4">
       <button
         type="button"
-        className="flex justify-center items-center mx-auto"
+        className="flex justify-end items-center ml-auto"
         onClick={handleAccordion}
       >
-        <span className="mr-2">Advanced</span>
-        {advancedInfo ? (
-          <Icon viewClass="arrow-right" iconName="up-arrow" />
-        ) : (
-          <Icon viewClass="arrow-right" iconName="down-arrow" />
-        )}
+        <span className="mr-2 text-light-white-500 underline">Advanced</span>
+        {/*{gas.active ? (*/}
+        {/*  <Icon viewClass="arrow-right" iconName="up-arrow" />*/}
+        {/*) : (*/}
+        {/*  <Icon viewClass="arrow-right" iconName="down-arrow" />*/}
+        {/*)}*/}
       </button>
       <div
         className={`${
-          advancedInfo ? "active" : ""
+          gas.active ? "active" : ""
         } collapseMenu ease-in overflow-hidden relative`}
       >
         <div className="mb-2">
-          <p className="mb-1">Gas</p>
+          <p className="mb-1 text-light-white-500">Gas</p>
           <InputText
             type="number"
             placeholder="0"
             disable={false}
             required={true}
-            onChange={handleAccountNumber}
+            onChange={handleGas}
             name="gas"
+            value={gas.gas.toString()}
             className={`border-0
              p-2 text-dark-high leading-normal 
              box-shadow-none font-normal focus:border-0 

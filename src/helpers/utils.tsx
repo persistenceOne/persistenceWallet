@@ -1,18 +1,18 @@
 import _ from "lodash";
-import { Scope } from "@sentry/nextjs";
 import * as Sentry from "@sentry/nextjs";
+import { Scope } from "@sentry/nextjs";
 import { CaptureContext } from "@sentry/types/types/scope";
 import { Primitive } from "@sentry/types";
 import { displayToast } from "../components/molecules/toast";
 import { ToastType } from "../components/molecules/toast/types";
-const encoding = require("@cosmjs/encoding");
-const bip39 = require("bip39");
 import { Coin } from "@cosmjs/proto-signing";
 import {
   DefaultChainInfo,
   ExternalChains,
   FeeInfo,
   MainNetFoundationNodes,
+  PstakeInfo,
+  stkATOMInfo,
   TestNetFoundationNodes,
 } from "./config";
 import { sha256, stringToPath } from "@cosmjs/crypto";
@@ -28,7 +28,9 @@ import {
   LOGIN_INFO,
   PERSISTENCE,
 } from "../../appConstants";
-import moment from "moment";
+
+const encoding = require("@cosmjs/encoding");
+const bip39 = require("bip39");
 
 const valoperAddressPrefix = DefaultChainInfo.prefix;
 const addressPrefix = DefaultChainInfo.prefix;
@@ -223,6 +225,44 @@ export const denomModify = (amount: Coin) => {
     } else {
       return [amount.amount, amount.denom];
     }
+  }
+};
+
+export const getChainFromDenom = (denom: string) => {
+  const chains = ExternalChains["Mainnet"];
+  return chains.find((item) => {
+    return item!.currencies.find((currency) => {
+      return currency.coinMinimalDenom === denom;
+    });
+  });
+};
+
+export const getDenomFromMinimalDenom = (
+  denom: string
+): { denom: string; tokenImg: string } => {
+  switch (denom) {
+    case "uxprt":
+      return { denom: "XPRT", tokenImg: "/tokens/xprt.png" };
+    case "uatom":
+      return { denom: "ATOM", tokenImg: "tokens/atom.svg" };
+    case PstakeInfo.coinMinimalDenom:
+      return { denom: "PSTAKE", tokenImg: "tokens/pstake.png" };
+    case "ugraviton":
+      return { denom: "GRAVITON", tokenImg: "tokens/grav.svg" };
+    case "uosmo":
+      return { denom: "OSMO", tokenImg: "tokens/osmo.svg" };
+    case stkATOMInfo.coinMinimalDenom:
+      return { denom: "STKATOM", tokenImg: "tokens/stkatom.svg" };
+    case "arebus":
+      return { denom: "REBUS", tokenImg: "tokens/rebus.png" };
+    case "aevmos":
+      return { denom: "EVMOS", tokenImg: "tokens/evmos.png" };
+    case "ucmdx":
+      return { denom: "CMDX", tokenImg: "tokens/cmdx.png" };
+    case "ucmst":
+      return { denom: "CMST", tokenImg: "tokens/cmst.png" };
+    default:
+      return { denom: "Unknown", tokenImg: "tokens/ibc.svg" };
   }
 };
 

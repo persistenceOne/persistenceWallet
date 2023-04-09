@@ -11,18 +11,20 @@ export const toPrettyCoin = (
     chainInfo.currencies.find(
       (currency) => currency.coinMinimalDenom === denom
     ) || chainInfo.currencies[0],
-    new Dec(amount.toString())
+    toDec(amount.toString())
   )
     .trim(true)
     .hideDenom(true);
 };
 
-export const getUnDecimaliedValue = (
-  value: string | number,
-  precision: number
-) => {
-  const bridgeFee: Dec = new Dec(value).mul(
-    DecUtils.getTenExponentNInPrecisionRange(precision)
-  );
-  return bridgeFee;
+export const getDecimalize = (value: string, precision: number) => {
+  return toDec(value).quo(DecUtils.getTenExponentNInPrecisionRange(precision));
+};
+
+export const getUnDecimalize = (value: string, precision: number) => {
+  return toDec(value).mul(DecUtils.getTenExponentNInPrecisionRange(precision));
+};
+
+export const toDec = (value: string) => {
+  return new Dec(value === "" ? "0" : value);
 };

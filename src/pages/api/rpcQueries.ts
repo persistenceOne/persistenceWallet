@@ -4,7 +4,11 @@ import {
 } from "cosmjs-types/cosmos/auth/v1beta1/query";
 import { BaseAccount } from "cosmjs-types/cosmos/auth/v1beta1/auth";
 import { getDelegatedValidatorsInfo, RpcClient } from "../../helpers/rpc";
-import { persistenceChain } from "../../helpers/utils";
+import {
+  getChainFromDenom,
+  getDenomFromMinimalDenom,
+  persistenceChain,
+} from "../../helpers/utils";
 import {
   ContinuousVestingAccount,
   DelayedVestingAccount,
@@ -56,6 +60,7 @@ import {
 } from "cosmjs-types/cosmos/staking/v1beta1/staking";
 import { Timestamp } from "cosmjs-types/google/protobuf/timestamp";
 import moment from "moment";
+import { useAppStore } from "../../../store/store";
 
 const currentEpochTime = Math.floor(new Date().getTime() / 1000);
 
@@ -154,18 +159,41 @@ export const fetchAllBalances = async (
           const ibcExtension = setupIbcExtension(queryClient);
           let denomTraceResponse: QueryDenomTraceResponse =
             await ibcExtension.ibc.transfer.denomTrace(denomText);
+
+          const denomResponse = getDenomFromMinimalDenom(
+            denomTraceResponse.denomTrace?.baseDenom!
+          );
+
+          const chain = getChainFromDenom(
+            denomTraceResponse.denomTrace?.baseDenom!
+          );
+
           balanceList.push({
-            denom: balance.denom,
+            minimalDenom: balance.denom,
+            denom: denomResponse.denom,
+            tokenUrl: denomResponse.tokenImg,
             denomTrace: denomTraceResponse!.denomTrace,
-            amount: balance.amount,
+            amount: chain
+              ? toPrettyCoin(
+                  balance!.amount,
+                  denomTraceResponse.denomTrace?.baseDenom!,
+                  chain!.chainId
+                )
+              : balance.amount,
           });
         } else {
+          const denomResponse = getDenomFromMinimalDenom(balance.denom);
           if (balance.denom === DefaultChainInfo.currency.coinMinimalDenom) {
             xprtBalance = balance;
           }
+          const chain = getChainFromDenom(balance.denom);
           balanceList.push({
-            denom: balance.denom,
-            amount: balance.amount,
+            minimalDenom: balance.denom,
+            denom: denomResponse.denom,
+            tokenUrl: denomResponse.tokenImg,
+            amount: chain
+              ? toPrettyCoin(balance!.amount, balance.denom!, chain!.chainId)
+              : balance.amount,
           });
         }
       }
@@ -178,6 +206,12 @@ export const fetchAllBalances = async (
           xprtBalance!.amount
         );
       }
+
+      // set default token select
+      useAppStore
+        .getState()
+        .handleSendTxnToken(balanceList[0] ? balanceList[0] : null);
+
       return {
         totalXprt: toPrettyCoin(
           xprtBalance!.amount,
@@ -204,7 +238,6 @@ export const fetchAllBalances = async (
       transferableAmount: emptyPrettyCoin,
     };
   } catch (e: any) {
-    console.log(e.message, "error in fetchAllBalances");
     return {
       totalXprt: emptyPrettyCoin,
       allBalances: [],

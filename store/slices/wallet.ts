@@ -14,6 +14,7 @@ import {
   UnBondingListInfo,
   ValidatorsInfo,
 } from "../../src/helpers/types";
+import { useAppStore } from "../store";
 export type CoinType = 118 | 750;
 
 export type loginType = "keplr" | "keyStore" | "ledger";
@@ -239,7 +240,7 @@ export const createWalletSlice: StateCreator<WalletSlice> = (set) => ({
     ),
   fetchWalletBalances: async (rpc: string, address: string) => {
     const response: Balances = await fetchAllBalances(rpc, address);
-    console.log(response, "response");
+    console.log(response, "Balances");
     set(
       produce((state: WalletSlice) => {
         state.wallet.balances = response;
