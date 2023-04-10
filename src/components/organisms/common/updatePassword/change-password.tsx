@@ -68,12 +68,14 @@ const ChangePassword = ({ resposne }: any) => {
           required={true}
         />
       </div>
+      <p className={"text-sm text-red"}>{errorMessage}</p>
       <div className={"my-2 mt-4"}>
         <Button
           className="button md:text-sm flex items-center
             justify-center w-[150px] md:w-[200px] mx-auto mb-4"
           type="primary"
           size="medium"
+          disabled={password === "" || errorMessage !== ""}
           content="Submit"
           onClick={handleSubmit}
         />

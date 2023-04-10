@@ -26,6 +26,7 @@ const GenerateKeyStore = () => {
   );
 
   const handleClose = () => {
+    setErrorMessage("");
     setDownloadStatus(false);
     handleCreateWalletKeystoreModal(false);
   };
@@ -125,14 +126,24 @@ const GenerateKeyStore = () => {
             }
             onClick={handleChangeKeyStore}
           >
-            Change KeyStore
+            Change KeyStore Password
           </p>
         </div>
       ) : (
         <div className="px-8 py-6">
-          <p className={"text-light-emphasis text-center font-medium"}>
+          <p className={"text-green text-center font-medium"}>
             Keystore Successfully downloaded
           </p>
+          <div className={"mt-6"}>
+            <Button
+              className="button md:text-sm flex items-center
+            justify-center w-[250px] md:w-[200px] mx-auto mb-4"
+              type="primary"
+              size="medium"
+              content="Close"
+              onClick={handleClose}
+            />
+          </div>
         </div>
       )}
     </Modal>

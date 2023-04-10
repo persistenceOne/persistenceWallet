@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useAppStore } from "../../../../../store/store";
 
-const FileInput = () => {
+const FileInput = ({ setErrorMessage }: any) => {
   const handleWalletKeyStoreFile = useAppStore(
     (state) => state.handleWalletKeyStoreFile
   );

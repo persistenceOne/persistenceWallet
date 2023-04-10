@@ -18,7 +18,6 @@ const UpdateKeyStore = () => {
   const [steps, setSteps] = useState<CreateWalletSteps>("1");
   const [errorMessage, setErrorMessage] = useState("");
   const [response, setResponse] = useState("");
-  console.log("test123");
 
   const [
     accountNumber,
@@ -88,6 +87,7 @@ const UpdateKeyStore = () => {
     }
   };
 
+  console.log(password, "password");
   return (
     <Modal
       show={modal}
@@ -106,7 +106,7 @@ const UpdateKeyStore = () => {
       <div className="px-8 py-6">
         {steps === "1" ? (
           <>
-            <KeyStore />
+            <KeyStore setErrorMessage={setErrorMessage} />
             <p className={"text-sm text-red"}>{errorMessage}</p>
             <div className={"my-2"}>
               <Button
@@ -114,6 +114,9 @@ const UpdateKeyStore = () => {
             justify-center w-[150px] md:w-[200px] mx-auto mb-4"
                 type="primary"
                 size="medium"
+                disabled={
+                  file === null || errorMessage !== "" || password === null
+                }
                 content="Submit"
                 onClick={handleSubmit}
               />

@@ -3,11 +3,11 @@ import CoinType from "../coinType";
 import FileInput from "./file-input";
 import Password from "./password";
 
-const KeyStore = () => {
+const KeyStore = ({ setErrorMessage }: any) => {
   return (
     <>
-      <FileInput />
-      <Password />
+      <FileInput setErrorMessage={setErrorMessage} />
+      <Password setErrorMessage={setErrorMessage} />
       <CoinType />
     </>
   );
