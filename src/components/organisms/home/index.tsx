@@ -52,7 +52,7 @@ const HomeContainer = () => {
             />
             <p
               className={
-                "text-base text-light-emphasis text-center underline cursor-pointer"
+                "text-base text-light-emphasis text-center underline cursor-pointer "
               }
               onClick={createWalletKeyStoreHandler}
             >

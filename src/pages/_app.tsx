@@ -3,8 +3,9 @@ import type { AppProps } from "next/app";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "rc-tooltip/assets/bootstrap.css";
+import ProtectedRoute from "./protectedRoutes";
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps, router }: AppProps) {
   return (
     <>
       <ToastContainer
@@ -18,7 +19,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         draggable
         pauseOnHover
       />
-      <Component {...pageProps} />
+      <ProtectedRoute router={router}>
+        <Component {...pageProps} />
+      </ProtectedRoute>
     </>
   );
 }

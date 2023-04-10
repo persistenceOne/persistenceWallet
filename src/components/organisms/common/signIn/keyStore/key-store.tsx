@@ -143,7 +143,7 @@ const SignInKeyStore = () => {
             </p>
           </div>
           <div className="px-8 py-6 ">
-            <KeyStore />
+            <KeyStore setErrorMessage={setErrorMessage} />
             <AdvancedOptions />
             <p className={"text-sm text-red"}>{errorMessage}</p>
             <div className={"my-2"}>
