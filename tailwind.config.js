@@ -129,9 +129,18 @@ module.exports = {
             transform: "scale(1)",
           },
         },
+        "fade-in": {
+          from: {
+            opacity: 0,
+          },
+          to: {
+            opacity: 1,
+          },
+        },
       },
       animation: {
         "menu-open": "menu-open 200ms ease-in-out",
+        "fade-in": "fade-in 2s",
       },
       screens: {
         "-2xl": { min: "1536px" },

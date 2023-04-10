@@ -67,14 +67,16 @@ const CreateWallet = () => {
       onClose={handleClose}
       header=""
       modalBodyClassName={"!p-0"}
-      modalDialogClassName={"!max-w-[600px]"}
+      modalDialogClassName={"!max-w-[650px]"}
       staticBackDrop={true}
       closeButton={true}
     >
       {steps === "1" ? (
         noteContent
       ) : steps === "2" ? (
-        <SeedCreation handleSteps={handleSteps} />
+        <div className="animate-fade-in">
+          <SeedCreation handleSteps={handleSteps} />
+        </div>
       ) : (
         ""
       )}

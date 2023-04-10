@@ -13,6 +13,7 @@ const InputText = ({
   value,
   onChange = emptyFunc,
   disable = false,
+  ...rest
 }: InputTextTypes) => {
   const styles =
     "bg-black-600 px-4 py-3 text-light-emphasis leading-normal box-shadow-none font-normal " +
@@ -30,6 +31,7 @@ const InputText = ({
         required={required}
         disabled={disable}
         onWheel={(e) => (e.target as HTMLInputElement).blur()}
+        {...rest}
       />
       <p className="error">{error}</p>
     </div>

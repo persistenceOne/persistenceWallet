@@ -30,22 +30,23 @@ html, body{
 }
 
 
-[type="text"]:focus,
-[type="email"]:focus,
-[type="url"]:focus,
-[type="password"]:focus,
-[type="number"]:focus,
-[type="date"]:focus,
-[type="datetime-local"]:focus,
-[type="month"]:focus,
-[type="search"]:focus,
-[type="tel"]:focus,
-[type="time"]:focus,
-[type="week"]:focus,
-[multiple]:focus,
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+input[type="datetime-local"]:focus,
+input[type="month"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[multiple]:focus,
 textarea:focus,
 select:focus {
     box-shadow: none;
+    outline: none;
 }
 
 input::-webkit-outer-spin-button,
@@ -279,4 +280,41 @@ img {
 
 .spinner.light {
     color: #f8f9fa !important;
+}
+
+@keyframes modalFadeIn {
+    from {
+        transform: translateY(-50%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes modalFadeOut {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-50%);
+        opacity: 0;
+    }
+}
+
+.modal.open {
+    animation: modalFadeIn 0.5s;
+}
+
+.test.open{
+    animation: fadein 2s;
+}
+
+.modal {
+    /*animation-name: modalFade;*/
+    /*animation-duration: .3s;*/
+    animation: fadeout 0.4s;
+    /*animation:modalFadeOut 0.2s ease-out forwards;*/
 }

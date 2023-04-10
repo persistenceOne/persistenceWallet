@@ -16,7 +16,7 @@ export const ACCOUNT_NUMBER = "accountNumber";
 export const LEDGER = "ledger";
 export const COIN_TYPE = "coinType";
 export const PERSISTENCE = "Persistence";
-
+export const MAX_ACCOUNT_NUMBER = 2147483647;
 export const BASE_ACCOUNT = "/cosmos.auth.v1beta1.BaseAccount";
 export const PERIODIC_VESTING_ACCOUNT =
   "/cosmos.vesting.v1beta1.PeriodicVestingAccount";

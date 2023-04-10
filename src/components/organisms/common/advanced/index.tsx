@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import InputText from "../../../atoms/input";
 import { Icon } from "../../../atoms/icon";
 import { useAppStore } from "../../../../../store/store";
+import { MAX_ACCOUNT_NUMBER } from "../../../../../appConstants";
 
 const AdvancedOptions = () => {
+  const [error, setError] = useState("");
   const handleWalletAccountIndex = useAppStore(
     (state) => state.handleWalletAccountIndex
   );
@@ -21,16 +23,41 @@ const AdvancedOptions = () => {
     handleWalletAdvanceMode(!advancedInfo);
   };
 
-  const handleAccountNumber = (e: any) => {
-    handleWalletAccountNumber(e.target.value);
+  const handleAccountNumber = (evt: ChangeEvent<HTMLInputElement>) => {
+    let rex = /^\d{0,10}(\.\d{0,6})?$/;
+    if (
+      rex.test(evt.target.value) &&
+      Number(evt.target.value) <= MAX_ACCOUNT_NUMBER
+    ) {
+      handleWalletAccountNumber(evt.target.value);
+    } else {
+      setError("In-valid account number");
+      return false;
+    }
   };
 
-  const handleAccountIndex = (e: any) => {
-    handleWalletAccountIndex(e.target.value);
+  const handleAccountIndex = (evt: any) => {
+    let rex = /^\d{0,10}(\.\d{0,6})?$/;
+    if (
+      rex.test(evt.target.value) &&
+      Number(evt.target.value) <= MAX_ACCOUNT_NUMBER
+    ) {
+      handleWalletAccountIndex(evt.target.value);
+    } else {
+      setError(
+        `In-valid account index(must be less than ${MAX_ACCOUNT_NUMBER} characters)`
+      );
+      return false;
+    }
   };
 
-  const handleAccountPassPhrase = (e: any) => {
-    handleWalletAccountPassPhrase(e.target.value);
+  const handleAccountPassPhrase = (evt: any) => {
+    if (evt.target.value.length <= 50) {
+      handleWalletAccountPassPhrase(evt.target.value);
+    } else {
+      setError("In-valid PassPhrase(must be less than 50 characters)");
+      return false;
+    }
   };
 
   return (
@@ -40,12 +67,19 @@ const AdvancedOptions = () => {
         className="flex justify-center items-center mx-auto"
         onClick={handleAccordion}
       >
-        <span className="mr-2">Advanced</span>
-        {advancedInfo ? (
-          <Icon viewClass="arrow-right" iconName="up-arrow" />
-        ) : (
-          <Icon viewClass="arrow-right" iconName="down-arrow" />
-        )}
+        <span
+          className={`${
+            advancedInfo ? "text-light-emphasis" : "text-light-mid"
+          }  mr-2`}
+        >
+          Advanced
+        </span>
+        <Icon
+          viewClass={`${
+            advancedInfo ? "rotate-180 !fill-[#ECECEC]" : ""
+          } arrow-right !w-[14px] !h-[14px]`}
+          iconName="down-arrow"
+        />
       </button>
       <div
         className={`${
@@ -101,6 +135,9 @@ const AdvancedOptions = () => {
           />
         </div>
       </div>
+      <p className="text-sm text-red text-center mb-4 md:mb-3 md:text-sm">
+        {error}
+      </p>
     </div>
   );
 };

@@ -101,7 +101,7 @@ const SeedCreation = ({ handleSteps }: any) => {
           </div>
           <div className="p-6">
             <div
-              className="mb-2 text-center flex
+              className="mb-4 text-center flex
                 justify-center items-center relative"
             >
               <span className="mr-2 text-light-emphasis font-bold text-base leading-normaL">
@@ -125,7 +125,7 @@ const SeedCreation = ({ handleSteps }: any) => {
                             disabled={false}
                             key={index}
                             id={`mnemonicKey${number}`}
-                            className="h-[40px] w-[100px] m-2 p-2 text-center rounded-sm"
+                            className="h-[40px] w-[120px] m-2 p-2 text-center rounded-sm bg-black-600"
                             type="text"
                             defaultValue=""
                             onKeyPress={handleKeypress}
@@ -139,18 +139,21 @@ const SeedCreation = ({ handleSteps }: any) => {
                   </div>
                 </div>
               ) : (
-                mnemonicList.map((seed, index) => {
-                  return (
+                <div className="flex flex-wrap justify-center">
+                  {mnemonicList.map((seed, index) => (
                     <input
                       disabled
                       key={index}
-                      className="h-[40px] w-[100px] m-2 p-2 text-center rounded-sm"
+                      className="h-[40px] w-[100px] m-2 p-2 text-center rounded-sm text-light-emphasis rounded-md"
                       type="text"
                       value={seed}
                       required={true}
                     />
-                  );
-                })
+                  ))}
+                  <p className="text-center my-4 text-light-emphasis">
+                    Note: Please securely store the mnemonic for future use
+                  </p>
+                </div>
               )}
             </div>
             {errorMessage !== "" ? (
@@ -158,6 +161,7 @@ const SeedCreation = ({ handleSteps }: any) => {
                 {errorMessage}
               </p>
             ) : null}
+
             <Button
               className="button md:text-sm flex items-center
             justify-center w-[150px] md:w-[200px] mx-auto mb-4"
