@@ -4,8 +4,7 @@ import { Icon } from "../../../atoms/icon";
 import { useAppStore } from "../../../../../store/store";
 import { MAX_ACCOUNT_NUMBER } from "../../../../../appConstants";
 
-const AdvancedOptions = () => {
-  const [error, setError] = useState("");
+const AdvancedOptions = ({ setError }: any) => {
   const handleWalletAccountIndex = useAppStore(
     (state) => state.handleWalletAccountIndex
   );
@@ -19,6 +18,7 @@ const AdvancedOptions = () => {
     (state) => state.handleWalletAccountPassPhrase
   );
   const advancedInfo = useAppStore((state) => state.wallet.advancedInfo.active);
+
   const handleAccordion = () => {
     handleWalletAdvanceMode(!advancedInfo);
   };
@@ -30,8 +30,11 @@ const AdvancedOptions = () => {
       Number(evt.target.value) <= MAX_ACCOUNT_NUMBER
     ) {
       handleWalletAccountNumber(evt.target.value);
+      setError("");
     } else {
-      setError("In-valid account number");
+      setError(
+        `In-valid account index(must be less than ${MAX_ACCOUNT_NUMBER})`
+      );
       return false;
     }
   };
@@ -43,9 +46,10 @@ const AdvancedOptions = () => {
       Number(evt.target.value) <= MAX_ACCOUNT_NUMBER
     ) {
       handleWalletAccountIndex(evt.target.value);
+      setError("");
     } else {
       setError(
-        `In-valid account index(must be less than ${MAX_ACCOUNT_NUMBER} characters)`
+        `In-valid account index(must be less than ${MAX_ACCOUNT_NUMBER})`
       );
       return false;
     }
@@ -54,6 +58,7 @@ const AdvancedOptions = () => {
   const handleAccountPassPhrase = (evt: any) => {
     if (evt.target.value.length <= 50) {
       handleWalletAccountPassPhrase(evt.target.value);
+      setError("");
     } else {
       setError("In-valid PassPhrase(must be less than 50 characters)");
       return false;
@@ -135,9 +140,6 @@ const AdvancedOptions = () => {
           />
         </div>
       </div>
-      <p className="text-sm text-red text-center mb-4 md:mb-3 md:text-sm">
-        {error}
-      </p>
     </div>
   );
 };

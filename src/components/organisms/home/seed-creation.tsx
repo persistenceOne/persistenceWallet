@@ -14,6 +14,7 @@ const SeedCreation = ({ handleSteps }: any) => {
   const [randomMnemonicList, setRandomMnemonicList] = useState([]);
   const [randomNumberList, setRandomNumberList] = useState<any>([]);
   const [errorMessage, setErrorMessage] = useState("");
+  const [advancedInfoError, setAdvancedInfoError] = useState("");
   const [quiz, setQuiz] = useState(false);
 
   useEffect(() => {
@@ -77,6 +78,7 @@ const SeedCreation = ({ handleSteps }: any) => {
   };
 
   const previousHandler = () => {
+    setAdvancedInfoError("");
     if (quiz) {
       setQuiz(false);
     } else {
@@ -135,7 +137,12 @@ const SeedCreation = ({ handleSteps }: any) => {
                       ))}
                   </div>
                   <div className="my-4">
-                    <AdvancedOptions />
+                    <AdvancedOptions setError={setAdvancedInfoError} />
+                    {advancedInfoError !== "" ? (
+                      <p className="text-base text-red text-center mb-4 md:mb-3 md:text-sm">
+                        {advancedInfoError}
+                      </p>
+                    ) : null}
                   </div>
                 </div>
               ) : (
@@ -167,6 +174,7 @@ const SeedCreation = ({ handleSteps }: any) => {
             justify-center w-[150px] md:w-[200px] mx-auto mb-4"
               type="primary"
               size="medium"
+              disabled={advancedInfoError !== ""}
               content="Next"
               onClick={quiz ? submitMnemonic : handleQuiz}
             />

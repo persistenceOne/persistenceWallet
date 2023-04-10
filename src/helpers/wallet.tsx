@@ -31,7 +31,7 @@ export const MnemonicWalletWithPassphrase = async (
   return { wallet, address: firstAccount.address };
 };
 
-export const createKeyStore = (mnemonic: string, password: any) => {
+export const createKeyStore = (mnemonic: string, password: any): any => {
   try {
     const key = crypto.randomBytes(32);
     const iv = crypto.randomBytes(16);
@@ -148,4 +148,15 @@ export const createWallet = async (
   } else {
     return new Error("Invalid mnemonic.");
   }
+};
+
+/**
+ * @return {boolean}
+ */
+export const vestingAccountCheck = (type: string) => {
+  return (
+    type === "/cosmos.vesting.v1beta1.PeriodicVestingAccount" ||
+    type === "/cosmos.vesting.v1beta1.DelayedVestingAccount" ||
+    type === "/cosmos.vesting.v1beta1.ContinuousVestingAccount"
+  );
 };

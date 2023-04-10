@@ -41,11 +41,13 @@ export type KeyStoreLoginDetails = {
   coin118Info: {
     address: string | null;
     walletPath: string | null;
-  };
+    accountType: accountType | null;
+  } | null;
   coin750Info: {
     address: string | null;
     walletPath: string | null;
-  };
+    accountType: accountType | null;
+  } | null;
   encryptedSeed?: string | null;
 };
 
@@ -63,6 +65,7 @@ export interface WalletSliceState {
       accountIndex: string;
       bip39Passphrase: string;
       active: boolean;
+      error: string;
     };
     keyStore: {
       file: any;
@@ -115,6 +118,7 @@ const initialState = {
       accountIndex: "0",
       bip39Passphrase: "",
       active: false,
+      error: "",
     },
     keyStore: {
       file: null,
@@ -144,10 +148,12 @@ const initialState = {
       coin118Info: {
         address: null,
         walletPath: null,
+        accountType: null,
       },
       coin750Info: {
         address: null,
         walletPath: null,
+        accountType: null,
       },
       encryptedSeed: null,
     },
