@@ -23,6 +23,7 @@ import {
 
 const DecryptKeyStore = () => {
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [
     keyStoreModal,
     encryptedSeed,
@@ -55,7 +56,16 @@ const DecryptKeyStore = () => {
   };
 
   const onChange = (evt: any) => {
-    setPassword(evt.target.value);
+    const value = evt.target.value;
+    const regex = /^\S{3}\S+$/;
+    if (regex.test(value)) {
+      setPassword(value);
+      setErrorMessage("");
+    } else {
+      setErrorMessage(
+        "Password must be greater than 3 letters and no spaces allowed"
+      );
+    }
   };
 
   const handleSubmit = async () => {
@@ -125,6 +135,7 @@ const DecryptKeyStore = () => {
               required={true}
             />
           </div>
+          <p className={"text-sm text-red"}>{errorMessage}</p>
           <div className="pt-6">
             <Button
               className="button md:text-sm flex items-center

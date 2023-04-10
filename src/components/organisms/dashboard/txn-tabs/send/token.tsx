@@ -44,7 +44,13 @@ const Token = () => {
                 className="mr-2"
               />
               <span className="text-sm text-light-emphasis font-medium leading-normal md:text-xsm md:ml-2">
-                {token.denom}
+                {token.denomTrace ? (
+                  <>
+                    {token.denom} ({stringTruncate(token.minimalDenom)})
+                  </>
+                ) : (
+                  token.denom
+                )}
               </span>
             </div>
           ) : (
@@ -59,8 +65,9 @@ const Token = () => {
                        py-1 md:p-0"
       >
         {balances.allBalances.map((item: BalanceList, index: number): any =>
-          item.denom !==
-          ((token && token.denom) || balances.allBalances[0].denom) ? (
+          item.minimalDenom !==
+          ((token && token.minimalDenom) ||
+            balances.allBalances[0].minimalDenom) ? (
             <div key={index}>
               <div
                 className="px-4 py-2 flex items-center md:py-3
@@ -82,7 +89,7 @@ const Token = () => {
                       className="text-sm text-light-emphasis font-medium leading-normal md:text-xsm md:ml-2"
                       title={item.minimalDenom}
                     >
-                      {item.denom === "Unknown"
+                      {item.denom === "Unknown" || item.denomTrace
                         ? `${item.denom}(${stringTruncate(item.minimalDenom)})`
                         : item.denom}
                     </span>

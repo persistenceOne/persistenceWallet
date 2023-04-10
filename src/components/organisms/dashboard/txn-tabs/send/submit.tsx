@@ -49,9 +49,21 @@ const Submit = () => {
     handleDecryptKeystoreModal(true);
   };
 
+  console.log(
+    balances.totalXprt.toDec().gt(new Dec("0")),
+    balances.totalXprt
+      .toDec()
+      .gte(
+        getDecimalize(
+          fee.value!.toString(),
+          DefaultChainInfo.currency.coinDecimals
+        ).add(toDec(amount.toString()))
+      ),
+    toDec(amount.toString()).lte(toDec(token!.amount.toString()))
+  );
   const enable =
     balances.totalXprt.toDec().gt(new Dec("0")) &&
-    (token!.denom === DefaultChainInfo.currency.coinDenom
+    (token!.minimalDenom === DefaultChainInfo.currency.coinMinimalDenom
       ? balances.totalXprt
           .toDec()
           .gte(

@@ -1,8 +1,9 @@
 import { StateCreator } from "zustand";
 import produce from "immer";
 import { BalanceList } from "../../src/helpers/types";
-import { Dec } from "@keplr-wallet/unit";
+import { CoinPretty, Dec } from "@keplr-wallet/unit";
 import { FeeInfo, GasInfo } from "../../src/helpers/config";
+import { DenomTrace } from "cosmjs-types/ibc/applications/transfer/v1/transfer";
 
 export type FeeType = "low" | "average" | "high";
 
@@ -75,7 +76,13 @@ const initialState = {
       gas: GasInfo.gas,
     },
     send: {
-      token: null,
+      token: {
+        denom: "",
+        tokenUrl: "",
+        minimalDenom: "",
+        amount: "",
+        denomTrace: null,
+      },
       amount: "", //new Dec("0")
       recipient: "",
     },

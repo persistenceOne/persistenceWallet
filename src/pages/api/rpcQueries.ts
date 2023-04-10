@@ -168,6 +168,7 @@ export const fetchAllBalances = async (
             denomTraceResponse.denomTrace?.baseDenom!
           );
 
+          console.log(denomTraceResponse, "balance1");
           balanceList.push({
             minimalDenom: balance.denom,
             denom: denomResponse.denom,
@@ -213,6 +214,7 @@ export const fetchAllBalances = async (
         .getState()
         .handleSendTxnToken(balanceList[0] ? balanceList[0] : null);
 
+      console.log(balanceList, "xprtBalance", balanceList[0].amount.toString());
       return {
         totalXprt: toPrettyCoin(
           xprtBalance!.amount,

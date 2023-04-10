@@ -26,7 +26,7 @@ export interface BalanceList {
   tokenUrl: string;
   minimalDenom: string;
   amount: string | CoinPretty;
-  denomTrace?: DenomTrace;
+  denomTrace?: DenomTrace | null;
 }
 export interface Delegations {
   amount: CoinPretty;
