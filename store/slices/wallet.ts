@@ -107,6 +107,7 @@ export interface WalletSliceActions {
   fetchWalletBalances: (rpc: string, address: string) => void;
   fetchWalletDelegations: (rpc: string, address: string) => void;
   fetchWalletUnbonding: (rpc: string, address: string) => void;
+  resetWalletSlice: () => void;
 }
 
 export type WalletSlice = WalletSliceState & WalletSliceActions;
@@ -172,7 +173,7 @@ const initialState = {
     },
     unBondingInfo: {
       unBondingList: [],
-      totalAmount: 0,
+      totalAmount: emptyPrettyCoin,
     },
   },
 };
@@ -283,5 +284,8 @@ export const createWalletSlice: StateCreator<WalletSlice> = (set) => ({
         state.wallet.unBondingInfo = response;
       })
     );
+  },
+  resetWalletSlice: () => {
+    set(initialState);
   },
 });

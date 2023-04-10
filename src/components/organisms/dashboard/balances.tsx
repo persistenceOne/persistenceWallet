@@ -43,7 +43,9 @@ const Balances = () => {
         </div>
         <div className="flex items-center justify-between py-2">
           <p className="text-light-emphasis">Unbonding</p>
-          <p className="text-light-emphasis">{unBondingInfo.totalAmount}</p>
+          <p className="text-light-emphasis">
+            {unBondingInfo.totalAmount.toString()}
+          </p>
         </div>
       </div>
     </div>

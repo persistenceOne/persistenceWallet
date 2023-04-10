@@ -77,7 +77,8 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
           )}
         </div>
         <div
-          className={`${dropDownContentClass} translate-y-0.5 dropDownContent min-w-full w-fit absolute opacity-0 transition-opacity transform ease duration-200 bg-dropDown left-0 right-0 ${
+          className={`${dropDownContentClass} translate-y-0.5 dropDownContent min-w-full w-fit absolute 
+          opacity-0 transition-opacity transform ease duration-200 bg-dropDown right-0 ${
             closeDropdown ? "visible translate-y-0 opacity-100" : "invisible"
           } text-light-high rounded-md z-10`}
         >

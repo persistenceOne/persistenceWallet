@@ -52,7 +52,7 @@ import { setupIbcExtension, QueryClient } from "@cosmjs/stargate";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { QueryDenomTraceResponse } from "cosmjs-types/ibc/applications/transfer/v1/query";
 import { Coin } from "@cosmjs/proto-signing";
-import { Dec } from "@keplr-wallet/unit";
+import { CoinPretty, Dec } from "@keplr-wallet/unit";
 import Long from "long";
 import {
   UnbondingDelegationEntry,
@@ -335,7 +335,7 @@ export const fetchUnBondingList = async (
       });
     console.log(unBondingResponse, "unBondingResponse");
     let totalAmount: number = 0;
-    let entries: { completionTime?: any; balance: string }[] = [];
+    let entries: { completionTime?: any; balance: CoinPretty }[] = [];
     if (unBondingResponse.unbondingResponses.length > 0) {
       unBondingResponse.unbondingResponses.forEach((item) => {
         item.entries.forEach((entry) => {
@@ -343,7 +343,11 @@ export const fetchUnBondingList = async (
             completionTime: moment(
               entry["completionTime"]!.seconds.toNumber()! * 1000
             ).format("DD MMM YYYY hh:mm A"),
-            balance: entry.balance,
+            balance: toPrettyCoin(
+              entry.balance.toString(),
+              DefaultChainInfo.currency.coinDenom,
+              persistenceChain!.chainId
+            ),
           });
           totalAmount += Number(entry.balance);
         });
@@ -352,12 +356,16 @@ export const fetchUnBondingList = async (
     console.log(totalAmount, "totalAmount", entries);
     return {
       unBondingList: entries,
-      totalAmount,
+      totalAmount: toPrettyCoin(
+        totalAmount.toString(),
+        DefaultChainInfo.currency.coinDenom,
+        persistenceChain!.chainId
+      ),
     };
   } catch (e: any) {
     return {
       unBondingList: [],
-      totalAmount: 0,
+      totalAmount: emptyPrettyCoin,
     };
   }
 };

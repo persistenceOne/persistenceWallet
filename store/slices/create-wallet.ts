@@ -15,6 +15,7 @@ export interface CreateWalletSliceState {
 export interface CreateWalletSliceActions {
   handleCreateWalletModal: (value: boolean) => void;
   handleCreateWalletKeystoreModal: (value: boolean) => void;
+  resetCreateWalletSlice: () => void;
 }
 
 export type CreateWalletSlice = CreateWalletSliceState &
@@ -47,4 +48,7 @@ export const createCreateWalletSlice: StateCreator<CreateWalletSlice> = (
         state.createWallet.generateKeyStore.modal = value;
       })
     ),
+  resetCreateWalletSlice: () => {
+    set(initialState);
+  },
 });

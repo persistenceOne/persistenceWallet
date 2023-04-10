@@ -183,10 +183,9 @@ export const sentryReport = (exception: any, context: CaptureContext) => {
 };
 
 export const resetStore = () => {
-  // useAppStore.getState().resetWalletSlice();
-  // useAppStore.getState().resetBalanceSlice();
-  // useAppStore.getState().resetInitialDataSlice();
-  // useAppStore.getState().resetTxnSlice();
+  useAppStore.getState().resetTxnSlice();
+  useAppStore.getState().resetWalletSlice();
+  useAppStore.getState().resetCreateWalletSlice();
 };
 
 function isActive(item: any) {

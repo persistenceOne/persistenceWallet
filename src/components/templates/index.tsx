@@ -7,6 +7,9 @@ import useLocalStorage, {
 import { useAppStore } from "../../../store/store";
 import { persistenceChain } from "../../helpers/utils";
 import DecryptKeyStore from "../organisms/common/decrypt-keystore";
+import { useRouter } from "next/router";
+import GenerateKeyStore from "../organisms/home/genarate-keystore";
+import UpdateKeyStore from "../organisms/common/updatePassword";
 
 const env: string = process.env.NEXT_PUBLIC_ENVIRONMENT!;
 
@@ -19,6 +22,7 @@ export const Template = ({
   className: string;
   title: string;
 }) => {
+  const router = useRouter();
   const handleWalletAccountDetails = useAppStore(
     (state) => state.handleWalletAccountDetails
   );
@@ -26,21 +30,23 @@ export const Template = ({
     (state) => state.handleWalletKeyStoreLoginDetails
   );
 
+  const address = useAppStore((state) => state.wallet.accountDetails.address);
+
   const fetchWalletBalances = useAppStore((state) => state.fetchWalletBalances);
   const fetchWalletDelegations = useAppStore(
     (state) => state.fetchWalletDelegations
   );
+  const fetchWalletUnbonding = useAppStore(
+    (state) => state.fetchWalletUnbonding
+  );
 
   useEffect(() => {
-    fetchWalletBalances(
-      persistenceChain!.rpc,
-      "persistence1g8v9tfy9lpwwdfjc9ylp68zexzt66sek6t4jnu"
-    );
-    fetchWalletDelegations(
-      persistenceChain!.rpc,
-      "persistence1g8v9tfy9lpwwdfjc9ylp68zexzt66sek6t4jnu"
-    );
-  }, []);
+    if (address !== null) {
+      fetchWalletBalances(persistenceChain!.rpc, address);
+      fetchWalletDelegations(persistenceChain!.rpc, address);
+      fetchWalletUnbonding(persistenceChain!.rpc, address);
+    }
+  }, [address]);
 
   useEffect(() => {
     const accountInfo = getStorageValue("accountDetails", "");
@@ -54,7 +60,8 @@ export const Template = ({
       handleWalletKeyStoreLoginDetails(accountKeyStoreDetails);
     }
   }, []);
-  return (
+
+  return address !== null ? (
     <div className="bg-body-bg">
       <NavigationBar />
       <div className="flex md:block h-[calc(100vh-84px)]">
@@ -66,6 +73,10 @@ export const Template = ({
         </div>
       </div>
       <DecryptKeyStore />
+      <GenerateKeyStore />
+      <UpdateKeyStore />
     </div>
+  ) : (
+    ""
   );
 };

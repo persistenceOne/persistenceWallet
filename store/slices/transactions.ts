@@ -56,6 +56,7 @@ export interface TransactionSliceActions {
   handleSendTxnRecipient: (value: string) => void;
   setTxnInfo: (value: TransactionInfo) => void;
   setTxnMsgs: (value: any[]) => void;
+  resetTxnSlice: () => void;
 }
 
 export type TransactionSlice = TransactionSliceState & TransactionSliceActions;
@@ -145,4 +146,7 @@ export const createTransactionSlice: StateCreator<TransactionSlice> = (
         state.transactions.txnMsgs = value;
       })
     ),
+  resetTxnSlice: () => {
+    set(initialState);
+  },
 });

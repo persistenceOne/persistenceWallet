@@ -47,6 +47,6 @@ export interface ValidatorsInfo {
 }
 
 export interface UnBondingListInfo {
-  unBondingList: { completionTime?: any; balance: string }[];
-  totalAmount: number | string;
+  unBondingList: { completionTime?: any; balance: CoinPretty }[];
+  totalAmount: CoinPretty;
 }
