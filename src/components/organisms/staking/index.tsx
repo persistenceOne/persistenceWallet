@@ -18,7 +18,7 @@ const StakingContainer = () => {
     <div className="flex max-h-full w-full shrink grow items-start justify-start gap-4 overflow-auto p-8">
       <div className="border border-solid border-[#2b2b2b] w-full rounded-md">
         <div className={``}>
-          <ul className="stakingTabs flex justify-between flex-wrap mb-4 border-b border-solid border-[#2b2b2b]">
+          <ul className="stakingTabs flex justify-between flex-wrap border-b border-solid border-[#2b2b2b]">
             <div className="flex">
               <TabItem
                 id="Send"
@@ -66,7 +66,7 @@ const StakingContainer = () => {
             <TabContent
               id="Send"
               activeTab={activeTab}
-              className="p-6 md:p-4 bg-tabContent rounded-md"
+              className=" md:p-4 bg-tabContent rounded-md"
             >
               <AllValidators activeValidatorsType={activeValidatorsType} />
             </TabContent>

@@ -29,7 +29,7 @@ const Table = ({ data, columns }: TableProps) => {
     : [];
   return (
     <>
-      <table className="table">
+      <table className="w-full">
         <TableHead {...{ columns, handleSorting }} />
         <TableBody {...{ columns, tableData: updateData }} />
       </table>

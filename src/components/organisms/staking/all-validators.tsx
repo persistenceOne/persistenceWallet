@@ -44,7 +44,7 @@ const AllValidators = ({ activeValidatorsType }: Props) => {
       data?.length === validatorsInfo.inActiveValidators.length);
 
   return (
-    <div className="text-light-emphasis w-full rounded-md p-4">
+    <div className="text-light-emphasis w-full rounded-md px-6">
       {data && data.length > 0 && renderCondition ? (
         <Table data={data} columns={columns} />
       ) : (
