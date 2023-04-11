@@ -38,10 +38,20 @@ export interface GetDelegatedValidatorInfo {
   delegatedAmount: string;
 }
 
+export interface ValidatorProps {
+  id: number;
+  validatorName: any;
+  validatorImage: string;
+  validatorAddress: string;
+  votingPower: any;
+  commission: any;
+  actions: any;
+}
+
 export interface ValidatorsInfo {
-  validators: Validator[];
-  activeValidators: Validator[];
-  inActiveValidators: Validator[];
+  validators: ValidatorProps[];
+  activeValidators: ValidatorProps[];
+  inActiveValidators: ValidatorProps[];
   delegatedValidators: GetDelegatedValidatorInfo[];
   totalDelegatedAmount: CoinPretty;
 }

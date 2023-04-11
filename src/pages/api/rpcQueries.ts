@@ -26,7 +26,7 @@ import {
   QueryDelegatorUnbondingDelegationsResponse,
   QueryValidatorsResponse,
 } from "cosmjs-types/cosmos/staking/v1beta1/query";
-import { toPrettyCoin } from "../../helpers/coin";
+import { getDecimalize, toDec, toPrettyCoin } from "../../helpers/coin";
 import { Balances, emptyPrettyCoin } from "../../../store/slices/wallet";
 import { DefaultChainInfo } from "../../helpers/config";
 import {
@@ -46,6 +46,7 @@ import {
   GetAccount,
   GetDelegatedValidatorInfo,
   UnBondingListInfo,
+  ValidatorProps,
   ValidatorsInfo,
 } from "../../helpers/types";
 import { setupIbcExtension, QueryClient } from "@cosmjs/stargate";
@@ -303,9 +304,9 @@ export const fetchValidatorsInfo = async (
       );
     }
     return {
-      validators: validators,
-      activeValidators: activeValidators,
-      inActiveValidators: inActiveValidators,
+      validators: getStructuredList(validators),
+      activeValidators: getStructuredList(activeValidators),
+      inActiveValidators: getStructuredList(inActiveValidators),
       delegatedValidators,
       totalDelegatedAmount: toPrettyCoin(
         totalDelegatedAmount.toString(),
@@ -324,6 +325,30 @@ export const fetchValidatorsInfo = async (
   }
 };
 
+export const getStructuredList = (validators: Validator[]) => {
+  const newList: ValidatorProps[] = [];
+  validators.map((validator, index) => {
+    const monieker = validator.description!.moniker;
+    const commission = getDecimalize(
+      validator.commission!.commissionRates!.rate,
+      18
+    )
+      .mul(toDec(100))
+      .truncate()
+      .toString();
+    const votingPower = Number(validator.tokens) * Math.pow(10, -6);
+    newList.push({
+      id: index + 1,
+      validatorName: monieker,
+      validatorAddress: validator.operatorAddress,
+      validatorImage: validator.description!.identity,
+      votingPower,
+      commission,
+      actions: "",
+    });
+  });
+  return newList;
+};
 export const fetchUnBondingList = async (
   rpc: string,
   address: string
