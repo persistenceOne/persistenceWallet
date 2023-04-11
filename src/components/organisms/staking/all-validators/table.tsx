@@ -1,8 +1,8 @@
-import { useSortableTable } from "../../../customHooks/useSortableTable";
-import TableHead from "../../molecules/table/table-head";
-import TableBody from "../../molecules/table/table-body";
-import { TableProps } from "../../molecules/table/types";
-import Avatar from "./avatar";
+import { useSortableTable } from "../../../../customHooks/useSortableTable";
+import TableHead from "../../../molecules/table/table-head";
+import TableBody from "../../../molecules/table/table-body";
+import { TableProps } from "../../../molecules/table/types";
+import Avatar from "../avatar";
 
 const Table = ({ data, columns }: TableProps) => {
   const [tableData, handleSorting] = useSortableTable(data, columns);

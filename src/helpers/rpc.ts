@@ -9,13 +9,14 @@ import {
   DelegationResponse,
   Validator,
 } from "cosmjs-types/cosmos/staking/v1beta1/staking";
-import { GetDelegatedValidatorInfo } from "./types";
+import { GetDelegatedValidatorInfo, ValidatorProps } from "./types";
 import {
   DirectSecp256k1HdWallet,
   OfflineDirectSigner,
 } from "@cosmjs/proto-signing";
 import { OfflineSigner, StdFee } from "@cosmjs/launchpad";
 import { Transaction } from "./transactions";
+import { getDecimalize, toDec } from "./coin";
 
 export async function RpcClient(rpc: string) {
   const tendermintClient = await Tendermint34Client.connect(rpc);
@@ -43,17 +44,23 @@ export async function getDelegatedValidatorsInfo(
   try {
     let delegatedValidators: GetDelegatedValidatorInfo[] = [];
     if (delegations.length > 0) {
-      validators.forEach((item) => {
-        if (item.description?.moniker === "PrithviDevs") {
-          console.log(item, "jailed");
-        }
+      validators.forEach((validator, index) => {
+        const monieker = validator.description!.moniker;
+
         for (const delegation of delegations) {
           if (
-            item.operatorAddress === delegation!.delegation!.validatorAddress
+            validator.operatorAddress ===
+            delegation!.delegation!.validatorAddress
           ) {
             delegatedValidators.push({
-              validator: item,
-              delegatedAmount: delegation.balance!.amount,
+              id: index + 1,
+              validatorName: monieker,
+              validatorAddress: validator.operatorAddress,
+              validatorImage: validator.description!.identity,
+              actions: "",
+              delegatedAmount: getDecimalize(delegation.balance!.amount, 6)
+                .truncate()
+                .toString(),
             });
           }
         }
@@ -67,3 +74,27 @@ export async function getDelegatedValidatorsInfo(
     return [];
   }
 }
+export const getStructuredList = (validators: Validator[]) => {
+  const newList: ValidatorProps[] = [];
+  validators.map((validator, index) => {
+    const monieker = validator.description!.moniker;
+    const commission = getDecimalize(
+      validator.commission!.commissionRates!.rate,
+      18
+    )
+      .mul(toDec(100))
+      .truncate()
+      .toString();
+    const votingPower = Number(validator.tokens) * Math.pow(10, -6);
+    newList.push({
+      id: index + 1,
+      validatorName: monieker,
+      validatorAddress: validator.operatorAddress,
+      validatorImage: validator.description!.identity,
+      votingPower,
+      commission,
+      actions: "",
+    });
+  });
+  return newList;
+};

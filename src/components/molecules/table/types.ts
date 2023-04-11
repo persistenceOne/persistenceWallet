@@ -1,8 +1,11 @@
-import { ValidatorProps } from "../../../helpers/types";
+import {
+  GetDelegatedValidatorInfo,
+  ValidatorProps,
+} from "../../../helpers/types";
 
 export interface TableColumnsProps {
   label: string;
-  accessor: keyof ValidatorProps;
+  accessor: keyof ValidatorProps | keyof GetDelegatedValidatorInfo;
   sortable: boolean;
   sortbyOrder?: "asc" | "desc";
 }

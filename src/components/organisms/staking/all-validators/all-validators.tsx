@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { TableColumnsProps } from "../../molecules/table/types";
+import { TableColumnsProps } from "../../../molecules/table/types";
 import Table from "./table";
-import { useAppStore } from "../../../../store/store";
-import { ValidatorProps } from "../../../helpers/types";
-import { ValidatorTypes } from "./index";
+import { useAppStore } from "../../../../../store/store";
+import { ValidatorProps } from "../../../../helpers/types";
+import { ValidatorTypes } from "../index";
 
 interface Props {
   activeValidatorsType: ValidatorTypes;

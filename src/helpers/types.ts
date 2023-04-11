@@ -34,8 +34,12 @@ export interface Delegations {
 }
 
 export interface GetDelegatedValidatorInfo {
-  validator: Validator;
   delegatedAmount: string;
+  id: number;
+  validatorName: any;
+  validatorImage: string;
+  validatorAddress: string;
+  actions: any;
 }
 
 export interface ValidatorProps {

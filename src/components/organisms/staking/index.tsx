@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import TabItem from "../../molecules/tabs/tabItem";
 import TabContent from "../../molecules/tabs/tabContent";
 import DelegatedValidators from "./delegated-validators";
-import AllValidators from "./all-validators";
+import AllValidators from "./all-validators/all-validators";
 
 export type ValidatorTypes = "active" | "in-active";
 

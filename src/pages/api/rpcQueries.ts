@@ -3,7 +3,11 @@ import {
   QueryClientImpl,
 } from "cosmjs-types/cosmos/auth/v1beta1/query";
 import { BaseAccount } from "cosmjs-types/cosmos/auth/v1beta1/auth";
-import { getDelegatedValidatorsInfo, RpcClient } from "../../helpers/rpc";
+import {
+  getDelegatedValidatorsInfo,
+  getStructuredList,
+  RpcClient,
+} from "../../helpers/rpc";
 import {
   getChainFromDenom,
   getDenomFromMinimalDenom,
@@ -285,7 +289,7 @@ export const fetchValidatorsInfo = async (
 
     const delegationsResponse: QueryDelegatorDelegationsResponse =
       await stakingQueryService.DelegatorDelegations({
-        delegatorAddr: address,
+        delegatorAddr: "persistence1s4r2ya8kn4sjh3myd4e8tvhar334c8nanu8e6e",
       });
 
     let delegatedValidators: GetDelegatedValidatorInfo[] = [];
@@ -303,6 +307,7 @@ export const fetchValidatorsInfo = async (
         0
       );
     }
+    console.log(delegatedValidators, "delegatedValidators123");
     return {
       validators: getStructuredList(validators),
       activeValidators: getStructuredList(activeValidators),
@@ -325,30 +330,6 @@ export const fetchValidatorsInfo = async (
   }
 };
 
-export const getStructuredList = (validators: Validator[]) => {
-  const newList: ValidatorProps[] = [];
-  validators.map((validator, index) => {
-    const monieker = validator.description!.moniker;
-    const commission = getDecimalize(
-      validator.commission!.commissionRates!.rate,
-      18
-    )
-      .mul(toDec(100))
-      .truncate()
-      .toString();
-    const votingPower = Number(validator.tokens) * Math.pow(10, -6);
-    newList.push({
-      id: index + 1,
-      validatorName: monieker,
-      validatorAddress: validator.operatorAddress,
-      validatorImage: validator.description!.identity,
-      votingPower,
-      commission,
-      actions: "",
-    });
-  });
-  return newList;
-};
 export const fetchUnBondingList = async (
   rpc: string,
   address: string
