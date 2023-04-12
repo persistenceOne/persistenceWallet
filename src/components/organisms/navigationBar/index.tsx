@@ -66,21 +66,14 @@ const NavigationBar = () => {
               closeHandler={(value) => dropCloseDownHandler(value)}
               dropdownLabel={
                 <div className="flex items-center">
-                  <img
-                    src={"/images/keplr.svg"}
-                    alt={"logo"}
-                    width={20}
-                    className="mr-2"
-                  />
-                  <span className="text-sm text-light-emphasis font-medium leading-normal md:text-xsm md:ml-2">
-                    Profile
-                  </span>
+                  <img src={"/images/profile.svg"} alt={"logo"} width={20} />
                 </div>
               }
-              dropDownButtonClass="cursor-pointer py-3 px-4 bg-black-600 justify-between text-[12px] text-light-emphasis rounded-md"
+              dropDownButtonClass="cursor-pointer p-2 bg-black-600 justify-between text-[12px] text-light-emphasis
+               rounded-full"
               dropdownType={"click"}
               staticBackDrop={false}
-              dropDownIcon={true}
+              dropDownIcon={false}
               dropDownContentClass="!w-[180px] !bg-[#282828] drop-shadow-md round-md
                        py-1 md:p-0"
             >

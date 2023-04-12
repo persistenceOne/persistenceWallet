@@ -91,6 +91,8 @@ export const getStructuredList = (validators: Validator[]) => {
       validatorName: monieker,
       validatorAddress: validator.operatorAddress,
       validatorImage: validator.description!.identity,
+      validatorDescription: validator.description?.details!,
+      validatorLink: validator.description?.website!,
       votingPower,
       commission,
       actions: "",

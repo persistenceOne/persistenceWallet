@@ -289,7 +289,7 @@ export const fetchValidatorsInfo = async (
 
     const delegationsResponse: QueryDelegatorDelegationsResponse =
       await stakingQueryService.DelegatorDelegations({
-        delegatorAddr: "persistence1s4r2ya8kn4sjh3myd4e8tvhar334c8nanu8e6e",
+        delegatorAddr: address,
       });
 
     let delegatedValidators: GetDelegatedValidatorInfo[] = [];

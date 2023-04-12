@@ -46,6 +46,8 @@ export interface ValidatorProps {
   id: number;
   validatorName: any;
   validatorImage: string;
+  validatorDescription: string;
+  validatorLink: string;
   validatorAddress: string;
   votingPower: any;
   commission: any;

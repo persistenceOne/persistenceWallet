@@ -3,11 +3,19 @@ import TabItem from "../../molecules/tabs/tabItem";
 import TabContent from "../../molecules/tabs/tabContent";
 import DelegatedValidators from "./delegated-validators";
 import AllValidators from "./all-validators/all-validators";
+import TransactionModal from "./txns";
+import { useAppStore } from "../../../../store/store";
+import { shallow } from "zustand/shallow";
+import DelegateModal from "./txns/delegate";
 
 export type ValidatorTypes = "active" | "in-active";
 
 const StakingContainer = () => {
   const [activeTab, setActiveTab] = useState("Send");
+  const [selectedValidator] = useAppStore(
+    (state) => [state.transactions.staking.selectedValidator],
+    shallow
+  );
   const [activeValidatorsType, setActiveValidatorsType] =
     useState<ValidatorTypes>("active");
   const tabItemClasses =
@@ -80,6 +88,8 @@ const StakingContainer = () => {
           </div>
         </div>
       </div>
+      {selectedValidator !== null ? <TransactionModal /> : ""}
+      <DelegateModal />
     </div>
   );
 };

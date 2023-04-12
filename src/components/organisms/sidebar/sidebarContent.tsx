@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Styles from "./styles.module.css";
 import Link from "next/link";
 import { useWindowSize } from "../../../customHooks/useWindowSize";
@@ -36,13 +36,14 @@ const env: string = process.env.NEXT_PUBLIC_ENVIRONMENT!;
 
 const SidebarContent = () => {
   const { isMobile } = useWindowSize();
+  const [collapse, setCollapse] = useState(false);
   const handleSidebar = useAppStore((state) => state.handleSidebar);
   const router = useRouter();
   const wallet = true;
 
   const routeList = [
     {
-      icon: "staking",
+      icon: "wallet",
       text: "Dashboard",
       path: "/dashboard",
     },
@@ -51,15 +52,22 @@ const SidebarContent = () => {
       text: "Staking",
       path: "/staking",
     },
-    {
-      icon: "defi",
-      text: "Explorer",
-      path: "/defi",
-    },
   ];
 
   return (
-    <aside className="w-[284px] md:w-[220px]">
+    <aside
+      className={`${
+        collapse ? "w-[54px] md:w-[20px]" : "w-[284px] md:w-[220px]"
+      } relative`}
+    >
+      <button
+        className="pl-2 absolute hidden -right-[10px] z-10"
+        onClick={() => {
+          setCollapse(!collapse);
+        }}
+      >
+        <Icon iconName="menu" viewClass="menu" />
+      </button>
       <div
         className={`${Styles.sideBarContent} h-[calc(100vh-84px)] flex flex-col justify-between overflow-y-auto sticky`}
       >

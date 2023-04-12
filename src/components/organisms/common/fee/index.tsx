@@ -37,7 +37,8 @@ const FeeOptions = ({ amount }: Props) => {
     });
     if (
       feeV.lte(totalXprt.toDec()) &&
-      transactionInfo.name === "send" &&
+      (transactionInfo.name === "send" ||
+        transactionInfo.name === "delegate") &&
       feeV.lte(totalXprt.toDec().sub(toDec(amount.toString())))
     ) {
       setError("Insufficient wallet balance to process the transaction");

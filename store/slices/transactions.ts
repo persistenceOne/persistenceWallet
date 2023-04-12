@@ -1,13 +1,13 @@
 import { StateCreator } from "zustand";
 import produce from "immer";
-import { BalanceList } from "../../src/helpers/types";
+import { BalanceList, ValidatorProps } from "../../src/helpers/types";
 import { CoinPretty, Dec } from "@keplr-wallet/unit";
 import { FeeInfo, GasInfo } from "../../src/helpers/config";
 import { DenomTrace } from "cosmjs-types/ibc/applications/transfer/v1/transfer";
 
 export type FeeType = "low" | "average" | "high";
 
-export type transactionNames =
+export type TransactionNames =
   | "send"
   | "sendIBC"
   | "delegate"
@@ -23,7 +23,7 @@ export interface Fee {
 
 export interface TransactionInfo {
   inProgress: boolean;
-  name: transactionNames | null;
+  name: TransactionNames | null;
   failed?: boolean;
 }
 
@@ -44,6 +44,22 @@ export interface TransactionSliceState {
     };
     transactionInfo: TransactionInfo;
     txnMsgs: any[];
+    staking: {
+      stakingModal: boolean;
+      selectedValidator: ValidatorProps | null;
+    };
+    delegate: {
+      modal: boolean;
+      amount: Dec | string;
+    };
+    reDelegate: {
+      modal: boolean;
+      amount: Dec | string;
+    };
+    unbond: {
+      modal: boolean;
+      amount: Dec | string;
+    };
   };
 }
 
@@ -58,6 +74,14 @@ export interface TransactionSliceActions {
   setTxnInfo: (value: TransactionInfo) => void;
   setTxnMsgs: (value: any[]) => void;
   resetTxnSlice: () => void;
+  handleStakingModal: (value: boolean) => void;
+  handleStakingValidator: (value: ValidatorProps) => void;
+  handleDelegateTxnAmount: (value: any) => void;
+  handleDelegateTxnModal: (value: boolean) => void;
+  handleReDelegateTxnAmount: (value: any) => void;
+  handleReDelegateTxnModal: (value: boolean) => void;
+  handleUnDelegateTxnAmount: (value: any) => void;
+  handleUnDelegateTxnModal: (value: boolean) => void;
 }
 
 export type TransactionSlice = TransactionSliceState & TransactionSliceActions;
@@ -91,6 +115,22 @@ const initialState = {
       inProgress: false,
       name: null,
       failed: false,
+    },
+    staking: {
+      stakingModal: false,
+      selectedValidator: null,
+    },
+    delegate: {
+      amount: "",
+      modal: false,
+    },
+    reDelegate: {
+      amount: "",
+      modal: false,
+    },
+    unbond: {
+      amount: "",
+      modal: false,
     },
   },
 };
@@ -151,6 +191,54 @@ export const createTransactionSlice: StateCreator<TransactionSlice> = (
     set(
       produce((state: TransactionSlice) => {
         state.transactions.txnMsgs = value;
+      })
+    ),
+  handleStakingModal: (value: boolean) =>
+    set(
+      produce((state: TransactionSlice) => {
+        state.transactions.staking.stakingModal = value;
+      })
+    ),
+  handleStakingValidator: (value: ValidatorProps) =>
+    set(
+      produce((state: TransactionSlice) => {
+        state.transactions.staking.selectedValidator = value;
+      })
+    ),
+  handleDelegateTxnAmount: (value: any) =>
+    set(
+      produce((state: TransactionSlice) => {
+        state.transactions.delegate.amount = value;
+      })
+    ),
+  handleDelegateTxnModal: (value: boolean) =>
+    set(
+      produce((state: TransactionSlice) => {
+        state.transactions.delegate.modal = value;
+      })
+    ),
+  handleReDelegateTxnAmount: (value: any) =>
+    set(
+      produce((state: TransactionSlice) => {
+        state.transactions.reDelegate.amount = value;
+      })
+    ),
+  handleReDelegateTxnModal: (value: boolean) =>
+    set(
+      produce((state: TransactionSlice) => {
+        state.transactions.reDelegate.modal = value;
+      })
+    ),
+  handleUnDelegateTxnAmount: (value: any) =>
+    set(
+      produce((state: TransactionSlice) => {
+        state.transactions.unbond.amount = value;
+      })
+    ),
+  handleUnDelegateTxnModal: (value: boolean) =>
+    set(
+      produce((state: TransactionSlice) => {
+        state.transactions.unbond.modal = value;
       })
     ),
   resetTxnSlice: () => {
