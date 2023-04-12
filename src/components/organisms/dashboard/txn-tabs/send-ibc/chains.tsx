@@ -6,14 +6,18 @@ import { ibcChainInfo, stringTruncate } from "../../../../../helpers/utils";
 import { getDecimalize } from "../../../../../helpers/coin";
 import { CoinPretty } from "@keplr-wallet/unit";
 import { Spinner } from "../../../../atoms/spinner";
+import { shallow } from "zustand/shallow";
 
 const Chains = () => {
   const [show, setShow] = useState<boolean>(false);
 
-  const [token, chain] = useAppStore((state) => [
-    state.transactions.sendIbc.token,
-    state.transactions.sendIbc.chain,
-  ]);
+  const [token, chain] = useAppStore(
+    (state) => [
+      state.transactions.sendIbc.token,
+      state.transactions.sendIbc.chain,
+    ],
+    shallow
+  );
 
   const handleSendIbcTxnChain = useAppStore(
     (state) => state.handleSendIbcTxnChain

@@ -3,12 +3,16 @@ import InputText from "../../../../atoms/input";
 import { useAppStore } from "../../../../../../store/store";
 import { CoinPretty } from "@keplr-wallet/unit";
 import { getDecimalize } from "../../../../../helpers/coin";
+import { shallow } from "zustand/shallow";
 
 const Amount = () => {
-  const [token, amount] = useAppStore((state) => [
-    state.transactions.sendIbc.token,
-    state.transactions.sendIbc.amount,
-  ]);
+  const [token, amount] = useAppStore(
+    (state) => [
+      state.transactions.sendIbc.token,
+      state.transactions.sendIbc.amount,
+    ],
+    shallow
+  );
   const handleSendTxnAmount = useAppStore(
     (state) => state.handleSendIbcTxnAmount
   );

@@ -25,3 +25,4 @@ export const DELAYED_VESTING_ACCOUNT =
   "/cosmos.vesting.v1beta1.DelayedVestingAccount";
 export const CONTINUOUS_VESTING_ACCOUNT =
   "/cosmos.vesting.v1beta1.ContinuousVestingAccount";
+export const IBC_TRANSFER_URL = "/ibc.applications.transfer.v1.MsgTransfer";

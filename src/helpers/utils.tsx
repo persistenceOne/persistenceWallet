@@ -31,7 +31,8 @@ import {
   PERSISTENCE_PREFIX,
 } from "../../appConstants";
 import { useAppStore } from "../../store/store";
-
+import bech32 from "bech32";
+const tendermint = require("cosmjs-types/ibc/lightclients/tendermint/v1/tendermint");
 const encoding = require("@cosmjs/encoding");
 const bip39 = require("bip39");
 
@@ -328,65 +329,6 @@ export const generateHash = (txBytes: Uint8Array) => {
   return encoding.toHex(sha256(txBytes)).toUpperCase();
 };
 
-export async function getAccount(address: string) {
-  try {
-    const rpcClient = await transactions.RpcClient();
-    const authAccountService = new QueryClientImpl(rpcClient);
-    const accountResponse = await authAccountService.Account({
-      address: address,
-    });
-    if (
-      accountResponse.account.typeUrl === "/cosmos.auth.v1beta1.BaseAccount"
-    ) {
-      let baseAccountResponse = BaseAccount.decode(
-        accountResponse.account.value
-      );
-      return {
-        typeUrl: accountResponse.account.typeUrl,
-        accountData: baseAccountResponse,
-      };
-    } else if (
-      accountResponse.account.typeUrl ===
-      "/cosmos.vesting.v1beta1.PeriodicVestingAccount"
-    ) {
-      let periodicVestingAccountResponse = PeriodicVestingAccount.decode(
-        accountResponse.account.value
-      );
-      return {
-        typeUrl: accountResponse.account.typeUrl,
-        accountData: periodicVestingAccountResponse,
-      };
-    } else if (
-      accountResponse.account.typeUrl ===
-      "/cosmos.vesting.v1beta1.DelayedVestingAccount"
-    ) {
-      let delayedVestingAccountResponse = DelayedVestingAccount.decode(
-        accountResponse.account.value
-      );
-      return {
-        typeUrl: accountResponse.account.typeUrl,
-        accountData: delayedVestingAccountResponse,
-      };
-    } else if (
-      accountResponse.account.typeUrl ===
-      "/cosmos.vesting.v1beta1.ContinuousVestingAccount"
-    ) {
-      let continuousVestingAccountResponse = ContinuousVestingAccount.decode(
-        accountResponse.account.value
-      );
-      return {
-        typeUrl: accountResponse.account.typeUrl,
-        accountData: continuousVestingAccountResponse,
-      };
-    }
-  } catch (error: any) {
-    Sentry.captureException(
-      error.response ? error.response.data.message : error.message
-    );
-    console.log(error.message);
-  }
-}
-
 export const mnemonicTrim = (mnemonic: string) => {
   let mnemonicList = mnemonic.replace(/\s/g, " ").split(/\s/g);
   let mnemonicWords: any = [];
@@ -423,6 +365,17 @@ export const downloadFile = async (jsonContent: any) => {
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
+};
+
+export const validateAddress = (bech32Address: string, prefix?: string) => {
+  try {
+    const { prefix: decodedPrefix } = bech32.decode(bech32Address);
+    console.log(prefix, "decodedPrefix", decodedPrefix);
+    return !!(prefix && prefix === decodedPrefix);
+  } catch (e) {
+    console.log(e, "error decodedPrefix");
+    return false;
+  }
 };
 
 export const updateFee = (address: string) => {
@@ -542,7 +495,6 @@ export const getAccountNumberAndSequence = (authResponse: any) => {
   }
 };
 
-// copied from node_modules/@cosmjs/stargate/build/queries/ibc.js
 export const decodeTendermintClientStateAny = (clientState: any) => {
   if (
     (clientState === null || clientState === void 0
@@ -557,11 +509,11 @@ export const decodeTendermintClientStateAny = (clientState: any) => {
       }`
     );
   }
-  return tendermint_1.ClientState.decode(clientState.value);
+  return tendermint.ClientState.decode(clientState.value!);
 };
 
 // copied from node_modules/@cosmjs/stargate/build/queries/ibc.js
-export const decodeTendermintConsensusStateAny = (consensusState) => {
+export const decodeTendermintConsensusStateAny = (consensusState: any) => {
   if (
     (consensusState === null || consensusState === void 0
       ? void 0
@@ -576,7 +528,7 @@ export const decodeTendermintConsensusStateAny = (consensusState) => {
       }`
     );
   }
-  return tendermint_1.ConsensusState.decode(consensusState.value);
+  return tendermint.ConsensusState.decode(consensusState.value);
 };
 
 export const getChain = (chainId: string) => {

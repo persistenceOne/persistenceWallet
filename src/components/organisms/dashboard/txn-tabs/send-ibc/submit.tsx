@@ -2,15 +2,26 @@ import React from "react";
 import Button from "../../../../atoms/button";
 import { useAppStore } from "../../../../../../store/store";
 import { Dec } from "@keplr-wallet/unit";
-import { defaultChain } from "../../../../../helpers/utils";
+import { defaultChain, persistenceChain } from "../../../../../helpers/utils";
 import {
   getDecimalize,
   getUnDecimalize,
   toDec,
 } from "../../../../../helpers/coin";
-import { sendMsg } from "../../../../../helpers/protoMsg";
+import {
+  MakeIBCTransferMsg,
+  sendMsg,
+  TransferMsg,
+} from "../../../../../helpers/protoMsg";
 import { shallow } from "zustand/shallow";
 import { Spinner } from "../../../../atoms/spinner";
+import {
+  ExternalChains,
+  IBCConfiguration,
+} from "../../../../../helpers/config";
+import { PERSISTENCE_PREFIX } from "../../../../../../appConstants";
+
+const env: string = process.env.NEXT_PUBLIC_ENVIRONMENT!;
 
 const Submit = () => {
   const handleDecryptKeystoreModal = useAppStore(
@@ -25,6 +36,7 @@ const Submit = () => {
     accountDetails,
     recipient,
     transactionInfo,
+    chain,
   ] = useAppStore(
     (state) => [
       state.wallet.balances,
@@ -34,17 +46,27 @@ const Submit = () => {
       state.wallet.accountDetails,
       state.transactions.sendIbc.recipient,
       state.transactions.transactionInfo,
+      state.transactions.sendIbc.chain,
     ],
     shallow
   );
 
-  const handleSubmit = () => {
-    const msg = sendMsg(
-      accountDetails!.address!,
-      recipient,
-      getUnDecimalize(amount.toString(), 6).truncate().toString(),
-      token!.minimalDenom!
+  const handleSubmit = async () => {
+    const destinationChain = ExternalChains[env].find(
+      (chain) => chain.chainId === chain.chainId
     );
+    const msg = await MakeIBCTransferMsg({
+      channel: chain!.sourceChannelId,
+      fromAddress: accountDetails.address,
+      toAddress: recipient,
+      amount: getUnDecimalize(amount.toString(), 6).truncate().toString(),
+      timeoutHeight: undefined,
+      timeoutTimestamp: undefined,
+      denom: token!.minimalDenom!,
+      sourceRPCUrl: persistenceChain?.rpc,
+      destinationRPCUrl: destinationChain?.rpc,
+      port: IBCConfiguration.ibcDefaultPort,
+    });
     setTxnMsgs([msg]);
     handleDecryptKeystoreModal(true);
   };

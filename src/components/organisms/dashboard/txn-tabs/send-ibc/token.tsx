@@ -6,14 +6,15 @@ import { stringTruncate } from "../../../../../helpers/utils";
 import { getDecimalize } from "../../../../../helpers/coin";
 import { CoinPretty } from "@keplr-wallet/unit";
 import { Spinner } from "../../../../atoms/spinner";
+import { shallow } from "zustand/shallow";
 
 const Token = () => {
   const [show, setShow] = useState<boolean>(false);
 
-  const [balances, token] = useAppStore((state) => [
-    state.wallet.balances,
-    state.transactions.sendIbc.token,
-  ]);
+  const [balances, token] = useAppStore(
+    (state) => [state.wallet.balances, state.transactions.sendIbc.token],
+    shallow
+  );
 
   const handleSendIbcTxnToken = useAppStore(
     (state) => state.handleSendIbcTxnToken
