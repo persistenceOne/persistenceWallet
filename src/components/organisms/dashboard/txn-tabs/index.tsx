@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import TabItem from "../../../molecules/tabs/tabItem";
 import TabContent from "../../../molecules/tabs/tabContent";
 import Send from "./send";
+import SendIbc from "./send-ibc";
 
 const TxnTabs = () => {
   const [activeTab, setActiveTab] = useState("Send");
@@ -42,7 +43,7 @@ const TxnTabs = () => {
             activeTab={activeTab}
             className="p-6 md:p-4 bg-tabContent rounded-md"
           >
-            <p>send ibc</p>
+            <SendIbc />
           </TabContent>
         </div>
       </div>

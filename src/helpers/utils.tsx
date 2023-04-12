@@ -10,6 +10,7 @@ import {
   DefaultChainInfo,
   ExternalChains,
   FeeInfo,
+  IBCChainInfos,
   MainNetFoundationNodes,
   PstakeInfo,
   stkATOMInfo,
@@ -42,6 +43,7 @@ export const persistenceChain = ExternalChains[env].find(
 console.log(persistenceChain, "persistenceChain", env);
 
 export const defaultChain = DefaultChainInfo[env];
+export const ibcChainInfo = IBCChainInfos[env];
 const valoperAddressPrefix = defaultChain.prefix;
 const addressPrefix = defaultChain.prefix;
 const configCoinType = defaultChain.coinType;

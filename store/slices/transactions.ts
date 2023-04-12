@@ -2,8 +2,14 @@ import { StateCreator } from "zustand";
 import produce from "immer";
 import { BalanceList, ValidatorProps } from "../../src/helpers/types";
 import { CoinPretty, Dec } from "@keplr-wallet/unit";
-import { FeeInfo, GasInfo } from "../../src/helpers/config";
+import {
+  FeeInfo,
+  GasInfo,
+  IBCChainData,
+  IBCChainInfo,
+} from "../../src/helpers/config";
 import { DenomTrace } from "cosmjs-types/ibc/applications/transfer/v1/transfer";
+import { ibcChainInfo } from "../../src/helpers/utils";
 
 export type FeeType = "low" | "average" | "high";
 
@@ -38,6 +44,12 @@ export interface TransactionSliceState {
       gas: number | string;
     };
     send: {
+      token: BalanceList | null;
+      amount: Dec | string;
+      recipient: string;
+    };
+    sendIbc: {
+      chain: IBCChainInfo | null;
       token: BalanceList | null;
       amount: Dec | string;
       recipient: string;
@@ -82,6 +94,10 @@ export interface TransactionSliceActions {
   handleReDelegateTxnModal: (value: boolean) => void;
   handleUnDelegateTxnAmount: (value: any) => void;
   handleUnDelegateTxnModal: (value: boolean) => void;
+  handleSendIbcTxnToken: (value: any) => void;
+  handleSendIbcTxnAmount: (value: any) => void;
+  handleSendIbcTxnRecipient: (value: string) => void;
+  handleSendIbcTxnChain: (value: IBCChainInfo) => void;
 }
 
 export type TransactionSlice = TransactionSliceState & TransactionSliceActions;
@@ -109,6 +125,18 @@ const initialState = {
       },
       amount: "", //new Dec("0")
       recipient: "",
+    },
+    sendIbc: {
+      token: {
+        denom: "",
+        tokenUrl: "",
+        minimalDenom: "",
+        amount: "",
+        denomTrace: null,
+      },
+      amount: "", //new Dec("0")
+      recipient: "",
+      chain: ibcChainInfo.length > 0 ? ibcChainInfo[0] : null,
     },
     txnMsgs: [],
     transactionInfo: {
@@ -239,6 +267,30 @@ export const createTransactionSlice: StateCreator<TransactionSlice> = (
     set(
       produce((state: TransactionSlice) => {
         state.transactions.unbond.modal = value;
+      })
+    ),
+  handleSendIbcTxnToken: (value: any) =>
+    set(
+      produce((state: TransactionSlice) => {
+        state.transactions.sendIbc.token = value;
+      })
+    ),
+  handleSendIbcTxnAmount: (value: any) =>
+    set(
+      produce((state: TransactionSlice) => {
+        state.transactions.sendIbc.amount = value;
+      })
+    ),
+  handleSendIbcTxnRecipient: (value: string) =>
+    set(
+      produce((state: TransactionSlice) => {
+        state.transactions.sendIbc.recipient = value;
+      })
+    ),
+  handleSendIbcTxnChain: (value: IBCChainInfo) =>
+    set(
+      produce((state: TransactionSlice) => {
+        state.transactions.sendIbc.chain = value;
       })
     ),
   resetTxnSlice: () => {

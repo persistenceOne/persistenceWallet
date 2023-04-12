@@ -221,6 +221,11 @@ export const fetchAllBalances = async (
         .getState()
         .handleSendTxnToken(balanceList[0] ? balanceList[0] : null);
 
+      // set default token select
+      useAppStore
+        .getState()
+        .handleSendIbcTxnToken(balanceList[0] ? balanceList[0] : null);
+
       console.log(balanceList, "xprtBalance", balanceList[0].amount.toString());
       return {
         totalXprt: toPrettyCoin(

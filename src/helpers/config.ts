@@ -132,36 +132,13 @@ export const CHAIN_ID: any = {
 export const IBCChainInfos: IBCChainData = {
   Testnet: [
     {
-      counterpartyChainId: "osmosis-1",
-      chainName: "Osmosis",
-      sourceChannelId: "channel-6",
+      counterpartyChainId: "theta-testnet-001",
+      chainName: "pStake Cosmos Testnet",
+      sourceChannelId: "channel-667",
       portID: "transfer",
-      coinMinimalDenom: "uatom",
-      prefix: "osmo",
-    },
-    {
-      counterpartyChainId: "cosmoshub-4",
-      chainName: "Cosmos",
-      sourceChannelId: "channel-24",
-      portID: "transfer",
-      coinMinimalDenom: "uatom",
+      coinMinimalDenom:
+        "ibc/4A17832B26BF318D052563EFFE677C1DE11DF8CE104F00204860F3E3439818B2",
       prefix: "cosmos",
-    },
-    {
-      counterpartyChainId: "juno-1",
-      chainName: "Juno",
-      sourceChannelId: "channel-37",
-      portID: "transfer",
-      coinMinimalDenom: "ujuno",
-      prefix: "juno",
-    },
-    {
-      counterpartyChainId: "gravity-bridge-3",
-      chainName: "Gravity",
-      sourceChannelId: "channel-38",
-      portID: "transfer",
-      coinMinimalDenom: "ugraviton",
-      prefix: "gravity",
     },
   ],
   Mainnet: [
