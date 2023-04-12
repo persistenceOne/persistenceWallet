@@ -32,7 +32,7 @@ import {
 } from "cosmjs-types/cosmos/staking/v1beta1/query";
 import { getDecimalize, toDec, toPrettyCoin } from "../../helpers/coin";
 import { Balances, emptyPrettyCoin } from "../../../store/slices/wallet";
-import { DefaultChainInfo } from "../../helpers/config";
+import { defaultChain } from "../../helpers/utils";
 import {
   BASE_ACCOUNT,
   CONTINUOUS_VESTING_ACCOUNT,
@@ -189,7 +189,7 @@ export const fetchAllBalances = async (
           });
         } else {
           const denomResponse = getDenomFromMinimalDenom(balance.denom);
-          if (balance.denom === DefaultChainInfo.currency.coinMinimalDenom) {
+          if (balance.denom === defaultChain.currency.coinMinimalDenom) {
             xprtBalance = balance;
           }
           const chain = getChainFromDenom(balance.denom);
@@ -315,7 +315,7 @@ export const fetchValidatorsInfo = async (
       delegatedValidators,
       totalDelegatedAmount: toPrettyCoin(
         totalDelegatedAmount.toString(),
-        DefaultChainInfo.currency.coinDenom,
+        defaultChain.currency.coinDenom,
         persistenceChain!.chainId
       ),
     };
@@ -353,7 +353,7 @@ export const fetchUnBondingList = async (
             ).format("DD MMM YYYY hh:mm A"),
             balance: toPrettyCoin(
               entry.balance.toString(),
-              DefaultChainInfo.currency.coinDenom,
+              defaultChain.currency.coinDenom,
               persistenceChain!.chainId
             ),
           });
@@ -366,7 +366,7 @@ export const fetchUnBondingList = async (
       unBondingList: entries,
       totalAmount: toPrettyCoin(
         totalAmount.toString(),
-        DefaultChainInfo.currency.coinDenom,
+        defaultChain.currency.coinDenom,
         persistenceChain!.chainId
       ),
     };

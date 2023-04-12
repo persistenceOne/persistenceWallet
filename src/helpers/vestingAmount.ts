@@ -1,6 +1,6 @@
 import * as Sentry from "@sentry/browser";
 import { Coin } from "@cosmjs/proto-signing";
-import { DefaultChainInfo } from "./config";
+import { defaultChain } from "./utils";
 import {
   BASE_ACCOUNT,
   CONTINUOUS_VESTING_ACCOUNT,
@@ -19,7 +19,7 @@ const continuousVesting = "/cosmos.vesting.v1beta1.ContinuousVestingAccount";
 function getUTOKEN_Balance(amountList: any) {
   let balance = 0;
   for (let i = 0; i < amountList.length; i++) {
-    if (amountList[i].denom === DefaultChainInfo.currency.coinMinimalDenom) {
+    if (amountList[i].denom === defaultChain.currency.coinMinimalDenom) {
       balance = parseInt(amountList[i].amount);
       break;
     }
@@ -149,7 +149,7 @@ export const getTransferableAmount = async (
 
 function getDenomAmount(
   coins: Coin[],
-  denom = DefaultChainInfo.currency.coinMinimalDenom
+  denom = defaultChain.currency.coinMinimalDenom
 ) {
   if (coins.length > 0) {
     for (let coin of coins) {

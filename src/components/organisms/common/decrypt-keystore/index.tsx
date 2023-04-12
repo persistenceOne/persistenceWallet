@@ -12,7 +12,7 @@ import {
   makeHdPath,
   persistenceChain,
 } from "../../../../helpers/utils";
-import { DefaultChainInfo } from "../../../../helpers/config";
+import { defaultChain } from "../../../../helpers/utils";
 import { executeSendTransaction } from "../../../../helpers/transactions";
 import { fee, sendMsg } from "../../../../helpers/protoMsg";
 import {
@@ -91,7 +91,7 @@ const DecryptKeyStore = () => {
         mnemonic,
         hdPath,
         accountDetails.bipPasPhrase!,
-        DefaultChainInfo.prefix
+        defaultChain.prefix
       );
       handleDecryptKeystoreModal(false);
       await executeSendTransaction({

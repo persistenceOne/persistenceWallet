@@ -2,7 +2,7 @@ import React from "react";
 import Button from "../../../../atoms/button";
 import { useAppStore } from "../../../../../../store/store";
 import { Dec } from "@keplr-wallet/unit";
-import { DefaultChainInfo } from "../../../../../helpers/config";
+import { defaultChain } from "../../../../../helpers/utils";
 import {
   getDecimalize,
   getUnDecimalize,
@@ -41,7 +41,7 @@ const Submit = () => {
       accountDetails!.address!,
       selectedValidator!.validatorAddress,
       getUnDecimalize(amount.toString(), 6).truncate().toString(),
-      DefaultChainInfo.currency.coinMinimalDenom
+      defaultChain.currency.coinMinimalDenom
     );
     setTxnMsgs([msg]);
     handleDecryptKeystoreModal(true);
@@ -60,7 +60,7 @@ const Submit = () => {
       .gte(
         getDecimalize(
           fee.value!.toString(),
-          DefaultChainInfo.currency.coinDecimals
+          defaultChain.currency.coinDecimals
         ).add(toDec(amount.toString()))
       ) &&
     toDec(amount.toString()).lte(toDec(balances.totalXprt.toString()));

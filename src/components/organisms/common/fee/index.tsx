@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import Gas from "./gas";
 import { useAppStore } from "../../../../../store/store";
 import { shallow } from "zustand/shallow";
-import { DefaultChainInfo, FeeInfo } from "../../../../helpers/config";
+import { FeeInfo } from "../../../../helpers/config";
+import { defaultChain } from "../../../../helpers/utils";
 import { FeeType } from "../../../../../store/slices/transactions";
 import { getDecimalize, toDec } from "../../../../helpers/coin";
 
@@ -73,10 +74,10 @@ const FeeOptions = ({ amount }: Props) => {
             {Number(
               getDecimalize(
                 (FeeInfo.averageFee * Number(gas)).toString(),
-                DefaultChainInfo.currency.coinDecimals
+                defaultChain.currency.coinDecimals
               ).toString()
             ).toFixed(6)}{" "}
-            {DefaultChainInfo.currency.coinDenom}
+            {defaultChain.currency.coinDenom}
             ($4.5)
           </p>
         </div>
@@ -93,10 +94,10 @@ const FeeOptions = ({ amount }: Props) => {
             {Number(
               getDecimalize(
                 (FeeInfo.highFee * Number(gas)).toString(),
-                DefaultChainInfo.currency.coinDecimals
+                defaultChain.currency.coinDecimals
               ).toString()
             ).toFixed(6)}{" "}
-            {DefaultChainInfo.currency.coinDenom}
+            {defaultChain.currency.coinDenom}
             ($10)
           </p>
         </div>

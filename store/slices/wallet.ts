@@ -1,7 +1,7 @@
 import { StateCreator } from "zustand";
 import produce from "immer";
 import { toPrettyCoin } from "../../src/helpers/coin";
-import { DefaultChainInfo } from "../../src/helpers/config";
+import { defaultChain } from "../../src/helpers/utils";
 import { CoinPretty } from "@keplr-wallet/unit";
 import {
   fetchAllBalances,
@@ -23,8 +23,8 @@ export type accountType = "vesting" | "non-vesting";
 
 export const emptyPrettyCoin = toPrettyCoin(
   "0",
-  DefaultChainInfo.currency.coinMinimalDenom,
-  DefaultChainInfo.counterpartyChainId
+  defaultChain.currency.coinMinimalDenom,
+  defaultChain.counterpartyChainId
 );
 
 export type AccountDetails = {

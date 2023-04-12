@@ -27,19 +27,24 @@ import {
   ENCRYPTED_MNEMONIC,
   LOGIN_INFO,
   PERSISTENCE,
+  PERSISTENCE_PREFIX,
 } from "../../appConstants";
 import { useAppStore } from "../../store/store";
 
 const encoding = require("@cosmjs/encoding");
 const bip39 = require("bip39");
 
-const valoperAddressPrefix = DefaultChainInfo.prefix;
-const addressPrefix = DefaultChainInfo.prefix;
-const configCoinType = DefaultChainInfo.coinType;
+const env: string = process.env.NEXT_PUBLIC_ENVIRONMENT!;
 
-export const persistenceChain = ExternalChains["Mainnet"].find(
-  (chain) => chain.chainName === PERSISTENCE
+export const persistenceChain = ExternalChains[env].find(
+  (chain) => chain.bech32Config.bech32PrefixAccAddr === PERSISTENCE_PREFIX
 );
+console.log(persistenceChain, "persistenceChain", env);
+
+export const defaultChain = DefaultChainInfo[env];
+const valoperAddressPrefix = defaultChain.prefix;
+const addressPrefix = defaultChain.prefix;
+const configCoinType = defaultChain.coinType;
 
 export const emptyFunc = () => ({});
 
@@ -201,16 +206,16 @@ function checkLastPage(
 }
 
 export const tokenValueConversion = (data: string) => {
-  return Number(data) / DefaultChainInfo.uTokenValue;
+  return Number(data) / defaultChain.uTokenValue;
 };
 
 export const denomModify = (amount: Coin) => {
   if (Array.isArray(amount)) {
     if (amount.length) {
-      if (amount[0].denom === DefaultChainInfo.currency.coinMinimalDenom) {
+      if (amount[0].denom === defaultChain.currency.coinMinimalDenom) {
         return [
           tokenValueConversion(amount[0].amount),
-          DefaultChainInfo.currency.coinDenom,
+          defaultChain.currency.coinDenom,
         ];
       } else {
         return [amount[0].amount, amount[0].denom];
@@ -219,10 +224,10 @@ export const denomModify = (amount: Coin) => {
       return "";
     }
   } else {
-    if (amount.denom === DefaultChainInfo.currency.coinMinimalDenom) {
+    if (amount.denom === defaultChain.currency.coinMinimalDenom) {
       return [
         tokenValueConversion(amount.amount),
-        DefaultChainInfo.currency.coinDenom,
+        defaultChain.currency.coinDenom,
       ];
     } else {
       return [amount.amount, amount.denom];
@@ -231,7 +236,7 @@ export const denomModify = (amount: Coin) => {
 };
 
 export const getChainFromDenom = (denom: string) => {
-  const chains = ExternalChains["Mainnet"];
+  const chains = ExternalChains[env];
   return chains.find((item) => {
     return item!.currencies.find((currency) => {
       return currency.coinMinimalDenom === denom;
@@ -573,5 +578,5 @@ export const decodeTendermintConsensusStateAny = (consensusState) => {
 };
 
 export const getChain = (chainId: string) => {
-  return ExternalChains["Mainnet"].find((chain) => chain.chainId === chainId);
+  return ExternalChains[env].find((chain) => chain.chainId === chainId);
 };

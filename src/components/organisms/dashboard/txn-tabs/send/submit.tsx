@@ -2,7 +2,7 @@ import React from "react";
 import Button from "../../../../atoms/button";
 import { useAppStore } from "../../../../../../store/store";
 import { Dec } from "@keplr-wallet/unit";
-import { DefaultChainInfo } from "../../../../../helpers/config";
+import { defaultChain } from "../../../../../helpers/utils";
 import {
   getDecimalize,
   getUnDecimalize,
@@ -56,20 +56,20 @@ const Submit = () => {
       .gte(
         getDecimalize(
           fee.value!.toString(),
-          DefaultChainInfo.currency.coinDecimals
+          defaultChain.currency.coinDecimals
         ).add(toDec(amount.toString()))
       ),
     toDec(amount.toString()).lte(toDec(token!.amount.toString()))
   );
   const enable =
     balances.totalXprt.toDec().gt(new Dec("0")) &&
-    (token!.minimalDenom === DefaultChainInfo.currency.coinMinimalDenom
+    (token!.minimalDenom === defaultChain.currency.coinMinimalDenom
       ? balances.totalXprt
           .toDec()
           .gte(
             getDecimalize(
               fee.value!.toString(),
-              DefaultChainInfo.currency.coinDecimals
+              defaultChain.currency.coinDecimals
             ).add(toDec(amount.toString()))
           )
       : balances.totalXprt
@@ -77,7 +77,7 @@ const Submit = () => {
           .gte(
             getDecimalize(
               fee.value!.toString(),
-              DefaultChainInfo.currency.coinDecimals
+              defaultChain.currency.coinDecimals
             )
           ) && toDec(amount.toString()).lte(toDec(token!.amount.toString())));
 

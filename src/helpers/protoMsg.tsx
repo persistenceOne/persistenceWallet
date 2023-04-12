@@ -2,7 +2,7 @@ import { MsgTransfer } from "cosmjs-types/ibc/applications/transfer/v1/tx";
 import { coin } from "@cosmjs/amino";
 import Long from "long";
 import { MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
-import { DefaultChainInfo } from "./config";
+import { defaultChain } from "./utils";
 import { StdFee } from "@cosmjs/amino/build/signdoc";
 const msgSendTypeUrl = "/cosmos.bank.v1beta1.MsgSend";
 const msgDelegateTypeUrl = "/cosmos.staking.v1beta1.MsgDelegate";
@@ -44,9 +44,7 @@ export const sendMsg = (
 
 export const fee = (amount: string, gas = "250000"): StdFee => {
   return {
-    amount: [
-      { amount: amount, denom: DefaultChainInfo.currency.coinMinimalDenom },
-    ],
+    amount: [{ amount: amount, denom: defaultChain.currency.coinMinimalDenom }],
     gas: gas.toString(),
   };
 };

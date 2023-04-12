@@ -36,20 +36,41 @@ export type IBCChainData = {
   [index: string]: IBCChainInfo[];
 };
 
-export const DefaultChainInfo = {
-  counterpartyChainId: "core-1",
-  chainName: "Persistence",
-  prefix: "persistence",
-  ledgerAppName: "Persistence",
-  currency: {
-    coinDenom: "XPRT",
-    coinMinimalDenom: "uxprt",
-    coinDecimals: 6,
-    coinGeckoId: "persistence",
+export type DefaultChain = {
+  [index: string]: any;
+};
+
+export const DefaultChainInfo: DefaultChain = {
+  Testnet: {
+    counterpartyChainId: "test-core-1",
+    chainName: "Persistence",
+    prefix: "persistence",
+    ledgerAppName: "Persistence",
+    currency: {
+      coinDenom: "XPRT",
+      coinMinimalDenom: "uxprt",
+      coinDecimals: 6,
+      coinGeckoId: "persistence",
+    },
+    deprecatedCoinType: 750,
+    coinType: 118,
+    uTokenValue: 1000000,
   },
-  deprecatedCoinType: 750,
-  coinType: 118,
-  uTokenValue: 1000000,
+  Mainnet: {
+    counterpartyChainId: "core-1",
+    chainName: "Persistence",
+    prefix: "persistence",
+    ledgerAppName: "Persistence",
+    currency: {
+      coinDenom: "XPRT",
+      coinMinimalDenom: "uxprt",
+      coinDecimals: 6,
+      coinGeckoId: "persistence",
+    },
+    deprecatedCoinType: 750,
+    coinType: 118,
+    uTokenValue: 1000000,
+  },
 };
 
 export const AccountInfo = {
@@ -217,14 +238,7 @@ export const ExternalChains: ExternalChainData = {
           coinGeckoId: "persistence",
         },
       ],
-      bech32Config: {
-        bech32PrefixAccAddr: "persistence",
-        bech32PrefixAccPub: "persistencepub",
-        bech32PrefixValAddr: "persistencevaloper",
-        bech32PrefixValPub: "persistencevaloperpub",
-        bech32PrefixConsAddr: "persistencevalcons",
-        bech32PrefixConsPub: "persistencevalconspub",
-      },
+      bech32Config: Bech32Address.defaultBech32Config("persistence"),
       gasPriceStep: {
         low: 0.0,
         average: 0.01,
@@ -271,21 +285,14 @@ export const ExternalChains: ExternalChainData = {
       },
     },
     {
-      rpc: "https://rpc.osmosis-1.audit.one",
-      rest: "https://rest.osmosis-1.audit.one",
-      chainId: "osmosis-1",
+      rpc: "https://rpc.testnet.osmosis.zone",
+      rest: "https://lcd.testnet.osmosis.zone",
+      chainId: "osmo-test-4",
       chainName: "Osmosis",
       bip44: {
         coinType: 118,
       },
-      bech32Config: {
-        bech32PrefixAccAddr: "persistence",
-        bech32PrefixAccPub: "persistencepub",
-        bech32PrefixValAddr: "persistencevaloper",
-        bech32PrefixValPub: "persistencevaloperpub",
-        bech32PrefixConsAddr: "persistencevalcons",
-        bech32PrefixConsPub: "persistencevalconspub",
-      },
+      bech32Config: Bech32Address.defaultBech32Config("osmo"),
       currencies: [
         {
           coinDenom: "OSMO",
