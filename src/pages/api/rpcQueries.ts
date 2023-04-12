@@ -17,7 +17,6 @@ import {
   ContinuousVestingAccount,
   DelayedVestingAccount,
   PeriodicVestingAccount,
-  BaseVestingAccount,
 } from "cosmjs-types/cosmos/vesting/v1beta1/vesting";
 
 import {
@@ -80,6 +79,7 @@ export const getAccount = async (address: string): Promise<GetAccount> => {
     let typeUrl: string = " ";
     let accountData: any = null;
     let vestingBalance: any = 0;
+    console.log(accountResponse, "accountResponse");
     switch (accountResponse.account!.typeUrl) {
       case BASE_ACCOUNT:
         typeUrl = accountResponse.account?.typeUrl!;
@@ -102,6 +102,7 @@ export const getAccount = async (address: string): Promise<GetAccount> => {
         accountData = DelayedVestingAccount.decode(
           accountResponse.account!.value
         );
+        console.log(accountData, "DELAYED_VESTING_ACCOUNT");
         vestingBalance = getDelayedVestingAmount(accountData, currentEpochTime);
         break;
       case CONTINUOUS_VESTING_ACCOUNT:
@@ -205,6 +206,7 @@ export const fetchAllBalances = async (
       }
       const account: GetAccount = await getAccount(address);
 
+      console.log(account, "GetAccount");
       if (account) {
         vestingAmount = account.vestingBalance;
         transferableAmount = await getTransferableAmount(

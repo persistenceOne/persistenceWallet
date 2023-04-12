@@ -4,6 +4,7 @@ import Long from "long";
 import { MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
 import { defaultChain } from "./utils";
 import { StdFee } from "@cosmjs/amino/build/signdoc";
+import { MsgDelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 const msgSendTypeUrl = "/cosmos.bank.v1beta1.MsgSend";
 const msgDelegateTypeUrl = "/cosmos.staking.v1beta1.MsgDelegate";
 const msgRedelegateTypeUrl = "/cosmos.staking.v1beta1.MsgBeginRedelegate";
@@ -38,6 +39,25 @@ export const sendMsg = (
           amount: amount,
         },
       ],
+    }),
+  };
+};
+
+export const delegateMsg = (
+  delegatorAddress: string,
+  validatorAddress: string,
+  amount: string,
+  denom = defaultChain.currency.coinMinimalDenom
+) => {
+  return {
+    typeUrl: msgDelegateTypeUrl,
+    value: MsgDelegate.fromPartial({
+      delegatorAddress: delegatorAddress,
+      validatorAddress: validatorAddress,
+      amount: {
+        denom: denom,
+        amount: String(amount),
+      },
     }),
   };
 };

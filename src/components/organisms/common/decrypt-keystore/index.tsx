@@ -82,6 +82,7 @@ const DecryptKeyStore = () => {
         accountDetails.accountIndex!,
         coinType!
       );
+
       const feeMsg = fee(
         toDec(feeValue!.toString()).truncate().toString(),
         gas.toString()
@@ -93,6 +94,7 @@ const DecryptKeyStore = () => {
         accountDetails.bipPasPhrase!,
         defaultChain.prefix
       );
+
       handleDecryptKeystoreModal(false);
       await executeSendTransaction({
         signer: response.wallet,

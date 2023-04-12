@@ -8,13 +8,16 @@ import {
   getUnDecimalize,
   toDec,
 } from "../../../../../helpers/coin";
-import { sendMsg } from "../../../../../helpers/protoMsg";
+import { delegateMsg } from "../../../../../helpers/protoMsg";
 import { shallow } from "zustand/shallow";
 import { Spinner } from "../../../../atoms/spinner";
 
 const Submit = () => {
   const handleDecryptKeystoreModal = useAppStore(
     (state) => state.handleDecryptKeystoreModal
+  );
+  const handleDelegateTxnModal = useAppStore(
+    (state) => state.handleDelegateTxnModal
   );
   const setTxnMsgs = useAppStore((state) => state.setTxnMsgs);
   const [
@@ -37,7 +40,7 @@ const Submit = () => {
   );
 
   const handleSubmit = () => {
-    const msg = sendMsg(
+    const msg = delegateMsg(
       accountDetails!.address!,
       selectedValidator!.validatorAddress,
       getUnDecimalize(amount.toString(), 6).truncate().toString(),
@@ -45,6 +48,7 @@ const Submit = () => {
     );
     setTxnMsgs([msg]);
     handleDecryptKeystoreModal(true);
+    handleDelegateTxnModal(false);
   };
 
   console.log(

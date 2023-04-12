@@ -1,5 +1,4 @@
 import {
-  BaseVestingAccount,
   ContinuousVestingAccount,
   DelayedVestingAccount,
   PeriodicVestingAccount,
@@ -16,7 +15,6 @@ export interface GetAccount {
     | ContinuousVestingAccount
     | PeriodicVestingAccount
     | BaseAccount
-    | BaseVestingAccount
     | null;
   vestingBalance: number;
 }

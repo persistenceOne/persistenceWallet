@@ -32,19 +32,18 @@ export const getPeriodicVestingAmount = (
   currentEpochTime: number
 ) => {
   let accountVestingAmount = getUTOKEN_Balance(
-    account.accountData.baseVestingAccount.originalVesting
+    account.baseVestingAccount.originalVesting
   );
   let freeBalance = 0;
-  const endTime = parseInt(account.accountData.baseVestingAccount.endTime);
+  const endTime = parseInt(account.baseVestingAccount.endTime);
   if (endTime >= currentEpochTime) {
-    let vestingTimes = parseInt(account.accountData.startTime);
-    for (let i = 0; i < account.accountData.vestingPeriods.length; i++) {
-      let length = parseInt(account.accountData.vestingPeriods[i]["length"]);
+    let vestingTimes = parseInt(account.startTime);
+    for (let i = 0; i < account.vestingPeriods.length; i++) {
+      let length = parseInt(account.vestingPeriods[i]["length"]);
       vestingTimes = vestingTimes + length;
       if (currentEpochTime >= vestingTimes) {
         freeBalance =
-          freeBalance +
-          getUTOKEN_Balance(account.accountData.vestingPeriods[i].amount);
+          freeBalance + getUTOKEN_Balance(account.vestingPeriods[i].amount);
       }
     }
   } else {
@@ -58,11 +57,9 @@ export const getDelayedVestingAmount = (
   account: any,
   currentEpochTime: number
 ) => {
-  const endTime = parseInt(account.accountData.baseVestingAccount.endTime);
+  const endTime = parseInt(account.baseVestingAccount.endTime);
   if (endTime >= currentEpochTime) {
-    return getUTOKEN_Balance(
-      account.accountData.baseVestingAccount.originalVesting
-    );
+    return getUTOKEN_Balance(account.baseVestingAccount.originalVesting);
   } else {
     return 0;
   }
@@ -72,11 +69,11 @@ export const getContinuousVestingAmount = (
   account: any,
   currentEpochTime: number
 ) => {
-  const endTime = parseInt(account.accountData.baseVestingAccount.endTime);
-  const startTime = parseInt(account.accountData.startTime);
+  const endTime = parseInt(account.baseVestingAccount.endTime);
+  const startTime = parseInt(account.startTime);
   if (endTime >= currentEpochTime) {
     let originalVestingAmount = getUTOKEN_Balance(
-      account.accountData.baseVestingAccount.originalVesting
+      account.baseVestingAccount.originalVesting
     );
     return (
       (originalVestingAmount * (endTime - currentEpochTime)) /
@@ -132,7 +129,6 @@ export const getTransferableAmount = async (
         )!
       );
     }
-    console.log(delegatedVesting, "delegatedVesting", amount, balance);
     transferableAmount = balanceDec.add(delegatedVesting.sub(amount));
     if (transferableAmount.lt(new Dec(0))) {
       transferableAmount = new Dec(0);
@@ -142,7 +138,6 @@ export const getTransferableAmount = async (
     }
     return transferableAmount;
   } catch (error: any) {
-    console.log(error, "getTransferableAmount");
     return new Dec(0);
   }
 };
