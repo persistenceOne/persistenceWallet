@@ -58,11 +58,7 @@ import { QueryDenomTraceResponse } from "cosmjs-types/ibc/applications/transfer/
 import { Coin } from "@cosmjs/proto-signing";
 import { CoinPretty, Dec } from "@keplr-wallet/unit";
 import Long from "long";
-import {
-  UnbondingDelegationEntry,
-  Validator,
-} from "cosmjs-types/cosmos/staking/v1beta1/staking";
-import { Timestamp } from "cosmjs-types/google/protobuf/timestamp";
+import { Validator } from "cosmjs-types/cosmos/staking/v1beta1/staking";
 import moment from "moment";
 import { useAppStore } from "../../../store/store";
 

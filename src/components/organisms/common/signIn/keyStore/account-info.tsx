@@ -8,6 +8,8 @@ import {
   KeyStoreLoginDetails,
 } from "../../../../../../store/slices/wallet";
 import useLocalStorage from "../../../../../customHooks/useLocalStorage";
+import { GetAccount } from "../../../../../helpers/types";
+import { getAccount } from "../../../../../pages/api/rpcQueries";
 
 export interface AccountInfoProps {
   coin118Data: any;
@@ -44,7 +46,7 @@ const AccountInfo: React.FC<AccountInfoProps> = ({ ...Props }) => {
 
   const handleSubmit = async () => {
     const accountDetails: AccountDetails = {
-      accountType: "vesting",
+      accountType: coin750Data.accountType,
       address: coin750Data.address,
       loginType: "keyStore",
       accountIndex: accountIndex,
@@ -55,10 +57,12 @@ const AccountInfo: React.FC<AccountInfoProps> = ({ ...Props }) => {
       coin118Info: {
         walletPath: coin118Data.walletPath,
         address: coin118Data.address,
+        accountType: coin118Data.accountType,
       },
       coin750Info: {
         walletPath: coin750Data.walletPath,
         address: coin750Data.address,
+        accountType: coin750Data.accountType,
       },
       encryptedSeed: encryptedMnemonic,
     };

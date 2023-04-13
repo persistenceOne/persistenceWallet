@@ -10,13 +10,18 @@ import {
   makeHdPath,
   mnemonicTrim,
 } from "../../../../../helpers/utils";
-import { createWallet, decryptKeyStore } from "../../../../../helpers/wallet";
+import {
+  createWallet,
+  decryptKeyStore,
+  vestingAccountCheck,
+} from "../../../../../helpers/wallet";
 import { shallow } from "zustand/shallow";
-import { ENCRYPTED_MNEMONIC } from "../../../../../../appConstants";
 import { displayToast } from "../../../../molecules/toast";
 import { ToastType } from "../../../../molecules/toast/types";
 import AdvancedOptions from "../../advanced";
 import AccountInfo, { AccountInfoProps } from "./account-info";
+import { GetAccount } from "../../../../../helpers/types";
+import { getAccount } from "../../../../../pages/api/rpcQueries";
 
 const SignInKeyStore = () => {
   const [errorMessage, setErrorMessage] = useState("");
@@ -27,13 +32,6 @@ const SignInKeyStore = () => {
   const handleWalletSignInKeyStoreModal = useAppStore(
     (state) => state.handleWalletSignInKeyStoreModal
   );
-
-  // const storeC = useStore(useAppStore, (state) => state);
-  //
-  // const keyStoreModal = storeC?.wallet.signIn.keyStoreModal!;
-  // const handleWalletSignInKeyStoreModal =
-  //     storeC?.handleWalletSignInKeyStoreModal!;
-  //
 
   const handleClose = () => {
     handleWalletSignInKeyStoreModal(false);
@@ -86,24 +84,30 @@ const SignInKeyStore = () => {
             bip39Passphrase
           );
 
+          const accountType118: GetAccount = await getAccount(
+            coin118Response.address!
+          );
+
+          const accountType750: GetAccount = await getAccount(
+            coin750Response.address!
+          );
+
           const coin118Data = {
             address: coin118Response.address!,
             walletPath: coin118Response.walletPath,
+            accountType: vestingAccountCheck(accountType118.typeUrl!)
+              ? "vesting"
+              : "non-vesting",
           };
 
           const coin750Data = {
             address: coin750Response.address,
             walletPath: coin750Response.walletPath,
+            accountType: vestingAccountCheck(accountType750.typeUrl!)
+              ? "vesting"
+              : "non-vesting",
           };
-          console.log(
-            coin118Data,
-            coin750Data,
-            accountNumber,
-            accountIndex,
-            bip39Passphrase,
-            encryptedMnemonic,
-            "coin118Data-test"
-          );
+
           setResponse({
             coin118Data,
             coin750Data,
