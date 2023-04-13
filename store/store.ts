@@ -10,18 +10,24 @@ import {
   TransactionSlice,
   createTransactionSlice,
 } from "./slices/transactions";
+import {
+  InitialFetchSlice,
+  createInitialFetchSlice,
+} from "./slices/initial-fetch";
 // import { persist } from "zustand/middleware";
 
 type StoreState = SidebarSlice &
   CreateWalletSlice &
   WalletSlice &
-  TransactionSlice;
+  TransactionSlice &
+  InitialFetchSlice;
 
 export const useAppStore = create<StoreState>()((...a) => ({
   ...createSidebarSlice(...a),
   ...createCreateWalletSlice(...a),
   ...createWalletSlice(...a),
   ...createTransactionSlice(...a),
+  ...createInitialFetchSlice(...a),
 }));
 //
 // export const useAppStore = create<StoreState>()(

@@ -36,6 +36,7 @@ export const Template = ({
   const fetchWalletDelegations = useAppStore(
     (state) => state.fetchWalletDelegations
   );
+  const fetchTokenPrice = useAppStore((state) => state.fetchTokenPrice);
   const fetchWalletUnbonding = useAppStore(
     (state) => state.fetchWalletUnbonding
   );
@@ -59,6 +60,10 @@ export const Template = ({
       handleWalletAccountDetails(accountInfo);
       handleWalletKeyStoreLoginDetails(accountKeyStoreDetails);
     }
+  }, []);
+
+  useEffect(() => {
+    fetchTokenPrice();
   }, []);
 
   return address !== null ? (
