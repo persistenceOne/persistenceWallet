@@ -67,6 +67,7 @@ export interface TransactionSliceState {
     reDelegate: {
       modal: boolean;
       amount: Dec | string;
+      validator: ValidatorProps | null;
     };
     unbond: {
       modal: boolean;
@@ -92,6 +93,7 @@ export interface TransactionSliceActions {
   handleDelegateTxnModal: (value: boolean) => void;
   handleReDelegateTxnAmount: (value: any) => void;
   handleReDelegateTxnModal: (value: boolean) => void;
+  handleReDelegateTxnValidator: (value: ValidatorProps) => void;
   handleUnDelegateTxnAmount: (value: any) => void;
   handleUnDelegateTxnModal: (value: boolean) => void;
   handleSendIbcTxnToken: (value: any) => void;
@@ -155,6 +157,7 @@ const initialState = {
     reDelegate: {
       amount: "",
       modal: false,
+      validator: null,
     },
     unbond: {
       amount: "",
@@ -249,6 +252,12 @@ export const createTransactionSlice: StateCreator<TransactionSlice> = (
     set(
       produce((state: TransactionSlice) => {
         state.transactions.reDelegate.amount = value;
+      })
+    ),
+  handleReDelegateTxnValidator: (value: ValidatorProps) =>
+    set(
+      produce((state: TransactionSlice) => {
+        state.transactions.reDelegate.validator = value;
       })
     ),
   handleReDelegateTxnModal: (value: boolean) =>

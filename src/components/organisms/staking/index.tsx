@@ -8,6 +8,7 @@ import { useAppStore } from "../../../../store/store";
 import { shallow } from "zustand/shallow";
 import DelegateModal from "./txns/delegate";
 import UnDelegateModal from "./txns/un-delegate";
+import ReDelegateModal from "./txns/re-delegate";
 
 export type ValidatorTypes = "active" | "in-active";
 
@@ -92,6 +93,7 @@ const StakingContainer = () => {
       {selectedValidator !== null ? <TransactionModal /> : ""}
       <DelegateModal />
       <UnDelegateModal />
+      <ReDelegateModal />
     </div>
   );
 };

@@ -9,6 +9,7 @@ import {
 } from "./utils";
 import { StdFee } from "@cosmjs/amino/build/signdoc";
 import {
+  MsgBeginRedelegate,
   MsgDelegate,
   MsgUndelegate,
 } from "cosmjs-types/cosmos/staking/v1beta1/tx";
@@ -68,7 +69,7 @@ export const delegateMsg = (
       validatorAddress: validatorAddress,
       amount: {
         denom: denom,
-        amount: String(amount),
+        amount: amount,
       },
     }),
   };
@@ -87,7 +88,27 @@ export const unBondMsg = (
       validatorAddress: validatorAddress,
       amount: {
         denom: denom,
-        amount: String(amount),
+        amount: amount,
+      },
+    }),
+  };
+};
+
+export const RedelegateMsg = (
+  delegatorAddress: string,
+  validatorSrcAddress: string,
+  validatorDstAddress: string,
+  amount: string
+) => {
+  return {
+    typeUrl: msgRedelegateTypeUrl,
+    value: MsgBeginRedelegate.fromPartial({
+      delegatorAddress: delegatorAddress,
+      validatorSrcAddress: validatorSrcAddress,
+      validatorDstAddress: validatorDstAddress,
+      amount: {
+        denom: defaultChain.currency.coinMinimalDenom,
+        amount: amount,
       },
     }),
   };

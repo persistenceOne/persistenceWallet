@@ -6,6 +6,7 @@ import Amount from "./amount";
 import FeeOptions from "../../../common/fee";
 import Submit from "./submit";
 import { Icon } from "../../../../atoms/icon";
+import Validators from "./validators";
 
 const ReDelegateModal = () => {
   const [modal, amount] = useAppStore(
@@ -53,6 +54,7 @@ const ReDelegateModal = () => {
         </p>
       </div>
       <div className="px-8 py-6">
+        <Validators />
         <Amount />
         <FeeOptions amount={"0"} />
         <Submit />

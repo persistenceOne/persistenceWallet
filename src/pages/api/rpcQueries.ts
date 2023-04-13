@@ -283,6 +283,7 @@ export const fetchValidatorsInfo = async (
             reverse: false,
           },
         });
+      console.log(response, "responsev");
       key = response!.pagination!.nextKey;
       validators.push(...response.validators);
     } while (key.length !== 0);

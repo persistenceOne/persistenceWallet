@@ -8,7 +8,11 @@ import {
   getUnDecimalize,
   toDec,
 } from "../../../../../helpers/coin";
-import { delegateMsg, unBondMsg } from "../../../../../helpers/protoMsg";
+import {
+  delegateMsg,
+  RedelegateMsg,
+  unBondMsg,
+} from "../../../../../helpers/protoMsg";
 import { shallow } from "zustand/shallow";
 import { Spinner } from "../../../../atoms/spinner";
 
@@ -23,6 +27,7 @@ const Submit = () => {
   const [
     balances,
     amount,
+    destinationValidator,
     selectedValidator,
     fee,
     accountDetails,
@@ -31,6 +36,7 @@ const Submit = () => {
     (state) => [
       state.wallet.balances,
       state.transactions.reDelegate.amount,
+      state.transactions.reDelegate.validator,
       state.transactions.staking.selectedValidator,
       state.transactions.feeInfo.fee,
       state.wallet.accountDetails,
@@ -40,11 +46,11 @@ const Submit = () => {
   );
 
   const handleSubmit = () => {
-    const msg = unBondMsg(
+    const msg = RedelegateMsg(
       accountDetails!.address!,
       selectedValidator!.validatorAddress,
-      getUnDecimalize(amount.toString(), 6).truncate().toString(),
-      defaultChain.currency.coinMinimalDenom
+      destinationValidator!.validatorAddress,
+      getUnDecimalize(amount.toString(), 6).truncate().toString()
     );
     setTxnMsgs([msg]);
     handleDecryptKeystoreModal(true);
@@ -52,6 +58,7 @@ const Submit = () => {
   };
 
   const enable =
+    destinationValidator !== null &&
     toDec(amount.toString()).gt(new Dec("0")) &&
     balances.totalXprt.toDec().gt(new Dec("0")) &&
     balances.totalXprt
@@ -79,7 +86,7 @@ const Submit = () => {
           transactionInfo.name === "delegate" && transactionInfo.inProgress ? (
             <Spinner size={"medium"} />
           ) : (
-            "Delegate"
+            "Redelegate"
           )
         }
         onClick={handleSubmit}
