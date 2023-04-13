@@ -32,7 +32,7 @@ export interface Delegations {
 }
 
 export interface GetDelegatedValidatorInfo {
-  delegatedAmount: string;
+  delegatedAmount: CoinPretty;
   id: number;
   validatorName: any;
   validatorImage: string;

@@ -25,6 +25,7 @@ const ValidatorsDropdown = ({ activeValidatorsType }: Props) => {
     } else {
       setData(validatorsInfo!.inActiveValidators);
     }
+    handleReDelegateTxnValidator(null);
   }, [validatorsInfo, activeValidatorsType]);
 
   const renderCondition =

@@ -16,7 +16,8 @@ import {
 } from "@cosmjs/proto-signing";
 import { OfflineSigner, StdFee } from "@cosmjs/launchpad";
 import { Transaction } from "./transactions";
-import { getDecimalize, toDec } from "./coin";
+import { getDecimalize, toDec, toPrettyCoin } from "./coin";
+import { defaultChain, persistenceChain } from "./utils";
 
 export async function RpcClient(rpc: string) {
   const tendermintClient = await Tendermint34Client.connect(rpc);
@@ -46,7 +47,6 @@ export async function getDelegatedValidatorsInfo(
     if (delegations.length > 0) {
       validators.forEach((validator, index) => {
         const monieker = validator.description!.moniker;
-
         for (const delegation of delegations) {
           if (
             validator.operatorAddress ===
@@ -58,16 +58,16 @@ export async function getDelegatedValidatorsInfo(
               validatorAddress: validator.operatorAddress,
               validatorImage: validator.description!.identity,
               actions: "",
-              delegatedAmount: getDecimalize(delegation.balance!.amount, 6)
-                .truncate()
-                .toString(),
+              delegatedAmount: toPrettyCoin(
+                delegation.balance!.amount,
+                defaultChain.currency.coinDenom,
+                persistenceChain!.chainId
+              ),
             });
           }
         }
       });
-      return delegatedValidators.sort(function (a, b) {
-        return Number(b.delegatedAmount) - Number(a.delegatedAmount);
-      });
+      return delegatedValidators;
     }
     return [];
   } catch (e) {

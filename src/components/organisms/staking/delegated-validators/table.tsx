@@ -3,9 +3,19 @@ import TableHead from "../../../molecules/table/table-head";
 import TableBody from "../../../molecules/table/table-body";
 import { TableProps } from "../../../molecules/table/types";
 import Avatar from "../avatar";
+import { useAppStore } from "../../../../../store/store";
+import { ValidatorProps } from "../../../../helpers/types";
 
 const Table = ({ data, columns }: TableProps) => {
   const [tableData, handleSorting] = useSortableTable(data, columns);
+  const handleStakingModal = useAppStore((state) => state.handleStakingModal);
+  const handleStakingValidator = useAppStore(
+    (state) => state.handleStakingValidator
+  );
+  const handleValidators = (item: ValidatorProps) => {
+    handleStakingValidator(item);
+    handleStakingModal(true);
+  };
   const updateData: any[] = [];
   tableData.length
     ? tableData.map((data: any, index: number) =>
@@ -21,8 +31,19 @@ const Table = ({ data, columns }: TableProps) => {
               </p>
             </div>
           ),
-          delegatedAmount: <p key={index}>{data.delegatedAmount} XPRT</p>,
-          status: <p key={index}>{data.status}</p>,
+          delegatedAmount: (
+            <p key={index}>{data.delegatedAmount.toString()} XPRT</p>
+          ),
+          actions: (
+            <button
+              key={index}
+              onClick={() => {
+                handleValidators(data);
+              }}
+            >
+              actions
+            </button>
+          ),
         })
       )
     : [];
