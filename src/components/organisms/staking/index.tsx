@@ -26,7 +26,7 @@ const StakingContainer = () => {
     " text-light-mid px-6 py-4 md:px-2 md:py-1.5 md:text-base";
   return (
     <div className="flex max-h-full w-full shrink grow items-start justify-start gap-4 overflow-auto p-8">
-      <div className="border border-solid border-[#2b2b2b] w-full rounded-md">
+      <div className="bg-black-500 w-full rounded-md">
         <div className={``}>
           <ul className="stakingTabs flex justify-between flex-wrap border-b border-solid border-[#2b2b2b]">
             <div className="flex">

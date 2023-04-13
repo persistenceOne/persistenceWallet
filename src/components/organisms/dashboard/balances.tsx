@@ -12,7 +12,7 @@ const Balances = () => {
     shallow
   );
   return (
-    <div className="border border-solid border-[#2b2b2b] w-full rounded-md">
+    <div className="bg-black-500 w-full rounded-md">
       <div className="px-6 py-4 border-b border-solid border-[#2b2b2b]">
         <p className="text-light-emphasis">Wallet balances</p>
       </div>

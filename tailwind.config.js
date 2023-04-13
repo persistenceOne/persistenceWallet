@@ -63,7 +63,7 @@ module.exports = {
       "black-800": "#181818",
       "black-700": "#1b1b1b",
       "black-600": "#212121",
-      "black-500": "#17171799",
+      "black-500": "#141414",
       "black-400": "#282828",
       "white-full": "#ffffff",
       "white-high": "#FCFCFC",

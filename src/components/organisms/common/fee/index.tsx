@@ -52,7 +52,7 @@ const FeeOptions = ({ amount }: Props) => {
       <div className="flex items-center justify-center">
         <div
           className={`p-4 flex-1 text-center  cursor-pointer shadow-lg rounded-md ${
-            fee.type === "low" ? "bg-black-600" : "bg-black-900"
+            fee.type === "low" ? "bg-black-600" : "bg-black-700"
           }`}
           onClick={() => {
             feeHandler(FeeInfo.lowFee, "low");
@@ -63,7 +63,7 @@ const FeeOptions = ({ amount }: Props) => {
         </div>
         <div
           className={`p-4 flex-1 text-center  cursor-pointer shadow-lg mx-4 rounded-md ${
-            fee.type === "average" ? "bg-black-600" : "bg-black-900"
+            fee.type === "average" ? "bg-black-600" : "bg-black-700"
           }`}
           onClick={() => {
             feeHandler(FeeInfo.averageFee, "average");
@@ -83,7 +83,7 @@ const FeeOptions = ({ amount }: Props) => {
         </div>
         <div
           className={`p-4 flex-1 text-center  cursor-pointer shadow-lg rounded-md ${
-            fee.type === "high" ? "bg-black-600" : "bg-black-900"
+            fee.type === "high" ? "bg-black-600" : "bg-black-700"
           }`}
           onClick={() => {
             feeHandler(FeeInfo.highFee, "high");
