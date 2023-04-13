@@ -145,10 +145,13 @@ const DecryptKeyStore = () => {
               type="primary"
               size="medium"
               disabled={false}
-              content="Send"
+              content="Submit"
               onClick={handleSubmit}
             />
           </div>
+          <p className="text-light-emphasis text-center">
+            Note: Password decrypts your Private Key (KeyStore file).
+          </p>
         </div>
       </>
     </Modal>

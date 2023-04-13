@@ -8,7 +8,10 @@ import {
   defaultChain,
 } from "./utils";
 import { StdFee } from "@cosmjs/amino/build/signdoc";
-import { MsgDelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
+import {
+  MsgDelegate,
+  MsgUndelegate,
+} from "cosmjs-types/cosmos/staking/v1beta1/tx";
 import { IBC_TRANSFER_URL } from "../../appConstants";
 import { IBCConfiguration } from "./config";
 import { QueryClient, setupIbcExtension } from "@cosmjs/stargate";
@@ -61,6 +64,25 @@ export const delegateMsg = (
   return {
     typeUrl: msgDelegateTypeUrl,
     value: MsgDelegate.fromPartial({
+      delegatorAddress: delegatorAddress,
+      validatorAddress: validatorAddress,
+      amount: {
+        denom: denom,
+        amount: String(amount),
+      },
+    }),
+  };
+};
+
+export const unBondMsg = (
+  delegatorAddress: string,
+  validatorAddress: string,
+  amount: string,
+  denom = defaultChain.currency.coinMinimalDenom
+) => {
+  return {
+    typeUrl: msgDelegateTypeUrl,
+    value: MsgUndelegate.fromPartial({
       delegatorAddress: delegatorAddress,
       validatorAddress: validatorAddress,
       amount: {

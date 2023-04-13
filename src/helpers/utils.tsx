@@ -172,7 +172,9 @@ export const exceptionHandle = (
 ) => {
   displayToast(
     {
-      message: "This transaction could not be completed",
+      message: e.message
+        ? e.message
+        : "This transaction could not be completed",
     },
     ToastType.ERROR
   );

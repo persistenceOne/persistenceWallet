@@ -8,7 +8,7 @@ import {
   getUnDecimalize,
   toDec,
 } from "../../../../../helpers/coin";
-import { sendMsg } from "../../../../../helpers/protoMsg";
+import { delegateMsg, unBondMsg } from "../../../../../helpers/protoMsg";
 import { shallow } from "zustand/shallow";
 import { Spinner } from "../../../../atoms/spinner";
 
@@ -16,41 +16,44 @@ const Submit = () => {
   const handleDecryptKeystoreModal = useAppStore(
     (state) => state.handleDecryptKeystoreModal
   );
+  const handleUnDelegateTxnModal = useAppStore(
+    (state) => state.handleUnDelegateTxnModal
+  );
   const setTxnMsgs = useAppStore((state) => state.setTxnMsgs);
   const [
     balances,
-    token,
     amount,
+    selectedValidator,
     fee,
     accountDetails,
-    recipient,
     transactionInfo,
   ] = useAppStore(
     (state) => [
       state.wallet.balances,
-      state.transactions.send.token,
-      state.transactions.send.amount,
+      state.transactions.unbond.amount,
+      state.transactions.staking.selectedValidator,
       state.transactions.feeInfo.fee,
       state.wallet.accountDetails,
-      state.transactions.send.recipient,
       state.transactions.transactionInfo,
     ],
     shallow
   );
 
   const handleSubmit = () => {
-    const msg = sendMsg(
+    const msg = unBondMsg(
       accountDetails!.address!,
-      recipient,
+      selectedValidator!.validatorAddress,
       getUnDecimalize(amount.toString(), 6).truncate().toString(),
-      token!.minimalDenom!
+      defaultChain.currency.coinMinimalDenom
     );
     setTxnMsgs([msg]);
     handleDecryptKeystoreModal(true);
+    handleUnDelegateTxnModal(false);
   };
 
-  console.log(
-    balances.totalXprt.toDec().gt(new Dec("0")),
+  const enable =
+    toDec(amount.toString()).gt(new Dec("0")) &&
+    balances.totalXprt.toDec().gt(new Dec("0")) &&
     balances.totalXprt
       .toDec()
       .gte(
@@ -58,29 +61,8 @@ const Submit = () => {
           fee.value!.toString(),
           defaultChain.currency.coinDecimals
         ).add(toDec(amount.toString()))
-      ),
-    toDec(amount.toString()).lte(toDec(token!.amount.toString()))
-  );
-  const enable =
-    recipient !== "" &&
-    balances.totalXprt.toDec().gt(new Dec("0")) &&
-    (token!.minimalDenom === defaultChain.currency.coinMinimalDenom
-      ? balances.totalXprt
-          .toDec()
-          .gte(
-            getDecimalize(
-              fee.value!.toString(),
-              defaultChain.currency.coinDecimals
-            ).add(toDec(amount.toString()))
-          )
-      : balances.totalXprt
-          .toDec()
-          .gte(
-            getDecimalize(
-              fee.value!.toString(),
-              defaultChain.currency.coinDecimals
-            )
-          ) && toDec(amount.toString()).lte(toDec(token!.amount.toString())));
+      ) &&
+    toDec(amount.toString()).lte(toDec(balances.totalXprt.toString()));
 
   return (
     <div className="pt-6">
@@ -91,13 +73,13 @@ const Submit = () => {
         size="medium"
         disabled={
           !enable ||
-          (transactionInfo.name === "send" && transactionInfo.inProgress)
+          (transactionInfo.name === "delegate" && transactionInfo.inProgress)
         }
         content={
-          transactionInfo.name === "send" && transactionInfo.inProgress ? (
+          transactionInfo.name === "delegate" && transactionInfo.inProgress ? (
             <Spinner size={"medium"} />
           ) : (
-            "Send"
+            "Delegate"
           )
         }
         onClick={handleSubmit}

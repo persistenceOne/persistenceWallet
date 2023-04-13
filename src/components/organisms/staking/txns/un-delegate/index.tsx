@@ -7,26 +7,27 @@ import FeeOptions from "../../../common/fee";
 import Submit from "./submit";
 import { Icon } from "../../../../atoms/icon";
 
-const DelegateModal = () => {
+const UnDelegateModal = () => {
   const [modal, amount] = useAppStore(
     (state) => [
-      state.transactions.delegate.modal,
-      state.transactions.delegate.amount,
+      state.transactions.unbond.modal,
+      state.transactions.unbond.amount,
     ],
     shallow
   );
 
-  const handleDelegateTxnModal = useAppStore(
-    (state) => state.handleDelegateTxnModal
-  );
   const handleStakingModal = useAppStore((state) => state.handleStakingModal);
 
+  const handleUnDelegateTxnModal = useAppStore(
+    (state) => state.handleUnDelegateTxnModal
+  );
+
   const handleClose = () => {
-    handleDelegateTxnModal(false);
+    handleUnDelegateTxnModal(false);
   };
 
   const previousHandler = () => {
-    handleDelegateTxnModal(false);
+    handleUnDelegateTxnModal(false);
     handleStakingModal(true);
   };
 
@@ -48,7 +49,7 @@ const DelegateModal = () => {
           <Icon viewClass="arrow-right fill-[#fff]" iconName="left-arrow" />
         </button>
         <p className="text-center text-light-high font-semibold text-2xl leading-normal">
-          Delegate
+          Unbond
         </p>
       </div>
       <div className="px-8 py-6">
@@ -60,4 +61,4 @@ const DelegateModal = () => {
   );
 };
 
-export default DelegateModal;
+export default UnDelegateModal;

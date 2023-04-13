@@ -23,6 +23,9 @@ const TransactionModal = () => {
   const handleDelegateTxnModal = useAppStore(
     (state) => state.handleDelegateTxnModal
   );
+  const handleUnDelegateTxnModal = useAppStore(
+    (state) => state.handleUnDelegateTxnModal
+  );
 
   const handleClose = () => {
     handleStakingModal(false);
@@ -32,6 +35,8 @@ const TransactionModal = () => {
     handleStakingModal(false);
     if (type === "delegate") {
       handleDelegateTxnModal(true);
+    } else if (type === "un-delegate") {
+      handleUnDelegateTxnModal(true);
     }
   };
 
