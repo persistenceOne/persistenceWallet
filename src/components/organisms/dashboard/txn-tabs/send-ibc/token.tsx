@@ -40,21 +40,27 @@ const Token = () => {
         dropdownLabel={
           token ? (
             <div className="flex items-center">
-              <img
-                src={token.tokenUrl}
-                alt={"logo"}
-                width={20}
-                className="mr-2"
-              />
-              <span className="text-sm text-light-emphasis font-medium leading-normal md:text-xsm md:ml-2">
-                {token.denomTrace ? (
-                  <>
-                    {token.denom} ({stringTruncate(token.minimalDenom)})
-                  </>
-                ) : (
-                  token.denom
-                )}
-              </span>
+              {token.tokenUrl !== "" ? (
+                <>
+                  <img
+                    src={token.tokenUrl}
+                    alt={"logo"}
+                    width={20}
+                    className="mr-2"
+                  />
+                  <span className="text-sm text-light-emphasis font-medium leading-normal md:text-xsm md:ml-2">
+                    {token.denomTrace ? (
+                      <>
+                        {token.denom} ({stringTruncate(token.minimalDenom)})
+                      </>
+                    ) : (
+                      token.denom
+                    )}
+                  </span>
+                </>
+              ) : (
+                "No Tokens Found"
+              )}
             </div>
           ) : (
             <Spinner size={"small"} />
@@ -64,8 +70,7 @@ const Token = () => {
         dropdownType={"click"}
         staticBackDrop={false}
         dropDownIcon={true}
-        dropDownContentClass="!bg-[#282828] drop-shadow-md round-md
-                       py-1 md:p-0"
+        dropDownContentClass="!bg-[#282828] drop-shadow-md round-md md:p-0"
       >
         {balances.allBalances.map((item: BalanceList, index: number): any =>
           item.minimalDenom !==

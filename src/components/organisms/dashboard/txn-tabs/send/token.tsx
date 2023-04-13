@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Dropdown from "../../../../molecules/dropdown";
 import { useAppStore } from "../../../../../../store/store";
 import { BalanceList } from "../../../../../helpers/types";
@@ -26,6 +26,7 @@ const Token = () => {
     setShow(false);
   };
 
+  console.log(token, "token");
   return (
     <div className="mb-4">
       <p className="mb-1 text-light-white-500">Token</p>
@@ -37,21 +38,27 @@ const Token = () => {
         dropdownLabel={
           token ? (
             <div className="flex items-center">
-              <img
-                src={token.tokenUrl}
-                alt={"logo"}
-                width={20}
-                className="mr-2"
-              />
-              <span className="text-sm text-light-emphasis font-medium leading-normal md:text-xsm md:ml-2">
-                {token.denomTrace ? (
-                  <>
-                    {token.denom} ({stringTruncate(token.minimalDenom)})
-                  </>
-                ) : (
-                  token.denom
-                )}
-              </span>
+              {token.tokenUrl ? (
+                <>
+                  <img
+                    src={token.tokenUrl}
+                    alt={"logo"}
+                    width={20}
+                    className="mr-2"
+                  />
+                  <span className="text-sm text-light-emphasis font-medium leading-normal md:text-xsm md:ml-2">
+                    {token.denomTrace ? (
+                      <>
+                        {token.denom} ({stringTruncate(token.minimalDenom)})
+                      </>
+                    ) : (
+                      token.denom
+                    )}
+                  </span>
+                </>
+              ) : (
+                "No Tokens Found"
+              )}
             </div>
           ) : (
             <Spinner size={"small"} />
@@ -61,8 +68,7 @@ const Token = () => {
         dropdownType={"click"}
         staticBackDrop={false}
         dropDownIcon={true}
-        dropDownContentClass="!bg-[#282828] drop-shadow-md round-md
-                       py-1 md:p-0"
+        dropDownContentClass="!bg-[#282828] drop-shadow-md round-md"
       >
         {balances.allBalances.map((item: BalanceList, index: number): any =>
           item.minimalDenom !==

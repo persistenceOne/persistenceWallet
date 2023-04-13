@@ -64,6 +64,7 @@ const Submit = () => {
   const enable =
     recipient !== "" &&
     balances.totalXprt.toDec().gt(new Dec("0")) &&
+    toDec(amount.toString()).gt(new Dec("0")) &&
     (token!.minimalDenom === defaultChain.currency.coinMinimalDenom
       ? balances.totalXprt
           .toDec()
