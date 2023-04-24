@@ -2,8 +2,6 @@ import React from "react";
 import { useAppStore } from "../../../../../../store/store";
 import { shallow } from "zustand/shallow";
 import InputText from "../../../../atoms/input";
-import { CoinPretty } from "@keplr-wallet/unit";
-import { getDecimalize } from "../../../../../helpers/coin";
 
 const Amount = () => {
   const [amount, available] = useAppStore(

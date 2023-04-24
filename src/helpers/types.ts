@@ -60,7 +60,16 @@ export interface ValidatorsInfo {
   totalDelegatedAmount: CoinPretty;
 }
 
+export interface UnBondingList {
+  id: number;
+  completionTime?: any;
+  balance: CoinPretty;
+  validatorAddress: string;
+  validatorName?: string;
+  validatorImage?: string;
+}
+
 export interface UnBondingListInfo {
-  unBondingList: { completionTime?: any; balance: CoinPretty }[];
+  unBondingList: UnBondingList[];
   totalAmount: CoinPretty;
 }

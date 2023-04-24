@@ -82,7 +82,7 @@ export const unBondMsg = (
   denom = defaultChain.currency.coinMinimalDenom
 ) => {
   return {
-    typeUrl: msgDelegateTypeUrl,
+    typeUrl: msgUnbondTypeUrl,
     value: MsgUndelegate.fromPartial({
       delegatorAddress: delegatorAddress,
       validatorAddress: validatorAddress,

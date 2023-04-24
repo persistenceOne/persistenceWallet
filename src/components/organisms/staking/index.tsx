@@ -9,11 +9,14 @@ import { shallow } from "zustand/shallow";
 import DelegateModal from "./txns/delegate";
 import UnDelegateModal from "./txns/un-delegate";
 import ReDelegateModal from "./txns/re-delegate";
+import UnbondValidators from "./unbonding-validators";
+import ToggleSwitch from "../../atoms/switch";
 
 export type ValidatorTypes = "active" | "in-active";
 
 const StakingContainer = () => {
-  const [activeTab, setActiveTab] = useState("Send");
+  const [value, setValue] = useState(true);
+  const [activeTab, setActiveTab] = useState("All");
   const [selectedValidator] = useAppStore(
     (state) => [state.transactions.staking.selectedValidator],
     shallow
@@ -23,50 +26,66 @@ const StakingContainer = () => {
   const tabItemClasses =
     "cursor-pointer w-full" +
     "font-semibold text-lg leading-normal text-center" +
-    " text-light-mid px-6 py-4 md:px-2 md:py-1.5 md:text-base";
+    " text-light-mid py-2 px-6 md:text-base";
   return (
     <div className="flex max-h-full w-full shrink grow items-start justify-start gap-4 overflow-auto p-8">
       <div className="bg-black-500 w-full rounded-md">
         <div className={``}>
-          <ul className="stakingTabs flex justify-between flex-wrap border-b border-solid border-[#2b2b2b]">
-            <div className="flex">
+          <ul className="stakingTabs flex justify-between flex-wrap p-3 bg-black-500">
+            <div className="flex items-center">
               <TabItem
-                id="Send"
+                id="All"
                 title={"All Validators"}
                 activeTab={activeTab}
-                className={`${tabItemClasses} border-r border-solid border-[#2b2b2b]`}
+                className={`${tabItemClasses}  rounded-full`}
                 setActiveTab={setActiveTab}
               />
               <TabItem
-                id="SendIbc"
+                id="Delegated"
                 title={"Delegated"}
                 activeTab={activeTab}
-                className={`${tabItemClasses}`}
+                className={`${tabItemClasses} rounded-full`}
+                setActiveTab={setActiveTab}
+              />
+              <TabItem
+                id="Unbond"
+                title={"Unbondings"}
+                activeTab={activeTab}
+                className={`${tabItemClasses} rounded-full`}
                 setActiveTab={setActiveTab}
               />
             </div>
-            {activeTab === "Send" ? (
-              <div className="flex">
-                <div
-                  className={`${
-                    activeValidatorsType === "active"
-                      ? "text-light-emphasis"
-                      : "text-light-mid"
-                  } px-6 py-4 cursor-pointer`}
-                  onClick={() => setActiveValidatorsType("active")}
-                >
-                  active
-                </div>
-                <div
-                  className={`${
-                    activeValidatorsType !== "active"
-                      ? "text-light-emphasis"
-                      : "text-light-mid"
-                  } px-6 py-4  cursor-pointer`}
-                  onClick={() => setActiveValidatorsType("in-active")}
-                >
-                  In-active
-                </div>
+            {activeTab === "All" ? (
+              // <div className="flex">
+              //   <div
+              //     className={`${
+              //       activeValidatorsType === "active"
+              //         ? "text-light-emphasis"
+              //         : "text-light-mid"
+              //     } p-2 cursor-pointer`}
+              //     onClick={() => setActiveValidatorsType("active")}
+              //   >
+              //     active
+              //   </div>
+              //   <div
+              //     className={`${
+              //       activeValidatorsType !== "active"
+              //         ? "text-light-emphasis"
+              //         : "text-light-mid"
+              //     } p-2  cursor-pointer`}
+              //     onClick={() => setActiveValidatorsType("in-active")}
+              //   >
+              //     In-active
+              //   </div>
+              // </div>
+              <div className="p-2 flex items-center">
+                <p className="text-light-emphasis mr-2">Active Validators</p>
+                <ToggleSwitch
+                  isOn={value}
+                  color="#EF476F"
+                  variant={"medium"}
+                  onChange={() => setValue(!value)}
+                />
               </div>
             ) : (
               ""
@@ -74,18 +93,27 @@ const StakingContainer = () => {
           </ul>
           <div>
             <TabContent
-              id="Send"
+              id="All"
               activeTab={activeTab}
               className=" md:p-4 bg-tabContent rounded-md"
             >
-              <AllValidators activeValidatorsType={activeValidatorsType} />
+              <AllValidators
+                activeValidatorsType={value ? "active" : "in-active"}
+              />
             </TabContent>
             <TabContent
-              id="SendIbc"
+              id="Delegated"
               activeTab={activeTab}
               className="p-6 md:p-4 bg-tabContent rounded-md"
             >
               <DelegatedValidators />
+            </TabContent>
+            <TabContent
+              id="Unbond"
+              activeTab={activeTab}
+              className="p-6 md:p-4 bg-tabContent rounded-md"
+            >
+              <UnbondValidators />
             </TabContent>
           </div>
         </div>

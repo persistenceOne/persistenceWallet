@@ -48,6 +48,7 @@ import {
   BalanceList,
   GetAccount,
   GetDelegatedValidatorInfo,
+  UnBondingList,
   UnBondingListInfo,
   ValidatorProps,
   ValidatorsInfo,
@@ -295,7 +296,7 @@ export const fetchValidatorsInfo = async (
       await stakingQueryService.DelegatorDelegations({
         delegatorAddr: address,
       });
-
+    console.log(delegationsResponse, "delegationsResponse");
     let delegatedValidators: GetDelegatedValidatorInfo[] = [];
     let totalDelegatedAmount = 0;
     if (delegationsResponse.delegationResponses.length > 0) {
@@ -341,17 +342,29 @@ export const fetchUnBondingList = async (
   try {
     const rpcClient = await RpcClient(rpc);
     const stakingQueryService = new StakingQueryClient(rpcClient);
+
     const unBondingResponse: QueryDelegatorUnbondingDelegationsResponse =
       await stakingQueryService.DelegatorUnbondingDelegations({
         delegatorAddr: address,
       });
     console.log(unBondingResponse, "unBondingResponse");
     let totalAmount: number = 0;
-    let entries: { completionTime?: any; balance: CoinPretty }[] = [];
+    let entries: UnBondingList[] = [];
+    // entries.push({
+    //   id: 0,
+    //   completionTime: "29 Apr 2023 03:34 PM",
+    //   balance: toPrettyCoin(
+    //     "4",
+    //     defaultChain.currency.coinDenom,
+    //     persistenceChain!.chainId
+    //   ),
+    //   validatorAddress: "",
+    // });
     if (unBondingResponse.unbondingResponses.length > 0) {
-      unBondingResponse.unbondingResponses.forEach((item) => {
+      unBondingResponse.unbondingResponses.forEach((item, index) => {
         item.entries.forEach((entry) => {
           entries.push({
+            id: index + 1,
             completionTime: moment(
               entry["completionTime"]!.seconds.toNumber()! * 1000
             ).format("DD MMM YYYY hh:mm A"),
@@ -360,6 +373,7 @@ export const fetchUnBondingList = async (
               defaultChain.currency.coinDenom,
               persistenceChain!.chainId
             ),
+            validatorAddress: item.validatorAddress,
           });
           totalAmount += Number(entry.balance);
         });

@@ -109,6 +109,10 @@ const DecryptKeyStore = () => {
     }
   };
 
+  const styles =
+    "bg-black-600 px-4 py-3 text-light-emphasis leading-normal box-shadow-none font-normal " +
+    "placeholder:text-light-mid placeholder:leading-normal placeholder:font-normal outline-none";
+
   return (
     <Modal
       show={keyStoreModal}
@@ -131,7 +135,7 @@ const DecryptKeyStore = () => {
             <input
               disabled={false}
               onChange={onChange}
-              className="h-[40px] w-full p-2 rounded-sm"
+              className={`${styles} h-[40px] w-full p-2 rounded-sm`}
               type="password"
               defaultValue=""
               required={true}
@@ -144,7 +148,7 @@ const DecryptKeyStore = () => {
             justify-center w-[250px] mx-auto mb-4"
               type="primary"
               size="medium"
-              disabled={false}
+              disabled={errorMessage !== "" || password === ""}
               content="Submit"
               onClick={handleSubmit}
             />

@@ -77,7 +77,7 @@ export async function getDelegatedValidatorsInfo(
 export const getStructuredList = (validators: Validator[]) => {
   const newList: ValidatorProps[] = [];
   validators.map((validator, index) => {
-    const monieker = validator.description!.moniker;
+    const moniker = validator.description!.moniker;
     const commission = getDecimalize(
       validator.commission!.commissionRates!.rate,
       18
@@ -88,7 +88,7 @@ export const getStructuredList = (validators: Validator[]) => {
     const votingPower = Number(validator.tokens) * Math.pow(10, -6);
     newList.push({
       id: index + 1,
-      validatorName: monieker,
+      validatorName: moniker,
       validatorAddress: validator.operatorAddress,
       validatorImage: validator.description!.identity,
       validatorDescription: validator.description?.details!,

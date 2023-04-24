@@ -17,10 +17,12 @@ const NavigationBar = () => {
   const headerList = [
     {
       name: "Learn More",
+      icon: "globe",
       url: "https://persistence.one/",
     },
     {
       name: "Help",
+      icon: "help",
       url: "https://notes.persistence.one/s/9l80_chis",
     },
   ];
@@ -70,22 +72,35 @@ const NavigationBar = () => {
             id="navbar-default"
           >
             <ul className="flex flex-col mt-4 -md:flex-row -md:space-x-8 -md:mt-0">
-              <li className="text-light-high font-medium text-sm cursor-pointer">
+              <li className="text-light-mid font-medium text-sm cursor-pointer">
                 <p
-                  className={`block py-2 pr-0 pl-3 text-white`}
+                  className={`block py-2 pr-0 pl-3 text-light-mid flex items-center group`}
                   aria-current="page"
                   onClick={signInHandler}
                 >
-                  signIn
+                  <Icon
+                    iconName={"globe"}
+                    viewClass="!w-[20px] !h-auto fill-[#a6a6a6] group-hover:fill-[#fcfcfc]"
+                  />
+                  <span className="py-2 pl-3 group-hover:text-light-high">
+                    signIn
+                  </span>
                 </p>
               </li>
               {headerList.map((item, index) => (
-                <li className="text-light-high font-medium text-sm" key={index}>
+                <li
+                  className="font-medium text-sm flex items-center group"
+                  key={index}
+                >
+                  <Icon
+                    iconName={item.icon}
+                    viewClass="!w-[20px] !h-auto fill-[#a6a6a6] group-hover:fill-[#fcfcfc]"
+                  />
                   <a
                     href={item.url}
                     target={"_blank"}
                     rel="noreferrer"
-                    className={`block py-2 pr-0 pl-3 text-white`}
+                    className={`block py-2 pr-0 pl-3 text-light-mid group-hover:text-light-high`}
                     aria-current="page"
                   >
                     {item.name}

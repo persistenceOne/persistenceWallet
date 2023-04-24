@@ -28,7 +28,7 @@ const AllValidators = ({ activeValidatorsType }: Props) => {
       sortable: true,
       sortbyOrder: "asc",
     },
-    { label: "votingPower", accessor: "votingPower", sortable: true },
+    { label: "Voting Power", accessor: "votingPower", sortable: true },
     {
       label: "Commission",
       accessor: "commission",

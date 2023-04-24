@@ -1,5 +1,5 @@
 import Axios from "axios";
-import { toPrettyCoin } from "../../helpers/coin";
+
 export const XPRT_PRICE_URL =
   "https://api.coingecko.com/api/v3/coins/persistence";
 

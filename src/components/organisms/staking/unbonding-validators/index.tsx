@@ -5,30 +5,38 @@ import { useAppStore } from "../../../../../store/store";
 import {
   GetDelegatedValidatorInfo,
   UnBondingList,
-  ValidatorsInfo,
 } from "../../../../helpers/types";
 
-const DelegatedValidators = () => {
+const UnbondValidators = () => {
   const validatorsInfo = useAppStore((state) => state.wallet.validatorsInfo);
   const unBondingInfo = useAppStore((state) => state.wallet.unBondingInfo);
-  const [data, setData] = useState<GetDelegatedValidatorInfo[] | null>(null);
+  const [data, setData] = useState<UnBondingList[] | null>(null);
 
   useEffect(() => {
-    const filteredList: GetDelegatedValidatorInfo[] = [];
+    const filteredList: UnBondingList[] = [];
     if (
       validatorsInfo.delegatedValidators.length > 0 &&
       unBondingInfo.unBondingList.length > 0
     ) {
-      validatorsInfo.delegatedValidators.forEach((item) => {
-        const response: UnBondingList | undefined =
-          unBondingInfo.unBondingList.find(
-            (validator) => validator.validatorAddress !== item.validatorAddress
+      unBondingInfo.unBondingList.forEach((item, index) => {
+        const response: GetDelegatedValidatorInfo | undefined =
+          validatorsInfo.delegatedValidators.find(
+            (validator) => validator.validatorAddress === item.validatorAddress
           );
         if (response) {
-          filteredList.push(item!);
+          filteredList.push({
+            id: index + 1,
+            balance: item.balance,
+            completionTime: item.completionTime,
+            validatorAddress: item.validatorAddress,
+            validatorName: response.validatorName,
+            validatorImage: response.validatorImage,
+          });
         }
       });
     }
+    console.log(filteredList, "filteredList");
+
     setData(filteredList);
   }, [validatorsInfo]);
 
@@ -39,11 +47,11 @@ const DelegatedValidators = () => {
       sortable: true,
       sortbyOrder: "asc",
     },
-    { label: "Delegated Amount", accessor: "delegatedAmount", sortable: true },
-    { label: "Actions", accessor: "actions", sortable: false },
+    { label: "Unbond Amount", accessor: "balance", sortable: true },
+    { label: "Unbond Time", accessor: "completionTime", sortable: true },
   ];
 
-  console.log(data, "delegatedValidators");
+  console.log(data, "UnbondValidators1");
   return (
     <div className="text-light-emphasis w-full rounded-md px-6">
       {data && data.length > 0 ? <Table data={data} columns={columns} /> : ""}
@@ -51,4 +59,4 @@ const DelegatedValidators = () => {
   );
 };
 
-export default DelegatedValidators;
+export default UnbondValidators;

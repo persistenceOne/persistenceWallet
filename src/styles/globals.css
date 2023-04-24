@@ -111,14 +111,14 @@ input[type="number"] {
     transform: scale(1);
 }
 
-.sendTabs .tabItem.active {
+.sendTabs .tabItem.active, .stakingTabs  .tabItem.active{
     background-color: #ececec;
     color: #181818;
 }
 
-.stakingTabs .tabItem.active {
-    color: #fcfcfc;
-}
+/*.stakingTabs .tabItem.active {*/
+/*    color: #fcfcfc;*/
+/*}*/
 
 /* toastify overriding styles */
 .Toastify .Toastify__toast-container .Toastify__toast {

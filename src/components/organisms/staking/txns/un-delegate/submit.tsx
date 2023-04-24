@@ -51,9 +51,9 @@ const Submit = () => {
     handleUnDelegateTxnModal(false);
   };
 
-  const enable =
-    toDec(amount.toString()).gt(new Dec("0")) &&
-    balances.totalXprt.toDec().gt(new Dec("0")) &&
+  console.log(
+    toDec(amount.toString()).gt(new Dec("0")),
+    balances.totalXprt.toDec().gt(new Dec("0")),
     balances.totalXprt
       .toDec()
       .gte(
@@ -61,8 +61,17 @@ const Submit = () => {
           fee.value!.toString(),
           defaultChain.currency.coinDecimals
         ).add(toDec(amount.toString()))
-      ) &&
-    toDec(amount.toString()).lte(toDec(balances.totalXprt.toString()));
+      ),
+    "console",
+    fee.value!.toString()
+  );
+  const enable =
+    toDec(amount.toString()).gt(new Dec("0")) &&
+    balances.totalXprt
+      .toDec()
+      .gte(
+        getDecimalize(fee.value!.toString(), defaultChain.currency.coinDecimals)
+      );
 
   return (
     <div className="pt-6">
@@ -73,13 +82,14 @@ const Submit = () => {
         size="medium"
         disabled={
           !enable ||
-          (transactionInfo.name === "delegate" && transactionInfo.inProgress)
+          (transactionInfo.name === "un-delegate" && transactionInfo.inProgress)
         }
         content={
-          transactionInfo.name === "delegate" && transactionInfo.inProgress ? (
+          transactionInfo.name === "un-delegate" &&
+          transactionInfo.inProgress ? (
             <Spinner size={"medium"} />
           ) : (
-            "Delegate"
+            "Unbond"
           )
         }
         onClick={handleSubmit}

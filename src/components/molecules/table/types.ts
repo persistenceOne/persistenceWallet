@@ -1,11 +1,15 @@
 import {
   GetDelegatedValidatorInfo,
+  UnBondingList,
   ValidatorProps,
 } from "../../../helpers/types";
 
 export interface TableColumnsProps {
   label: string;
-  accessor: keyof ValidatorProps | keyof GetDelegatedValidatorInfo;
+  accessor:
+    | keyof ValidatorProps
+    | keyof GetDelegatedValidatorInfo
+    | keyof UnBondingList;
   sortable: boolean;
   sortbyOrder?: "asc" | "desc";
 }
