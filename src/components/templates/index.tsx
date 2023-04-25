@@ -1,9 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import NavigationBar from "../organisms/navigationBar";
 import SideBar from "../organisms/sidebar";
-import useLocalStorage, {
-  getStorageValue,
-} from "../../customHooks/useLocalStorage";
+import { getStorageValue } from "../../customHooks/useLocalStorage";
 import { useAppStore } from "../../../store/store";
 import { persistenceChain } from "../../helpers/utils";
 import DecryptKeyStore from "../organisms/common/decrypt-keystore";
@@ -82,6 +80,6 @@ export const Template = ({
       <UpdateKeyStore />
     </div>
   ) : (
-    ""
+    <div className="bg-body-bg"></div>
   );
 };

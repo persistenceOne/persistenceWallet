@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import TabItem from "../../molecules/tabs/tabItem";
 import TabContent from "../../molecules/tabs/tabContent";
 import DelegatedValidators from "./delegated-validators";
@@ -14,15 +14,19 @@ import ToggleSwitch from "../../atoms/switch";
 
 export type ValidatorTypes = "active" | "in-active";
 
-const StakingContainer = () => {
+interface Props {
+  defaultTab: string;
+}
+
+const StakingContainer: React.FC<Props> = ({ defaultTab }) => {
   const [value, setValue] = useState(true);
-  const [activeTab, setActiveTab] = useState("All");
+  const [activeTab, setActiveTab] = useState<string>(defaultTab);
+
   const [selectedValidator] = useAppStore(
     (state) => [state.transactions.staking.selectedValidator],
     shallow
   );
-  const [activeValidatorsType, setActiveValidatorsType] =
-    useState<ValidatorTypes>("active");
+
   const tabItemClasses =
     "cursor-pointer w-full" +
     "font-semibold text-lg leading-normal text-center" +
@@ -34,50 +38,28 @@ const StakingContainer = () => {
           <ul className="stakingTabs flex justify-between flex-wrap p-3 bg-black-500">
             <div className="flex items-center">
               <TabItem
-                id="All"
+                id="all"
                 title={"All Validators"}
                 activeTab={activeTab}
                 className={`${tabItemClasses}  rounded-full`}
                 setActiveTab={setActiveTab}
               />
               <TabItem
-                id="Delegated"
+                id="delegated"
                 title={"Delegated"}
                 activeTab={activeTab}
                 className={`${tabItemClasses} rounded-full`}
                 setActiveTab={setActiveTab}
               />
               <TabItem
-                id="Unbond"
+                id="unbond"
                 title={"Unbondings"}
                 activeTab={activeTab}
                 className={`${tabItemClasses} rounded-full`}
                 setActiveTab={setActiveTab}
               />
             </div>
-            {activeTab === "All" ? (
-              // <div className="flex">
-              //   <div
-              //     className={`${
-              //       activeValidatorsType === "active"
-              //         ? "text-light-emphasis"
-              //         : "text-light-mid"
-              //     } p-2 cursor-pointer`}
-              //     onClick={() => setActiveValidatorsType("active")}
-              //   >
-              //     active
-              //   </div>
-              //   <div
-              //     className={`${
-              //       activeValidatorsType !== "active"
-              //         ? "text-light-emphasis"
-              //         : "text-light-mid"
-              //     } p-2  cursor-pointer`}
-              //     onClick={() => setActiveValidatorsType("in-active")}
-              //   >
-              //     In-active
-              //   </div>
-              // </div>
+            {activeTab === "all" ? (
               <div className="p-2 flex items-center">
                 <p className="text-light-emphasis mr-2">Active Validators</p>
                 <ToggleSwitch
@@ -93,7 +75,7 @@ const StakingContainer = () => {
           </ul>
           <div>
             <TabContent
-              id="All"
+              id="all"
               activeTab={activeTab}
               className=" md:p-4 bg-tabContent rounded-md"
             >
@@ -102,14 +84,14 @@ const StakingContainer = () => {
               />
             </TabContent>
             <TabContent
-              id="Delegated"
+              id="delegated"
               activeTab={activeTab}
               className="p-6 md:p-4 bg-tabContent rounded-md"
             >
               <DelegatedValidators />
             </TabContent>
             <TabContent
-              id="Unbond"
+              id="unbond"
               activeTab={activeTab}
               className="p-6 md:p-4 bg-tabContent rounded-md"
             >

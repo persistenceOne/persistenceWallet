@@ -354,3 +354,23 @@ img {
     left: calc(100% - 2px);
     transform: translateX(-100%);
 }
+
+
+.sliderLeft {
+    /*max-width: 0;*/
+    /*-moz-transition: all 0.5s ease-out;*/
+    /*-ms-transition: all 0.5s ease-out;*/
+    /*-o-transition: all 0.5s ease-out;*/
+    /*transition: all 0.5s ease-out;*/
+    overflow: hidden;
+}
+
+.sdfsdf:hover .sliderLeft {
+    padding: 0 10px;
+    max-width: 30px;
+    width: auto;
+    /*-moz-transition: all 0.5s ease-in;*/
+    /*-ms-transition: all 0.5s ease-in;*/
+    /*-o-transition: all 0.5s ease-in;*/
+    /*transition: all 0.5s ease-in;*/
+}
