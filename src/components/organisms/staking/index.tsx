@@ -33,29 +33,29 @@ const StakingContainer: React.FC<Props> = ({ defaultTab }) => {
     " text-light-mid py-2 px-6 md:text-base";
   return (
     <div className="flex max-h-full w-full shrink grow items-start justify-start gap-4 overflow-auto p-8">
-      <div className="bg-black-500 w-full rounded-md">
+      <div className="w-full rounded-md">
         <div className={``}>
-          <ul className="stakingTabs flex justify-between flex-wrap p-3 bg-black-500">
+          <ul className="stakingTabs flex justify-between flex-wrap p-3 bg-black-500 mb-2 rounded-md">
             <div className="flex items-center">
               <TabItem
                 id="all"
                 title={"All Validators"}
                 activeTab={activeTab}
-                className={`${tabItemClasses}  rounded-full`}
+                className={`${tabItemClasses}  rounded-md`}
                 setActiveTab={setActiveTab}
               />
               <TabItem
                 id="delegated"
                 title={"Delegated"}
                 activeTab={activeTab}
-                className={`${tabItemClasses} rounded-full`}
+                className={`${tabItemClasses} rounded-md`}
                 setActiveTab={setActiveTab}
               />
               <TabItem
                 id="unbond"
                 title={"Unbondings"}
                 activeTab={activeTab}
-                className={`${tabItemClasses} rounded-full`}
+                className={`${tabItemClasses} rounded-md`}
                 setActiveTab={setActiveTab}
               />
             </div>
@@ -77,7 +77,7 @@ const StakingContainer: React.FC<Props> = ({ defaultTab }) => {
             <TabContent
               id="all"
               activeTab={activeTab}
-              className=" md:p-4 bg-tabContent rounded-md"
+              className=" md:p-4 bg-black-500 rounded-xl"
             >
               <AllValidators
                 activeValidatorsType={value ? "active" : "in-active"}
@@ -86,14 +86,14 @@ const StakingContainer: React.FC<Props> = ({ defaultTab }) => {
             <TabContent
               id="delegated"
               activeTab={activeTab}
-              className="p-6 md:p-4 bg-tabContent rounded-md"
+              className="p-6 md:p-4 bg-black-500 rounded-xl"
             >
               <DelegatedValidators />
             </TabContent>
             <TabContent
               id="unbond"
               activeTab={activeTab}
-              className="p-6 md:p-4 bg-tabContent rounded-md"
+              className="p-6 md:p-4 bg-black-500 rounded-xl"
             >
               <UnbondValidators />
             </TabContent>

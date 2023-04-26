@@ -34,7 +34,7 @@ const Profile = () => {
         </div>
       }
       dropDownButtonClass="cursor-pointer !w-fit p-2 bg-black-600 justify-between text-[12px] text-light-emphasis
-               rounded-full"
+               rounded-md"
       dropdownType={"click"}
       staticBackDrop={false}
       dropDownIcon={false}

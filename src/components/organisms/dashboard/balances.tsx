@@ -23,12 +23,14 @@ const Balances = () => {
 
   const styles =
     "flex items-center justify-between py-3 px-6 hover:bg-black-600";
+
   return (
-    <div className="bg-black-500 w-full rounded-md">
-      <div className="px-6 py-4 border-b border-solid border-[#2b2b2b]">
-        <p className="text-light-emphasis">Wallet balances</p>
+    <div className="w-full ">
+      <div className="bg-black-500 px-6 py-4 mb-2 rounded-md">
+        <p className="text-light-emphasis text-lg">Wallet balances</p>
       </div>
-      <div className="py-4">
+
+      <div className="py-4 bg-black-500 rounded-md">
         <div className={`${styles}`}>
           <p className="text-light-emphasis">Current Token Price</p>
           <p className="text-light-emphasis">${xprtPrice.toFixed(6)}</p>
@@ -91,6 +93,29 @@ const Balances = () => {
               <Icon
                 iconName={"right-arrow"}
                 viewClass={"fill-[#f5f5f5] w-[20px]"}
+              />
+            </span>
+          </div>
+        </div>
+        <div
+          className={`${styles} group cursor-pointer`}
+          onClick={() => {
+            handleRoute("unbond");
+          }}
+        >
+          <p className="text-light-emphasis">Delegation Rewards</p>
+          <div className={"flex items-center"}>
+            <p className="text-light-emphasis cursor-pointer underline">
+              {unBondingInfo.totalAmount.toString()}
+            </p>
+            <span
+              className="text-light-emphasis flex items-center max-w-[0px] transition-all ease-out duration-300 overflow-hidden group-hover:ease-in-out
+             group-hover:transition-all group-hover:duration-300 group-hover:max-w-[90px] group-hover:w-auto group-hover:px-2"
+            >
+              Claim
+              <Icon
+                iconName={"right-arrow"}
+                viewClass={"fill-[#f5f5f5] w-[20px] ml-1"}
               />
             </span>
           </div>

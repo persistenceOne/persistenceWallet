@@ -14,19 +14,19 @@ const TxnTabs = () => {
   return (
     <div className="[#2b2b2b] w-full rounded-md">
       <div className={``}>
-        <ul className="sendTabs flex flex-wrap p-3 bg-black-500 rounded-full mb-4">
+        <ul className="sendTabs flex flex-wrap p-3 bg-black-500 rounded-md mb-2">
           <TabItem
             id="Send"
             title={"Send"}
             activeTab={activeTab}
-            className={`${tabItemClasses} rounded-full`}
+            className={`${tabItemClasses} rounded-md`}
             setActiveTab={setActiveTab}
           />
           <TabItem
             id="SendIbc"
             title={"SendIbc"}
             activeTab={activeTab}
-            className={`${tabItemClasses} rounded-full`}
+            className={`${tabItemClasses} rounded-md`}
             setActiveTab={setActiveTab}
           />
         </ul>

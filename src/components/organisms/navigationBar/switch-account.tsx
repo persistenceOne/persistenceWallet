@@ -44,7 +44,7 @@ const SwitchAccount = () => {
 
   return (
     <Dropdown
-      className="text-light-high w-full ml-2"
+      className="text-light-high w-full ml-4"
       dropDownVariant="custom"
       closeDropdown={show}
       closeHandler={(value) => dropCloseDownHandler(value)}
@@ -55,7 +55,7 @@ const SwitchAccount = () => {
         </div>
       }
       dropDownButtonClass="cursor-pointer p-2 w-max bg-black-600 justify-between text-[12px] text-light-emphasis
-               rounded-full"
+               rounded-md"
       dropdownType={"click"}
       staticBackDrop={false}
       dropDownIcon={false}
