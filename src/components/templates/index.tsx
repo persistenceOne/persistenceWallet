@@ -8,6 +8,7 @@ import DecryptKeyStore from "../organisms/common/decrypt-keystore";
 import { useRouter } from "next/router";
 import GenerateKeyStore from "../organisms/home/genarate-keystore";
 import UpdateKeyStore from "../organisms/common/updatePassword";
+import ClaimModal from "../organisms/staking/txns/claim";
 
 const env: string = process.env.NEXT_PUBLIC_ENVIRONMENT!;
 
@@ -80,8 +81,9 @@ export const Template = ({
       <DecryptKeyStore />
       <GenerateKeyStore />
       <UpdateKeyStore />
+      <ClaimModal />
     </div>
   ) : (
-    <div className="bg-body-bg"></div>
+    <div className="bg-body-bg" />
   );
 };

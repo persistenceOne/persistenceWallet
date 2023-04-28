@@ -51,20 +51,6 @@ const Submit = () => {
     handleUnDelegateTxnModal(false);
   };
 
-  console.log(
-    toDec(amount.toString()).gt(new Dec("0")),
-    balances.totalXprt.toDec().gt(new Dec("0")),
-    balances.totalXprt
-      .toDec()
-      .gte(
-        getDecimalize(
-          fee.value!.toString(),
-          defaultChain.currency.coinDecimals
-        ).add(toDec(amount.toString()))
-      ),
-    "console",
-    fee.value!.toString()
-  );
   const enable =
     toDec(amount.toString()).gt(new Dec("0")) &&
     balances.totalXprt

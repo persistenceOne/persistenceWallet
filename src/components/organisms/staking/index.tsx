@@ -23,10 +23,18 @@ const StakingContainer: React.FC<Props> = ({ defaultTab }) => {
   const [value, setValue] = useState(true);
   const [activeTab, setActiveTab] = useState<string>(defaultTab);
 
-  const [selectedValidator] = useAppStore(
-    (state) => [state.transactions.staking.selectedValidator],
+  const [selectedValidator, totalRewards] = useAppStore(
+    (state) => [
+      state.transactions.staking.selectedValidator,
+      state.wallet.rewardsInfo.totalAmount,
+    ],
     shallow
   );
+  const handleClaimTxnModal = useAppStore((state) => state.handleClaimTxnModal);
+
+  const handleClaimAll = () => {
+    handleClaimTxnModal(true);
+  };
 
   const tabItemClasses =
     "cursor-pointer w-full" +
@@ -69,6 +77,18 @@ const StakingContainer: React.FC<Props> = ({ defaultTab }) => {
                   variant={"medium"}
                   onChange={() => setValue(!value)}
                 />
+              </div>
+            ) : (
+              ""
+            )}
+            {activeTab === "delegated" ? (
+              <div className="p-2 flex items-center">
+                <p
+                  className="text-light-emphasis mr-2 cursor-pointer underline"
+                  onClick={handleClaimAll}
+                >
+                  Claim Rewards ({totalRewards.toString()})
+                </p>
               </div>
             ) : (
               ""

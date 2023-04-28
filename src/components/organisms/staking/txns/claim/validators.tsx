@@ -5,14 +5,18 @@ import { RewardsList, ValidatorProps } from "../../../../../helpers/types";
 import { defaultChain } from "../../../../../helpers/utils";
 import Avatar from "../../avatar";
 
-interface DataState extends RewardsList {
+export interface DataState extends RewardsList {
   selected: boolean;
 }
 
-const Validators = () => {
+interface Props {
+  selected: DataState[];
+  setSelected: React.Dispatch<React.SetStateAction<DataState[]>>;
+}
+
+const Validators = ({ selected, setSelected }: Props) => {
   const [show, setShow] = useState<boolean>(false);
   const [totalAmount, setTotalAmount] = useState<number>(0);
-  const [selected, setSelected] = useState<DataState[]>([]);
 
   const [balances, token, rewardsInfo, validatorsInfo] = useAppStore(
     (state) => [

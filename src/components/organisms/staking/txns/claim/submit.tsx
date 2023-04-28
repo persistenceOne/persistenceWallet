@@ -3,35 +3,27 @@ import Button from "../../../../atoms/button";
 import { useAppStore } from "../../../../../../store/store";
 import { Dec } from "@keplr-wallet/unit";
 import { defaultChain } from "../../../../../helpers/utils";
-import {
-  getDecimalize,
-  getUnDecimalize,
-  toDec,
-} from "../../../../../helpers/coin";
-import { delegateMsg } from "../../../../../helpers/protoMsg";
+import { getDecimalize, toDec } from "../../../../../helpers/coin";
+import { withdrawMsg } from "../../../../../helpers/protoMsg";
 import { shallow } from "zustand/shallow";
 import { Spinner } from "../../../../atoms/spinner";
+import { DataState } from "./validators";
 
-const Submit = () => {
+interface Props {
+  selected: DataState[];
+}
+
+const Submit = ({ selected }: Props) => {
   const handleDecryptKeystoreModal = useAppStore(
     (state) => state.handleDecryptKeystoreModal
   );
-  const handleDelegateTxnModal = useAppStore(
-    (state) => state.handleDelegateTxnModal
-  );
+
+  const handleClaimTxnModal = useAppStore((state) => state.handleClaimTxnModal);
   const setTxnMsgs = useAppStore((state) => state.setTxnMsgs);
-  const [
-    balances,
-    amount,
-    selectedValidator,
-    fee,
-    accountDetails,
-    transactionInfo,
-  ] = useAppStore(
+  const [balances, amount, fee, accountDetails, transactionInfo] = useAppStore(
     (state) => [
       state.wallet.balances,
       state.transactions.delegate.amount,
-      state.transactions.staking.selectedValidator,
       state.transactions.feeInfo.fee,
       state.wallet.accountDetails,
       state.transactions.transactionInfo,
@@ -40,39 +32,24 @@ const Submit = () => {
   );
 
   const handleSubmit = () => {
-    let messages = [];
-    // evt.forEach(async (item) => {
-    //   messages.push(WithdrawMsg(loginInfo.address, item.value));
-    // });
-
-    const msg = delegateMsg(
-      accountDetails!.address!,
-      selectedValidator!.validatorAddress,
-      getUnDecimalize(amount.toString(), 6).truncate().toString(),
-      defaultChain.currency.coinMinimalDenom
-    );
-    setTxnMsgs([msg]);
+    let messages: any = [];
+    selected.forEach(async (item) => {
+      messages.push(
+        withdrawMsg(accountDetails!.address!, item.validatorAddress)
+      );
+    });
+    setTxnMsgs(messages);
     handleDecryptKeystoreModal(true);
-    handleDelegateTxnModal(false);
+    handleClaimTxnModal(false);
   };
 
-  console.log(
-    balances.totalXprt.toDec().gt(new Dec("0")),
-    toDec(amount.toString()).lte(toDec(balances.totalXprt.toString())),
-    "test"
-  );
   const enable =
-    toDec(amount.toString()).gt(new Dec("0")) &&
-    balances.totalXprt.toDec().gt(new Dec("0")) &&
+    selected.length > 0 &&
     balances.totalXprt
       .toDec()
       .gte(
-        getDecimalize(
-          fee.value!.toString(),
-          defaultChain.currency.coinDecimals
-        ).add(toDec(amount.toString()))
-      ) &&
-    toDec(amount.toString()).lte(toDec(balances.totalXprt.toString()));
+        getDecimalize(fee.value!.toString(), defaultChain.currency.coinDecimals)
+      );
 
   return (
     <div className="pt-6">

@@ -6,10 +6,12 @@ import Amount from "./amount";
 import FeeOptions from "../../../common/fee";
 import Submit from "./submit";
 import { Icon } from "../../../../atoms/icon";
-import Validators from "./validators";
+import Validators, { DataState } from "./validators";
 import { defaultChain } from "../../../../../helpers/utils";
 
 const ClaimModal = () => {
+  const [selected, setSelected] = useState<DataState[]>([]);
+
   const [modal, rewardsInfo] = useAppStore(
     (state) => [state.transactions.claim.modal, state.wallet.rewardsInfo],
     shallow
@@ -20,11 +22,6 @@ const ClaimModal = () => {
 
   const handleClose = () => {
     handleClaimTxnModal(false);
-  };
-
-  const previousHandler = () => {
-    handleClaimTxnModal(false);
-    handleStakingModal(true);
   };
 
   return (
@@ -38,12 +35,6 @@ const ClaimModal = () => {
       closeButton={true}
     >
       <div className="px-8 pt-8 md:px-6 md:pt-6">
-        <button
-          className="absolute left-[50px] top-[40px]"
-          onClick={previousHandler}
-        >
-          <Icon viewClass="arrow-right fill-[#fff]" iconName="left-arrow" />
-        </button>
         <p className="text-center text-light-high font-semibold text-2xl leading-normal">
           Claim Rewards
         </p>
@@ -58,9 +49,9 @@ const ClaimModal = () => {
             {defaultChain.currency.coinDenom}
           </p>
         </div>
-        <Validators />
+        <Validators setSelected={setSelected} selected={selected} />
         <FeeOptions amount={"0"} />
-        <Submit />
+        <Submit selected={selected} />
       </div>
     </Modal>
   );

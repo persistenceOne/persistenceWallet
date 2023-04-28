@@ -38,13 +38,13 @@ const Balances = () => {
   };
 
   const handleClaimAll = () => {
-    let messages: any = [];
-    rewardsInfo.rewardsList.forEach(async (item: RewardsList) => {
-      messages.push(
-        withdrawMsg(accountDetails!.address!, item.reward.amount.toString())
-      );
-    });
-    setTxnMsgs(messages);
+    // let messages: any = [];
+    // rewardsInfo.rewardsList.forEach(async (item: RewardsList) => {
+    //   messages.push(
+    //     withdrawMsg(accountDetails!.address!, item.reward.amount.toString())
+    //   );
+    // });
+    // setTxnMsgs(messages);
     handleClaimTxnModal(true);
   };
   const styles =
