@@ -15,16 +15,18 @@ const DelegatedValidators = () => {
 
   useEffect(() => {
     const filteredList: GetDelegatedValidatorInfo[] = [];
-    if (
-      validatorsInfo.delegatedValidators.length > 0 &&
-      unBondingInfo.unBondingList.length > 0
-    ) {
+    if (validatorsInfo.delegatedValidators.length > 0) {
       validatorsInfo.delegatedValidators.forEach((item) => {
-        const response: UnBondingList | undefined =
-          unBondingInfo.unBondingList.find(
-            (validator) => validator.validatorAddress !== item.validatorAddress
-          );
-        if (response) {
+        if (unBondingInfo.unBondingList.length > 0) {
+          const response: UnBondingList | undefined =
+            unBondingInfo.unBondingList.find(
+              (validator) =>
+                validator.validatorAddress !== item.validatorAddress
+            );
+          if (response) {
+            filteredList.push(item!);
+          }
+        } else {
           filteredList.push(item!);
         }
       });

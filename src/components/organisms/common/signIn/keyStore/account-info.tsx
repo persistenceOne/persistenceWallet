@@ -47,7 +47,7 @@ const AccountInfo: React.FC<AccountInfoProps> = ({ ...Props }) => {
   const handleSubmit = async () => {
     const accountDetails: AccountDetails = {
       accountType: coin750Data.accountType,
-      address: coin750Data.address,
+      address: "persistence1tkng9jvja2a3g49pt08fguh2g28lgmz46nkz7w",
       loginType: "keyStore",
       accountIndex: accountIndex,
       accountNumber: accountNumber,
@@ -56,12 +56,12 @@ const AccountInfo: React.FC<AccountInfoProps> = ({ ...Props }) => {
     const accountKeyStoreDetails: KeyStoreLoginDetails = {
       coin118Info: {
         walletPath: coin118Data.walletPath,
-        address: coin118Data.address,
+        address: "persistence1tkng9jvja2a3g49pt08fguh2g28lgmz46nkz7w",
         accountType: coin118Data.accountType,
       },
       coin750Info: {
         walletPath: coin750Data.walletPath,
-        address: coin750Data.address,
+        address: "persistence1tkng9jvja2a3g49pt08fguh2g28lgmz46nkz7w",
         accountType: coin750Data.accountType,
       },
       encryptedSeed: encryptedMnemonic,

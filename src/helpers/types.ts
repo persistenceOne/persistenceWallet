@@ -78,6 +78,8 @@ export interface UnBondingListInfo {
 
 export interface RewardsList {
   validatorAddress: string;
+  validatorName?: string;
+  validatorImage?: string;
   reward: {
     amount: CoinPretty;
     denom: string;

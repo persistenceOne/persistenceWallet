@@ -40,6 +40,11 @@ const Submit = () => {
   );
 
   const handleSubmit = () => {
+    let messages = [];
+    // evt.forEach(async (item) => {
+    //   messages.push(WithdrawMsg(loginInfo.address, item.value));
+    // });
+
     const msg = delegateMsg(
       accountDetails!.address!,
       selectedValidator!.validatorAddress,

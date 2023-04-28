@@ -5,8 +5,9 @@ import React, { useEffect, useState } from "react";
 interface Props {
   identity: any;
   validatorName: any;
+  width?: string;
 }
-const Avatar = ({ identity, validatorName }: Props) => {
+const Avatar = ({ identity, validatorName, width }: Props) => {
   const [avatarURL, setAvatarURL] = useState("");
 
   useEffect(() => {
@@ -35,14 +36,14 @@ const Avatar = ({ identity, validatorName }: Props) => {
   return avatarURL ? (
     <img
       alt="moniker-image"
-      className="w-[34px] h-[34px] rounded-full"
+      className={`${width ? `w-[${width}]` : "w-[34px]"}  h-auto rounded-full`}
       src={avatarURL}
     />
   ) : (
     <div
-      className={
-        "w-[34px] h-[34px] bg-red flex items-center justify-center rounded-full"
-      }
+      className={`${
+        width ? width : "w-[34px] h-[34px]"
+      } bg-red flex items-center justify-center rounded-full`}
     >
       <span className="text-light-mid text-base">
         {validatorName.substring(0, 1)}

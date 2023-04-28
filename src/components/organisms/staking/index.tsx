@@ -103,6 +103,7 @@ const StakingContainer: React.FC<Props> = ({ defaultTab }) => {
       </div>
       {selectedValidator !== null ? <TransactionModal /> : ""}
       <DelegateModal />
+      <ClaimModal />
       <UnDelegateModal />
       <ReDelegateModal />
     </div>

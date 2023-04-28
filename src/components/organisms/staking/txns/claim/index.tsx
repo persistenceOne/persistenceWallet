@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAppStore } from "../../../../../../store/store";
 import Modal from "../.././../../molecules/modal";
 import { shallow } from "zustand/shallow";
@@ -6,6 +6,8 @@ import Amount from "./amount";
 import FeeOptions from "../../../common/fee";
 import Submit from "./submit";
 import { Icon } from "../../../../atoms/icon";
+import Validators from "./validators";
+import { defaultChain } from "../../../../../helpers/utils";
 
 const ClaimModal = () => {
   const [modal, rewardsInfo] = useAppStore(
@@ -52,9 +54,11 @@ const ClaimModal = () => {
             Claimable Rewards:
           </p>
           <p className="text-center text-light-emphasis font-semibold leading-normal">
-            {rewardsInfo.totalAmount.toString()}
+            {rewardsInfo.totalAmount.toString()}{" "}
+            {defaultChain.currency.coinDenom}
           </p>
         </div>
+        <Validators />
         <FeeOptions amount={"0"} />
         <Submit />
       </div>

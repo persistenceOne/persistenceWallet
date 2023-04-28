@@ -17,6 +17,7 @@ const Table = ({ data, columns }: TableProps) => {
     handleStakingModal(true);
   };
   const updateData: any[] = [];
+  console.log(tableData, "tableData");
   tableData.length
     ? tableData.map((data: any, index: number) =>
         updateData.push({
