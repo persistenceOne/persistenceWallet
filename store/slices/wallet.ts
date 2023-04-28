@@ -5,12 +5,14 @@ import { defaultChain } from "../../src/helpers/utils";
 import { CoinPretty } from "@keplr-wallet/unit";
 import {
   fetchAllBalances,
+  fetchRewardsList,
   fetchUnBondingList,
   fetchValidatorsInfo,
 } from "../../src/pages/api/rpcQueries";
 import {
   BalanceList,
   Delegations,
+  RewardsInfo,
   UnBondingListInfo,
   ValidatorsInfo,
 } from "../../src/helpers/types";
@@ -87,6 +89,7 @@ export interface WalletSliceState {
     balances: Balances;
     validatorsInfo: ValidatorsInfo;
     unBondingInfo: UnBondingListInfo;
+    rewardsInfo: RewardsInfo;
   };
 }
 
@@ -107,6 +110,7 @@ export interface WalletSliceActions {
   fetchWalletBalances: (rpc: string, address: string) => void;
   fetchWalletDelegations: (rpc: string, address: string) => void;
   fetchWalletUnbonding: (rpc: string, address: string) => void;
+  fetchWalletRewards: (rpc: string, address: string) => void;
   resetWalletSlice: () => void;
 }
 
@@ -173,6 +177,10 @@ const initialState = {
     },
     unBondingInfo: {
       unBondingList: [],
+      totalAmount: emptyPrettyCoin,
+    },
+    rewardsInfo: {
+      rewardsList: [],
       totalAmount: emptyPrettyCoin,
     },
   },
@@ -282,6 +290,15 @@ export const createWalletSlice: StateCreator<WalletSlice> = (set) => ({
     set(
       produce((state: WalletSlice) => {
         state.wallet.unBondingInfo = response;
+      })
+    );
+  },
+  fetchWalletRewards: async (rpc: string, address: string) => {
+    const response: RewardsInfo = await fetchRewardsList(rpc, address);
+    console.log(response, "fetchWalletRewards");
+    set(
+      produce((state: WalletSlice) => {
+        state.wallet.rewardsInfo = response;
       })
     );
   },

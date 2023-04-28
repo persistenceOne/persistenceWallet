@@ -29,6 +29,12 @@ import {
   QueryDelegatorUnbondingDelegationsResponse,
   QueryValidatorsResponse,
 } from "cosmjs-types/cosmos/staking/v1beta1/query";
+
+import {
+  QueryClientImpl as DistributionQueryClient,
+  QueryDelegationTotalRewardsResponse,
+} from "cosmjs-types/cosmos/distribution/v1beta1/query";
+
 import { getDecimalize, toDec, toPrettyCoin } from "../../helpers/coin";
 import { Balances, emptyPrettyCoin } from "../../../store/slices/wallet";
 import { defaultChain } from "../../helpers/utils";
@@ -48,6 +54,8 @@ import {
   BalanceList,
   GetAccount,
   GetDelegatedValidatorInfo,
+  RewardsInfo,
+  RewardsList,
   UnBondingList,
   UnBondingListInfo,
   ValidatorProps,
@@ -62,6 +70,8 @@ import Long from "long";
 import { Validator } from "cosmjs-types/cosmos/staking/v1beta1/staking";
 import moment from "moment";
 import { useAppStore } from "../../../store/store";
+import { DecCoin } from "cosmjs-types/cosmos/base/v1beta1/coin";
+import { Decimal } from "@cosmjs/math";
 
 const currentEpochTime = Math.floor(new Date().getTime() / 1000);
 
@@ -143,6 +153,7 @@ export const fetchAllBalances = async (
       await bankQueryService.AllBalances({
         address: address,
       });
+    console.log(response, "all balances");
     if (response.balances.length) {
       let balanceList: BalanceList[] = [];
       let xprtBalance: Coin;
@@ -320,7 +331,7 @@ export const fetchValidatorsInfo = async (
       delegatedValidators,
       totalDelegatedAmount: toPrettyCoin(
         totalDelegatedAmount.toString(),
-        defaultChain.currency.coinDenom,
+        defaultChain.currency.coinMinimalDenom,
         persistenceChain!.chainId
       ),
     };
@@ -370,7 +381,7 @@ export const fetchUnBondingList = async (
             ).format("DD MMM YYYY hh:mm A"),
             balance: toPrettyCoin(
               entry.balance.toString(),
-              defaultChain.currency.coinDenom,
+              defaultChain.currency.coinMinimalDenom,
               persistenceChain!.chainId
             ),
             validatorAddress: item.validatorAddress,
@@ -384,13 +395,77 @@ export const fetchUnBondingList = async (
       unBondingList: entries,
       totalAmount: toPrettyCoin(
         totalAmount.toString(),
-        defaultChain.currency.coinDenom,
+        defaultChain.currency.coinMinimalDenom,
         persistenceChain!.chainId
       ),
     };
   } catch (e: any) {
     return {
       unBondingList: [],
+      totalAmount: emptyPrettyCoin,
+    };
+  }
+};
+
+export const fetchRewardsList = async (
+  rpc: string,
+  address: string
+): Promise<RewardsInfo> => {
+  try {
+    const rpcClient = await RpcClient(rpc);
+    const distrQueryService = new DistributionQueryClient(rpcClient);
+
+    const rewardsResponse: QueryDelegationTotalRewardsResponse =
+      await distrQueryService.DelegationTotalRewards({
+        delegatorAddress: address,
+      });
+    let rewardsList: RewardsList[] = [];
+    rewardsResponse.rewards.length > 0 &&
+      rewardsResponse.rewards.forEach((reward) => {
+        const xprtReward = reward.reward.find(
+          (item: DecCoin) =>
+            item.denom == defaultChain.currency.coinMinimalDenom
+        );
+        const decimalize = getDecimalize(xprtReward!.amount, 18).toString();
+        if (xprtReward) {
+          rewardsList.push({
+            validatorAddress: reward.validatorAddress,
+            reward: {
+              amount: toPrettyCoin(
+                decimalize,
+                defaultChain.currency.coinMinimalDenom,
+                persistenceChain!.chainId
+              ),
+              denom: xprtReward.denom,
+            },
+          });
+        }
+      });
+
+    const xprtTotalRewards: DecCoin | undefined =
+      rewardsResponse.total.length > 0
+        ? rewardsResponse.total.find(
+            (item: DecCoin) =>
+              item.denom == defaultChain.currency.coinMinimalDenom
+          )
+        : undefined;
+
+    const decimalXprtTotalRewards = getDecimalize(
+      xprtTotalRewards!.amount,
+      18
+    ).toString();
+
+    return {
+      rewardsList: rewardsList,
+      totalAmount: toPrettyCoin(
+        xprtTotalRewards ? decimalXprtTotalRewards : "0",
+        defaultChain.currency.coinMinimalDenom,
+        persistenceChain!.chainId
+      ),
+    };
+  } catch (e: any) {
+    return {
+      rewardsList: [],
       totalAmount: emptyPrettyCoin,
     };
   }

@@ -60,7 +60,7 @@ export async function getDelegatedValidatorsInfo(
               actions: "",
               delegatedAmount: toPrettyCoin(
                 delegation.balance!.amount,
-                defaultChain.currency.coinDenom,
+                defaultChain.currency.coinMinimalDenom,
                 persistenceChain!.chainId
               ),
             });

@@ -38,12 +38,14 @@ export const Template = ({
   const fetchWalletUnbonding = useAppStore(
     (state) => state.fetchWalletUnbonding
   );
+  const fetchWalletRewards = useAppStore((state) => state.fetchWalletRewards);
 
   useEffect(() => {
     if (address !== null) {
       fetchWalletBalances(persistenceChain!.rpc, address);
       fetchWalletDelegations(persistenceChain!.rpc, address);
       fetchWalletUnbonding(persistenceChain!.rpc, address);
+      fetchWalletRewards(persistenceChain!.rpc, address);
     }
   }, [address]);
 

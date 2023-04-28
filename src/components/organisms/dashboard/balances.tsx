@@ -1,26 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAppStore } from "../../../../store/store";
 import { shallow } from "zustand/shallow";
 import { useRouter } from "next/router";
 import { Icon } from "../../atoms/icon";
-import { toDec } from "../../../helpers/coin";
+import { delegateMsg, withdrawMsg } from "../../../helpers/protoMsg";
+import { RewardsList } from "../../../helpers/types";
 
 const Balances = () => {
-  const [balances, validatorsInfo, unBondingInfo, xprtPrice] = useAppStore(
+  const [
+    balances,
+    validatorsInfo,
+    unBondingInfo,
+    xprtPrice,
+    rewardsInfo,
+    accountDetails,
+  ] = useAppStore(
     (state) => [
       state.wallet.balances,
       state.wallet.validatorsInfo,
       state.wallet.unBondingInfo,
       state.initialData.xprtPrice,
+      state.wallet.rewardsInfo,
+      state.wallet.accountDetails,
     ],
     shallow
   );
   const router = useRouter();
+  const handleDecryptKeystoreModal = useAppStore(
+    (state) => state.handleDecryptKeystoreModal
+  );
+  const handleClaimTxnModal = useAppStore((state) => state.handleClaimTxnModal);
+
+  const setTxnMsgs = useAppStore((state) => state.setTxnMsgs);
 
   const handleRoute = (value: string) => {
     router.push({ pathname: "/staking", query: { name: value } });
   };
 
+  const handleClaimAll = () => {
+    let messages: any = [];
+    rewardsInfo.rewardsList.forEach(async (item: RewardsList) => {
+      messages.push(
+        withdrawMsg(accountDetails!.address!, item.reward.amount.toString())
+      );
+    });
+    setTxnMsgs(messages);
+    handleClaimTxnModal(true);
+  };
   const styles =
     "flex items-center justify-between py-3 px-6 hover:bg-black-600";
 
@@ -100,19 +126,19 @@ const Balances = () => {
         <div
           className={`${styles} group cursor-pointer`}
           onClick={() => {
-            handleRoute("unbond");
+            handleClaimAll();
           }}
         >
           <p className="text-light-emphasis">Delegation Rewards</p>
           <div className={"flex items-center"}>
             <p className="text-light-emphasis cursor-pointer underline">
-              {unBondingInfo.totalAmount.toString()}
+              {rewardsInfo.totalAmount.toString()}
             </p>
             <span
               className="text-light-emphasis flex items-center max-w-[0px] transition-all ease-out duration-300 overflow-hidden group-hover:ease-in-out
-             group-hover:transition-all group-hover:duration-300 group-hover:max-w-[90px] group-hover:w-auto group-hover:px-2"
+             group-hover:transition-all group-hover:duration-300 group-hover:max-w-[150px] group-hover:w-auto group-hover:px-2 whitespace-nowrap"
             >
-              Claim
+              Claim All
               <Icon
                 iconName={"right-arrow"}
                 viewClass={"fill-[#f5f5f5] w-[20px] ml-1"}

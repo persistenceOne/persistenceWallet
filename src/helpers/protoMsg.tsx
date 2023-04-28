@@ -17,6 +17,10 @@ import { IBC_TRANSFER_URL } from "../../appConstants";
 import { IBCConfiguration } from "./config";
 import { QueryClient, setupIbcExtension } from "@cosmjs/stargate";
 import { QueryChannelClientStateResponse } from "cosmjs-types/ibc/core/channel/v1/query";
+import {
+  MsgWithdrawDelegatorReward,
+  MsgWithdrawValidatorCommission,
+} from "cosmjs-types/cosmos/distribution/v1beta1/tx";
 const tendermintRPC = require("@cosmjs/tendermint-rpc");
 
 const msgSendTypeUrl = "/cosmos.bank.v1beta1.MsgSend";
@@ -110,6 +114,28 @@ export const RedelegateMsg = (
         denom: defaultChain.currency.coinMinimalDenom,
         amount: amount,
       },
+    }),
+  };
+};
+
+export const withdrawMsg = (
+  delegatorAddress: string,
+  validatorAddress: string
+) => {
+  return {
+    typeUrl: msgWithdrawRewardsTypeUrl,
+    value: MsgWithdrawDelegatorReward.fromPartial({
+      delegatorAddress: delegatorAddress,
+      validatorAddress: validatorAddress,
+    }),
+  };
+};
+
+export const validatorCommissionMsg = (address: string) => {
+  return {
+    typeUrl: msgValidatorCommission,
+    value: MsgWithdrawValidatorCommission.fromPartial({
+      validatorAddress: address,
     }),
   };
 };

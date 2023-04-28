@@ -7,6 +7,8 @@ import { BaseAccount } from "cosmjs-types/cosmos/auth/v1beta1/auth";
 import { DenomTrace } from "cosmjs-types/ibc/applications/transfer/v1/transfer";
 import { CoinPretty } from "@keplr-wallet/unit";
 import { Validator } from "cosmjs-types/cosmos/staking/v1beta1/staking";
+import { DelegationDelegatorReward } from "cosmjs-types/cosmos/distribution/v1beta1/distribution";
+import { DecCoin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 
 export interface GetAccount {
   typeUrl: string | null;
@@ -71,5 +73,18 @@ export interface UnBondingList {
 
 export interface UnBondingListInfo {
   unBondingList: UnBondingList[];
+  totalAmount: CoinPretty;
+}
+
+export interface RewardsList {
+  validatorAddress: string;
+  reward: {
+    amount: CoinPretty;
+    denom: string;
+  };
+}
+
+export interface RewardsInfo {
+  rewardsList: RewardsList[];
   totalAmount: CoinPretty;
 }

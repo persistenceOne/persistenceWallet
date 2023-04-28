@@ -30,6 +30,8 @@ const TransactionModal = () => {
     (state) => state.handleReDelegateTxnModal
   );
 
+  const handleClaimTxnModal = useAppStore((state) => state.handleClaimTxnModal);
+
   const handleClose = () => {
     handleStakingModal(false);
   };
@@ -42,6 +44,8 @@ const TransactionModal = () => {
       handleUnDelegateTxnModal(true);
     } else if (type === "re-delegate") {
       handleReDelegateTxnModal(true);
+    } else if (type === "claim") {
+      handleClaimTxnModal(true);
     }
   };
 
@@ -137,6 +141,17 @@ const TransactionModal = () => {
           ) : (
             ""
           )}
+          <Button
+            className="button md:text-sm flex items-center
+            justify-center mx-2 mb-4"
+            type="primary"
+            size="medium"
+            disabled={false}
+            content="Claim Rewards"
+            onClick={() => {
+              handledTxnModals("claim");
+            }}
+          />
         </div>
       </div>
     </Modal>

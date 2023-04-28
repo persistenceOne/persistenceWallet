@@ -11,6 +11,7 @@ import UnDelegateModal from "./txns/un-delegate";
 import ReDelegateModal from "./txns/re-delegate";
 import UnbondValidators from "./unbonding-validators";
 import ToggleSwitch from "../../atoms/switch";
+import ClaimModal from "./txns/claim";
 
 export type ValidatorTypes = "active" | "in-active";
 
