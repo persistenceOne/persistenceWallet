@@ -9,6 +9,7 @@ import { CoinPretty } from "@keplr-wallet/unit";
 import { Validator } from "cosmjs-types/cosmos/staking/v1beta1/staking";
 import { DelegationDelegatorReward } from "cosmjs-types/cosmos/distribution/v1beta1/distribution";
 import { DecCoin } from "cosmjs-types/cosmos/base/v1beta1/coin";
+import { emptyPrettyCoin } from "../../store/slices/wallet";
 
 export interface GetAccount {
   typeUrl: string | null;
@@ -89,4 +90,10 @@ export interface RewardsList {
 export interface RewardsInfo {
   rewardsList: RewardsList[];
   totalAmount: CoinPretty;
+}
+
+export interface CommissionInfo {
+  commission: CoinPretty;
+  isValidator: boolean;
+  validatorAddress?: string;
 }

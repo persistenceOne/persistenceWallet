@@ -8,13 +8,16 @@ import {
   fetchRewardsList,
   fetchUnBondingList,
   fetchValidatorsInfo,
+  getValidatorCommission,
 } from "../../src/pages/api/rpcQueries";
 import {
   BalanceList,
   Delegations,
   RewardsInfo,
   UnBondingListInfo,
+  ValidatorProps,
   ValidatorsInfo,
+  CommissionInfo,
 } from "../../src/helpers/types";
 import { useAppStore } from "../store";
 export type CoinType = 118 | 750;
@@ -90,6 +93,7 @@ export interface WalletSliceState {
     validatorsInfo: ValidatorsInfo;
     unBondingInfo: UnBondingListInfo;
     rewardsInfo: RewardsInfo;
+    validatorCommission: CommissionInfo;
   };
 }
 
@@ -111,6 +115,11 @@ export interface WalletSliceActions {
   fetchWalletDelegations: (rpc: string, address: string) => void;
   fetchWalletUnbonding: (rpc: string, address: string) => void;
   fetchWalletRewards: (rpc: string, address: string) => void;
+  fetchValidatorCommission: (
+    validators: ValidatorProps[],
+    rpc: string,
+    address: string
+  ) => void;
   resetWalletSlice: () => void;
 }
 
@@ -182,6 +191,11 @@ const initialState = {
     rewardsInfo: {
       rewardsList: [],
       totalAmount: emptyPrettyCoin,
+    },
+    validatorCommission: {
+      commission: emptyPrettyCoin,
+      isValidator: false,
+      validatorAddress: "",
     },
   },
 };
@@ -299,6 +313,23 @@ export const createWalletSlice: StateCreator<WalletSlice> = (set) => ({
     set(
       produce((state: WalletSlice) => {
         state.wallet.rewardsInfo = response;
+      })
+    );
+  },
+  fetchValidatorCommission: async (
+    validators: ValidatorProps[],
+    rpc: string,
+    address: string
+  ) => {
+    const response: CommissionInfo = await getValidatorCommission(
+      validators,
+      address,
+      rpc
+    );
+    console.log(response, "fetchWalletRewards");
+    set(
+      produce((state: WalletSlice) => {
+        state.wallet.validatorCommission = response;
       })
     );
   },

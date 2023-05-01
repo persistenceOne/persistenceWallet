@@ -12,6 +12,8 @@ export interface DataState extends RewardsList {
 interface Props {
   selected: DataState[];
   setSelected: React.Dispatch<React.SetStateAction<DataState[]>>;
+  // setSelectedCommission: React.Dispatch<React.SetStateAction<boolean>>;
+  // selectedCommission: boolean;
 }
 
 const Validators = ({ selected, setSelected }: Props) => {
@@ -113,7 +115,7 @@ const Validators = ({ selected, setSelected }: Props) => {
         dropdownType={"click"}
         staticBackDrop={false}
         dropDownIcon={true}
-        dropDownContentClass="!bg-[#282828] drop-shadow-md round-md"
+        dropDownContentClass="!bg-[#282828] drop-shadow-md round-md  max-h-[200px] overflow-auto"
       >
         {data!.length > 0 &&
           data!.map((item: DataState, index: number): any => (

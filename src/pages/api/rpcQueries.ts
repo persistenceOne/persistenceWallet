@@ -12,6 +12,7 @@ import {
   getChainFromDenom,
   getDenomFromMinimalDenom,
   persistenceChain,
+  valoperToAddr,
 } from "../../helpers/utils";
 import {
   ContinuousVestingAccount,
@@ -33,6 +34,7 @@ import {
 import {
   QueryClientImpl as DistributionQueryClient,
   QueryDelegationTotalRewardsResponse,
+  QueryValidatorCommissionResponse,
 } from "cosmjs-types/cosmos/distribution/v1beta1/query";
 
 import { getDecimalize, toDec, toPrettyCoin } from "../../helpers/coin";
@@ -52,6 +54,7 @@ import {
 } from "../../helpers/vestingAmount";
 import {
   BalanceList,
+  CommissionInfo,
   GetAccount,
   GetDelegatedValidatorInfo,
   RewardsInfo,
@@ -323,6 +326,7 @@ export const fetchValidatorsInfo = async (
         0
       );
     }
+
     console.log(delegatedValidators, "delegatedValidators123");
     return {
       validators: getStructuredList(validators),
@@ -361,16 +365,6 @@ export const fetchUnBondingList = async (
     console.log(unBondingResponse, "unBondingResponse");
     let totalAmount: number = 0;
     let entries: UnBondingList[] = [];
-    // entries.push({
-    //   id: 0,
-    //   completionTime: "29 Apr 2023 03:34 PM",
-    //   balance: toPrettyCoin(
-    //     "4",
-    //     defaultChain.currency.coinDenom,
-    //     persistenceChain!.chainId
-    //   ),
-    //   validatorAddress: "",
-    // });
     if (unBondingResponse.unbondingResponses.length > 0) {
       unBondingResponse.unbondingResponses.forEach((item, index) => {
         item.entries.forEach((entry) => {
@@ -419,26 +413,29 @@ export const fetchRewardsList = async (
       await distrQueryService.DelegationTotalRewards({
         delegatorAddress: address,
       });
+
     let rewardsList: RewardsList[] = [];
     rewardsResponse.rewards.length > 0 &&
       rewardsResponse.rewards.forEach((reward) => {
-        const xprtReward = reward.reward.find(
-          (item: DecCoin) =>
-            item.denom == defaultChain.currency.coinMinimalDenom
-        );
-        const decimalize = getDecimalize(xprtReward!.amount, 18).toString();
-        if (xprtReward) {
-          rewardsList.push({
-            validatorAddress: reward.validatorAddress,
-            reward: {
-              amount: toPrettyCoin(
-                decimalize,
-                defaultChain.currency.coinMinimalDenom,
-                persistenceChain!.chainId
-              ),
-              denom: xprtReward.denom,
-            },
-          });
+        if (reward.reward.length > 0) {
+          const xprtReward = reward.reward.find(
+            (item: DecCoin) =>
+              item.denom == defaultChain.currency.coinMinimalDenom
+          );
+          const decimalize = getDecimalize(xprtReward!.amount, 18).toString();
+          if (xprtReward) {
+            rewardsList.push({
+              validatorAddress: reward.validatorAddress,
+              reward: {
+                amount: toPrettyCoin(
+                  decimalize,
+                  defaultChain.currency.coinMinimalDenom,
+                  persistenceChain!.chainId
+                ),
+                denom: xprtReward.denom,
+              },
+            });
+          }
         }
       });
 
@@ -449,6 +446,8 @@ export const fetchRewardsList = async (
               item.denom == defaultChain.currency.coinMinimalDenom
           )
         : undefined;
+
+    console.log(xprtTotalRewards, "xprtTotalRewards");
 
     const decimalXprtTotalRewards = getDecimalize(
       xprtTotalRewards!.amount,
@@ -464,9 +463,61 @@ export const fetchRewardsList = async (
       ),
     };
   } catch (e: any) {
+    console.log(e, "in fetch rewards");
     return {
       rewardsList: [],
       totalAmount: emptyPrettyCoin,
+    };
+  }
+};
+
+export const getValidatorCommission = async (
+  validators: ValidatorProps[],
+  accountAddress: string,
+  rpc: string
+): Promise<CommissionInfo> => {
+  try {
+    const validatorResponse = validators.find(
+      (validator: ValidatorProps) =>
+        valoperToAddr(validator.validatorAddress) == accountAddress
+    );
+    if (validatorResponse) {
+      const rpcClient = await RpcClient(rpc);
+      const distrQueryService = new DistributionQueryClient(rpcClient);
+      const rewardsResponse: QueryValidatorCommissionResponse =
+        await distrQueryService.ValidatorCommission({
+          validatorAddress: validatorResponse.validatorAddress,
+        });
+      if (
+        rewardsResponse &&
+        rewardsResponse!.commission!.commission!.length > 0
+      ) {
+        const response = rewardsResponse!.commission!.commission.find(
+          (commission) =>
+            commission.denom === defaultChain.currency.coinMinimalDenom
+        );
+        return {
+          commission: toPrettyCoin(
+            response ? response.amount : "0",
+            defaultChain.currency.coinMinimalDenom,
+            persistenceChain!.chainId
+          ),
+          isValidator: true,
+          validatorAddress: validatorResponse.validatorAddress!,
+        };
+      }
+    }
+    return {
+      commission: emptyPrettyCoin,
+      isValidator: false,
+      validatorAddress: "",
+    };
+  } catch (e: any) {
+    console.log(e, "in fetch rewards");
+    return {
+      commission: emptyPrettyCoin,
+      isValidator: false,
+      validatorAddress: "",
     };
   }
 };

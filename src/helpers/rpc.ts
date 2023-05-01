@@ -17,7 +17,7 @@ import {
 import { OfflineSigner, StdFee } from "@cosmjs/launchpad";
 import { Transaction } from "./transactions";
 import { getDecimalize, toDec, toPrettyCoin } from "./coin";
-import { defaultChain, persistenceChain } from "./utils";
+import { defaultChain, persistenceChain, valoperToAddr } from "./utils";
 
 export async function RpcClient(rpc: string) {
   const tendermintClient = await Tendermint34Client.connect(rpc);

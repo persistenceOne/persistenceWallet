@@ -299,13 +299,13 @@ export const getAccountNumber = (value: string) => {
 };
 
 export const addrToValoper = (address: string) => {
-  let data = encoding.Bech32.decode(address).data;
-  return encoding.Bech32.encode(valoperAddressPrefix, data);
+  let data = encoding.fromBech32(address).data;
+  return encoding.toBech32(valoperAddressPrefix, data);
 };
 
 export const valoperToAddr = (valoperAddr: string) => {
-  let data = encoding.Bech32.decode(valoperAddr).data;
-  return encoding.Bech32.encode(addressPrefix, data);
+  let data = encoding.fromBech32(valoperAddr).data;
+  return encoding.toBech32(addressPrefix, data);
 };
 
 export const checkValidatorAccountAddress = (
