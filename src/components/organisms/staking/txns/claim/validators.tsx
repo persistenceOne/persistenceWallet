@@ -12,8 +12,6 @@ export interface DataState extends RewardsList {
 interface Props {
   selected: DataState[];
   setSelected: React.Dispatch<React.SetStateAction<DataState[]>>;
-  // setSelectedCommission: React.Dispatch<React.SetStateAction<boolean>>;
-  // selectedCommission: boolean;
 }
 
 const Validators = ({ selected, setSelected }: Props) => {

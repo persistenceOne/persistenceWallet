@@ -19,6 +19,7 @@ export interface Transaction {
 }
 
 export const executeSendTransaction = async (Props: Transaction) => {
+  useAppStore.getState().handleTxnMemoValue("");
   useAppStore.getState().setTxnInfo({ name: "send", inProgress: true });
   try {
     displayToast(

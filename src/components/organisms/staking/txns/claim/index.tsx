@@ -11,10 +11,12 @@ import { defaultChain, persistenceChain } from "../../../../../helpers/utils";
 import { CoinPretty } from "@keplr-wallet/unit";
 import { emptyPrettyCoin } from "../../../../../../store/slices/wallet";
 import { getValidatorCommission } from "../../../../../pages/api/rpcQueries";
+import Memo from "../../../common/memo";
 
 const ClaimModal = () => {
   const [selected, setSelected] = useState<DataState[]>([]);
   const [selectedCommission, setSelectedCommission] = useState<boolean>(false);
+  const handleTxnMemoValue = useAppStore((state) => state.handleTxnMemoValue);
 
   const [accountDetails, modal, rewardsInfo, validatorsInfo, commission] =
     useAppStore(
@@ -45,6 +47,8 @@ const ClaimModal = () => {
 
   const handleClose = () => {
     handleClaimTxnModal(false);
+    handleTxnMemoValue("");
+    setSelected([]);
   };
 
   return (
@@ -72,7 +76,7 @@ const ClaimModal = () => {
             {defaultChain.currency.coinDenom}
           </p>
         </div>
-        {!commission.isValidator ? (
+        {commission.isValidator ? (
           <div className="flex items-center mb-4">
             <input
               type={"checkbox"}
@@ -96,6 +100,7 @@ const ClaimModal = () => {
           ""
         )}
         <Validators setSelected={setSelected} selected={selected} />
+        <Memo />
         <FeeOptions amount={"0"} />
         <Submit selected={selected} selectedCommission={selectedCommission} />
       </div>

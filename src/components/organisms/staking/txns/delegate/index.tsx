@@ -6,6 +6,7 @@ import Amount from "./amount";
 import FeeOptions from "../../../common/fee";
 import Submit from "./submit";
 import { Icon } from "../../../../atoms/icon";
+import Memo from "../../../common/memo";
 
 const DelegateModal = () => {
   const [modal, amount] = useAppStore(
@@ -15,19 +16,21 @@ const DelegateModal = () => {
     ],
     shallow
   );
-
+  const handleTxnMemoValue = useAppStore((state) => state.handleTxnMemoValue);
   const handleDelegateTxnModal = useAppStore(
     (state) => state.handleDelegateTxnModal
   );
   const handleStakingModal = useAppStore((state) => state.handleStakingModal);
 
   const handleClose = () => {
+    handleTxnMemoValue("");
     handleDelegateTxnModal(false);
   };
 
   const previousHandler = () => {
     handleDelegateTxnModal(false);
     handleStakingModal(true);
+    handleTxnMemoValue("");
   };
 
   return (
@@ -53,6 +56,7 @@ const DelegateModal = () => {
       </div>
       <div className="px-8 py-6">
         <Amount />
+        <Memo />
         <FeeOptions amount={"0"} />
         <Submit />
       </div>

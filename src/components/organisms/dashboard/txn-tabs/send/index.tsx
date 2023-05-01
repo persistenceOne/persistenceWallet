@@ -4,6 +4,7 @@ import Amount from "./amount";
 import Submit from "./submit";
 import Token from "./token";
 import FeeOptions from "../../../common/fee";
+import Memo from "../../../common/memo";
 
 const Send = () => {
   return (
@@ -11,6 +12,7 @@ const Send = () => {
       <Recipient />
       <Token />
       <Amount />
+      <Memo />
       <FeeOptions amount={"0"} />
       <Submit />
     </div>

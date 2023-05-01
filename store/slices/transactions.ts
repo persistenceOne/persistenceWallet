@@ -43,6 +43,7 @@ export interface TransactionSliceState {
       active: boolean;
       gas: number | string;
     };
+    memo: string;
     send: {
       token: BalanceList | null;
       amount: Dec | string;
@@ -84,6 +85,7 @@ export interface TransactionSliceActions {
   handleTxnGasValue: (value: string) => void;
   handleTxnGasStatus: (value: boolean) => void;
   handleTxnFeeValue: (value: Fee) => void;
+  handleTxnMemoValue: (value: string) => void;
   handleSendTxnToken: (value: any) => void;
   handleSendTxnAmount: (value: any) => void;
   handleSendTxnRecipient: (value: string) => void;
@@ -121,6 +123,7 @@ const initialState = {
       active: false,
       gas: GasInfo.gas,
     },
+    memo: "",
     send: {
       token: {
         denom: "",
@@ -199,6 +202,12 @@ export const createTransactionSlice: StateCreator<TransactionSlice> = (
     set(
       produce((state: TransactionSlice) => {
         state.transactions.gas.gas = value;
+      })
+    ),
+  handleTxnMemoValue: (value: string) =>
+    set(
+      produce((state: TransactionSlice) => {
+        state.transactions.memo = value;
       })
     ),
   handleSendTxnToken: (value: any) =>

@@ -5,6 +5,7 @@ import Submit from "./submit";
 import Token from "./token";
 import FeeOptions from "../../../common/fee";
 import Chains from "./chains";
+import Memo from "../../../common/memo";
 
 const SendIbc = () => {
   return (
@@ -13,6 +14,7 @@ const SendIbc = () => {
       <Recipient />
       <Token />
       <Amount />
+      <Memo />
       <FeeOptions amount={"0"} />
       <Submit />
     </div>

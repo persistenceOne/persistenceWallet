@@ -32,6 +32,7 @@ const DecryptKeyStore = () => {
     feeValue,
     gas,
     msgs,
+    memo,
   ] = useAppStore(
     (state) => [
       state.wallet.decryptKeyStore.modal,
@@ -41,6 +42,7 @@ const DecryptKeyStore = () => {
       state.transactions.feeInfo.fee.value,
       state.transactions.gas.gas,
       state.transactions.txnMsgs,
+      state.transactions.memo,
     ],
     shallow
   );
@@ -100,7 +102,7 @@ const DecryptKeyStore = () => {
         rpc: persistenceChain!.rpc,
         msgs: msgs,
         signerAddress: response.address!,
-        memo: "",
+        memo,
       });
     } catch (e: any) {
       exceptionHandle(e, { "Error while submitting txn": "" });
