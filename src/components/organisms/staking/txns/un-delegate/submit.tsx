@@ -47,7 +47,7 @@ const Submit = () => {
       defaultChain.currency.coinMinimalDenom
     );
     setTxnMsgs([msg]);
-    handleDecryptKeystoreModal(true);
+    handleDecryptKeystoreModal(true, "un-delegate");
     handleUnDelegateTxnModal(false);
   };
 

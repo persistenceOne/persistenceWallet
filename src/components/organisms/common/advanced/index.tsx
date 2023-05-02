@@ -74,7 +74,7 @@ const AdvancedOptions = ({ setError }: any) => {
       >
         <span
           className={`${
-            advancedInfo ? "text-light-emphasis" : "text-light-mid"
+            advancedInfo ? "text-light-white-500" : "text-light-emphasis"
           }  mr-2`}
         >
           Advanced
@@ -100,11 +100,7 @@ const AdvancedOptions = ({ setError }: any) => {
             required={true}
             onChange={handleAccountNumber}
             name="account"
-            className={`border-0
-             p-2 text-dark-high leading-normal 
-             box-shadow-none font-normal focus:border-0 
-             focus:box-shadow-none placeholder:text-light-mid placeholder:leading-normal 
-             placeholder:font-normal outline-none w-full rounded-md`}
+            className={`w-full rounded-md`}
           />
         </div>
         <div className="mb-2">
@@ -116,11 +112,7 @@ const AdvancedOptions = ({ setError }: any) => {
             required={true}
             onChange={handleAccountIndex}
             name="account"
-            className={`border-0
-             p-2 text-dark-high leading-normal 
-             box-shadow-none font-normal focus:border-0 
-             focus:box-shadow-none placeholder:text-light-mid placeholder:leading-normal 
-             placeholder:font-normal outline-none w-full rounded-md`}
+            className={`w-full rounded-md`}
           />
         </div>
         <div className="mb-2">
@@ -132,11 +124,7 @@ const AdvancedOptions = ({ setError }: any) => {
             required={true}
             name="account"
             onChange={handleAccountPassPhrase}
-            className={`border-0
-             p-2 text-dark-high leading-normal 
-             box-shadow-none font-normal focus:border-0 
-             focus:box-shadow-none placeholder:text-light-mid placeholder:leading-normal 
-             placeholder:font-normal outline-none w-full rounded-md`}
+            className={`w-full rounded-md`}
           />
         </div>
       </div>

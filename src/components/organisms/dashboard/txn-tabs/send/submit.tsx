@@ -46,7 +46,7 @@ const Submit = () => {
       token!.minimalDenom!
     );
     setTxnMsgs([msg]);
-    handleDecryptKeystoreModal(true);
+    handleDecryptKeystoreModal(true, "send");
   };
 
   console.log(

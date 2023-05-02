@@ -13,13 +13,9 @@ import {
   persistenceChain,
 } from "../../../../helpers/utils";
 import { defaultChain } from "../../../../helpers/utils";
-import { executeSendTransaction } from "../../../../helpers/transactions";
-import { fee, sendMsg } from "../../../../helpers/protoMsg";
-import {
-  getDecimalize,
-  getUnDecimalize,
-  toDec,
-} from "../../../../helpers/coin";
+import { executeTransaction } from "../../../../helpers/transactions";
+import { fee } from "../../../../helpers/protoMsg";
+import { toDec } from "../../../../helpers/coin";
 
 const DecryptKeyStore = () => {
   const [password, setPassword] = useState("");
@@ -33,9 +29,10 @@ const DecryptKeyStore = () => {
     gas,
     msgs,
     memo,
+    transactionInfo,
   ] = useAppStore(
     (state) => [
-      state.wallet.decryptKeyStore.modal,
+      state.wallet.decryptKeyStore,
       state.wallet.keyStoreLoginDetails.encryptedSeed,
       state.wallet.accountDetails,
       state.wallet.keyStore.coinType,
@@ -43,6 +40,7 @@ const DecryptKeyStore = () => {
       state.transactions.gas.gas,
       state.transactions.txnMsgs,
       state.transactions.memo,
+      state.transactions.transactionInfo,
     ],
     shallow
   );
@@ -52,7 +50,7 @@ const DecryptKeyStore = () => {
   );
 
   const handleClose = () => {
-    handleDecryptKeystoreModal(false);
+    handleDecryptKeystoreModal(false, null);
   };
 
   const onChange = (evt: any) => {
@@ -77,6 +75,7 @@ const DecryptKeyStore = () => {
       }
       const mnemonic = decryptedData.mnemonic;
 
+      console.log(mnemonic, password, "password");
       const hdPath = makeHdPath(
         accountDetails.accountNumber!,
         accountDetails.accountIndex!,
@@ -88,23 +87,28 @@ const DecryptKeyStore = () => {
         gas.toString()
       );
 
+      console.log(feeMsg, msgs, "msgs");
       const response = await MnemonicWalletWithPassphrase(
         mnemonic,
         hdPath,
         accountDetails.bipPasPhrase!,
         defaultChain.prefix
       );
-
-      handleDecryptKeystoreModal(false);
-      await executeSendTransaction({
-        signer: response.wallet,
-        fee: feeMsg,
-        rpc: persistenceChain!.rpc,
-        msgs: msgs,
-        signerAddress: response.address!,
-        memo,
-      });
+      await executeTransaction(
+        {
+          signer: response.wallet,
+          fee: feeMsg,
+          rpc: persistenceChain!.rpc,
+          msgs: msgs,
+          signerAddress: response.address!,
+          memo,
+        },
+        keyStoreModal.txnName
+      );
+      setPassword("");
+      handleDecryptKeystoreModal(false, null);
     } catch (e: any) {
+      setPassword("");
       exceptionHandle(e, { "Error while submitting txn": "" });
     }
   };
@@ -115,7 +119,7 @@ const DecryptKeyStore = () => {
 
   return (
     <Modal
-      show={keyStoreModal}
+      show={keyStoreModal.modal}
       onClose={handleClose}
       header=""
       modalBodyClassName={"!p-0"}
@@ -148,7 +152,11 @@ const DecryptKeyStore = () => {
             justify-center w-[250px] mx-auto mb-4"
               type="primary"
               size="medium"
-              disabled={errorMessage !== "" || password === ""}
+              disabled={
+                errorMessage !== "" ||
+                password === "" ||
+                transactionInfo.inProgress
+              }
               content="Submit"
               onClick={handleSubmit}
             />

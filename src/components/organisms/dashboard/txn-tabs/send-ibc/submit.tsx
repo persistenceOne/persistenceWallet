@@ -68,7 +68,7 @@ const Submit = () => {
       port: IBCConfiguration.ibcDefaultPort,
     });
     setTxnMsgs([msg]);
-    handleDecryptKeystoreModal(true);
+    handleDecryptKeystoreModal(true, "sendIBC");
   };
 
   console.log(

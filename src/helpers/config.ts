@@ -40,6 +40,15 @@ export type DefaultChain = {
   [index: string]: any;
 };
 
+interface ExplorerLink {
+  [index: string]: any;
+}
+
+export const explorerLink: ExplorerLink = {
+  Testnet: "https://testnet.mintscan.io/persistence-testnet",
+  Mainnet: "https://www.mintscan.io/persistence",
+};
+
 export const DefaultChainInfo: DefaultChain = {
   Testnet: {
     counterpartyChainId: "test-core-1",

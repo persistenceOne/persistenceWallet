@@ -65,6 +65,7 @@ module.exports = {
       "black-600": "#212121",
       "black-500": "#141414",
       "black-400": "#282828",
+      "black-300": "#373737",
       "white-full": "#ffffff",
       "white-high": "#FCFCFC",
       "white-emphasis": "#ECECEC",

@@ -1,15 +1,17 @@
 import React from "react";
 import { useAppStore } from "../../../../../store/store";
+import InputText from "../../../atoms/input";
 
 const Password = ({ setErrorMessage }: any) => {
+  const [password] = useAppStore((state) => [state.wallet.keyStore.password]);
   const handleWalletKeyStoreFilePassword = useAppStore(
     (state) => state.handleWalletKeyStoreFilePassword
   );
   const onChange = (evt: any) => {
     const value = evt.target.value;
     const regex = /^\S{3}\S+$/;
+    handleWalletKeyStoreFilePassword(evt.target.value);
     if (regex.test(value)) {
-      handleWalletKeyStoreFilePassword(evt.target.value);
       setErrorMessage("");
     } else {
       setErrorMessage(
@@ -17,16 +19,19 @@ const Password = ({ setErrorMessage }: any) => {
       );
     }
   };
+
   return (
     <div className="mb-2">
-      <p className="mb-1">Password</p>
-      <input
-        disabled={false}
-        onChange={onChange}
-        className="h-[40px] w-full p-2 rounded-sm"
+      <p className="mb-1 text-light-white-500">Password</p>
+      <InputText
         type="password"
-        defaultValue=""
+        placeholder=""
+        disable={false}
         required={true}
+        onChange={onChange}
+        name="password"
+        value={password}
+        className={`w-full rounded-md`}
       />
     </div>
   );

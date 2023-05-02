@@ -2,13 +2,15 @@ import React from "react";
 import { useAppStore } from "../../../../../../store/store";
 import { shallow } from "zustand/shallow";
 import InputText from "../../../../atoms/input";
+import { GetDelegatedValidatorInfo } from "../../../../../helpers/types";
 
-const Amount = () => {
-  const [amount, available] = useAppStore(
-    (state) => [
-      state.transactions.unbond.amount,
-      state.wallet.validatorsInfo.totalDelegatedAmount,
-    ],
+interface Props {
+  delegatedValidator: GetDelegatedValidatorInfo;
+}
+
+const Amount = ({ delegatedValidator }: Props) => {
+  const [amount] = useAppStore(
+    (state) => [state.transactions.unbond.amount],
     shallow
   );
 
@@ -35,10 +37,12 @@ const Amount = () => {
         <p className="text-light-white-500">Amount</p>
         <p
           className="text-light-white-500 cursor-pointer underline"
-          onClick={() => maxHandler(available.toString())}
+          onClick={() =>
+            maxHandler(delegatedValidator!.delegatedAmount.toString())
+          }
         >
           Available:
-          {available.toString()}
+          {delegatedValidator!.delegatedAmount.toString()}
         </p>
       </div>
       <InputText

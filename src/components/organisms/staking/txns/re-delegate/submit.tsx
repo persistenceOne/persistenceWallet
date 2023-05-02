@@ -53,7 +53,7 @@ const Submit = () => {
       getUnDecimalize(amount.toString(), 6).truncate().toString()
     );
     setTxnMsgs([msg]);
-    handleDecryptKeystoreModal(true);
+    handleDecryptKeystoreModal(true, "re-delegate");
     handleReDelegateTxnModal(false);
   };
 

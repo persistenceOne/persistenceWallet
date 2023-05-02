@@ -148,8 +148,8 @@ const SignInKeyStore = () => {
           </div>
           <div className="px-8 py-6 ">
             <KeyStore setErrorMessage={setErrorMessage} />
-            <AdvancedOptions />
             <p className={"text-sm text-red"}>{errorMessage}</p>
+            <AdvancedOptions />
             <div className={"my-2"}>
               <Button
                 className="button md:text-sm flex items-center
@@ -157,6 +157,7 @@ const SignInKeyStore = () => {
                 type="primary"
                 size="medium"
                 content="Submit"
+                disabled={errorMessage !== "" || password === ""}
                 onClick={handleSubmit}
               />
             </div>

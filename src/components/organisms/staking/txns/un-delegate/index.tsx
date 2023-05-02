@@ -9,10 +9,12 @@ import { Icon } from "../../../../atoms/icon";
 import Memo from "../../../common/memo";
 
 const UnDelegateModal = () => {
-  const [modal, amount] = useAppStore(
+  const [modal, amount, selectedValidator, delegatedValidators] = useAppStore(
     (state) => [
       state.transactions.unbond.modal,
       state.transactions.unbond.amount,
+      state.transactions.staking.selectedValidator,
+      state.wallet.validatorsInfo.delegatedValidators,
     ],
     shallow
   );
@@ -22,6 +24,10 @@ const UnDelegateModal = () => {
 
   const handleUnDelegateTxnModal = useAppStore(
     (state) => state.handleUnDelegateTxnModal
+  );
+
+  const delegatedValidator = delegatedValidators.find(
+    (item) => item.validatorAddress === selectedValidator!.validatorAddress
   );
 
   const handleClose = () => {
@@ -57,7 +63,7 @@ const UnDelegateModal = () => {
         </p>
       </div>
       <div className="px-8 py-6">
-        <Amount />
+        <Amount delegatedValidator={delegatedValidator!} />
         <Memo />
         <FeeOptions amount={"0"} />
         <Submit />

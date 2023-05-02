@@ -20,6 +20,7 @@ import {
   CommissionInfo,
 } from "../../src/helpers/types";
 import { useAppStore } from "../store";
+import { TransactionNames } from "./transactions";
 export type CoinType = 118 | 750;
 
 export type loginType = "keplr" | "keyStore" | "ledger";
@@ -79,6 +80,7 @@ export interface WalletSliceState {
     };
     decryptKeyStore: {
       modal: boolean;
+      txnName: TransactionNames;
     };
     changePassword: {
       modal: boolean;
@@ -107,7 +109,10 @@ export interface WalletSliceActions {
   handleWalletKeyStoreFilePassword: (value: any) => void;
   handleWalletKeyStoreCoinType: (value: CoinType) => void;
   handleWalletSignInModal: (value: boolean) => void;
-  handleDecryptKeystoreModal: (value: boolean) => void;
+  handleDecryptKeystoreModal: (
+    value: boolean,
+    txnName: TransactionNames
+  ) => void;
   handleWalletSignInKeyStoreModal: (value: boolean) => void;
   handleWalletAccountDetails: (value: AccountDetails) => void;
   handleWalletKeyStoreLoginDetails: (value: KeyStoreLoginDetails) => void;
@@ -136,11 +141,12 @@ const initialState = {
     },
     keyStore: {
       file: null,
-      password: null,
+      password: "",
       coinType: 750,
     },
     decryptKeyStore: {
       modal: false,
+      txnName: null,
     },
     changePassword: {
       modal: false,
@@ -256,10 +262,13 @@ export const createWalletSlice: StateCreator<WalletSlice> = (set) => ({
         state.wallet.signIn.modal = value;
       })
     ),
-  handleDecryptKeystoreModal: (value: boolean) =>
+  handleDecryptKeystoreModal: (value: boolean, txnName: TransactionNames) =>
     set(
       produce((state: WalletSlice) => {
-        state.wallet.decryptKeyStore.modal = value;
+        state.wallet.decryptKeyStore = {
+          modal: value,
+          txnName: txnName,
+        };
       })
     ),
   handleWalletSignInKeyStoreModal: (value: boolean) =>

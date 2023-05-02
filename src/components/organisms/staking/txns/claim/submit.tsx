@@ -48,7 +48,7 @@ const Submit = ({ selected, selectedCommission }: Props) => {
       messages.push(validatorCommissionMsg(commission.validatorAddress!));
     }
     setTxnMsgs(messages);
-    handleDecryptKeystoreModal(true);
+    handleDecryptKeystoreModal(true, "claim");
     handleClaimTxnModal(false);
   };
 
