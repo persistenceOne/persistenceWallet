@@ -66,7 +66,7 @@ const AdvancedOptions = ({ setError }: any) => {
   };
 
   return (
-    <div>
+    <div className={"mb-4"}>
       <button
         type="button"
         className="flex justify-center items-center mx-auto"
