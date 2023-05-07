@@ -1,4 +1,5 @@
 import Axios from "axios";
+import { ValidatorProps } from "../../helpers/types";
 
 export const XPRT_PRICE_URL =
   "https://api.coingecko.com/api/v3/coins/persistence";
@@ -29,5 +30,25 @@ export const fetchXPRTPrice = async (): Promise<number> => {
     return 0;
   } catch (e) {
     return 0;
+  }
+};
+
+interface AvatarList {
+  avatarUrl: string;
+  validatorAddress: string;
+}
+export const getAvatars = async (validators: ValidatorProps[]) => {
+  try {
+    const list: AvatarList[] = [];
+    for (let validator of validators) {
+      const avatar = await getAvatar(validator.validatorImage);
+      list.push({
+        avatarUrl: avatar,
+        validatorAddress: validator.validatorAddress,
+      });
+    }
+    return list;
+  } catch (e) {
+    return [];
   }
 };

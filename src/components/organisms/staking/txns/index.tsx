@@ -110,17 +110,22 @@ const TransactionModal = () => {
               handledTxnModals("delegate");
             }}
           />
-          <Button
-            className="button md:text-sm flex items-center
+          {delegatedValidator &&
+          delegatedValidator!.delegatedAmount.toDec().gt(toDec("0")) ? (
+            <Button
+              className="button md:text-sm flex items-center
             justify-center mx-2 mb-4"
-            type="primary"
-            size="medium"
-            disabled={false}
-            content="UnBond"
-            onClick={() => {
-              handledTxnModals("un-delegate");
-            }}
-          />
+              type="primary"
+              size="medium"
+              disabled={false}
+              content="UnBond"
+              onClick={() => {
+                handledTxnModals("un-delegate");
+              }}
+            />
+          ) : (
+            ""
+          )}
           {delegatedValidator &&
           delegatedValidator!.delegatedAmount.toDec().gt(toDec("0")) ? (
             <Button
