@@ -17,6 +17,7 @@ import ModalWithDraw from "../Transactions/ModalWithDrawAllRewards";
 import ModalSetWithdrawAddress from "../Transactions/ModalSetWithdrawAddress";
 import Loader from "../../components/Loader";
 import ReactGA from "react-ga4";
+import TransferDelegations from "./Validators/Transfer";
 
 const Staking = () => {
     const {t} = useTranslation();
@@ -55,6 +56,9 @@ const Staking = () => {
                                         <Nav.Item>
                                             <Nav.Link eventKey="delegated" onClick={() => onClick(t("DELEGATED"))}>{t("DELEGATED")}</Nav.Link>
                                         </Nav.Item>
+                                        <Nav.Item>
+                                            <Nav.Link eventKey="transfer" onClick={() => onClick(t("TRANSFER"))}>{t("TRANSFER")}</Nav.Link>
+                                        </Nav.Item>
                                     </Nav>
                                 </div>
                                 <div>
@@ -69,6 +73,9 @@ const Staking = () => {
                             </Tab.Pane>
                             <Tab.Pane eventKey="delegated">
                                 <DelegatedValidators/>
+                            </Tab.Pane>
+                            <Tab.Pane eventKey="transfer">
+                                <TransferDelegations/>
                             </Tab.Pane>
                         </Tab.Content>
                     </Tab.Container>

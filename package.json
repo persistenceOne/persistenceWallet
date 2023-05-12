@@ -32,6 +32,7 @@
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "mui-datatables": "^3.7.6",
+    "prettier": "^2.8.8",
     "qrcode.react": "^1.0.1",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.3",

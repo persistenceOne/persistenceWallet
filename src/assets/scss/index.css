@@ -817,6 +817,11 @@ ul li em {
   .migrate-modal .buttons button {
     width: 200px; }
 
+.moniker-image {
+  margin-right: 10px;
+  width: 20px;
+  border-radius: 50%; }
+
 /*--------------------------------------------------------------
 # main styles
 --------------------------------------------------------------*/
@@ -1701,7 +1706,8 @@ ul li em {
     outline: none;
     border-bottom: 2px solid #272931; }
   .wallet-main-section .tabs-section .nav-tabs {
-    border: 1px solid #dee2e6 !important; }
+    border: 1px solid #dee2e6 !important;
+    border-radius: 6px; }
     .wallet-main-section .tabs-section .nav-tabs .ibc-tab p {
       margin: 0; }
       .wallet-main-section .tabs-section .nav-tabs .ibc-tab p button {
@@ -1726,9 +1732,7 @@ ul li em {
         border-right: 1px solid #EAEBF6; }
   .wallet-main-section .tabs-section .tab-content {
     padding: 25px 0px 0 0px;
-    position: relative;
-    height: calc(100vh - 335px);
-    overflow-y: auto; }
+    position: relative; }
     .wallet-main-section .tabs-section .tab-content .tab-header .left {
       display: flex;
       display: -webkit-flex;
@@ -1759,6 +1763,7 @@ ul li em {
       padding-bottom: 25px; }
 .wallet-main-section .send-container {
   border: 1px solid #E3E5F4;
+  border-radius: 6px;
   padding: 35px 100px; }
   .wallet-main-section .send-container .form-error {
     text-align: left; }
@@ -1880,6 +1885,7 @@ ul li em {
 .wallet-main-section .receive-container {
   text-align: center;
   border: 1px solid #E3E5F4;
+  border-radius: 6px;
   padding: 50px; }
   .wallet-main-section .receive-container .key {
     font-weight: 500;
@@ -2146,7 +2152,8 @@ ul li em {
     align-items: center;
     justify-content: center;
     padding: 20px 30px;
-    border: 1px solid; }
+    border: 1px solid;
+    border-radius: 6px; }
     .token-info-section .info-box:nth-child(2) {
       margin: 0 20px; }
     .token-info-section .info-box .line {
@@ -2210,11 +2217,10 @@ ul li em {
     color: #2E3239; }
 
 .validators-section {
-  position: relative;
-  height: calc(100vh - 281px);
-  overflow-y: hidden; }
+  position: relative; }
   .validators-section .main-header {
     border-bottom: 1px solid #ccc;
+    border-radius: 6px;
     margin-bottom: 20px; }
     .validators-section .main-header .left {
       display: flex;
@@ -2241,32 +2247,28 @@ ul li em {
         border: 0px solid;
         border-bottom: 2px solid #272931;
         color: #272931; }
-  .validators-section .main-tab-content {
-    height: calc(100vh - 329px);
-    overflow-y: auto;
-    padding: 0 10px 50px 0px; }
-    .validators-section .main-tab-content .active-inactive-validators {
-      margin-bottom: 20px; }
-      .validators-section .main-tab-content .active-inactive-validators .left {
-        display: flex;
-        display: -webkit-flex;
-        align-items: center; }
-        .validators-section .main-tab-content .active-inactive-validators .left .info-name {
-          padding-right: 10px;
-          margin: 0; }
-        .validators-section .main-tab-content .active-inactive-validators .left .nav-pills .nav-link {
-          margin: 0;
-          padding: .3rem 1rem;
-          border-radius: 0;
-          background: none;
-          font-weight: 500;
-          font-size: 14px;
-          color: #55678B;
-          border: 1px solid; }
-        .validators-section .main-tab-content .active-inactive-validators .left .nav-pills .nav-link.active, .validators-section .main-tab-content .active-inactive-validators .left .nav-pills .show > .nav-link {
-          background: #E50913;
-          border: 1px solid #E50913;
-          color: #FFFFFF; }
+  .validators-section .main-tab-content .active-inactive-validators {
+    margin-bottom: 20px; }
+    .validators-section .main-tab-content .active-inactive-validators .left {
+      display: flex;
+      display: -webkit-flex;
+      align-items: center; }
+      .validators-section .main-tab-content .active-inactive-validators .left .info-name {
+        padding-right: 10px;
+        margin: 0; }
+      .validators-section .main-tab-content .active-inactive-validators .left .nav-pills .nav-link {
+        margin: 0;
+        padding: .3rem 1rem;
+        border-radius: 0;
+        background: none;
+        font-weight: 500;
+        font-size: 14px;
+        color: #55678B;
+        border: 1px solid; }
+      .validators-section .main-tab-content .active-inactive-validators .left .nav-pills .nav-link.active, .validators-section .main-tab-content .active-inactive-validators .left .nav-pills .show > .nav-link {
+        background: #E50913;
+        border: 1px solid #E50913;
+        color: #FFFFFF; }
   .validators-section .info {
     display: flex;
     display: -webkit-flex;
@@ -2301,40 +2303,38 @@ ul li em {
     border: 1px solid #E3E5F4; }
   .validators-section .MUIDataTableToolbar-icon-153:hover, .validators-section .MUIDataTableToolbar-iconActive-154 {
     color: #E50913; }
-  .validators-section table {
-    border: 1px solid #E3E5F4; }
-    .validators-section table thead {
-      border-bottom: 1px solid #E3E5F4; }
-      .validators-section table thead th {
-        padding: 15px 20px;
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 150%;
-        color: #8D9CB5 !important;
-        font-family: 'Poppins', sans-serif;
-        background: transparent !important; }
-        .validators-section table thead th span button {
-          outline: none !important; }
-        .validators-section table thead th:first-child {
-          padding-left: 40px; }
-    .validators-section table tbody td {
+  .validators-section table thead {
+    border-bottom: 1px solid #E3E5F4; }
+    .validators-section table thead th {
+      padding: 15px 20px;
+      font-weight: 500;
       font-size: 14px;
       line-height: 150%;
-      padding: 15px 20px;
-      font-family: 'Poppins', sans-serif; }
-      .validators-section table tbody td .moniker-image {
-        margin-right: 10px;
-        width: 23px;
-        border-radius: 50%; }
-      .validators-section table tbody td .validator-name {
-        font-size: 14px;
-        line-height: 150%;
-        color: #1A73B4; }
-      .validators-section table tbody td:first-child {
-        align-items: center;
+      color: #8D9CB5 !important;
+      font-family: 'Poppins', sans-serif;
+      background: transparent !important; }
+      .validators-section table thead th span button {
+        outline: none !important; }
+      .validators-section table thead th:first-child {
         padding-left: 40px; }
-    .validators-section table tr:first-child td {
-      padding-top: 30px; }
+  .validators-section table tbody td {
+    font-size: 14px;
+    line-height: 150%;
+    padding: 15px 20px;
+    font-family: 'Poppins', sans-serif; }
+    .validators-section table tbody td .moniker-image {
+      margin-right: 10px;
+      width: 23px;
+      border-radius: 50%; }
+    .validators-section table tbody td .validator-name {
+      font-size: 14px;
+      line-height: 150%;
+      color: #1A73B4; }
+    .validators-section table tbody td:first-child {
+      align-items: center;
+      padding-left: 40px; }
+  .validators-section table tr:first-child td {
+    padding-top: 30px; }
 
 .delegate-modal .delegate-modal-body {
   padding: 10px 50px 40px 50px; }
@@ -2670,6 +2670,30 @@ ul li em {
   font-family: 'Poppins', sans-serif;
   color: #212529;
   margin: 0; }
+.delegated-validators.transfer .validator-name .empty-checkbox {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid #69696D; }
+.delegated-validators.transfer .validator-name .icon {
+  width: 16px;
+  height: 16px;
+  fill: #E50913; }
+.delegated-validators.transfer .input-amount {
+  padding: 8px;
+  border: 1px solid #282828;
+  border-radius: 6px;
+  outline: none !important;
+  box-shadow: none !important;
+  color: #8D9CB5; }
+  .delegated-validators.transfer .input-amount.active {
+    border-color: #e50912; }
+.delegated-validators.transfer .button-section {
+  margin: 20px 0 10px 0;
+  text-align: right; }
+  .delegated-validators.transfer .button-section .button {
+    width: 200px;
+    margin-left: auto; }
 
 .delegate-list-modal .modal-list-data {
   padding: 0 !important; }
