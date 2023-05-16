@@ -98,6 +98,7 @@ let English = {
     TRANSACTIONS: "Transactions",
     RECIPIENT_ADDRESS: "Recipient Address",
     SELECTED_VALIDATORS: "Selected Validators",
+    DELEGATE_TOKENS: "Delegated Tokens",
     SEND_AMOUNT: "Send Amount",
     RECEIVED: "Received",
     CHOOSE_VALIDATOR: "Choose a Validator",

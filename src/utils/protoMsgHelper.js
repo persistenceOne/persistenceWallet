@@ -13,7 +13,10 @@ import { MsgTransfer } from "cosmjs-types/ibc/applications/transfer/v1/tx";
 import { coin } from "@cosmjs/stargate";
 import { trimWhiteSpaces } from "./scripts";
 import { DefaultChainInfo } from "../config";
-import { MsgTokenizeShares } from "../protos/lsnative/staking/v1beta1/tx";
+import {
+  MsgTokenizeShares,
+  MsgRedeemTokensforShares
+} from "../protos/lsnative/staking/v1beta1/tx";
 
 const msgSendTypeUrl = "/cosmos.bank.v1beta1.MsgSend";
 const msgDelegateTypeUrl = "/cosmos.staking.v1beta1.MsgDelegate";
@@ -27,6 +30,8 @@ const msgTransferTypeUrl = "/ibc.applications.transfer.v1.MsgTransfer";
 const msgValidatorCommission =
   "/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission";
 export const msgTokenizeShares = "/lsnative.staking.v1beta1.MsgTokenizeShares";
+export const msgRedeemTokensforShares =
+  "/lsnative.staking.v1beta1.MsgRedeemTokensforShares";
 
 function SendMsg(fromAddress, toAddress, amount, denom) {
   return {
@@ -124,14 +129,6 @@ function DelegationTransferMsg(
   amount,
   denom = DefaultChainInfo.currency.coinMinimalDenom
 ) {
-  console.log(
-    fromAddress,
-    validatorAddress,
-    tokenizedShareOwner,
-    amount,
-    denom,
-    "DelegationTransferMsg"
-  );
   return {
     typeUrl: msgTokenizeShares,
     value: MsgTokenizeShares.fromPartial({
@@ -142,6 +139,19 @@ function DelegationTransferMsg(
         amount: String(amount)
       },
       tokenizedShareOwner: trimWhiteSpaces(tokenizedShareOwner)
+    })
+  };
+}
+
+function RedeemDelegationTransferMsg(fromAddress, denom, amount) {
+  return {
+    typeUrl: msgRedeemTokensforShares,
+    value: MsgRedeemTokensforShares.fromPartial({
+      delegatorAddress: trimWhiteSpaces(fromAddress),
+      amount: {
+        denom: denom,
+        amount: String(amount)
+      }
     })
   };
 }
@@ -191,5 +201,6 @@ export {
   SetWithDrawAddressMsg,
   TransferMsg,
   ValidatorCommissionMsg,
-  DelegationTransferMsg
+  DelegationTransferMsg,
+  RedeemDelegationTransferMsg
 };

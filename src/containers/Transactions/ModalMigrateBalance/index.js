@@ -1,4 +1,4 @@
-import { Modal } from "react-bootstrap";
+import { Modal, OverlayTrigger, Popover } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
 import helper, {
@@ -19,15 +19,42 @@ import {
 } from "../../../store/actions/transactions/migrateAssets";
 import { setTxSendAddress } from "../../../store/actions/transactions/migrateAssets";
 import { validateAddress } from "../../../utils/validations";
+import Avatar from "../../Staking/Validators/Avatar";
+import Icon from "../../../components/Icon";
 
 const ModalMigrateBalance = () => {
   const tokenList = useSelector((state) => state.balance.tokenList);
   const { modal, toAddress, migrationTokenList, buttonStatus } = useSelector(
     (state) => state.migrateAssets
   );
+  const [selectedList, setSelectedList] = useState({
+    list: [],
+    totalAmount: 0
+  });
   const loginInfo = JSON.parse(localStorage.getItem(LOGIN_INFO));
   const [editMode, setEditMode] = useState(false);
   const [localMigrationTokenList, setLocalMigrationTokenList] = useState([]);
+
+  const validators = useSelector((state) => state.validators);
+
+  useEffect(() => {
+    let list = [];
+    let totalAmount = 0;
+    if (validators.delegatedValidators.length > 0) {
+      validators.delegatedValidators.map((validator) => {
+        totalAmount =
+          totalAmount + Number(decimalize(validator.delegations, 6));
+        list.push({
+          name: validator.data.description.moniker,
+          amount: decimalize(validator.delegations, 6),
+          address: validator.data.operatorAddress,
+          identity: validator.data.description.identity,
+          inputAmount: ""
+        });
+      });
+    }
+    setSelectedList({ list: list, totalAmount: totalAmount });
+  }, [validators]);
 
   useEffect(() => {
     dispatch(
@@ -137,8 +164,8 @@ const ModalMigrateBalance = () => {
             to your new 118 coin-type address in one transaction.
           </p>
           <p className="list-item">
-            Note that staked, vesting, and unbonding tokens, as well as
-            unclaimed staking rewards are not transferable yet.
+            Note that vesting, and unbonding tokens, as well as unclaimed
+            staking rewards are not transferable yet.
           </p>
           <p className="list-item"> The following assets will be transferred</p>
           {localMigrationTokenList.length
@@ -208,6 +235,43 @@ const ModalMigrateBalance = () => {
                 );
               })
             : null}
+          {selectedList.list.length > 0 ? (
+            <div className="token-list">
+              <div className="left flex-fill">
+                <p className="label">
+                  {t("DELEGATE_TOKENS")}
+                  <OverlayTrigger
+                    trigger={["hover", "focus"]}
+                    placement="bottom"
+                    overlay={
+                      <Popover id="popover">
+                        <Popover.Content>
+                          {selectedList.list.map((item, index) => (
+                            <div
+                              key={index}
+                              className={"d-flex align-items-center"}
+                            >
+                              <Avatar identity={item.identity} />
+                              <p className="mb-0 mt-1 ml-1">
+                                {item.name} - {item.amount} XPRT
+                              </p>
+                            </div>
+                          ))}
+                        </Popover.Content>
+                      </Popover>
+                    }
+                  >
+                    <button className="icon-button info" type="button">
+                      <Icon viewClass="arrow-right" icon="info" />
+                    </button>
+                  </OverlayTrigger>
+                </p>
+              </div>
+              <p className={"value mb-0 ml-2 flex-fill text-right"}>
+                {selectedList.totalAmount} XPRT
+              </p>
+            </div>
+          ) : null}
           <p className="list-item">
             to the following address: (please verify this is your own 118
             coin-type address)
@@ -236,7 +300,7 @@ const ModalMigrateBalance = () => {
             </p>
             <p className="input-error">{toAddress.error.message}</p>
           </div>
-          <ButtonMigrate />
+          <ButtonMigrate selectedList={selectedList} />
         </Modal.Body>
       </Modal>
       <div role="button" className="dropdown-item" onClick={handleModal}>

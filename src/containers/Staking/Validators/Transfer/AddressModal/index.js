@@ -14,7 +14,6 @@ const AddressModal = () => {
   const dispatch = useDispatch();
   const list = useSelector((state) => state.delegationTransfer.list);
 
-  console.log(list, "list1");
   const handleClose = () => {
     dispatch(handleDelegationTransferModal(false));
   };

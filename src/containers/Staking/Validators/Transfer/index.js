@@ -73,7 +73,6 @@ const TransferDelegations = () => {
     setTotalAmount(amount);
   };
 
-  console.log(inputState, "inputState", totalAmount);
   const columns = [
     {
       name: "validator",

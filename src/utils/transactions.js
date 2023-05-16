@@ -16,8 +16,11 @@ import {
   makeHdPath
 } from "./helper";
 import { DefaultChainInfo, IBCConfiguration } from "../config";
-import { msgTokenizeShares } from "./protoMsgHelper";
-import { MsgTokenizeShares } from "../protos/lsnative/staking/v1beta1/tx";
+import { msgRedeemTokensforShares, msgTokenizeShares } from "./protoMsgHelper";
+import {
+  MsgRedeemTokensforShares,
+  MsgTokenizeShares
+} from "../protos/lsnative/staking/v1beta1/tx";
 
 const {
   SigningStargateClient,
@@ -39,7 +42,8 @@ async function Transaction(wallet, signerAddress, msgs, fee, memo = "") {
     {
       registry: new Registry([
         ...defaultRegistryTypes,
-        [msgTokenizeShares, MsgTokenizeShares]
+        [msgTokenizeShares, MsgTokenizeShares],
+        [msgRedeemTokensforShares, MsgRedeemTokensforShares]
       ])
     }
   );

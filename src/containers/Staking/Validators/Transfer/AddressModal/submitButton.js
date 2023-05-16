@@ -29,7 +29,6 @@ const Submit = () => {
         )
       );
     });
-    console.log(messages, "messages");
     dispatch(submitFormData(messages));
   };
 

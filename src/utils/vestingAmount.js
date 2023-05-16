@@ -139,7 +139,6 @@ export const getTransferableAmount = async (address, accountData, balance) => {
         )
       );
     }
-    console.log(balance, "accountData231", delegatedVesting, amount);
     transferableAmount = balance + delegatedVesting - amount;
     if (transferableAmount < 0) {
       transferableAmount = 0;
@@ -147,13 +146,6 @@ export const getTransferableAmount = async (address, accountData, balance) => {
     if (delegatedVesting > amount) {
       transferableAmount = balance;
     }
-    console.log(
-      balance,
-      "accountData231",
-      delegatedVesting,
-      amount,
-      transferableAmount
-    );
     return transferableAmount;
   } catch (error) {
     return 0;

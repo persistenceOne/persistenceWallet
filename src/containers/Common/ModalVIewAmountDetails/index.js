@@ -27,21 +27,23 @@ const ModalViewAmountDetails = (props) => {
     });
     props.list.map(async (item) => {
       if (item.denom !== DefaultChainInfo.currency.coinMinimalDenom) {
-        let denom = item.denom.substr(item.denom.indexOf("/") + 1);
-        console.log(item.denom, "denom");
-        const tendermintClient = await tmRPC.Tendermint34Client.connect(
-          tendermintRPCURL
-        );
-        const queryClient = new QueryClient(tendermintClient);
-        const ibcExtension = setupIbcExtension(queryClient);
-        let ibcDenomeResponse = await ibcExtension.ibc.transfer.denomTrace(
-          denom
-        );
-        let data = {
-          dataResponse: item,
-          denomResponse: ibcDenomeResponse
-        };
-        setIbcList((ibcList) => [...ibcList, data]);
+        if (item.denom.startsWith("ibc")) {
+          let denom = item.denom.substr(item.denom.indexOf("/") + 1);
+          console.log(item.denom, "denom");
+          const tendermintClient = await tmRPC.Tendermint34Client.connect(
+            tendermintRPCURL
+          );
+          const queryClient = new QueryClient(tendermintClient);
+          const ibcExtension = setupIbcExtension(queryClient);
+          let ibcDenomeResponse = await ibcExtension.ibc.transfer.denomTrace(
+            denom
+          );
+          let data = {
+            dataResponse: item,
+            denomResponse: ibcDenomeResponse
+          };
+          setIbcList((ibcList) => [...ibcList, data]);
+        }
       }
     });
   };

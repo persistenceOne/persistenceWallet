@@ -46,7 +46,7 @@ export const fetchDelegationsTransfer = async (address) => {
 
 export const fetchDelegationsCount = (address) => {
   fetchDelegationsTransfer(
-    "persistence108cqtjz7gqasctvrw74kewg6642062kmfuujsd"
+    "persistence1wv9879c57ag7zthrtcvundrw3yvvt0a92wmmhq"
   );
   return async (dispatch) => {
     try {
