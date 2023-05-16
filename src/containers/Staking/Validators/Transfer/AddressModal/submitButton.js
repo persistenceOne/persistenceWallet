@@ -3,23 +3,34 @@ import Button from "../../../../../components/Button";
 import { useSelector, useDispatch } from "react-redux";
 import { LOGIN_INFO } from "../../../../../constants/localStorage";
 import { submitFormData } from "../../../../../store/actions/transactions/delegationTransfer";
+import { stringToNumber } from "../../../../../utils/scripts";
+import { tokenValueConversion } from "../../../../../utils/helper";
+import {
+  DelegationTransferMsg,
+  WithdrawMsg
+} from "../../../../../utils/protoMsgHelper";
 
 const Submit = () => {
   const dispatch = useDispatch();
   const loginInfo = JSON.parse(localStorage.getItem(LOGIN_INFO));
   const toAddress = useSelector((state) => state.delegationTransfer.toAddress);
-  // const list = useSelector((state) => state.delegationTransfer.list);
+  const list = useSelector((state) => state.delegationTransfer.list);
   const memo = useSelector((state) => state.delegationTransfer.memo);
 
-  // let sendAmount;
-  // if (token.value.tokenDenom === PstakeInfo.coinMinimalDenom) {
-  //   sendAmount = unDecimalize(amount.value.toString()).toString();
-  // } else {
-  //   sendAmount = (amount.value * 1000000).toFixed(0);
-  // }
-
   const onClick = () => {
-    dispatch(submitFormData([]));
+    let messages = [];
+    list.forEach(async (item) => {
+      messages.push(
+        DelegationTransferMsg(
+          loginInfo.address,
+          item.address,
+          toAddress.value,
+          (item.inputAmount * 1000000).toFixed(0)
+        )
+      );
+    });
+    console.log(messages, "messages");
+    dispatch(submitFormData(messages));
   };
 
   const disable =
@@ -28,23 +39,25 @@ const Submit = () => {
     memo.error.message !== "";
 
   const onClickKeplr = () => {
-    // dispatch(
-    //   setTxName({
-    //     value: {
-    //       name: "send"
-    //     }
-    //   })
-    // );
-    // dispatch(
-    //   keplrSubmit([
-    //     SendMsg(
-    //       loginInfo && loginInfo.address,
-    //       toAddress.value,
-    //       sendAmount,
-    //       token.value.token
-    //     )
-    //   ])
-    // );
+    let messages = [];
+    list.forEach(async (item) => {
+      messages.push(
+        DelegationTransferMsg(
+          loginInfo.address,
+          item.address,
+          toAddress,
+          (item.inputAmount * 1000000).toFixed(0)
+        )
+      );
+    });
+    dispatch(
+      setTxName({
+        value: {
+          name: "delegation-transfer"
+        }
+      })
+    );
+    dispatch(keplrSubmit(messages));
   };
 
   return (
