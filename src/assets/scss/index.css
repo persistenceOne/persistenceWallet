@@ -148,7 +148,6 @@ html, body {
   font-size: 14px;
   line-height: 150%;
   height: calc(2.3em + .75rem + 2px);
-  border-radius: 0;
   border: 0px solid;
   color: #8D9CB5; }
   .modal-custom .modal-body input.form-check-input {
@@ -353,13 +352,13 @@ html, body {
   padding-bottom: 15px; }
   .menmonic-list .form-control {
     width: 120px !important;
-    border-radius: 0;
     margin: 5px;
     text-align: center;
     background: #F5F6FA;
     border-color: #F5F6FA;
     font-size: 14px;
     line-height: 150%;
+    border-radius: 6px;
     color: #2E3239; }
   .menmonic-list .empty-mnemonic {
     font-weight: 600;
@@ -381,17 +380,14 @@ html, body {
   font-size: 14px;
   line-height: 150%;
   height: calc(2.3em + .75rem + 2px);
-  border-radius: 0;
+  border-radius: 6px;
   padding-left: 10px; }
-  .validators-list-selection .MuiSelect-select {
-    display: flex !important;
-    justify-content: space-between !important; }
-    .validators-list-selection .MuiSelect-select:focus {
-      background-color: transparent; }
-    .validators-list-selection .MuiSelect-select .state {
-      display: none !important; }
-    .validators-list-selection .MuiSelect-select em {
-      font-style: normal; }
+  .validators-list-selection .MuiSelect-select:focus {
+    background-color: transparent; }
+  .validators-list-selection .MuiSelect-select .state {
+    display: none !important; }
+  .validators-list-selection .MuiSelect-select em {
+    font-style: normal; }
   .validators-list-selection.Mui-disabled {
     opacity: 0.6; }
 
@@ -708,7 +704,17 @@ ul li em {
     background: #495057;
     width: 150px;
     padding: 5px;
-    text-align: center; }
+    text-align: center;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%; }
+    .custom-file-section .file-button .icon {
+      width: 14px;
+      height: 14px;
+      fill: #d6d6d6;
+      margin-right: 8px; }
   .custom-file-section .file-upload {
     position: absolute;
     top: 0px;
@@ -1794,7 +1800,8 @@ ul li em {
       line-height: 150%;
       border-radius: 0;
       border: 0px solid;
-      color: #8D9CB5; }
+      color: #8D9CB5;
+      border-radius: 6px; }
       .wallet-main-section .send-container .form-section .form-field .form-control::placeholder {
         font-size: 14px;
         color: #8D9CB5; }

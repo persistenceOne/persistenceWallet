@@ -1,7 +1,10 @@
-import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
+import { DirectSecp256k1HdWallet, Registry } from "@cosmjs/proto-signing";
 import Long from "long";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
-import { createProtobufRpcClient } from "@cosmjs/stargate";
+import {
+  createProtobufRpcClient,
+  defaultRegistryTypes
+} from "@cosmjs/stargate";
 import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
 import { LedgerSigner } from "@cosmjs/ledger-amino";
 import { fee } from "./aminoMsgHelper";
@@ -13,6 +16,8 @@ import {
   makeHdPath
 } from "./helper";
 import { DefaultChainInfo, IBCConfiguration } from "../config";
+import { msgTokenizeShares } from "./protoMsgHelper";
+import { MsgTokenizeShares } from "../protos/lsnative/staking/v1beta1/tx";
 
 const {
   SigningStargateClient,
@@ -30,7 +35,13 @@ const tendermintRPCURL = process.env.REACT_APP_TENDERMINT_RPC_ENDPOINT;
 async function Transaction(wallet, signerAddress, msgs, fee, memo = "") {
   const cosmJS = await SigningStargateClient.connectWithSigner(
     tendermintRPCURL,
-    wallet
+    wallet,
+    {
+      registry: new Registry([
+        ...defaultRegistryTypes,
+        [msgTokenizeShares, MsgTokenizeShares]
+      ])
+    }
   );
   return await cosmJS.signAndBroadcast(signerAddress, msgs, fee, memo);
 }

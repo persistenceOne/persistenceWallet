@@ -24,6 +24,7 @@ const TransferDelegations = () => {
         list.push({
           name: validator.data.description.moniker,
           amount: decimalize(validator.delegations, 6),
+          address: validator.data.operatorAddress,
           identity: validator.data.description.identity,
           inputAmount: ""
         });
@@ -43,7 +44,7 @@ const TransferDelegations = () => {
 
   const inputHandler = (name, inputAmount) => {
     const newList = inputState.map((item) => {
-      let itemCopy = { ...item };
+      let itemCopy = item;
       if (item.name === name) {
         itemCopy.inputAmount = inputAmount;
         const response = selectedList.some((selectedItem) => {
