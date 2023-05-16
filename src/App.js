@@ -10,10 +10,7 @@ import { useTranslation } from "react-i18next";
 import KeplrWallet from "./utils/keplr";
 import { useDispatch } from "react-redux";
 import { fetchDelegationsCount } from "./store/actions/delegations";
-import {
-  fetchBalance,
-  fetchTransferableVestingAmount
-} from "./store/actions/balance";
+import { fetchTransferableVestingAmount } from "./store/actions/balance";
 import { fetchRewards, fetchTotalRewards } from "./store/actions/rewards";
 import { fetchUnbondDelegations } from "./store/actions/unbond";
 import { fetchTokenPrice } from "./store/actions/tokenPrice";
@@ -86,7 +83,6 @@ const Main = () => {
       if (address !== null && address !== undefined) {
         await Promise.all([
           dispatch(fetchDelegationsCount(address)),
-          dispatch(fetchBalance(address)),
           dispatch(fetchRewards(address)),
           dispatch(fetchTotalRewards(address)),
           dispatch(fetchUnbondDelegations(address)),

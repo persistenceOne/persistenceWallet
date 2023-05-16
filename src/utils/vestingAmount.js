@@ -126,6 +126,40 @@ async function getTransferableVestingAmount(address, balance) {
   }
 }
 
+export const getTransferableAmount = async (address, accountData, balance) => {
+  try {
+    let transferableAmount = 0;
+
+    const amount = tokenValueConversion(accountData.vestingBalance);
+    let delegatedVesting = 0;
+    if (accountData.typeUrl !== "/cosmos.auth.v1beta1.BaseAccount") {
+      delegatedVesting = tokenValueConversion(
+        getDenomAmount(
+          accountData.accountData.baseVestingAccount.delegatedVesting
+        )
+      );
+    }
+    console.log(balance, "accountData231", delegatedVesting, amount);
+    transferableAmount = balance + delegatedVesting - amount;
+    if (transferableAmount < 0) {
+      transferableAmount = 0;
+    }
+    if (delegatedVesting > amount) {
+      transferableAmount = balance;
+    }
+    console.log(
+      balance,
+      "accountData231",
+      delegatedVesting,
+      amount,
+      transferableAmount
+    );
+    return transferableAmount;
+  } catch (error) {
+    return 0;
+  }
+};
+
 function getDenomAmount(
   coins,
   denom = DefaultChainInfo.currency.coinMinimalDenom

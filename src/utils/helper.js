@@ -35,6 +35,10 @@ import {
   stkATOMInfo,
   TestNetFoundationNodes
 } from "../config";
+import {
+  getContinuousVestingAmount,
+  getPeriodicVestingAmount
+} from "./vestingAmount";
 
 const tendermint_1 = require("cosmjs-types/ibc/lightclients/tendermint/v1/tendermint");
 const encoding = require("@cosmjs/encoding");
@@ -242,6 +246,8 @@ export const generateHash = (txBytes) => {
   return encoding.toHex(sha256(txBytes)).toUpperCase();
 };
 
+const currentEpochTime = Math.floor(new Date().getTime() / 1000);
+
 export async function getAccount(address) {
   try {
     const rpcClient = await transactions.RpcClient();
@@ -270,7 +276,10 @@ export async function getAccount(address) {
       return {
         typeUrl: accountResponse.account.typeUrl,
         accountData: periodicVestingAccountResponse,
-        vestingBalance: getPeriodicVestingAmount(accountData, currentEpochTime)
+        vestingBalance: getPeriodicVestingAmount(
+          periodicVestingAccountResponse,
+          currentEpochTime
+        )
       };
     } else if (
       accountResponse.account.typeUrl ===
@@ -292,7 +301,11 @@ export async function getAccount(address) {
       );
       return {
         typeUrl: accountResponse.account.typeUrl,
-        accountData: continuousVestingAccountResponse
+        accountData: continuousVestingAccountResponse,
+        vestingBalance: getContinuousVestingAmount(
+          continuousVestingAccountResponse,
+          currentEpochTime
+        )
       };
     }
   } catch (error) {
