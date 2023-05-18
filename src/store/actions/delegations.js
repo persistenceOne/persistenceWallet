@@ -31,23 +31,7 @@ export const fetchDelegationStatusSuccess = (value) => {
   };
 };
 
-export const fetchDelegationsTransfer = async (address) => {
-  try {
-    const rpcClient = await transactions.RpcClient();
-    const lsNativeQueryService = new LsNativeStakingQueryClient(rpcClient);
-    const response = await lsNativeQueryService.TokenizeShareRecordsOwned({
-      owner: address
-    });
-    console.log(response, "response");
-  } catch (e) {
-    console.log(e, "error in fetchDelegationsTransfer");
-  }
-};
-
 export const fetchDelegationsCount = (address) => {
-  fetchDelegationsTransfer(
-    "persistence1wv9879c57ag7zthrtcvundrw3yvvt0a92wmmhq"
-  );
   return async (dispatch) => {
     try {
       const rpcClient = await transactions.RpcClient();
