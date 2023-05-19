@@ -8,6 +8,7 @@ import Icon from "../../../../components/Icon";
 import { decimalize } from "../../../../utils/scripts";
 import Submit from "./button";
 import AddressModal from "./AddressModal";
+import TxnModal from "./TxnModal";
 
 const TransferDelegations = () => {
   const { t } = useTranslation();
@@ -158,6 +159,7 @@ const TransferDelegations = () => {
         selectedList={selectedList}
       />
       <AddressModal />
+      <TxnModal />
     </div>
   );
 };

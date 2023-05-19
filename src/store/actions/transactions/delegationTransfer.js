@@ -3,6 +3,7 @@ import {
   TX_DELEGATION_TRANSFER_MEMO_SET,
   TX_DELEGATION_TRANSFER_AMOUNT_SET,
   TX_DELEGATION_TRANSFER_ADDRESS_SET,
+  TX_DELEGATION_TOKENIZE_MODAL,
   TX_DELEGATION_TRANSFER_MODAL
 } from "../../../constants/delegationTransfer";
 import { setTxIno, setTxName } from "./common";
@@ -35,6 +36,13 @@ export const setTxDelegationTransferMemo = (data) => {
   };
 };
 
+export const handleDelegationTokenizeModal = (data) => {
+  return {
+    type: TX_DELEGATION_TOKENIZE_MODAL,
+    data
+  };
+};
+
 export const handleDelegationTransferModal = (data) => {
   return {
     type: TX_DELEGATION_TRANSFER_MODAL,
@@ -55,7 +63,7 @@ export const submitFormData = (message) => (dispatch, getState) => {
   dispatch(
     setTxIno({
       value: {
-        modal: handleDelegationTransferModal(true),
+        modal: handleDelegationTokenizeModal(true),
         data: {
           message: message,
           amount: getState().send.amount.value,

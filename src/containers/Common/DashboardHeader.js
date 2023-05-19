@@ -177,7 +177,9 @@ const DashboardHeader = () => {
               >
                 <div className="info">
                   <p className="key">
-                    {loginInfo && loginInfo.loginMode === "ledger" ? (
+                    {loginInfo !== null &&
+                    loginInfo &&
+                    loginInfo.loginMode === "ledger" ? (
                       <button
                         className="ledger-verify"
                         onClick={ledgerShowAddress}
@@ -188,7 +190,9 @@ const DashboardHeader = () => {
                       ""
                     )}
                   </p>
-                  {loginInfo && loginInfo?.keyStoreLogin ? (
+                  {loginInfo !== null &&
+                  loginInfo &&
+                  loginInfo?.keyStoreLogin ? (
                     <div className="address-list">
                       <div
                         className={`${
@@ -251,7 +255,11 @@ const DashboardHeader = () => {
                         <div className="address-box">
                           <div className="address">
                             <span>
-                              {stringTruncate(loginInfo && loginInfo?.address)}
+                              {stringTruncate(
+                                loginInfo !== null &&
+                                  loginInfo &&
+                                  loginInfo?.address
+                              )}
                             </span>
                             <Copy id={loginInfo && loginInfo?.address} />
                           </div>

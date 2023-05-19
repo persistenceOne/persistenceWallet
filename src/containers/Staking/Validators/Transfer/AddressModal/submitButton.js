@@ -2,13 +2,13 @@ import React from "react";
 import Button from "../../../../../components/Button";
 import { useSelector, useDispatch } from "react-redux";
 import { LOGIN_INFO } from "../../../../../constants/localStorage";
-import { submitFormData } from "../../../../../store/actions/transactions/delegationTransfer";
-import { stringToNumber } from "../../../../../utils/scripts";
-import { tokenValueConversion } from "../../../../../utils/helper";
 import {
-  DelegationTransferMsg,
-  WithdrawMsg
-} from "../../../../../utils/protoMsgHelper";
+  handleDelegationTokenizeModal,
+  submitFormData
+} from "../../../../../store/actions/transactions/delegationTransfer";
+import { DelegationTransferMsg } from "../../../../../utils/protoMsgHelper";
+import { setTxName } from "../../../../../store/actions/transactions/common";
+import { keplrSubmit } from "../../../../../store/actions/transactions/keplr";
 
 const Submit = () => {
   const dispatch = useDispatch();
@@ -29,6 +29,7 @@ const Submit = () => {
         )
       );
     });
+    dispatch(handleDelegationTokenizeModal(false));
     dispatch(submitFormData(messages));
   };
 
@@ -44,7 +45,7 @@ const Submit = () => {
         DelegationTransferMsg(
           loginInfo.address,
           item.address,
-          toAddress,
+          toAddress.value,
           (item.inputAmount * 1000000).toFixed(0)
         )
       );
@@ -56,6 +57,7 @@ const Submit = () => {
         }
       })
     );
+    dispatch(handleDelegationTokenizeModal(false));
     dispatch(keplrSubmit(messages));
   };
 

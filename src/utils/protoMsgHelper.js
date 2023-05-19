@@ -132,13 +132,13 @@ function DelegationTransferMsg(
   return {
     typeUrl: msgTokenizeShares,
     value: MsgTokenizeShares.fromPartial({
-      delegatorAddress: trimWhiteSpaces(fromAddress),
-      validatorAddress: trimWhiteSpaces(validatorAddress),
+      delegatorAddress: fromAddress,
+      validatorAddress: validatorAddress,
       amount: {
         denom: denom,
         amount: String(amount)
       },
-      tokenizedShareOwner: trimWhiteSpaces(tokenizedShareOwner)
+      tokenizedShareOwner: tokenizedShareOwner
     })
   };
 }
@@ -147,7 +147,7 @@ function RedeemDelegationTransferMsg(fromAddress, denom, amount) {
   return {
     typeUrl: msgRedeemTokensforShares,
     value: MsgRedeemTokensforShares.fromPartial({
-      delegatorAddress: trimWhiteSpaces(fromAddress),
+      delegatorAddress: fromAddress,
       amount: {
         denom: denom,
         amount: String(amount)

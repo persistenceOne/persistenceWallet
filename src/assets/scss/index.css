@@ -828,6 +828,9 @@ ul li em {
   width: 20px;
   border-radius: 50%; }
 
+.cursor-pointer {
+  cursor: pointer; }
+
 /*--------------------------------------------------------------
 # main styles
 --------------------------------------------------------------*/
@@ -1733,9 +1736,6 @@ ul li em {
       line-height: 180%;
       text-align: center;
       color: #8D9CB5; }
-      .wallet-main-section .tabs-section .nav-tabs .nav-link:nth-child(2) {
-        border-left: 1px solid #EAEBF6;
-        border-right: 1px solid #EAEBF6; }
   .wallet-main-section .tabs-section .tab-content {
     padding: 25px 0px 0 0px;
     position: relative; }
@@ -2247,9 +2247,6 @@ ul li em {
         line-height: 180%;
         font-size: 14px;
         color: #55678B; }
-        .validators-section .main-header .left .nav-pills .nav-link:nth-child(2) {
-          border-left: 1px solid #E3E5F4 !important;
-          border-right: 1px solid #E3E5F4 !important; }
       .validators-section .main-header .left .nav-pills .nav-link.active, .validators-section .main-header .left .nav-pills .show > .nav-link {
         border: 0px solid;
         border-bottom: 2px solid #272931;

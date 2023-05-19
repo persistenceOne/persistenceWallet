@@ -138,11 +138,6 @@
         line-height: 180%;
         text-align: center;
         color: #8D9CB5;
-
-        &:nth-child(2) {
-          border-left: 1px solid #EAEBF6;
-          border-right: 1px solid #EAEBF6;
-        }
       }
     }
 
@@ -928,10 +923,6 @@
           font-size: 14px;
           color: #55678B;
 
-          &:nth-child(2) {
-            border-left: 1px solid #E3E5F4 !important;
-            border-right: 1px solid #E3E5F4 !important;
-          }
         }
 
         .nav-link.active, .show > .nav-link {

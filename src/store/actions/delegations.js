@@ -10,6 +10,7 @@ import { QueryClientImpl as LsNativeStakingQueryClient } from "../../protos/lsna
 import * as Sentry from "@sentry/browser";
 import { stringToNumber } from "../../utils/scripts";
 import { tokenValueConversion } from "../../utils/helper";
+import { queryTokenizeSharesRecordId } from "../../utils/queries";
 
 export const fetchDelegationsCountSuccess = (count) => {
   return {
@@ -31,7 +32,24 @@ export const fetchDelegationStatusSuccess = (value) => {
   };
 };
 
+export const fetchDelegationsTransfer = async (address) => {
+  try {
+    const rpcClient = await transactions.RpcClient();
+    const lsNativeQueryService = new LsNativeStakingQueryClient(rpcClient);
+    await queryTokenizeSharesRecordId();
+    const response = await lsNativeQueryService.TokenizeShareRecordsOwned({
+      owner: address
+    });
+    console.log(response, "response");
+  } catch (e) {
+    console.log(e, "error in fetchDelegationsTransfer");
+  }
+};
+
 export const fetchDelegationsCount = (address) => {
+  fetchDelegationsTransfer(
+    "persistence108cqtjz7gqasctvrw74kewg6642062kmfuujsd"
+  );
   return async (dispatch) => {
     try {
       const rpcClient = await transactions.RpcClient();

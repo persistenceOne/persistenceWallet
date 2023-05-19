@@ -29,6 +29,7 @@ const ModalViewTxnResponse = () => {
   const dispatch = useDispatch();
   const show = useSelector((state) => state.common.modal);
   const response = useSelector((state) => state.common.txResponse.value);
+  console.log(response, "response");
   const handleClose = () => {
     dispatch(hideTxResultModal());
   };

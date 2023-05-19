@@ -18,6 +18,7 @@ import ModalSetWithdrawAddress from "../Transactions/ModalSetWithdrawAddress";
 import Loader from "../../components/Loader";
 import ReactGA from "react-ga4";
 import TransferDelegations from "./Validators/Transfer";
+import TokenizedShares from "./Validators/TokenizedShares";
 
 const Staking = () => {
   const { t } = useTranslation();
@@ -68,6 +69,14 @@ const Staking = () => {
                     </Nav.Item>
                     <Nav.Item>
                       <Nav.Link
+                        eventKey="tokenized-shares"
+                        onClick={() => onClick(t("tokenized-shares"))}
+                      >
+                        Tokenize Shares
+                      </Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                      <Nav.Link
                         eventKey="transfer"
                         onClick={() => onClick(t("TRANSFER"))}
                       >
@@ -89,6 +98,9 @@ const Staking = () => {
                 <DelegatedValidators />
               </Tab.Pane>
               <Tab.Pane eventKey="transfer">
+                <TokenizedShares />
+              </Tab.Pane>
+              <Tab.Pane eventKey="tokenized-shares">
                 <TransferDelegations />
               </Tab.Pane>
             </Tab.Content>

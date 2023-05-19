@@ -54,7 +54,7 @@ export const randomNum = (min, max) => {
 };
 
 export const stringTruncate = (str, length = 7) => {
-  if (str.length > 30) {
+  if (str && str.length > 30) {
     return (
       str.substr(0, length) +
       "..." +

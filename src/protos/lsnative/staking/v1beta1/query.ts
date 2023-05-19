@@ -3,7 +3,7 @@ import Long from "long";
 import * as _m0 from "protobufjs/minimal";
 import {
   PageRequest,
-  PageResponse,
+  PageResponse
 } from "../../cosmos/base/query/v1beta1/pagination";
 import {
   Validator,
@@ -13,7 +13,7 @@ import {
   Pool,
   Params,
   TokenizeShareRecord,
-  RedelegationResponse,
+  RedelegationResponse
 } from "../../staking/v1beta1/staking";
 import { Coin } from "../../cosmos/base/v1beta1/coin";
 
@@ -358,7 +358,7 @@ export const QueryValidatorsRequest = {
       status: isSet(object.status) ? String(object.status) : "",
       pagination: isSet(object.pagination)
         ? PageRequest.fromJSON(object.pagination)
-        : undefined,
+        : undefined
     };
   },
 
@@ -382,7 +382,7 @@ export const QueryValidatorsRequest = {
         ? PageRequest.fromPartial(object.pagination)
         : undefined;
     return message;
-  },
+  }
 };
 
 function createBaseQueryValidatorsResponse(): QueryValidatorsResponse {
@@ -437,7 +437,7 @@ export const QueryValidatorsResponse = {
         : [],
       pagination: isSet(object.pagination)
         ? PageResponse.fromJSON(object.pagination)
-        : undefined,
+        : undefined
     };
   },
 
@@ -468,7 +468,7 @@ export const QueryValidatorsResponse = {
         ? PageResponse.fromPartial(object.pagination)
         : undefined;
     return message;
-  },
+  }
 };
 
 function createBaseQueryValidatorRequest(): QueryValidatorRequest {
@@ -511,7 +511,7 @@ export const QueryValidatorRequest = {
     return {
       validatorAddr: isSet(object.validatorAddr)
         ? String(object.validatorAddr)
-        : "",
+        : ""
     };
   },
 
@@ -528,7 +528,7 @@ export const QueryValidatorRequest = {
     const message = createBaseQueryValidatorRequest();
     message.validatorAddr = object.validatorAddr ?? "";
     return message;
-  },
+  }
 };
 
 function createBaseQueryValidatorResponse(): QueryValidatorResponse {
@@ -571,7 +571,7 @@ export const QueryValidatorResponse = {
     return {
       validator: isSet(object.validator)
         ? Validator.fromJSON(object.validator)
-        : undefined,
+        : undefined
     };
   },
 
@@ -593,7 +593,7 @@ export const QueryValidatorResponse = {
         ? Validator.fromPartial(object.validator)
         : undefined;
     return message;
-  },
+  }
 };
 
 function createBaseQueryValidatorDelegationsRequest(): QueryValidatorDelegationsRequest {
@@ -645,7 +645,7 @@ export const QueryValidatorDelegationsRequest = {
         : "",
       pagination: isSet(object.pagination)
         ? PageRequest.fromJSON(object.pagination)
-        : undefined,
+        : undefined
     };
   },
 
@@ -670,7 +670,7 @@ export const QueryValidatorDelegationsRequest = {
         ? PageRequest.fromPartial(object.pagination)
         : undefined;
     return message;
-  },
+  }
 };
 
 function createBaseQueryValidatorDelegationsResponse(): QueryValidatorDelegationsResponse {
@@ -729,7 +729,7 @@ export const QueryValidatorDelegationsResponse = {
         : [],
       pagination: isSet(object.pagination)
         ? PageResponse.fromJSON(object.pagination)
-        : undefined,
+        : undefined
     };
   },
 
@@ -762,7 +762,7 @@ export const QueryValidatorDelegationsResponse = {
         ? PageResponse.fromPartial(object.pagination)
         : undefined;
     return message;
-  },
+  }
 };
 
 function createBaseQueryValidatorUnbondingDelegationsRequest(): QueryValidatorUnbondingDelegationsRequest {
@@ -814,7 +814,7 @@ export const QueryValidatorUnbondingDelegationsRequest = {
         : "",
       pagination: isSet(object.pagination)
         ? PageRequest.fromJSON(object.pagination)
-        : undefined,
+        : undefined
     };
   },
 
@@ -839,7 +839,7 @@ export const QueryValidatorUnbondingDelegationsRequest = {
         ? PageRequest.fromPartial(object.pagination)
         : undefined;
     return message;
-  },
+  }
 };
 
 function createBaseQueryValidatorUnbondingDelegationsResponse(): QueryValidatorUnbondingDelegationsResponse {
@@ -898,7 +898,7 @@ export const QueryValidatorUnbondingDelegationsResponse = {
         : [],
       pagination: isSet(object.pagination)
         ? PageResponse.fromJSON(object.pagination)
-        : undefined,
+        : undefined
     };
   },
 
@@ -931,7 +931,7 @@ export const QueryValidatorUnbondingDelegationsResponse = {
         ? PageResponse.fromPartial(object.pagination)
         : undefined;
     return message;
-  },
+  }
 };
 
 function createBaseQueryDelegationRequest(): QueryDelegationRequest {
@@ -983,7 +983,7 @@ export const QueryDelegationRequest = {
         : "",
       validatorAddr: isSet(object.validatorAddr)
         ? String(object.validatorAddr)
-        : "",
+        : ""
     };
   },
 
@@ -1003,7 +1003,7 @@ export const QueryDelegationRequest = {
     message.delegatorAddr = object.delegatorAddr ?? "";
     message.validatorAddr = object.validatorAddr ?? "";
     return message;
-  },
+  }
 };
 
 function createBaseQueryDelegationResponse(): QueryDelegationResponse {
@@ -1052,7 +1052,7 @@ export const QueryDelegationResponse = {
     return {
       delegationResponse: isSet(object.delegationResponse)
         ? DelegationResponse.fromJSON(object.delegationResponse)
-        : undefined,
+        : undefined
     };
   },
 
@@ -1075,7 +1075,7 @@ export const QueryDelegationResponse = {
         ? DelegationResponse.fromPartial(object.delegationResponse)
         : undefined;
     return message;
-  },
+  }
 };
 
 function createBaseQueryUnbondingDelegationRequest(): QueryUnbondingDelegationRequest {
@@ -1127,7 +1127,7 @@ export const QueryUnbondingDelegationRequest = {
         : "",
       validatorAddr: isSet(object.validatorAddr)
         ? String(object.validatorAddr)
-        : "",
+        : ""
     };
   },
 
@@ -1147,7 +1147,7 @@ export const QueryUnbondingDelegationRequest = {
     message.delegatorAddr = object.delegatorAddr ?? "";
     message.validatorAddr = object.validatorAddr ?? "";
     return message;
-  },
+  }
 };
 
 function createBaseQueryUnbondingDelegationResponse(): QueryUnbondingDelegationResponse {
@@ -1193,7 +1193,7 @@ export const QueryUnbondingDelegationResponse = {
     return {
       unbond: isSet(object.unbond)
         ? UnbondingDelegation.fromJSON(object.unbond)
-        : undefined,
+        : undefined
     };
   },
 
@@ -1215,7 +1215,7 @@ export const QueryUnbondingDelegationResponse = {
         ? UnbondingDelegation.fromPartial(object.unbond)
         : undefined;
     return message;
-  },
+  }
 };
 
 function createBaseQueryDelegatorDelegationsRequest(): QueryDelegatorDelegationsRequest {
@@ -1267,7 +1267,7 @@ export const QueryDelegatorDelegationsRequest = {
         : "",
       pagination: isSet(object.pagination)
         ? PageRequest.fromJSON(object.pagination)
-        : undefined,
+        : undefined
     };
   },
 
@@ -1292,7 +1292,7 @@ export const QueryDelegatorDelegationsRequest = {
         ? PageRequest.fromPartial(object.pagination)
         : undefined;
     return message;
-  },
+  }
 };
 
 function createBaseQueryDelegatorDelegationsResponse(): QueryDelegatorDelegationsResponse {
@@ -1351,7 +1351,7 @@ export const QueryDelegatorDelegationsResponse = {
         : [],
       pagination: isSet(object.pagination)
         ? PageResponse.fromJSON(object.pagination)
-        : undefined,
+        : undefined
     };
   },
 
@@ -1384,7 +1384,7 @@ export const QueryDelegatorDelegationsResponse = {
         ? PageResponse.fromPartial(object.pagination)
         : undefined;
     return message;
-  },
+  }
 };
 
 function createBaseQueryDelegatorUnbondingDelegationsRequest(): QueryDelegatorUnbondingDelegationsRequest {
@@ -1436,7 +1436,7 @@ export const QueryDelegatorUnbondingDelegationsRequest = {
         : "",
       pagination: isSet(object.pagination)
         ? PageRequest.fromJSON(object.pagination)
-        : undefined,
+        : undefined
     };
   },
 
@@ -1461,7 +1461,7 @@ export const QueryDelegatorUnbondingDelegationsRequest = {
         ? PageRequest.fromPartial(object.pagination)
         : undefined;
     return message;
-  },
+  }
 };
 
 function createBaseQueryDelegatorUnbondingDelegationsResponse(): QueryDelegatorUnbondingDelegationsResponse {
@@ -1520,7 +1520,7 @@ export const QueryDelegatorUnbondingDelegationsResponse = {
         : [],
       pagination: isSet(object.pagination)
         ? PageResponse.fromJSON(object.pagination)
-        : undefined,
+        : undefined
     };
   },
 
@@ -1553,7 +1553,7 @@ export const QueryDelegatorUnbondingDelegationsResponse = {
         ? PageResponse.fromPartial(object.pagination)
         : undefined;
     return message;
-  },
+  }
 };
 
 function createBaseQueryRedelegationsRequest(): QueryRedelegationsRequest {
@@ -1561,7 +1561,7 @@ function createBaseQueryRedelegationsRequest(): QueryRedelegationsRequest {
     delegatorAddr: "",
     srcValidatorAddr: "",
     dstValidatorAddr: "",
-    pagination: undefined,
+    pagination: undefined
   };
 }
 
@@ -1628,7 +1628,7 @@ export const QueryRedelegationsRequest = {
         : "",
       pagination: isSet(object.pagination)
         ? PageRequest.fromJSON(object.pagination)
-        : undefined,
+        : undefined
     };
   },
 
@@ -1659,7 +1659,7 @@ export const QueryRedelegationsRequest = {
         ? PageRequest.fromPartial(object.pagination)
         : undefined;
     return message;
-  },
+  }
 };
 
 function createBaseQueryRedelegationsResponse(): QueryRedelegationsResponse {
@@ -1718,7 +1718,7 @@ export const QueryRedelegationsResponse = {
         : [],
       pagination: isSet(object.pagination)
         ? PageResponse.fromJSON(object.pagination)
-        : undefined,
+        : undefined
     };
   },
 
@@ -1751,7 +1751,7 @@ export const QueryRedelegationsResponse = {
         ? PageResponse.fromPartial(object.pagination)
         : undefined;
     return message;
-  },
+  }
 };
 
 function createBaseQueryDelegatorValidatorsRequest(): QueryDelegatorValidatorsRequest {
@@ -1803,7 +1803,7 @@ export const QueryDelegatorValidatorsRequest = {
         : "",
       pagination: isSet(object.pagination)
         ? PageRequest.fromJSON(object.pagination)
-        : undefined,
+        : undefined
     };
   },
 
@@ -1828,7 +1828,7 @@ export const QueryDelegatorValidatorsRequest = {
         ? PageRequest.fromPartial(object.pagination)
         : undefined;
     return message;
-  },
+  }
 };
 
 function createBaseQueryDelegatorValidatorsResponse(): QueryDelegatorValidatorsResponse {
@@ -1883,7 +1883,7 @@ export const QueryDelegatorValidatorsResponse = {
         : [],
       pagination: isSet(object.pagination)
         ? PageResponse.fromJSON(object.pagination)
-        : undefined,
+        : undefined
     };
   },
 
@@ -1914,7 +1914,7 @@ export const QueryDelegatorValidatorsResponse = {
         ? PageResponse.fromPartial(object.pagination)
         : undefined;
     return message;
-  },
+  }
 };
 
 function createBaseQueryDelegatorValidatorRequest(): QueryDelegatorValidatorRequest {
@@ -1966,7 +1966,7 @@ export const QueryDelegatorValidatorRequest = {
         : "",
       validatorAddr: isSet(object.validatorAddr)
         ? String(object.validatorAddr)
-        : "",
+        : ""
     };
   },
 
@@ -1986,7 +1986,7 @@ export const QueryDelegatorValidatorRequest = {
     message.delegatorAddr = object.delegatorAddr ?? "";
     message.validatorAddr = object.validatorAddr ?? "";
     return message;
-  },
+  }
 };
 
 function createBaseQueryDelegatorValidatorResponse(): QueryDelegatorValidatorResponse {
@@ -2029,7 +2029,7 @@ export const QueryDelegatorValidatorResponse = {
     return {
       validator: isSet(object.validator)
         ? Validator.fromJSON(object.validator)
-        : undefined,
+        : undefined
     };
   },
 
@@ -2051,7 +2051,7 @@ export const QueryDelegatorValidatorResponse = {
         ? Validator.fromPartial(object.validator)
         : undefined;
     return message;
-  },
+  }
 };
 
 function createBaseQueryHistoricalInfoRequest(): QueryHistoricalInfoRequest {
@@ -2092,7 +2092,7 @@ export const QueryHistoricalInfoRequest = {
 
   fromJSON(object: any): QueryHistoricalInfoRequest {
     return {
-      height: isSet(object.height) ? Long.fromValue(object.height) : Long.ZERO,
+      height: isSet(object.height) ? Long.fromValue(object.height) : Long.ZERO
     };
   },
 
@@ -2112,7 +2112,7 @@ export const QueryHistoricalInfoRequest = {
         ? Long.fromValue(object.height)
         : Long.ZERO;
     return message;
-  },
+  }
 };
 
 function createBaseQueryHistoricalInfoResponse(): QueryHistoricalInfoResponse {
@@ -2155,7 +2155,7 @@ export const QueryHistoricalInfoResponse = {
     return {
       hist: isSet(object.hist)
         ? HistoricalInfo.fromJSON(object.hist)
-        : undefined,
+        : undefined
     };
   },
 
@@ -2177,7 +2177,7 @@ export const QueryHistoricalInfoResponse = {
         ? HistoricalInfo.fromPartial(object.hist)
         : undefined;
     return message;
-  },
+  }
 };
 
 function createBaseQueryPoolRequest(): QueryPoolRequest {
@@ -2221,7 +2221,7 @@ export const QueryPoolRequest = {
   ): QueryPoolRequest {
     const message = createBaseQueryPoolRequest();
     return message;
-  },
+  }
 };
 
 function createBaseQueryPoolResponse(): QueryPoolResponse {
@@ -2259,7 +2259,7 @@ export const QueryPoolResponse = {
 
   fromJSON(object: any): QueryPoolResponse {
     return {
-      pool: isSet(object.pool) ? Pool.fromJSON(object.pool) : undefined,
+      pool: isSet(object.pool) ? Pool.fromJSON(object.pool) : undefined
     };
   },
 
@@ -2279,7 +2279,7 @@ export const QueryPoolResponse = {
         ? Pool.fromPartial(object.pool)
         : undefined;
     return message;
-  },
+  }
 };
 
 function createBaseQueryParamsRequest(): QueryParamsRequest {
@@ -2323,7 +2323,7 @@ export const QueryParamsRequest = {
   ): QueryParamsRequest {
     const message = createBaseQueryParamsRequest();
     return message;
-  },
+  }
 };
 
 function createBaseQueryParamsResponse(): QueryParamsResponse {
@@ -2361,7 +2361,7 @@ export const QueryParamsResponse = {
 
   fromJSON(object: any): QueryParamsResponse {
     return {
-      params: isSet(object.params) ? Params.fromJSON(object.params) : undefined,
+      params: isSet(object.params) ? Params.fromJSON(object.params) : undefined
     };
   },
 
@@ -2381,7 +2381,7 @@ export const QueryParamsResponse = {
         ? Params.fromPartial(object.params)
         : undefined;
     return message;
-  },
+  }
 };
 
 function createBaseQueryTokenizeShareRecordByIdRequest(): QueryTokenizeShareRecordByIdRequest {
@@ -2422,7 +2422,7 @@ export const QueryTokenizeShareRecordByIdRequest = {
 
   fromJSON(object: any): QueryTokenizeShareRecordByIdRequest {
     return {
-      id: isSet(object.id) ? Long.fromValue(object.id) : Long.UZERO,
+      id: isSet(object.id) ? Long.fromValue(object.id) : Long.UZERO
     };
   },
 
@@ -2442,7 +2442,7 @@ export const QueryTokenizeShareRecordByIdRequest = {
         ? Long.fromValue(object.id)
         : Long.UZERO;
     return message;
-  },
+  }
 };
 
 function createBaseQueryTokenizeShareRecordByIdResponse(): QueryTokenizeShareRecordByIdResponse {
@@ -2488,7 +2488,7 @@ export const QueryTokenizeShareRecordByIdResponse = {
     return {
       record: isSet(object.record)
         ? TokenizeShareRecord.fromJSON(object.record)
-        : undefined,
+        : undefined
     };
   },
 
@@ -2510,7 +2510,7 @@ export const QueryTokenizeShareRecordByIdResponse = {
         ? TokenizeShareRecord.fromPartial(object.record)
         : undefined;
     return message;
-  },
+  }
 };
 
 function createBaseQueryTokenizeShareRecordByDenomRequest(): QueryTokenizeShareRecordByDenomRequest {
@@ -2551,7 +2551,7 @@ export const QueryTokenizeShareRecordByDenomRequest = {
 
   fromJSON(object: any): QueryTokenizeShareRecordByDenomRequest {
     return {
-      denom: isSet(object.denom) ? String(object.denom) : "",
+      denom: isSet(object.denom) ? String(object.denom) : ""
     };
   },
 
@@ -2567,7 +2567,7 @@ export const QueryTokenizeShareRecordByDenomRequest = {
     const message = createBaseQueryTokenizeShareRecordByDenomRequest();
     message.denom = object.denom ?? "";
     return message;
-  },
+  }
 };
 
 function createBaseQueryTokenizeShareRecordByDenomResponse(): QueryTokenizeShareRecordByDenomResponse {
@@ -2613,7 +2613,7 @@ export const QueryTokenizeShareRecordByDenomResponse = {
     return {
       record: isSet(object.record)
         ? TokenizeShareRecord.fromJSON(object.record)
-        : undefined,
+        : undefined
     };
   },
 
@@ -2635,7 +2635,7 @@ export const QueryTokenizeShareRecordByDenomResponse = {
         ? TokenizeShareRecord.fromPartial(object.record)
         : undefined;
     return message;
-  },
+  }
 };
 
 function createBaseQueryTokenizeShareRecordsOwnedRequest(): QueryTokenizeShareRecordsOwnedRequest {
@@ -2676,7 +2676,7 @@ export const QueryTokenizeShareRecordsOwnedRequest = {
 
   fromJSON(object: any): QueryTokenizeShareRecordsOwnedRequest {
     return {
-      owner: isSet(object.owner) ? String(object.owner) : "",
+      owner: isSet(object.owner) ? String(object.owner) : ""
     };
   },
 
@@ -2692,7 +2692,7 @@ export const QueryTokenizeShareRecordsOwnedRequest = {
     const message = createBaseQueryTokenizeShareRecordsOwnedRequest();
     message.owner = object.owner ?? "";
     return message;
-  },
+  }
 };
 
 function createBaseQueryTokenizeShareRecordsOwnedResponse(): QueryTokenizeShareRecordsOwnedResponse {
@@ -2737,7 +2737,7 @@ export const QueryTokenizeShareRecordsOwnedResponse = {
     return {
       records: Array.isArray(object?.records)
         ? object.records.map((e: any) => TokenizeShareRecord.fromJSON(e))
-        : [],
+        : []
     };
   },
 
@@ -2760,7 +2760,7 @@ export const QueryTokenizeShareRecordsOwnedResponse = {
     message.records =
       object.records?.map((e) => TokenizeShareRecord.fromPartial(e)) || [];
     return message;
-  },
+  }
 };
 
 function createBaseQueryAllTokenizeShareRecordsRequest(): QueryAllTokenizeShareRecordsRequest {
@@ -2807,7 +2807,7 @@ export const QueryAllTokenizeShareRecordsRequest = {
   >(_: I): QueryAllTokenizeShareRecordsRequest {
     const message = createBaseQueryAllTokenizeShareRecordsRequest();
     return message;
-  },
+  }
 };
 
 function createBaseQueryAllTokenizeShareRecordsResponse(): QueryAllTokenizeShareRecordsResponse {
@@ -2852,7 +2852,7 @@ export const QueryAllTokenizeShareRecordsResponse = {
     return {
       records: Array.isArray(object?.records)
         ? object.records.map((e: any) => TokenizeShareRecord.fromJSON(e))
-        : [],
+        : []
     };
   },
 
@@ -2875,7 +2875,7 @@ export const QueryAllTokenizeShareRecordsResponse = {
     message.records =
       object.records?.map((e) => TokenizeShareRecord.fromPartial(e)) || [];
     return message;
-  },
+  }
 };
 
 function createBaseQueryLastTokenizeShareRecordIdRequest(): QueryLastTokenizeShareRecordIdRequest {
@@ -2922,7 +2922,7 @@ export const QueryLastTokenizeShareRecordIdRequest = {
   >(_: I): QueryLastTokenizeShareRecordIdRequest {
     const message = createBaseQueryLastTokenizeShareRecordIdRequest();
     return message;
-  },
+  }
 };
 
 function createBaseQueryLastTokenizeShareRecordIdResponse(): QueryLastTokenizeShareRecordIdResponse {
@@ -2963,7 +2963,7 @@ export const QueryLastTokenizeShareRecordIdResponse = {
 
   fromJSON(object: any): QueryLastTokenizeShareRecordIdResponse {
     return {
-      id: isSet(object.id) ? Long.fromValue(object.id) : Long.UZERO,
+      id: isSet(object.id) ? Long.fromValue(object.id) : Long.UZERO
     };
   },
 
@@ -2983,7 +2983,7 @@ export const QueryLastTokenizeShareRecordIdResponse = {
         ? Long.fromValue(object.id)
         : Long.UZERO;
     return message;
-  },
+  }
 };
 
 function createBaseQueryTotalTokenizeSharedAssetsRequest(): QueryTotalTokenizeSharedAssetsRequest {
@@ -3030,7 +3030,7 @@ export const QueryTotalTokenizeSharedAssetsRequest = {
   >(_: I): QueryTotalTokenizeSharedAssetsRequest {
     const message = createBaseQueryTotalTokenizeSharedAssetsRequest();
     return message;
-  },
+  }
 };
 
 function createBaseQueryTotalTokenizeSharedAssetsResponse(): QueryTotalTokenizeSharedAssetsResponse {
@@ -3071,7 +3071,7 @@ export const QueryTotalTokenizeSharedAssetsResponse = {
 
   fromJSON(object: any): QueryTotalTokenizeSharedAssetsResponse {
     return {
-      value: isSet(object.value) ? Coin.fromJSON(object.value) : undefined,
+      value: isSet(object.value) ? Coin.fromJSON(object.value) : undefined
     };
   },
 
@@ -3091,7 +3091,7 @@ export const QueryTotalTokenizeSharedAssetsResponse = {
         ? Coin.fromPartial(object.value)
         : undefined;
     return message;
-  },
+  }
 };
 
 /** Query defines the gRPC querier service. */
@@ -3213,7 +3213,7 @@ export class QueryClientImpl implements Query {
   ): Promise<QueryValidatorsResponse> {
     const data = QueryValidatorsRequest.encode(request).finish();
     const promise = this.rpc.request(
-      "lsnative.staking.v1beta1.Query",
+      "cosmos.staking.v1beta1.Query",
       "Validators",
       data
     );
@@ -3225,7 +3225,7 @@ export class QueryClientImpl implements Query {
   Validator(request: QueryValidatorRequest): Promise<QueryValidatorResponse> {
     const data = QueryValidatorRequest.encode(request).finish();
     const promise = this.rpc.request(
-      "lsnative.staking.v1beta1.Query",
+      "cosmos.staking.v1beta1.Query",
       "Validator",
       data
     );
@@ -3239,7 +3239,7 @@ export class QueryClientImpl implements Query {
   ): Promise<QueryValidatorDelegationsResponse> {
     const data = QueryValidatorDelegationsRequest.encode(request).finish();
     const promise = this.rpc.request(
-      "lsnative.staking.v1beta1.Query",
+      "cosmos.staking.v1beta1.Query",
       "ValidatorDelegations",
       data
     );
@@ -3254,7 +3254,7 @@ export class QueryClientImpl implements Query {
     const data =
       QueryValidatorUnbondingDelegationsRequest.encode(request).finish();
     const promise = this.rpc.request(
-      "lsnative.staking.v1beta1.Query",
+      "cosmos.staking.v1beta1.Query",
       "ValidatorUnbondingDelegations",
       data
     );
@@ -3268,7 +3268,7 @@ export class QueryClientImpl implements Query {
   ): Promise<QueryDelegationResponse> {
     const data = QueryDelegationRequest.encode(request).finish();
     const promise = this.rpc.request(
-      "lsnative.staking.v1beta1.Query",
+      "cosmos.staking.v1beta1.Query",
       "Delegation",
       data
     );
@@ -3282,7 +3282,7 @@ export class QueryClientImpl implements Query {
   ): Promise<QueryUnbondingDelegationResponse> {
     const data = QueryUnbondingDelegationRequest.encode(request).finish();
     const promise = this.rpc.request(
-      "lsnative.staking.v1beta1.Query",
+      "cosmos.staking.v1beta1.Query",
       "UnbondingDelegation",
       data
     );
@@ -3296,7 +3296,7 @@ export class QueryClientImpl implements Query {
   ): Promise<QueryDelegatorDelegationsResponse> {
     const data = QueryDelegatorDelegationsRequest.encode(request).finish();
     const promise = this.rpc.request(
-      "lsnative.staking.v1beta1.Query",
+      "cosmos.staking.v1beta1.Query",
       "DelegatorDelegations",
       data
     );
@@ -3311,7 +3311,7 @@ export class QueryClientImpl implements Query {
     const data =
       QueryDelegatorUnbondingDelegationsRequest.encode(request).finish();
     const promise = this.rpc.request(
-      "lsnative.staking.v1beta1.Query",
+      "cosmos.staking.v1beta1.Query",
       "DelegatorUnbondingDelegations",
       data
     );
@@ -3325,7 +3325,7 @@ export class QueryClientImpl implements Query {
   ): Promise<QueryRedelegationsResponse> {
     const data = QueryRedelegationsRequest.encode(request).finish();
     const promise = this.rpc.request(
-      "lsnative.staking.v1beta1.Query",
+      "cosmos.staking.v1beta1.Query",
       "Redelegations",
       data
     );
@@ -3339,7 +3339,7 @@ export class QueryClientImpl implements Query {
   ): Promise<QueryDelegatorValidatorsResponse> {
     const data = QueryDelegatorValidatorsRequest.encode(request).finish();
     const promise = this.rpc.request(
-      "lsnative.staking.v1beta1.Query",
+      "cosmos.staking.v1beta1.Query",
       "DelegatorValidators",
       data
     );
@@ -3353,7 +3353,7 @@ export class QueryClientImpl implements Query {
   ): Promise<QueryDelegatorValidatorResponse> {
     const data = QueryDelegatorValidatorRequest.encode(request).finish();
     const promise = this.rpc.request(
-      "lsnative.staking.v1beta1.Query",
+      "cosmos.staking.v1beta1.Query",
       "DelegatorValidator",
       data
     );
@@ -3367,7 +3367,7 @@ export class QueryClientImpl implements Query {
   ): Promise<QueryHistoricalInfoResponse> {
     const data = QueryHistoricalInfoRequest.encode(request).finish();
     const promise = this.rpc.request(
-      "lsnative.staking.v1beta1.Query",
+      "cosmos.staking.v1beta1.Query",
       "HistoricalInfo",
       data
     );
@@ -3379,7 +3379,7 @@ export class QueryClientImpl implements Query {
   Pool(request: QueryPoolRequest): Promise<QueryPoolResponse> {
     const data = QueryPoolRequest.encode(request).finish();
     const promise = this.rpc.request(
-      "lsnative.staking.v1beta1.Query",
+      "cosmos.staking.v1beta1.Query",
       "Pool",
       data
     );
@@ -3391,7 +3391,7 @@ export class QueryClientImpl implements Query {
   Params(request: QueryParamsRequest): Promise<QueryParamsResponse> {
     const data = QueryParamsRequest.encode(request).finish();
     const promise = this.rpc.request(
-      "lsnative.staking.v1beta1.Query",
+      "cosmos.staking.v1beta1.Query",
       "Params",
       data
     );
@@ -3405,7 +3405,7 @@ export class QueryClientImpl implements Query {
   ): Promise<QueryTokenizeShareRecordByIdResponse> {
     const data = QueryTokenizeShareRecordByIdRequest.encode(request).finish();
     const promise = this.rpc.request(
-      "lsnative.staking.v1beta1.Query",
+      "cosmos.staking.v1beta1.Query",
       "TokenizeShareRecordById",
       data
     );
@@ -3420,7 +3420,7 @@ export class QueryClientImpl implements Query {
     const data =
       QueryTokenizeShareRecordByDenomRequest.encode(request).finish();
     const promise = this.rpc.request(
-      "lsnative.staking.v1beta1.Query",
+      "cosmos.staking.v1beta1.Query",
       "TokenizeShareRecordByDenom",
       data
     );
@@ -3434,7 +3434,7 @@ export class QueryClientImpl implements Query {
   ): Promise<QueryTokenizeShareRecordsOwnedResponse> {
     const data = QueryTokenizeShareRecordsOwnedRequest.encode(request).finish();
     const promise = this.rpc.request(
-      "lsnative.staking.v1beta1.Query",
+      "cosmos.staking.v1beta1.Query",
       "TokenizeShareRecordsOwned",
       data
     );
@@ -3448,7 +3448,7 @@ export class QueryClientImpl implements Query {
   ): Promise<QueryAllTokenizeShareRecordsResponse> {
     const data = QueryAllTokenizeShareRecordsRequest.encode(request).finish();
     const promise = this.rpc.request(
-      "lsnative.staking.v1beta1.Query",
+      "cosmos.staking.v1beta1.Query",
       "AllTokenizeShareRecords",
       data
     );
@@ -3462,7 +3462,7 @@ export class QueryClientImpl implements Query {
   ): Promise<QueryLastTokenizeShareRecordIdResponse> {
     const data = QueryLastTokenizeShareRecordIdRequest.encode(request).finish();
     const promise = this.rpc.request(
-      "lsnative.staking.v1beta1.Query",
+      "cosmos.staking.v1beta1.Query",
       "LastTokenizeShareRecordId",
       data
     );
@@ -3476,7 +3476,7 @@ export class QueryClientImpl implements Query {
   ): Promise<QueryTotalTokenizeSharedAssetsResponse> {
     const data = QueryTotalTokenizeSharedAssetsRequest.encode(request).finish();
     const promise = this.rpc.request(
-      "lsnative.staking.v1beta1.Query",
+      "cosmos.staking.v1beta1.Query",
       "TotalTokenizeSharedAssets",
       data
     );

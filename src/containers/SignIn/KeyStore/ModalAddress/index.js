@@ -20,7 +20,6 @@ import { createProtobufRpcClient, QueryClient } from "@cosmjs/stargate";
 import vestingAccount from "../../../../utils/vestingAmount";
 import transactions from "../../../../utils/transactions";
 import Lodash from "lodash";
-import { fetchTransferableVestingAmount } from "../../../../store/actions/balance";
 const tendermintRPCURL = process.env.REACT_APP_TENDERMINT_RPC_ENDPOINT;
 
 const fetchBalance = async (address) => {
@@ -141,7 +140,7 @@ const ModalAddress = () => {
       unBondings118,
       unBondings750
     ] = await Promise.all([
-      fetchTransferableVestingAmount(response?.coin118Data?.address),
+      fetchBalance(response?.coin118Data?.address),
       fetchBalance(response?.coin750Data?.address),
       fetchDelegationsCount(response?.coin118Data?.address),
       fetchDelegationsCount(response?.coin750Data?.address),

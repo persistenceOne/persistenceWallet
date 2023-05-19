@@ -25,16 +25,11 @@ export const GlobalStyles = createGlobalStyle`
     
     .wallet-main-section .tabs-section .nav-tabs, .validators-section .main-header{
       border: 1px solid ${({ theme }) => theme.tableBorderColor} !important;  
-    }           
-    .wallet-main-section .tabs-section .nav-tabs .nav-link:nth-child(2), 
-    .validators-section .main-header .left .nav-pills .nav-item:nth-child(2){
-        border-left: 1px solid ${({ theme }) =>
-          theme.tableBorderColor} !important;
-        border-right: 1px solid ${({ theme }) =>
-          theme.tableBorderColor} !important;
     }
-    .wallet-main-section .tabs-section .nav-tabs .nav-link:nth-child(3){
-    border-right: 1px solid ${({ theme }) => theme.tableBorderColor} !important;
+    .wallet-main-section .tabs-section .nav-tabs .nav-link:not(:last-child),
+    .validators-section .main-header .left .nav-pills .nav-item:not(:last-child){
+      border-right: 1px solid ${({ theme }) =>
+        theme.tableBorderColor} !important;
     }
     .wallet-main-section .send-container, .wallet-main-section .receive-container{
     border: 1px solid ${({ theme }) => theme.tableBorderColor} !important;  

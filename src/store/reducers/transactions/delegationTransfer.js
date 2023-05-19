@@ -3,6 +3,7 @@ import {
   TX_DELEGATION_TRANSFER_AMOUNT_SET,
   TX_DELEGATION_TRANSFER_MEMO_SET,
   TX_DELEGATION_TRANSFER_ADDRESS_SET,
+  TX_DELEGATION_TOKENIZE_MODAL,
   TX_DELEGATION_TRANSFER_MODAL
 } from "../../../constants/delegationTransfer";
 import { combineReducers } from "redux";
@@ -27,7 +28,6 @@ const toAddress = (
           message: data.error.message
         }
       };
-    case TX_SUCCESS:
     case TX_RESULT_MODAL_HIDE:
       return {
         value: "",
@@ -117,6 +117,15 @@ const memo = (
 
 const modal = (state = false, { type, data }) => {
   switch (type) {
+    case TX_DELEGATION_TOKENIZE_MODAL:
+      return data;
+    default:
+      return state;
+  }
+};
+
+const transferModal = (state = false, { type, data }) => {
+  switch (type) {
     case TX_DELEGATION_TRANSFER_MODAL:
       return data;
     default:
@@ -129,5 +138,6 @@ export default combineReducers({
   amount,
   list,
   memo,
-  modal
+  modal,
+  transferModal
 });

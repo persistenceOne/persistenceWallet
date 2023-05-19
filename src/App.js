@@ -82,6 +82,7 @@ const Main = () => {
   useEffect(() => {
     const fetchApi = async () => {
       if (address !== null && address !== undefined) {
+        console.log(address, "fetchApi");
         await Promise.all([
           dispatch(fetchDelegationsCount(address)),
           dispatch(fetchRewards(address)),
@@ -141,11 +142,6 @@ const Main = () => {
     integrations: [new Integrations.BrowserTracing()],
     tracesSampleRate: 1.0
   });
-
-  useEffect(() => {
-    fetchTokenizeShares("persistence108cqtjz7gqasctvrw74kewg6642062kmfuujsd");
-  }, []);
-
   return (
     <>
       {!isOnline ? (

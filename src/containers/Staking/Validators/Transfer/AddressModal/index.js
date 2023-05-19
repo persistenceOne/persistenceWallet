@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal as ReactModal, OverlayTrigger, Popover } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { handleDelegationTransferModal } from "../../../../../store/actions/transactions/delegationTransfer";
+import { handleDelegationTokenizeModal } from "../../../../../store/actions/transactions/delegationTransfer";
 import ToAddress from "./ToAddress";
 import Icon from "../../../../../components/Icon";
 import { useTranslation } from "react-i18next";
@@ -15,7 +15,7 @@ const AddressModal = () => {
   const list = useSelector((state) => state.delegationTransfer.list);
 
   const handleClose = () => {
-    dispatch(handleDelegationTransferModal(false));
+    dispatch(handleDelegationTokenizeModal(false));
   };
 
   const popover = (
