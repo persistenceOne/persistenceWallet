@@ -122,7 +122,7 @@ export const keyStoreSubmit = (loginAddress) => {
         bip39PassPhrase,
         loginCoinType
       );
-      if (result.code !== undefined) {
+      if (result.code !== undefined && result.code === 0) {
         localStorage.setItem(COIN_TYPE, loginCoinType);
         dispatch(
           setLoginInfo({
@@ -145,13 +145,14 @@ export const keyStoreSubmit = (loginAddress) => {
           dispatch(txResponse(result));
           dispatch(showTxResultModal());
         }
+      } else {
+        throw Error(result.rawLog);
       }
     } catch (error) {
       Sentry.captureException(
         error.response ? error.response.data.message : error.message
       );
       dispatch(txFailed(error.message));
-      dispatch(showTxResultModal());
     }
   };
 };

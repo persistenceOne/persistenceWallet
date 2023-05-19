@@ -41,16 +41,24 @@ const ModalMigrateBalance = () => {
     let list = [];
     let totalAmount = 0;
     if (validators.delegatedValidators.length > 0) {
-      validators.delegatedValidators.map((validator) => {
-        totalAmount =
-          totalAmount + Number(decimalize(validator.delegations, 6));
-        list.push({
-          name: validator.data.description.moniker,
-          amount: decimalize(validator.delegations, 6),
-          address: validator.data.operatorAddress,
-          identity: validator.data.description.identity,
-          inputAmount: ""
-        });
+      validators.delegatedValidators.forEach((validator) => {
+        if (validators.activeList.length > 0) {
+          const response = validators.activeList.find(
+            (item) =>
+              item.data.operatorAddress === validator.data.operatorAddress
+          );
+          if (response) {
+            totalAmount =
+              totalAmount + Number(decimalize(validator.delegations, 6));
+            list.push({
+              name: validator.data.description.moniker,
+              amount: decimalize(validator.delegations, 6),
+              address: validator.data.operatorAddress,
+              identity: validator.data.description.identity,
+              inputAmount: ""
+            });
+          }
+        }
       });
     }
     setSelectedList({ list: list, totalAmount: totalAmount });

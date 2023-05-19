@@ -80,7 +80,7 @@ const Staking = () => {
                         eventKey="transfer"
                         onClick={() => onClick(t("TRANSFER"))}
                       >
-                        {t("TRANSFER")}
+                        Redeem Shares
                       </Nav.Link>
                     </Nav.Item>
                   </Nav>

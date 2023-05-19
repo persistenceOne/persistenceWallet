@@ -51,8 +51,6 @@ export const handleDelegationTransferModal = (data) => {
 };
 
 export const submitFormData = (message) => (dispatch, getState) => {
-  console.log(message, "messages1");
-
   dispatch(
     setTxName({
       value: {

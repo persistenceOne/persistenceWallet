@@ -21,14 +21,22 @@ const TransferDelegations = () => {
   useEffect(() => {
     let list = [];
     if (validators.delegatedValidators.length > 0) {
-      validators.delegatedValidators.map((validator) => {
-        list.push({
-          name: validator.data.description.moniker,
-          amount: decimalize(validator.delegations, 6),
-          address: validator.data.operatorAddress,
-          identity: validator.data.description.identity,
-          inputAmount: ""
-        });
+      validators.delegatedValidators.forEach((validator) => {
+        if (validators.activeList.length > 0) {
+          const response = validators.activeList.find(
+            (item) =>
+              item.data.operatorAddress === validator.data.operatorAddress
+          );
+          if (response) {
+            list.push({
+              name: validator.data.description.moniker,
+              amount: decimalize(validator.delegations, 6),
+              address: validator.data.operatorAddress,
+              identity: validator.data.description.identity,
+              inputAmount: ""
+            });
+          }
+        }
       });
     }
     setInputState(list);
