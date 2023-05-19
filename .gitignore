@@ -24,7 +24,6 @@
 
 # Build generated
 dist/
-public/
 build/
 .next
 

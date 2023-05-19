@@ -203,7 +203,6 @@ html, body {
       font-size: 14px;
       line-height: 150%;
       height: calc(2.3em + .75rem + 2px);
-      border-radius: 0;
       border: 0px solid;
       color: #8D9CB5;
       &.form-check-input{
@@ -484,13 +483,13 @@ html, body {
 
   .form-control {
     width: 120px !important;
-    border-radius: 0;
     margin: 5px;
     text-align: center;
     background: #F5F6FA;
     border-color: #F5F6FA;
     font-size: 14px;
     line-height: 150%;
+    border-radius: 6px;
     color: #2E3239;
   }
 
@@ -518,17 +517,13 @@ html, body {
   font-size: 14px;
   line-height: 150%;
   height: calc(2.3em + .75rem + 2px);
-  border-radius: 0;
+  border-radius: 6px;
   padding-left: 10px;
 
   .MuiSelect-select {
     &:focus {
       background-color: transparent;
     }
-
-    display: flex !important;
-    justify-content: space-between !important;
-
     .state {
       display: none !important;
     }
@@ -961,7 +956,18 @@ ul li em {
     width: 150px;
     padding: 5px;
     text-align: center;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
     //box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+    .icon{
+      width: 14px;
+      height: 14px;
+      fill: #d6d6d6;
+      margin-right: 8px;
+    }
   }
 
   .file-upload {
@@ -1126,4 +1132,14 @@ ul li em {
       width: 200px;
     }
   }
+}
+
+.moniker-image {
+  margin-right: 10px;
+  width: 20px;
+  border-radius: 50%;
+}
+
+.cursor-pointer{
+  cursor: pointer;
 }

@@ -1,5 +1,5 @@
-import {combineReducers} from 'redux';
-import delegations from './delegations';
+import { combineReducers } from "redux";
+import delegations from "./delegations";
 import transactions from "./transactionsHistory";
 import validators from "./validators";
 import balance from "./balance";
@@ -28,42 +28,44 @@ import unbondTx from "./transactions/unbond";
 import withdrawValidatorRewards from "./transactions/withdrawValidatorRewards";
 import generateKeyStore from "./generateKeyStore";
 import changePassword from "./changePassword";
+import delegationTransfer from "./transactions/delegationTransfer";
 
 const appReducer = combineReducers({
-    delegations,
-    transactions,
-    validators,
-    balance,
-    rewards,
-    unbond,
-    tokenPrice,
-    send,
-    withdrawAddress,
-    common,
-    fee,
-    gas,
-    keyStore,
-    advanced,
-    signInKeyStore,
-    signInModal,
-    signInLedger,
-    signInAddress,
-    signInKeplr,
-    mulitpleRewardsWithDraw,
-    sendIbc,
-    setWithdrawAddress,
-    delegate,
-    redelegate,
-    unbondTx,
-    withdrawValidatorRewards,
-    generateKeyStore,
-    changePassword,
-    migrateAssets
+  delegations,
+  transactions,
+  validators,
+  balance,
+  rewards,
+  unbond,
+  tokenPrice,
+  send,
+  withdrawAddress,
+  common,
+  fee,
+  gas,
+  keyStore,
+  advanced,
+  signInKeyStore,
+  signInModal,
+  signInLedger,
+  signInAddress,
+  signInKeplr,
+  mulitpleRewardsWithDraw,
+  sendIbc,
+  setWithdrawAddress,
+  delegate,
+  redelegate,
+  unbondTx,
+  withdrawValidatorRewards,
+  generateKeyStore,
+  changePassword,
+  migrateAssets,
+  delegationTransfer
 });
 
 export const rootReducer = (state, action) => {
-    if (action.type === 'USER_LOGOUT') {
-        return appReducer(undefined, action);
-    }
-    return appReducer(state, action);
+  if (action.type === "USER_LOGOUT") {
+    return appReducer(undefined, action);
+  }
+  return appReducer(state, action);
 };
