@@ -26,6 +26,7 @@ import {
 } from "../../../constants/localStorage";
 import { handleDelegationTransferModal } from "./delegationTransfer";
 import { fetchTransferableVestingAmount } from "../balance";
+import {pollAccountBalance} from "../../../utils/queries";
 
 export const setTxKeyStore = (data) => {
   return {
@@ -62,6 +63,7 @@ export const keyStoreSubmit = (loginAddress) => {
       const loginInfo = JSON.parse(localStorage.getItem(LOGIN_INFO));
       const password = getState().keyStore.password;
       const keyStoreData = getState().keyStore.keyStore;
+      const balance = getState().balance.list;
       const encryptedSeed = getState().common.loginInfo.encryptedSeed;
 
       let loginCoinType;
@@ -132,14 +134,20 @@ export const keyStoreSubmit = (loginAddress) => {
             }
           })
         );
-        dispatch(closeLoader());
         if (txName === "delegation-transfer") {
-          dispatch(
-            fetchTransferableVestingAmount(loginInfo && loginInfo.address)
-          );
-          dispatch(hideKeyStoreModal());
-          dispatch(handleDelegationTransferModal(true));
+          const pollResult = await pollAccountBalance(balance,loginInfo && loginInfo.address);
+          dispatch(closeLoader());
+          if(pollResult){
+            dispatch(
+                fetchTransferableVestingAmount(loginInfo && loginInfo.address)
+            );
+            dispatch(hideKeyStoreModal());
+            dispatch(handleDelegationTransferModal(true));
+          }else {
+            throw Error('something went wrong');
+          }
         } else {
+          dispatch(closeLoader());
           dispatch(hideKeyStoreModal());
           dispatch(txSuccess());
           dispatch(txResponse(result));

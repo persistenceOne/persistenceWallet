@@ -26,6 +26,12 @@ export const PstakeInfo = {
     coinDecimals: 18,
 };
 
+export const PollingConfig = {
+    initialTxHashQueryDelay: 5000,
+    scheduledTxHashQueryDelay: 5000,
+    numberOfRetries: 60
+};
+
 export const stkATOMInfo = {
     coinDenom: "STKATOM",
     coinMinimalDenom: "stk/uatom",
