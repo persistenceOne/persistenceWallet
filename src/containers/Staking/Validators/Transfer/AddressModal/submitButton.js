@@ -7,7 +7,7 @@ import {
   submitFormData
 } from "../../../../../store/actions/transactions/delegationTransfer";
 import { DelegationTransferMsg } from "../../../../../utils/protoMsgHelper";
-import { setTxName } from "../../../../../store/actions/transactions/common";
+import {setTxIno, setTxName} from "../../../../../store/actions/transactions/common";
 import { keplrSubmit } from "../../../../../store/actions/transactions/keplr";
 
 const Submit = () => {
@@ -50,6 +50,19 @@ const Submit = () => {
         )
       );
     });
+    dispatch(
+        setTxIno({
+          value: {
+            modal: handleDelegationTokenizeModal(false),
+            data: {
+              message: "",
+              amount: "",
+              list: [],
+              memo: ""
+            }
+          }
+        })
+    );
     dispatch(
       setTxName({
         value: {

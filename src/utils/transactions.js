@@ -2,6 +2,7 @@ import { DirectSecp256k1HdWallet, Registry } from "@cosmjs/proto-signing";
 import Long from "long";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import {
+  AminoTypes,
   createProtobufRpcClient,
   defaultRegistryTypes
 } from "@cosmjs/stargate";
@@ -27,6 +28,15 @@ const {
   QueryClient,
   setupIbcExtension
 } = require("@cosmjs/stargate");
+import { createLSNativeAminoConverters } from "./aminoConvter";
+import {
+  createAuthzAminoConverters,
+  createBankAminoConverters,
+  createDistributionAminoConverters,
+  createGovAminoConverters,
+  createIbcAminoConverters,
+  createStakingAminoConverters,
+} from "@cosmjs/stargate";
 const tmRPC = require("@cosmjs/tendermint-rpc");
 const { TransferMsg } = require("./protoMsgHelper");
 const addressPrefix = DefaultChainInfo.prefix;
@@ -34,6 +44,18 @@ const configChainID = process.env.REACT_APP_CHAIN_ID;
 const configCoinType = DefaultChainInfo.coinType;
 
 const tendermintRPCURL = process.env.REACT_APP_TENDERMINT_RPC_ENDPOINT;
+
+function createAminoTypes(prefix) {
+  return {
+    ...createAuthzAminoConverters(),
+    ...createBankAminoConverters(),
+    ...createDistributionAminoConverters(),
+    ...createGovAminoConverters(),
+    ...createStakingAminoConverters(prefix),
+    ...createIbcAminoConverters(),
+    ...createLSNativeAminoConverters()
+  };
+}
 
 async function Transaction(wallet, signerAddress, msgs, fee, memo = "") {
   const cosmJS = await SigningStargateClient.connectWithSigner(
@@ -44,7 +66,8 @@ async function Transaction(wallet, signerAddress, msgs, fee, memo = "") {
         ...defaultRegistryTypes,
         [msgTokenizeShares, MsgTokenizeShares],
         [msgRedeemTokensforShares, MsgRedeemTokensforShares]
-      ])
+      ]),
+      aminoTypes: new AminoTypes(createAminoTypes(signerAddress.split("1")[0]))
     }
   );
   return await cosmJS.signAndBroadcast(signerAddress, msgs, fee, memo);
@@ -62,7 +85,7 @@ async function TransactionWithKeplr(
 
 async function KeplrWallet(chainID = configChainID) {
   await window.keplr.enable(chainID);
-  const offlineSigner = window.getOfflineSignerOnlyAmino(chainID);
+  const offlineSigner = await window.getOfflineSignerAuto(chainID);
   const accounts = await offlineSigner.getAccounts();
   return [offlineSigner, accounts[0].address];
 }
