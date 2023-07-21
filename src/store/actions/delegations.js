@@ -40,16 +40,19 @@ export const fetchDelegationsTransfer = async (address) => {
     const response = await lsNativeQueryService.TokenizeShareRecordsOwned({
       owner: address
     });
-    console.log(response, "response");
+    if (response.records.length > 0) {
+      for (const record of response.records) {
+        console.log(record.id.toNumber(), "response-tokenzied1");
+      }
+    }
+    console.log(response, "response-tokenzied");
   } catch (e) {
     console.log(e, "error in fetchDelegationsTransfer");
   }
 };
 
 export const fetchDelegationsCount = (address) => {
-  fetchDelegationsTransfer(
-    "persistence108cqtjz7gqasctvrw74kewg6642062kmfuujsd"
-  );
+  fetchDelegationsTransfer(address);
   return async (dispatch) => {
     try {
       const rpcClient = await transactions.RpcClient();

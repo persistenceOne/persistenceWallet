@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { keplrSubmit } from "../../../../store/actions/transactions/keplr";
 import { setTxName } from "../../../../store/actions/transactions/common";
 import { LOGIN_INFO } from "../../../../constants/localStorage";
-import { RedeemDelegationTransferMsg } from "../../../../utils/protoMsgHelper";
+import { RedeemTokenizedSharesMsg } from "../../../../utils/protoMsgHelper";
 
 const ButtonSend = ({ tokenizedShares }) => {
   const dispatch = useDispatch();
@@ -14,7 +14,7 @@ const ButtonSend = ({ tokenizedShares }) => {
   const onClick = () => {
     let messages = [];
     tokenizedShares.forEach((item) => {
-      const msg = RedeemDelegationTransferMsg(
+      const msg = RedeemTokenizedSharesMsg(
         loginInfo && loginInfo.address,
         item.denom,
         item.amount
@@ -30,7 +30,7 @@ const ButtonSend = ({ tokenizedShares }) => {
   const onClickKeplr = () => {
     let messages = [];
     tokenizedShares.forEach((item) => {
-      const msg = RedeemDelegationTransferMsg(
+      const msg = RedeemTokenizedSharesMsg(
         loginInfo && loginInfo.address,
         item.denom,
         item.amount

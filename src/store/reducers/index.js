@@ -29,6 +29,8 @@ import withdrawValidatorRewards from "./transactions/withdrawValidatorRewards";
 import generateKeyStore from "./generateKeyStore";
 import changePassword from "./changePassword";
 import delegationTransfer from "./transactions/delegationTransfer";
+import tokenizeShares from "./transactions/tokenizeShares";
+import redeemShares from "./transactions/redeemShares";
 
 const appReducer = combineReducers({
   delegations,
@@ -60,7 +62,9 @@ const appReducer = combineReducers({
   generateKeyStore,
   changePassword,
   migrateAssets,
-  delegationTransfer
+  delegationTransfer,
+  tokenizeShares,
+  redeemShares
 });
 
 export const rootReducer = (state, action) => {

@@ -7,11 +7,13 @@ import InfoRefresh from "../Refresh";
 import { useTranslation } from "react-i18next";
 import ModalValidator from "./Validators/ModalValidator";
 import ModalDelegate from "../Transactions/ModalDelegate";
+import ModalTokenize from "../Transactions/ModalTokenize";
 import FeeModal from "../Common/Fee/Modal";
 import KeyStoreModal from "../Common/KeyStore/Modal";
 import ModalViewTxnResponse from "../Common/ModalViewTxnResponse";
 import ModalReDelegate from "../Transactions/ModalReDelegate";
 import ModalUnbond from "../Transactions/ModalUnbond";
+import ModalTokenizeActions from "./Validators/TokenizedShares/ModalActions";
 import ModalValidatorWithdraw from "../Transactions/ModalWithdrawValidatorRewards";
 import ModalWithDraw from "../Transactions/ModalWithDrawAllRewards";
 import ModalSetWithdrawAddress from "../Transactions/ModalSetWithdrawAddress";
@@ -34,8 +36,10 @@ const Staking = () => {
     <div className="staking-main-section">
       <Loader />
       <ModalValidator />
+      <ModalTokenizeActions />
       <ModalDelegate />
       <ModalReDelegate />
+      <ModalTokenize />
       <TokenInfo />
       <FeeModal />
       <KeyStoreModal />
@@ -80,7 +84,7 @@ const Staking = () => {
                         eventKey="transfer"
                         onClick={() => onClick(t("TRANSFER"))}
                       >
-                        Redeem Shares
+                        Tokenized Shares
                       </Nav.Link>
                     </Nav.Item>
                   </Nav>

@@ -9,7 +9,7 @@ import {
   submitFormData
 } from "../../../store/actions/transactions/migrateAssets";
 import { DefaultChainInfo, PstakeInfo } from "../../../config";
-import { DelegationTransferMsg } from "../../../utils/protoMsgHelper";
+import { TokenizeSharesMsg } from "../../../utils/protoMsgHelper";
 const msgSendTypeUrl = "/cosmos.bank.v1beta1.MsgSend";
 
 const SendMsg = (fromAddress, toAddress, amount) => {
@@ -66,7 +66,7 @@ const ButtonMigrate = ({ selectedList }) => {
     if (selectedList.list.length > 0) {
       selectedList.list.forEach(async (item) => {
         messages.push(
-          DelegationTransferMsg(
+          TokenizeSharesMsg(
             loginInfo.address,
             item.address,
             toAddress.value,

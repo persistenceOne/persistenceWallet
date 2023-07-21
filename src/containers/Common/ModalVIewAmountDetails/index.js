@@ -88,7 +88,7 @@ const ModalViewAmountDetails = (props) => {
                           )}
                         </li>
                       );
-                    } else {
+                    } else  if (item.dataResponse.denom.startsWith("ibc")) {
                       return (
                         <li
                           className=""

@@ -182,6 +182,7 @@ let English = {
     VALIDATOR: "Validator",
     AVAILABLE_REWARDS: "Available Rewards",
     RECEIVED_IBC_TOKENS: "Tokens received via IBC",
+    OTHER_TOKENS: "Other Tokens",
     VIEW: "View",
     VIEW_UNBOND_SCHEDULE: `View Unbonding ${DefaultChainInfo.currency.coinDenom} Schedule`,
     UNBONDING_AMOUNT: "Unbonding Amount",
@@ -235,7 +236,8 @@ let English = {
     CLICK_TOTAL_TOKENS_MODAL_VIEW: "Clicked on Total tokens modal",
     IBC_REWARDS: "IBC Rewards",
     DECRYPT_KEY_STORE: "Decrypt KeyStore",
-    MIGRATE_TOKENS: "Migrate Tokens From 750 wallet to 118 wallet"
+    MIGRATE_TOKENS: "Migrate Tokens From 750 wallet to 118 wallet",
+    TOKENIZE_SHARE: "Tokenize Share",
   }
 };
 

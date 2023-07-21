@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from "react";
 import DataTable from "../../../../components/DataTable";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { decimalize } from "../../../../utils/scripts";
 import ButtonSend from "./ButtonSend";
+import { showTokenizedActionModal } from "../../../../store/actions/transactions/redeemShares";
 
 const TokenizedShares = () => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const [list, setList] = useState([]);
 
   const balances = useSelector((state) => state.balance.list);
 
-  console.log(balances, "balances");
+  const handleModal = () => {
+    dispatch(showTokenizedActionModal());
+  };
+
   useEffect(() => {
     if (balances.length > 0) {
       const tokenizedList = balances.filter((item) =>
@@ -33,6 +38,11 @@ const TokenizedShares = () => {
     {
       name: "amount",
       label: "Amount"
+    },
+    {
+      name: "actions",
+      label: t("ACTIONS"),
+      options: { sort: false }
     }
   ];
 
@@ -47,6 +57,14 @@ const TokenizedShares = () => {
 
         <div className="actions-td" key={index}>
           {decimalize(item.amount, 6)}
+        </div>,
+        <div className="actions-td" key={index}>
+          <button
+            onClick={() => handleModal()}
+            className="button button-primary"
+          >
+            Actions
+          </button>
         </div>
       ])
     : [];

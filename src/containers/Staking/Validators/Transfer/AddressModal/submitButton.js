@@ -6,9 +6,16 @@ import {
   handleDelegationTokenizeModal,
   submitFormData
 } from "../../../../../store/actions/transactions/delegationTransfer";
-import { DelegationTransferMsg } from "../../../../../utils/protoMsgHelper";
-import {setTxIno, setTxName} from "../../../../../store/actions/transactions/common";
+import {
+  TokenizeSharesMsg,
+  TokenizeSharesTransferMsg
+} from "../../../../../utils/protoMsgHelper";
+import {
+  setTxIno,
+  setTxName
+} from "../../../../../store/actions/transactions/common";
 import { keplrSubmit } from "../../../../../store/actions/transactions/keplr";
+import Long from "long";
 
 const Submit = () => {
   const dispatch = useDispatch();
@@ -19,16 +26,21 @@ const Submit = () => {
 
   const onClick = () => {
     let messages = [];
-    list.forEach(async (item) => {
-      messages.push(
-        DelegationTransferMsg(
-          loginInfo.address,
-          item.address,
-          toAddress.value,
-          (item.inputAmount * 1000000).toFixed(0)
-        )
-      );
-    });
+    const msg1 = TokenizeSharesMsg(
+      loginInfo.address,
+      "persistencevaloper1ntmnu2aqtxwms06nvv2m80hm5dxvtyeslxugwl",
+      "persistence1nwzwh7vzxxhm2xheq2zadue2d6ru6ascp4hq76",
+      (0.01 * 1000000).toFixed(0)
+    );
+
+    const msg2 = TokenizeSharesTransferMsg(
+      Long.fromNumber(54),
+      loginInfo.address,
+      "persistence1nwzwh7vzxxhm2xheq2zadue2d6ru6ascp4hq76"
+    );
+
+    messages = [msg2, msg1];
+
     dispatch(handleDelegationTokenizeModal(false));
     dispatch(submitFormData(messages));
   };
@@ -42,7 +54,7 @@ const Submit = () => {
     let messages = [];
     list.forEach(async (item) => {
       messages.push(
-        DelegationTransferMsg(
+        TokenizeSharesMsg(
           loginInfo.address,
           item.address,
           toAddress.value,
@@ -51,17 +63,17 @@ const Submit = () => {
       );
     });
     dispatch(
-        setTxIno({
-          value: {
-            modal: handleDelegationTokenizeModal(false),
-            data: {
-              message: "",
-              amount: "",
-              list: [],
-              memo: ""
-            }
+      setTxIno({
+        value: {
+          modal: handleDelegationTokenizeModal(false),
+          data: {
+            message: "",
+            amount: "",
+            list: [],
+            memo: ""
           }
-        })
+        }
+      })
     );
     dispatch(
       setTxName({

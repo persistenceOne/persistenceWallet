@@ -15,7 +15,8 @@ import { trimWhiteSpaces } from "./scripts";
 import { DefaultChainInfo } from "../config";
 import {
   MsgTokenizeShares,
-  MsgRedeemTokensforShares
+  MsgRedeemTokensforShares,
+  MsgTransferTokenizeShareRecord
 } from "../protos/lsnative/staking/v1beta1/tx";
 
 const msgSendTypeUrl = "/cosmos.bank.v1beta1.MsgSend";
@@ -29,6 +30,8 @@ const msgSetWithdrawAddressTypeUrl =
 const msgTransferTypeUrl = "/ibc.applications.transfer.v1.MsgTransfer";
 const msgValidatorCommission =
   "/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission";
+export const msgTransferTokenizeShareRecord =
+  "/lsnative.staking.v1beta1.MsgTransferTokenizeShareRecord";
 export const msgTokenizeShares = "/lsnative.staking.v1beta1.MsgTokenizeShares";
 export const msgRedeemTokensforShares =
   "/lsnative.staking.v1beta1.MsgRedeemTokensforShares";
@@ -122,7 +125,7 @@ function SetWithDrawAddressMsg(delegatorAddress, withdrawAddress) {
   };
 }
 
-function DelegationTransferMsg(
+function TokenizeSharesMsg(
   fromAddress,
   validatorAddress,
   tokenizedShareOwner,
@@ -143,7 +146,18 @@ function DelegationTransferMsg(
   };
 }
 
-function RedeemDelegationTransferMsg(fromAddress, denom, amount) {
+function TokenizeSharesTransferMsg(recordId, sender, newOwner) {
+  return {
+    typeUrl: msgTransferTokenizeShareRecord,
+    value: MsgTransferTokenizeShareRecord.fromPartial({
+      tokenizeShareRecordId: recordId,
+      sender: sender,
+      newOwner: newOwner
+    })
+  };
+}
+
+function RedeemTokenizedSharesMsg(fromAddress, denom, amount) {
   return {
     typeUrl: msgRedeemTokensforShares,
     value: MsgRedeemTokensforShares.fromPartial({
@@ -201,6 +215,7 @@ export {
   SetWithDrawAddressMsg,
   TransferMsg,
   ValidatorCommissionMsg,
-  DelegationTransferMsg,
-  RedeemDelegationTransferMsg
+  TokenizeSharesMsg,
+  RedeemTokenizedSharesMsg,
+  TokenizeSharesTransferMsg
 };
