@@ -20,6 +20,7 @@ import { hideTxResultModal } from "../../../store/actions/transactions/common";
 import { LOGIN_INFO } from "../../../constants/localStorage";
 import { updateFee } from "../../../utils/helper";
 import { fetchValidators } from "../../../store/actions/validators";
+import { fetchTokenizedShares } from "../../../store/actions/tokenizeShares";
 
 const EXPLORER_API = process.env.REACT_APP_EXPLORER_API;
 
@@ -46,6 +47,7 @@ const ModalViewTxnResponse = () => {
           dispatch(
             fetchTransferableVestingAmount(loginInfo && loginInfo.address)
           ),
+          dispatch(fetchTokenizedShares(loginInfo && loginInfo.address)),
           dispatch(fetchTransactions(loginInfo && loginInfo.address, 5, 1)),
           dispatch(
             fetchReceiveTransactions(loginInfo && loginInfo.address, 5, 1)

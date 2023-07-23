@@ -18,69 +18,29 @@ const TransferDelegations = () => {
 
   const validators = useSelector((state) => state.validators);
 
+  const tokenizeSharesInfo = useSelector((state) => state.tokenizeSharesInfo);
+
   useEffect(() => {
     let list = [];
-    if (validators.delegatedValidators.length > 0) {
-      validators.delegatedValidators.forEach((validator) => {
-        if (validators.activeList.length > 0) {
-          const response = validators.activeList.find(
-            (item) =>
-              item.data.operatorAddress === validator.data.operatorAddress
-          );
-          if (response) {
-            list.push({
-              name: validator.data.description.moniker,
-              amount: decimalize(validator.delegations, 6),
-              address: validator.data.operatorAddress,
-              identity: validator.data.description.identity,
-              inputAmount: ""
-            });
-          }
+    console.log(validators, "-validators");
+
+    if (tokenizeSharesInfo.sharesList.length > 0) {
+      tokenizeSharesInfo.sharesList.forEach((share) => {
+        const valInfo = validators.validators.find(
+          (validator) => validator.operatorAddress === share.validatorAddress
+        );
+        console.log(valInfo, "valInfo", share);
+        if (valInfo) {
+          list.push({
+            ...share,
+            validatorName: valInfo.description.moniker,
+            validatorImage: valInfo.description.identity
+          });
         }
       });
     }
     setInputState(list);
-  }, [validators]);
-
-  const onChangeHandler = (evt) => {
-    let rex = /^\d{0,10}(\.\d{0,10})?$/;
-    if (rex.test(evt.target.value)) {
-      inputHandler(evt.target.name, evt.target.value);
-    } else {
-      return false;
-    }
-  };
-
-  const inputHandler = (name, inputAmount) => {
-    const newList = inputState.map((item) => {
-      let itemCopy = item;
-      if (item.name === name) {
-        itemCopy.inputAmount = inputAmount;
-        const response = selectedList.some((selectedItem) => {
-          return selectedItem.name === item.name;
-        });
-        if (Number(inputAmount) > 0) {
-          if (!response) {
-            setSelectedList([...selectedList, item]);
-          }
-        } else {
-          if (response) {
-            setSelectedList(
-              selectedList.filter(
-                (selectedItem) => selectedItem.name !== item.name
-              )
-            );
-          }
-        }
-      }
-      return itemCopy;
-    });
-    const amount = newList.reduce((accumulator, object) => {
-      return accumulator + Number(object?.inputAmount);
-    }, 0);
-    setInputState(newList);
-    setTotalAmount(amount);
-  };
+  }, [validators, tokenizeSharesInfo]);
 
   const columns = [
     {
@@ -88,59 +48,27 @@ const TransferDelegations = () => {
       label: t("VALIDATOR")
     },
     {
-      name: "delegatedAmount",
-      label: `${t("DELEGATED_AMOUNT")}(${DefaultChainInfo.currency.coinDenom})`
+      name: "tokenizedAmount",
+      label: "Tokenized Amount"
     },
     {
-      name: "transfer",
-      label: t("TRANSFER_AMOUNT")
+      name: "actions",
+      label: t("ACTIONS"),
+      options: { sort: false }
     }
   ];
   const tableData = inputState.length
     ? inputState.map((validator, index) => [
         <div key={index} className="validator-name d-flex">
-          <div className="mr-4">
-            {Number(validator.inputAmount) > 0 ? (
-              <Icon icon="checkbox" viewClass="" />
-            ) : (
-              <span className="d-block empty-checkbox" />
-            )}
-          </div>
-          <Avatar identity={validator.identity} />
-          {validator.name}
+          <Avatar identity={validator.validatorImage} />
+          {validator.validatorName}
         </div>,
         <div className="voting" key={index}>
           {validator.amount}
         </div>,
 
         <div className="actions-td" key={index}>
-          <div className={"relative z-10"}>
-            <input
-              placeholder={"Enter Amount"}
-              type="number"
-              onWheel={(e) => e.target.blur()}
-              className={`input-amount ${
-                Number(validator.inputAmount) > Number(validator.amount)
-                  ? "active"
-                  : ""
-              }`}
-              name={validator.name}
-              id={validator.name}
-              value={validator.inputAmount}
-              onChange={onChangeHandler}
-            />
-            {Number(validator.inputAmount) < Number(validator.amount) ? (
-              <span
-                className="text-light-high ml-2 text-sm font-bold uppercase
-                            cursor-pointer absolute right-[10px] top-[10px]"
-                onClick={() => inputHandler(validator.name, validator.amount)}
-              >
-                Max
-              </span>
-            ) : (
-              ""
-            )}
-          </div>
+          <button className="button button-primary">Actions</button>
         </div>
       ])
     : [];

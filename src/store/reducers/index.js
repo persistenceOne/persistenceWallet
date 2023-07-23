@@ -2,6 +2,7 @@ import { combineReducers } from "redux";
 import delegations from "./delegations";
 import transactions from "./transactionsHistory";
 import validators from "./validators";
+import tokenizeSharesInfo from "./tokenizeShares";
 import balance from "./balance";
 import rewards from "./rewards";
 import unbond from "./unbond";
@@ -64,7 +65,8 @@ const appReducer = combineReducers({
   migrateAssets,
   delegationTransfer,
   tokenizeShares,
-  redeemShares
+  redeemShares,
+  tokenizeSharesInfo
 });
 
 export const rootReducer = (state, action) => {

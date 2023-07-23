@@ -23,7 +23,7 @@ import { updateFee } from "./utils/helper";
 import { ledgerDisconnect } from "./utils/ledger";
 import ReactGA from "react-ga4";
 import packageJson from "../package.json";
-import { fetchTokenizeShares } from "./utils/queries";
+import { fetchTokenizedShares } from "./store/actions/tokenizeShares";
 
 const SENTRY_API = process.env.REACT_APP_SENTRY_API;
 const GOOGLE_ANALYTICS = process.env.REACT_APP_GA_TRACKING_ID;
@@ -90,6 +90,7 @@ const Main = () => {
           dispatch(fetchUnbondDelegations(address)),
           dispatch(fetchTokenPrice()),
           dispatch(fetchTransferableVestingAmount(address)),
+          dispatch(fetchTokenizedShares(address)),
           dispatch(fetchValidators(address)),
           updateFee(address),
           setInterval(() => dispatch(fetchTotalRewards(address)), 10000)
