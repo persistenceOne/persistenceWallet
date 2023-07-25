@@ -10,7 +10,7 @@ export function createLSNativeAminoConverters() {
       }) => ({
         delegator_address: delegatorAddress,
         amount: amount,
-        validator_address:validatorAddress,
+        validator_address: validatorAddress,
         tokenized_share_owner: tokenizedShareOwner
       }),
       fromAmino: ({
@@ -25,5 +25,5 @@ export function createLSNativeAminoConverters() {
         tokenizedShareOwner: tokenized_share_owner
       })
     }
-  }
+  };
 }

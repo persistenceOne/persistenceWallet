@@ -4,8 +4,44 @@ import {
   TX_TOKENIZE_AMOUNT_SET,
   TX_TOKENIZE_MEMO_SET,
   TX_TOKENIZE_MODAL_HIDE,
-  TX_TOKENIZE_MODAL_SHOW
+  TX_TOKENIZE_MODAL_SHOW,
+  TX_TOKENIZE_OWNER_ADDRESS_SET,
+  TX_TOKENIZE_SHARE_STATUS_FAILED,
+  TX_TOKENIZE_SHARE_STATUS_SUCCESS,
+  TX_TOKENIZE_SHARE_STATUS_SET
 } from "../../../constants/tokenizeShares";
+import { UNBOND_DELEGATIONS_LIST } from "../../../constants/unbond";
+
+const toAddress = (
+  state = {
+    value: "",
+    error: {
+      message: ""
+    }
+  },
+  { type, data }
+) => {
+  switch (type) {
+    case TX_TOKENIZE_OWNER_ADDRESS_SET:
+      return {
+        ...state,
+        value: data.value,
+        error: {
+          ...state.error,
+          message: data.error.message
+        }
+      };
+    case TX_RESULT_MODAL_HIDE:
+      return {
+        value: "",
+        error: {
+          message: ""
+        }
+      };
+    default:
+      return state;
+  }
+};
 
 const amount = (
   state = {
@@ -89,8 +125,28 @@ const memo = (
   }
 };
 
+// const tokenizeShareTxStatus = (state = "pending", { type }) => {
+//   switch (type) {
+//     case TX_TOKENIZE_SHARE_STATUS_SUCCESS:
+//       return "success";
+//     case TX_TOKENIZE_SHARE_STATUS_FAILED:
+//       return "failed";
+//     default:
+//       return state;
+//   }
+// };
+
+const tokenizeShareTxStatus = (state = "", action) => {
+  if (action.type === TX_TOKENIZE_SHARE_STATUS_SET) {
+    return action.data;
+  }
+  return state;
+};
+
 export default combineReducers({
   amount,
   modal,
-  memo
+  memo,
+  toAddress,
+  tokenizeShareTxStatus
 });

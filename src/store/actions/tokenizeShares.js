@@ -12,6 +12,36 @@ export const fetchTokenizedSharesSuccess = (list) => {
   };
 };
 
+export const fetchTokenizedSharesByAddress = async (address) => {
+  try {
+    console.log("called123", "called");
+    const rpcClient = await transactions.RpcClient();
+    const lsNativeQueryService = new LsNativeStakingQueryClient(rpcClient);
+    const response = await lsNativeQueryService.TokenizeShareRecordsOwned({
+      owner: address
+    });
+    if (response) {
+      console.log(response, "fetchTokenizedSharesByAddress");
+      return response.records.length > 0 ? response.records : [];
+      // const res = {
+      //   amount: tokenValueConversion(balance.amount),
+      //   validatorAddress: response.record.validator,
+      //   denom: balance.denom,
+      //   recordId: response.record.id,
+      //   owner: response.record.owner
+      // };
+      // responseList.push(res);
+      // response.push();
+    }
+    return [];
+  } catch (error) {
+    Sentry.captureException(
+      error.response ? error.response.data.message : error.message
+    );
+    return [];
+  }
+};
+
 export const fetchTokenizedShares = (address) => {
   return async (dispatch) => {
     try {
@@ -30,6 +60,7 @@ export const fetchTokenizedShares = (address) => {
               await lsNativeQueryService.TokenizeShareRecordByDenom({
                 denom: balance.denom
               });
+            console.log(response, "response-lsNativeQueryService");
             if (response) {
               const res = {
                 amount: tokenValueConversion(balance.amount),
@@ -44,20 +75,47 @@ export const fetchTokenizedShares = (address) => {
           }
         }
       }
-      const output =
-        responseList.length > 0 &&
-        responseList.reduce((accumulator, cur) => {
-          let validatorAddress = cur.validatorAddress;
-          let found = accumulator.find(
-            (elem) => elem.validatorAddress === validatorAddress
+      let newList = [];
+      responseList.length > 0 &&
+        responseList.forEach((item) => {
+          const newListCheck = newList.find(
+            (filterItem) =>
+              filterItem.validatorAddress === item.validatorAddress
           );
-          // console.log(found, "response-found", cur);
-          if (found) found.amount += cur.amount;
-          else accumulator.push(cur);
-          return accumulator;
-        }, []);
-      console.log(responseList, "response-tokenzied", output);
-      dispatch(fetchTokenizedSharesSuccess(responseList));
+          console.log(newListCheck, "newListCheck");
+          if (!newListCheck) {
+            const uniqList = responseList.filter(
+              (filterItem) =>
+                filterItem.validatorAddress === item.validatorAddress
+            );
+            let total = 0;
+            if (uniqList.length > 1) {
+              uniqList.forEach((item) => {
+                total += item.amount;
+              });
+            }
+            newList.push({
+              amount: total,
+              validatorAddress: item.validatorAddress,
+              list: uniqList
+            });
+          }
+        });
+
+      // const output =
+      //   responseList.length > 0 &&
+      //   responseList.reduce((accumulator, cur) => {
+      //     let validatorAddress = cur.validatorAddress;
+      //     let found = accumulator.find(
+      //       (elem) => elem.validatorAddress === validatorAddress
+      //     );
+      //     // console.log(found, "response-found", cur);
+      //     if (found) found.amount += cur.amount;
+      //     else accumulator.push(cur);
+      //     return accumulator;
+      //   }, []);
+      console.log(responseList, "response-tokenzied", newList);
+      dispatch(fetchTokenizedSharesSuccess(newList));
     } catch (error) {
       Sentry.captureException(
         error.response ? error.response.data.message : error.message

@@ -26,7 +26,12 @@ import {
 } from "../../../constants/localStorage";
 import { handleDelegationTransferModal } from "./delegationTransfer";
 import { fetchTransferableVestingAmount } from "../balance";
-import {pollAccountBalance} from "../../../utils/queries";
+import { pollAccountBalance } from "../../../utils/queries";
+import {
+  setTxTokenizeShareStatus,
+  showTxTokenizeModal
+} from "./tokenizeShares";
+import { store } from "../../index";
 
 export const setTxKeyStore = (data) => {
   return {
@@ -54,6 +59,71 @@ export const hideKeyStoreModal = (data) => {
     type: KEYSTORE_MODAL_HIDE,
     data
   };
+};
+
+export const keyStoreTxn = async (loginAddress) => {
+  const loginInfo = JSON.parse(localStorage.getItem(LOGIN_INFO));
+  const password = store.getState().keyStore.password;
+  const keyStoreData = store.getState().keyStore.keyStore;
+  const balance = store.getState().balance.list;
+  const encryptedSeed = store.getState().common.loginInfo.encryptedSeed;
+
+  let loginCoinType;
+  if ((loginInfo && loginInfo?.addressLogin) || (loginInfo && !encryptedSeed)) {
+    const { coinType } = store.getState().signInKeyStore;
+    loginCoinType = coinType;
+  } else {
+    loginCoinType = JSON.parse(localStorage.getItem(COIN_TYPE));
+  }
+
+  const accountNumber = helper.getAccountNumber(
+    store.getState().advanced.accountNumber.value
+  );
+  const accountIndex = helper.getAccountNumber(
+    store.getState().advanced.accountIndex.value
+  );
+  const bip39PassPhrase = store.getState().advanced.bip39PassPhrase.value;
+
+  const formData = store.getState().common.txInfo.value.data;
+  const txName = store.getState().common.txName.value.name;
+
+  const fee = store.getState().fee.fee.value.fee;
+  const gas = store.getState().gas.gas.value;
+
+  let mnemonic = "";
+  if (encryptedSeed) {
+    const encryptedMnemonic = localStorage.getItem(ENCRYPTED_MNEMONIC);
+    const res = JSON.parse(encryptedMnemonic);
+    const decryptedData = decryptKeyStore(res, password.value);
+    if (decryptedData.error != null) {
+      throw new Error(decryptedData.error);
+    }
+    mnemonic = decryptedData.mnemonic;
+  } else {
+    mnemonic = await privateKeyReader(
+      keyStoreData.value,
+      password.value,
+      loginAddress,
+      accountNumber,
+      accountIndex,
+      bip39PassPhrase,
+      loginCoinType
+    );
+  }
+
+  let result = await transactions.getTransactionResponse(
+    loginAddress,
+    formData,
+    fee,
+    gas,
+    mnemonic,
+    txName,
+    accountNumber,
+    accountIndex,
+    bip39PassPhrase,
+    loginCoinType
+  );
+  return result;
 };
 
 export const keyStoreSubmit = (loginAddress) => {
@@ -134,17 +204,22 @@ export const keyStoreSubmit = (loginAddress) => {
             }
           })
         );
-        if (txName === "delegation-transfer") {
-          const pollResult = await pollAccountBalance(balance,loginInfo && loginInfo.address);
+        if (txName === "tokenize") {
+          const pollResult = await pollAccountBalance(
+            balance,
+            loginInfo && loginInfo.address
+          );
           dispatch(closeLoader());
-          if(pollResult){
+          if (pollResult) {
             dispatch(
-                fetchTransferableVestingAmount(loginInfo && loginInfo.address)
+              fetchTransferableVestingAmount(loginInfo && loginInfo.address)
             );
             dispatch(hideKeyStoreModal());
-            dispatch(handleDelegationTransferModal(true));
-          }else {
-            throw Error('something went wrong');
+            dispatch(setTxTokenizeShareStatus("success"));
+            dispatch(showTxTokenizeModal());
+          } else {
+            dispatch(setTxTokenizeShareStatus("failed"));
+            throw Error("something went wrong");
           }
         } else {
           dispatch(closeLoader());

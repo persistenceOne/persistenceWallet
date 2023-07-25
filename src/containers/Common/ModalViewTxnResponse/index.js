@@ -21,6 +21,7 @@ import { LOGIN_INFO } from "../../../constants/localStorage";
 import { updateFee } from "../../../utils/helper";
 import { fetchValidators } from "../../../store/actions/validators";
 import { fetchTokenizedShares } from "../../../store/actions/tokenizeShares";
+import { fetchApiData } from "../../../utils/queries";
 
 const EXPLORER_API = process.env.REACT_APP_EXPLORER_API;
 
@@ -30,7 +31,6 @@ const ModalViewTxnResponse = () => {
   const dispatch = useDispatch();
   const show = useSelector((state) => state.common.modal);
   const response = useSelector((state) => state.common.txResponse.value);
-  console.log(response, "response");
   const handleClose = () => {
     dispatch(hideTxResultModal());
   };
@@ -38,23 +38,7 @@ const ModalViewTxnResponse = () => {
   useEffect(() => {
     const fetchCalls = async () => {
       if (response !== undefined) {
-        await Promise.all([
-          dispatch(fetchDelegationsCount(loginInfo && loginInfo.address)),
-          dispatch(fetchRewards(loginInfo && loginInfo.address)),
-          dispatch(fetchTotalRewards(loginInfo && loginInfo.address)),
-          dispatch(fetchUnbondDelegations(loginInfo && loginInfo.address)),
-          dispatch(fetchTokenPrice()),
-          dispatch(
-            fetchTransferableVestingAmount(loginInfo && loginInfo.address)
-          ),
-          dispatch(fetchTokenizedShares(loginInfo && loginInfo.address)),
-          dispatch(fetchTransactions(loginInfo && loginInfo.address, 5, 1)),
-          dispatch(
-            fetchReceiveTransactions(loginInfo && loginInfo.address, 5, 1)
-          ),
-          dispatch(fetchValidators(loginInfo && loginInfo.address)),
-          updateFee(loginInfo && loginInfo.address)
-        ]);
+        await fetchApiData(loginInfo && loginInfo.address, dispatch);
       }
     };
     fetchCalls();
