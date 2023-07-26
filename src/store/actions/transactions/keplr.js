@@ -23,6 +23,7 @@ export const keplrSubmit =
     try {
       const txName = getState().common.txName.value.name;
       const balance = getState().balance.list;
+      console.log("messages", messages, txName);
       const loginInfo = JSON.parse(localStorage.getItem(LOGIN_INFO));
       const response = await transactions.TransactionWithKeplr(
         messages,

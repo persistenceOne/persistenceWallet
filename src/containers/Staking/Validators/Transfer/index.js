@@ -24,8 +24,6 @@ const TransferDelegations = () => {
 
   useEffect(() => {
     let list = [];
-    console.log(validators, "-validators");
-
     if (tokenizeSharesInfo.sharesList.length > 0) {
       tokenizeSharesInfo.sharesList.forEach((share) => {
         const valInfo = validators.validators.find(

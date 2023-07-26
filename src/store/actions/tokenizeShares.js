@@ -1,6 +1,7 @@
 import { QueryClientImpl as BankQueryClientImpl } from "cosmjs-types/cosmos/bank/v1beta1/query";
 import transactions from "../../utils/transactions";
 import { QueryClientImpl as LsNativeStakingQueryClient } from "../../protos/lsnative/staking/v1beta1/query";
+import { QueryClientImpl as LsNativeDistributionQueryClient } from "../../protos/lsnative/distribution/v1beta1/query";
 import { TOKENIZE_SHARES_FETCH_SUCCESS } from "../../constants/tokenizeShares";
 import * as Sentry from "@sentry/browser";
 import { tokenValueConversion } from "../../utils/helper";
@@ -45,6 +46,7 @@ export const fetchTokenizedSharesByAddress = async (address) => {
 export const fetchTokenizedShares = (address) => {
   return async (dispatch) => {
     try {
+      fetchTokenizedShareRewards(address);
       const responseList = [];
       const rpcClient = await transactions.RpcClient();
       const bankQueryService = new BankQueryClientImpl(rpcClient);
@@ -123,4 +125,26 @@ export const fetchTokenizedShares = (address) => {
       console.log(error.message);
     }
   };
+};
+
+export const fetchTokenizedShareRewards = async (address) => {
+  try {
+    console.log(address, "fetchTokenizedShareRewards clled ");
+    const rpcClient = await transactions.RpcClient();
+    const lsNativeQueryService = new LsNativeDistributionQueryClient(rpcClient);
+    const response = await lsNativeQueryService.TokenizeShareRecordReward({
+      ownerAddress: address
+    });
+    console.log(response, "fetchTokenizedShareRewards");
+    if (response) {
+      console.log(response, "fetchTokenizedShareRewards2");
+    }
+    return [];
+  } catch (error) {
+    console.log(error, "fetchTokenizedShareRewards2 error");
+    Sentry.captureException(
+      error.response ? error.response.data.message : error.message
+    );
+    return [];
+  }
 };

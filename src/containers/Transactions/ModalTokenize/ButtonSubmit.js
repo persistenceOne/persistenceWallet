@@ -23,8 +23,6 @@ import transactions from "../../../utils/transactions";
 import { fee } from "../../../utils/aminoMsgHelper";
 import { fetchApiData, pollAccountBalance } from "../../../utils/queries";
 import { fetchTokenizedSharesByAddress } from "../../../store/actions/tokenizeShares";
-import Long from "long";
-import { keyStoreTxn } from "../../../store/actions/transactions/keyStore";
 
 const ButtonSubmit = () => {
   const dispatch = useDispatch();
@@ -134,6 +132,7 @@ const ButtonSubmit = () => {
         throw Error("something went wrong");
       }
     } catch (e) {
+      console.log(e, "error");
       dispatch(setTxTokenizeShareStatus(""));
     }
   };
