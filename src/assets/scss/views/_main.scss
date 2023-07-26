@@ -489,7 +489,7 @@
 
   .table-container {
     overflow-y: auto;
-    height: 200px;
+    max-height: 200px;
     padding-bottom: 20px;
     table {
       border-collapse: collapse;

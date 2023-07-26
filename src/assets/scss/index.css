@@ -1196,7 +1196,7 @@ ul li em {
   max-width: 750px; }
 .modal-redeem .table-container {
   overflow-y: auto;
-  height: 200px;
+  max-height: 200px;
   padding-bottom: 20px; }
   .modal-redeem .table-container table {
     border-collapse: collapse;

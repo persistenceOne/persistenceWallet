@@ -109,13 +109,6 @@ const TokenizedShares = () => {
   return (
     <div className="txns-container delegated-validators transfer">
       <DataTable columns={columns} data={tableData} name="" options={options} />
-      <Submit
-        inputState={inputState}
-        totalAmount={totalAmount}
-        selectedList={selectedList}
-      />
-      <AddressModal />
-      <TxnModal />
     </div>
   );
 };

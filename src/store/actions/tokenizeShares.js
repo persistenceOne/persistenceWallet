@@ -89,7 +89,7 @@ export const fetchTokenizedShares = (address) => {
                 filterItem.validatorAddress === item.validatorAddress
             );
             let total = 0;
-            if (uniqList.length > 1) {
+            if (uniqList.length > 0) {
               uniqList.forEach((item) => {
                 total += item.amount;
               });
