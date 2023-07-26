@@ -1,8 +1,12 @@
 import {
   TOKENIZED_ACTIONS_MODAL_SHOW,
-  TOKENIZED_ACTIONS_MODAL_HIDE
+  TOKENIZED_ACTIONS_MODAL_HIDE,
+  TX_REDEEM_SHARES_MODAL_SHOW,
+  TX_REDEEM_SHARES_MODAL_HIDE,
+  SET_REDEEM_TX_VALIDATOR
 } from "../../../constants/redeemShares";
 import { combineReducers } from "redux";
+import { TX_RESULT_MODAL_HIDE, TX_SUCCESS } from "../../../constants/common";
 
 const tokenizeActionsModal = (state = false, { type }) => {
   switch (type) {
@@ -15,6 +19,53 @@ const tokenizeActionsModal = (state = false, { type }) => {
   }
 };
 
+const modal = (state = false, { type }) => {
+  switch (type) {
+    case TX_REDEEM_SHARES_MODAL_SHOW:
+      return true;
+    case TX_REDEEM_SHARES_MODAL_HIDE:
+      return false;
+    default:
+      return state;
+  }
+};
+
+const validator = (
+  state = {
+    value: {},
+    error: {
+      message: ""
+    }
+  },
+  { type, data }
+) => {
+  switch (type) {
+    case SET_REDEEM_TX_VALIDATOR:
+      return {
+        ...state,
+        value: data.value,
+        error: {
+          ...state.error,
+          message: data.error.message
+        }
+      };
+    case TX_RESULT_MODAL_HIDE:
+    case TX_SUCCESS:
+      return {
+        ...state,
+        value: {},
+        error: {
+          ...state.error,
+          message: ""
+        }
+      };
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
-  tokenizeActionsModal
+  tokenizeActionsModal,
+  modal,
+  validator
 });

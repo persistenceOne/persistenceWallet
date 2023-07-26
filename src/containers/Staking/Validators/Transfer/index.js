@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 import Avatar from "../Avatar";
 import DataTable from "../../../../components/DataTable";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { DefaultChainInfo } from "../../../../config";
-import Icon from "../../../../components/Icon";
-import { decimalize } from "../../../../utils/scripts";
+import {
+  showTxRedeemSharesModal,
+  setValidatorTxData
+} from "../../../../store/actions/transactions/redeemShares";
 import Submit from "./button";
 import AddressModal from "./AddressModal";
 import TxnModal from "./TxnModal";
 
 const TransferDelegations = () => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const [inputState, setInputState] = useState([]);
   const [selectedList, setSelectedList] = useState([]);
@@ -57,6 +59,18 @@ const TransferDelegations = () => {
       options: { sort: false }
     }
   ];
+
+  const handleRedeem = (validator) => {
+    dispatch(
+      setValidatorTxData({
+        value: validator,
+        error: new Error("")
+      })
+    );
+    dispatch(showTxRedeemSharesModal());
+    console.log(validator, "validator123");
+  };
+
   const tableData = inputState.length
     ? inputState.map((validator, index) => [
         <div key={index} className="validator-name d-flex">
@@ -67,8 +81,14 @@ const TransferDelegations = () => {
           {validator.amount}
         </div>,
 
-        <div className="actions-td" key={index}>
-          <button className="button button-primary">Actions</button>
+        <div
+          className="actions-td"
+          key={index}
+          onClick={() => {
+            handleRedeem(validator);
+          }}
+        >
+          <button className="button button-primary">Redeem</button>
         </div>
       ])
     : [];

@@ -13,14 +13,13 @@ import KeyStoreModal from "../Common/KeyStore/Modal";
 import ModalViewTxnResponse from "../Common/ModalViewTxnResponse";
 import ModalReDelegate from "../Transactions/ModalReDelegate";
 import ModalUnbond from "../Transactions/ModalUnbond";
-import ModalTokenizeActions from "./Validators/TokenizedShares/ModalActions";
 import ModalValidatorWithdraw from "../Transactions/ModalWithdrawValidatorRewards";
 import ModalWithDraw from "../Transactions/ModalWithDrawAllRewards";
 import ModalSetWithdrawAddress from "../Transactions/ModalSetWithdrawAddress";
 import Loader from "../../components/Loader";
 import ReactGA from "react-ga4";
-import TransferDelegations from "./Validators/Transfer";
 import TokenizedShares from "./Validators/TokenizedShares";
+import ModalRedeemShares from "../Transactions/ModalRedeemShares";
 
 const Staking = () => {
   const { t } = useTranslation();
@@ -36,9 +35,9 @@ const Staking = () => {
     <div className="staking-main-section">
       <Loader />
       <ModalValidator />
-      <ModalTokenizeActions />
       <ModalDelegate />
       <ModalReDelegate />
+      <ModalRedeemShares />
       <ModalTokenize />
       <TokenInfo />
       <FeeModal />
@@ -76,14 +75,6 @@ const Staking = () => {
                         eventKey="tokenized-shares"
                         onClick={() => onClick(t("tokenized-shares"))}
                       >
-                        Tokenize Shares
-                      </Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item>
-                      <Nav.Link
-                        eventKey="transfer"
-                        onClick={() => onClick(t("TRANSFER"))}
-                      >
                         Tokenized Shares
                       </Nav.Link>
                     </Nav.Item>
@@ -101,12 +92,12 @@ const Staking = () => {
               <Tab.Pane eventKey="delegated">
                 <DelegatedValidators />
               </Tab.Pane>
-              <Tab.Pane eventKey="transfer">
+              <Tab.Pane eventKey="tokenized-shares">
                 <TokenizedShares />
               </Tab.Pane>
-              <Tab.Pane eventKey="tokenized-shares">
-                <TransferDelegations />
-              </Tab.Pane>
+              {/*<Tab.Pane eventKey="tokenized-shares">*/}
+              {/*  <TransferDelegations />*/}
+              {/*</Tab.Pane>*/}
             </Tab.Content>
           </Tab.Container>
         </div>

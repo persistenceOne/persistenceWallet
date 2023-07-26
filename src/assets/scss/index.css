@@ -1192,6 +1192,36 @@ ul li em {
   .zero-fee-modal .modal-dialog .modal-content {
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3); }
 
+.modal-redeem.modal-custom .modal-dialog {
+  max-width: 750px; }
+.modal-redeem .table-container {
+  overflow-y: auto;
+  height: 200px;
+  padding-bottom: 20px; }
+  .modal-redeem .table-container table {
+    border-collapse: collapse;
+    width: 100%; }
+  .modal-redeem .table-container th,
+  .modal-redeem .table-container td {
+    padding: 8px 15px; }
+  .modal-redeem .table-container th {
+    padding-top: 20px;
+    background: #FFFFFF; }
+  .modal-redeem .table-container tr th {
+    color: #8D9CB5;
+    font-weight: 500;
+    font-size: 14px; }
+  .modal-redeem .table-container tr td {
+    font-size: 14px; }
+    .modal-redeem .table-container tr td.name {
+      font-weight: 400; }
+    .modal-redeem .table-container tr td.address, .modal-redeem .table-container tr td.amount {
+      color: #272931;
+      font-weight: 600; }
+.modal-redeem .table-container thead th {
+  position: sticky;
+  top: 0; }
+
 /*--------------------------------------------------------------
 # homepage styles
 --------------------------------------------------------------*/
