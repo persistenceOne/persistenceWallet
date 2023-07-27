@@ -1,6 +1,6 @@
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { createProtobufRpcClient, QueryClient } from "@cosmjs/stargate";
-import { QueryClientImpl } from "../protos/lsnative/staking/v1beta1/query";
+import { QueryClientImpl } from "../protos/lsm/staking/v1beta1/query";
 import { QueryClientImpl as BankQueryClient } from "cosmjs-types/cosmos/bank/v1beta1/query";
 import transactions from "./transactions";
 import { PollingConfig } from "../config";
@@ -10,7 +10,10 @@ import { fetchRewards, fetchTotalRewards } from "../store/actions/rewards";
 import { fetchUnbondDelegations } from "../store/actions/unbond";
 import { fetchTokenPrice } from "../store/actions/tokenPrice";
 import { fetchTransferableVestingAmount } from "../store/actions/balance";
-import { fetchTokenizedShares } from "../store/actions/tokenizeShares";
+import {
+  fetchTokenizedShareRewards,
+  fetchTokenizedShares
+} from "../store/actions/tokenizeShares";
 import { fetchValidators } from "../store/actions/validators";
 import { ledgerDisconnect } from "./ledger";
 import {
@@ -80,6 +83,7 @@ export const fetchApiData = async (address, dispatch) => {
       dispatch(fetchTokenPrice()),
       dispatch(fetchTransferableVestingAmount(address)),
       dispatch(fetchTokenizedShares(address)),
+      dispatch(fetchTokenizedShareRewards(address)),
       dispatch(fetchTransactions(address, 5, 1)),
       dispatch(fetchReceiveTransactions(address, 5, 1)),
       dispatch(fetchValidators(address)),

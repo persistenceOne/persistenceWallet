@@ -20,14 +20,17 @@ import { DefaultChainInfo, IBCConfiguration } from "../config";
 import {
   msgRedeemTokensforShares,
   msgTokenizeShares,
-  msgTransferTokenizeShareRecord
+  msgTransferTokenizeShareRecord,
+  msgValidatorBondUrl,
+  msgWithdrawTokenizeShareRecordReward
 } from "./protoMsgHelper";
 import {
-  MsgRedeemTokensforShares,
+  MsgRedeemTokensForShares,
   MsgTokenizeShares,
-  MsgTransferTokenizeShareRecord
-} from "../protos/lsnative/staking/v1beta1/tx";
-
+  MsgTransferTokenizeShareRecord,
+  MsgValidatorBond
+} from "../protos/lsm/staking/v1beta1/tx";
+import { MsgWithdrawTokenizeShareRecordReward } from "../protos/lsm/distribution/v1beta1/tx";
 const {
   SigningStargateClient,
   QueryClient,
@@ -71,7 +74,12 @@ async function Transaction(wallet, signerAddress, msgs, fee, memo = "") {
         ...defaultRegistryTypes,
         [msgTokenizeShares, MsgTokenizeShares],
         [msgTransferTokenizeShareRecord, MsgTransferTokenizeShareRecord],
-        [msgRedeemTokensforShares, MsgRedeemTokensforShares]
+        [msgRedeemTokensforShares, MsgRedeemTokensForShares],
+        [msgValidatorBondUrl, MsgValidatorBond],
+        [
+          msgWithdrawTokenizeShareRecordReward,
+          MsgWithdrawTokenizeShareRecordReward
+        ]
       ]),
       aminoTypes: new AminoTypes(createAminoTypes(signerAddress.split("1")[0]))
     }

@@ -11,17 +11,23 @@ import {
   setTxName
 } from "../../../store/actions/transactions/common";
 import { LOGIN_INFO } from "../../../constants/localStorage";
-import { RedeemTokenizedSharesMsg } from "../../../utils/protoMsgHelper";
+import {
+  RedeemTokenizedSharesMsg,
+  TokenizedSharesRewardsMsg
+} from "../../../utils/protoMsgHelper";
 import { DefaultChainInfo } from "../../../config";
-import { hideTxDelegateModal } from "../../../store/actions/transactions/delegate";
 
-const ButtonRedeem = ({ tokenizedShares }) => {
-  console.log(tokenizedShares, "tokenizedShares");
+const ButtonRedeem = ({ tokenizedShares, rewardList }) => {
+  console.log(tokenizedShares, "tokenizedShares123", rewardList);
   const dispatch = useDispatch();
   const loginInfo = JSON.parse(localStorage.getItem(LOGIN_INFO));
 
   const onClick = () => {
     let messages = [];
+    rewardList.forEach((item) => {
+      const msg = TokenizedSharesRewardsMsg(item.owner, item.recordId);
+      messages.push(msg);
+    });
     tokenizedShares.forEach((item) => {
       const msg = RedeemTokenizedSharesMsg(
         loginInfo && loginInfo.address,
@@ -30,7 +36,7 @@ const ButtonRedeem = ({ tokenizedShares }) => {
       );
       messages.push(msg);
     });
-
+    console.log(messages, "messages");
     dispatch(submitFormData(messages));
   };
 
@@ -38,11 +44,17 @@ const ButtonRedeem = ({ tokenizedShares }) => {
 
   const onClickKeplr = () => {
     let messages = [];
+    console.log(rewardList, "rewardList1");
+    rewardList.forEach((item) => {
+      const msg = TokenizedSharesRewardsMsg(item.owner, item.recordId);
+      console.log(msg, "msg1234");
+      messages.push(msg);
+    });
     tokenizedShares.forEach((item) => {
       const msg = RedeemTokenizedSharesMsg(
         loginInfo && loginInfo.address,
         item.denom,
-        (tokenizedShares[0].amount * DefaultChainInfo.uTokenValue).toFixed(0)
+        (item.amount * DefaultChainInfo.uTokenValue).toFixed(0)
       );
       messages.push(msg);
     });

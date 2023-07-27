@@ -10,7 +10,8 @@ import { keplrSubmit } from "../../../store/actions/transactions/keplr";
 import {
   TokenizeSharesMsg,
   TokenizeSharesTransferMsg,
-  SendMsg
+  SendMsg,
+  ValidatorBond
 } from "../../../utils/protoMsgHelper";
 import {
   closeLoader,
@@ -23,6 +24,18 @@ import transactions from "../../../utils/transactions";
 import { fee } from "../../../utils/aminoMsgHelper";
 import { fetchApiData, pollAccountBalance } from "../../../utils/queries";
 import { fetchTokenizedSharesByAddress } from "../../../store/actions/tokenizeShares";
+import { getTokenizedShares } from "../../../utils/actions";
+
+const getLatestRecord = (newList, oldList, validatorAddress) => {
+  const result = newList.list.filter(
+    ({ recordId: recordId }) =>
+      !oldList.list.some(
+        ({ recordId: recordId2 }) =>
+          recordId2.toNumber() === recordId.toNumber()
+      )
+  );
+  return result;
+};
 
 const ButtonSubmit = () => {
   const dispatch = useDispatch();
@@ -35,6 +48,8 @@ const ButtonSubmit = () => {
   const tokenizeShareTxStatus = useSelector(
     (state) => state.tokenizeShares.tokenizeShareTxStatus
   );
+  const tokenizeSharesInfo = useSelector((state) => state.tokenizeSharesInfo);
+
   const onClick = () => {
     dispatch(setTxTokenizeShareStatus("pending"));
     dispatch(
@@ -62,6 +77,12 @@ const ButtonSubmit = () => {
 
   const onClickKeplr = async () => {
     dispatch(setTxTokenizeShareStatus("pending"));
+
+    // const msg = ValidatorBond(
+    //   loginInfo && loginInfo.address,
+    //   validatorAddress.value.operatorAddress
+    // );
+
     const msg = TokenizeSharesMsg(
       loginInfo && loginInfo.address,
       validatorAddress.value.operatorAddress,
@@ -71,6 +92,7 @@ const ButtonSubmit = () => {
     );
 
     try {
+      console.log("msg", msg);
       const response = await transactions.TransactionWithKeplr(
         [msg],
         fee(0, 250000),
@@ -86,44 +108,71 @@ const ButtonSubmit = () => {
         if (pollResult) {
           await fetchApiData(loginInfo && loginInfo.address, dispatch);
           dispatch(setTxTokenizeShareStatus("success"));
-          const tokenizedList = await fetchTokenizedSharesByAddress(
-            loginInfo && loginInfo.address
-          );
-          if (tokenizedList.length > 0) {
-            console.log(tokenizedList, "tokenizedList");
-            const searchResponse = tokenizedList.find(
-              (item) =>
-                item.validator === validatorAddress.value.operatorAddress
+          const list = await getTokenizedShares(loginInfo && loginInfo.address);
+
+          console.log(list, tokenizeSharesInfo, "tokenizeSharesInfo");
+          let listItem;
+          if (list.length > 0) {
+            const tokenizeShareResponse = list.find(
+              (share) =>
+                validatorAddress.value.operatorAddress ===
+                share.validatorAddress
             );
-            console.log(searchResponse, "searchResponse");
-            if (searchResponse) {
-              const msg1 = TokenizeSharesTransferMsg(
-                searchResponse.id,
-                loginInfo.address,
-                toAddress.value
-              );
-
-              const msg2 = SendMsg(
-                loginInfo && loginInfo.address,
-                toAddress.value,
-                (amount.value * DefaultChainInfo.uTokenValue).toFixed(0),
-                DefaultChainInfo.currency.coinMinimalDenom
-              );
-
-              console.log(msg1, msg2, "msg2msg2");
-              dispatch(
-                setTxIno({
-                  value: {
-                    modal: hideTxTokenizeModal(),
-                    data: {
-                      message: "",
-                      memo: ""
-                    }
-                  }
-                })
-              );
-              dispatch(keplrSubmit([msg1, msg2]));
+            if (tokenizeShareResponse) {
+              listItem = tokenizeShareResponse.list;
             }
+          }
+          let shareInfo;
+          if (tokenizeSharesInfo.sharesList.length > 0) {
+            const tokenizeShareResponse1 = tokenizeSharesInfo.sharesList.find(
+              (share) =>
+                validatorAddress.value.operatorAddress ===
+                share.validatorAddress
+            );
+            if (tokenizeShareResponse1) {
+              shareInfo = tokenizeShareResponse1;
+            }
+          }
+          console.log(listItem, "shareInfo", shareInfo);
+          let tokenizedItem;
+          if (!shareInfo && listItem) {
+            tokenizedItem = listItem;
+          } else {
+            tokenizedItem = getLatestRecord(
+              listItem,
+              shareInfo,
+              validatorAddress.value.operatorAddress
+            );
+          }
+          console.log(tokenizedItem, "uniqList");
+          if (tokenizedItem) {
+            const msg1 = TokenizeSharesTransferMsg(
+              tokenizedItem[0].recordId,
+              loginInfo.address,
+              toAddress.value
+            );
+            const msg2 = SendMsg(
+              loginInfo && loginInfo.address,
+              toAddress.value,
+              (amount.value * DefaultChainInfo.uTokenValue).toFixed(0),
+              tokenizedItem[0].denom
+            );
+
+            console.log(msg1, msg2, "msg2msg2");
+            dispatch(
+              setTxIno({
+                value: {
+                  modal: hideTxTokenizeModal(),
+                  data: {
+                    message: "",
+                    memo: ""
+                  }
+                }
+              })
+            );
+            dispatch(keplrSubmit([msg1, msg2]));
+          } else {
+            throw Error("something went wrong");
           }
         } else {
           throw Error("something went wrong");

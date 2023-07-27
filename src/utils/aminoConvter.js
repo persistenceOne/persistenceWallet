@@ -1,6 +1,6 @@
 export function createLSNativeAminoConverters() {
   return {
-    "/lsnative.staking.v1beta1.MsgTokenizeShares": {
+    "/cosmos.staking.v1beta1.MsgTokenizeShares": {
       aminoType: "cosmos/MsgTokenizeShares",
       toAmino: ({
         delegatorAddress,
