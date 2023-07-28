@@ -1,7 +1,7 @@
 import { QueryClientImpl as BankQueryClientImpl } from "cosmjs-types/cosmos/bank/v1beta1/query";
 import transactions from "../../utils/transactions";
-import { QueryClientImpl as LsNativeStakingQueryClient } from "../../protos/lsm/staking/v1beta1/query";
-import { QueryClientImpl as LsNativeDistributionQueryClient } from "../../protos/lsm/distribution/v1beta1/query";
+import { QueryClientImpl as LsNativeStakingQueryClient } from "persistenceonejs/cosmos/staking/v1beta1/query";
+import { QueryClientImpl as LsNativeDistributionQueryClient } from "persistenceonejs/cosmos/distribution/v1beta1/query";
 import {
   TOKENIZE_SHARES_FETCH_SUCCESS,
   TOKENIZE_SHARES_REWARDS_FETCH_SUCCESS

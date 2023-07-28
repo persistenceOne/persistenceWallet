@@ -29,8 +29,8 @@ import {
   MsgTokenizeShares,
   MsgTransferTokenizeShareRecord,
   MsgValidatorBond
-} from "../protos/lsm/staking/v1beta1/tx";
-import { MsgWithdrawTokenizeShareRecordReward } from "../protos/lsm/distribution/v1beta1/tx";
+} from "persistenceonejs/cosmos/staking/v1beta1/tx";
+import { MsgWithdrawTokenizeShareRecordReward } from "persistenceonejs/cosmos/distribution/v1beta1/tx";
 const {
   SigningStargateClient,
   QueryClient,

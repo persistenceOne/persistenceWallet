@@ -21,8 +21,6 @@ const ModalViewTxnResponse = () => {
     dispatch(hideTxResultModal());
   };
 
-  console.log(show, response, "ModalViewTxnResponse");
-
   useEffect(() => {
     const fetchCalls = async () => {
       if (response !== undefined) {

@@ -16,7 +16,7 @@ import * as Sentry from "@sentry/browser";
 import {
   MsgTokenizeShares,
   MsgRedeemTokensForShares
-} from "../../protos/lsm/staking/v1beta1/tx";
+} from "persistenceonejs/cosmos/staking/v1beta1/tx";
 
 const { defaultRegistryTypes } = require("@cosmjs/stargate");
 const tendermintRPCURL = process.env.REACT_APP_TENDERMINT_RPC_ENDPOINT;

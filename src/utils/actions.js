@@ -9,7 +9,7 @@ import { decimalize, stringToNumber } from "./scripts";
 import { tokenValueConversion } from "./helper";
 import { DefaultChainInfo } from "../config";
 import { QueryClientImpl as BankQueryClientImpl } from "cosmjs-types/cosmos/bank/v1beta1/query";
-import { QueryClientImpl as LsNativeStakingQueryClient } from "../protos/lsm/staking/v1beta1/query";
+import { QueryClientImpl as LsNativeStakingQueryClient } from "persistenceonejs/cosmos/staking/v1beta1/query";
 
 async function getValidatorRewards(validatorAddress) {
   const loginInfo = JSON.parse(localStorage.getItem(LOGIN_INFO));

@@ -14,12 +14,12 @@ import { coin } from "@cosmjs/stargate";
 import { trimWhiteSpaces } from "./scripts";
 import { DefaultChainInfo } from "../config";
 import {
-  MsgTokenizeShares,
   MsgRedeemTokensForShares,
   MsgTransferTokenizeShareRecord,
-  MsgValidatorBond
-} from "../protos/lsm/staking/v1beta1/tx";
-import { MsgWithdrawTokenizeShareRecordReward } from "../protos/lsm/distribution/v1beta1/tx";
+  MsgValidatorBond,
+  MsgTokenizeShares
+} from "persistenceonejs/cosmos/staking/v1beta1/tx";
+import { MsgWithdrawTokenizeShareRecordReward } from "persistenceonejs/cosmos/distribution/v1beta1/tx";
 const msgSendTypeUrl = "/cosmos.bank.v1beta1.MsgSend";
 const msgDelegateTypeUrl = "/cosmos.staking.v1beta1.MsgDelegate";
 const msgRedelegateTypeUrl = "/cosmos.staking.v1beta1.MsgBeginRedelegate";
