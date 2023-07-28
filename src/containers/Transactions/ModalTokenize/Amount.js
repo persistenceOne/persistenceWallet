@@ -54,7 +54,7 @@ const Amount = () => {
   return (
     <div className="form-field p-0">
       <p className="label amount-label">
-        <span> Tokenize Amount</span>
+        <span>Amount to Transfer</span>
         <span
           className={
             validatorDelegationAmount.value === 0

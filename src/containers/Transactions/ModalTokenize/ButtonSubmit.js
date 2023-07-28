@@ -15,7 +15,8 @@ import {
 } from "../../../utils/protoMsgHelper";
 import {
   closeLoader,
-  setTxIno
+  setTxIno,
+  txFailed
 } from "../../../store/actions/transactions/common";
 import { LOGIN_INFO } from "../../../constants/localStorage";
 import { stringToNumber, trimWhiteSpaces } from "../../../utils/scripts";
@@ -23,13 +24,12 @@ import { DefaultChainInfo } from "../../../config";
 import transactions from "../../../utils/transactions";
 import { fee } from "../../../utils/aminoMsgHelper";
 import { fetchApiData, pollAccountBalance } from "../../../utils/queries";
-import { fetchTokenizedSharesByAddress } from "../../../store/actions/tokenizeShares";
 import { getTokenizedShares } from "../../../utils/actions";
 
-const getLatestRecord = (newList, oldList, validatorAddress) => {
-  const result = newList.list.filter(
+const getLatestRecord = (newList, oldList) => {
+  const result = newList.filter(
     ({ recordId: recordId }) =>
-      !oldList.list.some(
+      !oldList.some(
         ({ recordId: recordId2 }) =>
           recordId2.toNumber() === recordId.toNumber()
       )
@@ -73,11 +73,12 @@ const ButtonSubmit = () => {
     validatorAddress.error.message !== "" ||
     memo.error.message !== "" ||
     toAddress.value === "" ||
+    toAddress.error.message !== "" ||
     tokenizeShareTxStatus === "pending";
 
   const onClickKeplr = async () => {
     dispatch(setTxTokenizeShareStatus("pending"));
-
+    dispatch(txFailed(""));
     // const msg = ValidatorBond(
     //   loginInfo && loginInfo.address,
     //   validatorAddress.value.operatorAddress
@@ -107,7 +108,6 @@ const ButtonSubmit = () => {
         );
         if (pollResult) {
           await fetchApiData(loginInfo && loginInfo.address, dispatch);
-          dispatch(setTxTokenizeShareStatus("success"));
           const list = await getTokenizedShares(loginInfo && loginInfo.address);
 
           console.log(list, tokenizeSharesInfo, "tokenizeSharesInfo");
@@ -130,7 +130,7 @@ const ButtonSubmit = () => {
                 share.validatorAddress
             );
             if (tokenizeShareResponse1) {
-              shareInfo = tokenizeShareResponse1;
+              shareInfo = tokenizeShareResponse1.list;
             }
           }
           console.log(listItem, "shareInfo", shareInfo);
@@ -170,17 +170,17 @@ const ButtonSubmit = () => {
                 }
               })
             );
+            dispatch(setTxTokenizeShareStatus("success"));
             dispatch(keplrSubmit([msg1, msg2]));
-          } else {
-            throw Error("something went wrong");
           }
         } else {
           throw Error("something went wrong");
         }
       } else {
-        throw Error("something went wrong");
+        throw Error(response.rawLog);
       }
     } catch (e) {
+      dispatch(txFailed(e.message));
       console.log(e, "error");
       dispatch(setTxTokenizeShareStatus(""));
     }

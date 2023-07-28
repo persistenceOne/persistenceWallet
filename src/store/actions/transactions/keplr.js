@@ -15,6 +15,7 @@ import { LOGIN_INFO } from "../../../constants/localStorage";
 import { pollAccountBalance } from "../../../utils/queries";
 import { hideKeyStoreModal } from "./keyStore";
 import { setTxTokenizeShareStatus } from "./tokenizeShares";
+import { store } from "../../index";
 
 export const keplrSubmit =
   (messages = "") =>
@@ -43,10 +44,18 @@ export const keplrSubmit =
         dispatch(showTxResultModal());
         dispatch(setTxTokenizeShareStatus(""));
       } else {
-        throw Error(response.rawLog);
+        if (response.transactionHash) {
+          dispatch(txResponse(response));
+          throw Error(`transaction error: ${response.rawLog}`);
+        } else {
+          throw Error(response.rawLog);
+        }
       }
     } catch (error) {
-      dispatch(showTxResultModal());
+      if (error.message.includes("transaction error")) {
+        dispatch(showTxResultModal());
+        dispatch(store.getState().common.txInfo.value.modal);
+      }
       dispatch(setTxTokenizeShareStatus(""));
       console.log(error.message, "error");
       Sentry.captureException(

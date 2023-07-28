@@ -1,10 +1,14 @@
 import { Modal as ReactModal, OverlayTrigger, Popover } from "react-bootstrap";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Icon from "../../../components/Icon";
 import { useTranslation } from "react-i18next";
 import Amount from "./Amount";
 import { useDispatch, useSelector } from "react-redux";
-import { hideTxTokenizeModal } from "../../../store/actions/transactions/tokenizeShares";
+import {
+  hideTxTokenizeModal,
+  setTxTokenizeAmount,
+  setTxTokenizeOwnerAddress
+} from "../../../store/actions/transactions/tokenizeShares";
 import ButtonSubmit from "./ButtonSubmit";
 import { showValidatorTxModal } from "../../../store/actions/validators";
 import Memo from "./Memo";
@@ -13,6 +17,7 @@ import Avatar from "../../Staking/Validators/Avatar";
 import ToAddress from "./ToAddress";
 import { fetchTokenizedSharesByAddress } from "../../../store/actions/tokenizeShares";
 import { Spinner } from "../../../components/Spinner";
+import { txFailed } from "../../../store/actions/transactions/common";
 
 const ModalTokenize = (props) => {
   const dispatch = useDispatch();
@@ -30,7 +35,22 @@ const ModalTokenize = (props) => {
   }, []);
 
   const handleClose = () => {
+    dispatch(txFailed(""));
     dispatch(hideTxTokenizeModal());
+    dispatch(
+      setTxTokenizeOwnerAddress({
+        value: "",
+        error: {
+          message: ""
+        }
+      })
+    );
+    dispatch(
+      setTxTokenizeAmount({
+        value: "",
+        error: ""
+      })
+    );
   };
 
   const handlePrevious = () => {
@@ -54,7 +74,7 @@ const ModalTokenize = (props) => {
             <Icon viewClass="arrow-right" icon="left-arrow" />
           </button>
         </div>
-        <h3 className="heading">Tokenize {props.moniker}</h3>
+        <h3 className="heading">Transferring Staked XPRT</h3>
       </ReactModal.Header>
       <ReactModal.Body className="delegate-modal-body">
         <div className="form-field">
@@ -67,7 +87,7 @@ const ModalTokenize = (props) => {
                     validator.description && validator.description.identity
                   }
                 />
-                <div className="info">
+                <div className="info-data">
                   <p className="name m-0">
                     {validator.description && validator.description.moniker}
                   </p>
@@ -87,7 +107,7 @@ const ModalTokenize = (props) => {
         {tokenizeShareTxStatus === "pending" ? (
           <div className="d-flex align-items-center justify-content-center mt-3">
             <Spinner size={"small"} />
-            <p className="ml-2 mb-0">tokenizing in progress</p>
+            <p className="ml-2 mb-0 text-secondary">tokenizing in progress</p>
           </div>
         ) : (
           ""
@@ -95,7 +115,9 @@ const ModalTokenize = (props) => {
         {tokenizeShareTxStatus === "success" ? (
           <div className="d-flex align-items-center justify-content-center mt-3">
             <Spinner size={"small"} />
-            <p className="ml-2 mb-0">Transferring tokenized shares</p>
+            <p className="ml-2 mb-0 text-secondary">
+              Transferring tokenized shares
+            </p>
           </div>
         ) : (
           ""

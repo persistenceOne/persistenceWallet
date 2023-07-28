@@ -37,14 +37,14 @@ const ToAddress = () => {
 
   const popover = (
     <Popover id="popover">
-      <Popover.Content>{t("RECIPIENT_ADDRESS_EXAMPLE")}</Popover.Content>
+      <Popover.Content>Wallet address starts with persistence</Popover.Content>
     </Popover>
   );
   return (
     <>
       <div className="form-field">
         <p className="label info">
-          {t("RECIPIENT_ADDRESS")}
+          Wallet Address
           <OverlayTrigger
             trigger={["hover", "focus"]}
             placement="bottom"

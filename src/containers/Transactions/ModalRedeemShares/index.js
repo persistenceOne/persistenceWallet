@@ -17,6 +17,7 @@ import {
   tokenValueConversion,
   truncateToFixedDecimalPlaces
 } from "../../../utils/helper";
+import { txFailed } from "../../../store/actions/transactions/common";
 
 const ModalRedeemShares = () => {
   const dispatch = useDispatch();
@@ -104,11 +105,7 @@ const ModalRedeemShares = () => {
   const loginInfo = JSON.parse(localStorage.getItem(LOGIN_INFO));
 
   const handleClose = () => {
-    dispatch(hideTxRedeemSharesModal());
-  };
-
-  const handlePrevious = () => {
-    dispatch(showValidatorTxModal());
+    dispatch(txFailed(""));
     dispatch(hideTxRedeemSharesModal());
   };
 
@@ -123,11 +120,6 @@ const ModalRedeemShares = () => {
       onHide={handleClose}
     >
       <ReactModal.Header closeButton>
-        <div className="previous-section txn-header">
-          <button className="button" onClick={() => handlePrevious()}>
-            <Icon viewClass="arrow-right" icon="left-arrow" />
-          </button>
-        </div>
         <h3 className="heading">Redeeming Staked XPRT</h3>
       </ReactModal.Header>
       <ReactModal.Body className="delegate-modal-body">
