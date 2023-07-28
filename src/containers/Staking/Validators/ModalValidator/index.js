@@ -129,7 +129,7 @@ const ModalValidator = () => {
             onClick={() => handleRoute("Tokenize")}
             className="button button-primary"
           >
-            {t("TOKENIZE_SHARE")}
+            Transfer Delegations
           </button>
         </div>
         {helper.foundationNodeCheck(
