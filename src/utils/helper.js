@@ -39,6 +39,7 @@ import {
   getContinuousVestingAmount,
   getPeriodicVestingAmount
 } from "./vestingAmount";
+import { Decimal } from "@cosmjs/math";
 
 const tendermint_1 = require("cosmjs-types/ibc/lightclients/tendermint/v1/tendermint");
 const encoding = require("@cosmjs/encoding");

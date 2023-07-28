@@ -14,10 +14,12 @@ import { coin } from "@cosmjs/stargate";
 import { trimWhiteSpaces } from "./scripts";
 import { DefaultChainInfo } from "../config";
 import {
-  MsgTokenizeShares,
-  MsgRedeemTokensforShares
-} from "../protos/lsnative/staking/v1beta1/tx";
-
+  MsgRedeemTokensForShares,
+  MsgTransferTokenizeShareRecord,
+  MsgValidatorBond,
+  MsgTokenizeShares
+} from "persistenceonejs/cosmos/staking/v1beta1/tx";
+import { MsgWithdrawTokenizeShareRecordReward } from "persistenceonejs/cosmos/distribution/v1beta1/tx";
 const msgSendTypeUrl = "/cosmos.bank.v1beta1.MsgSend";
 const msgDelegateTypeUrl = "/cosmos.staking.v1beta1.MsgDelegate";
 const msgRedelegateTypeUrl = "/cosmos.staking.v1beta1.MsgBeginRedelegate";
@@ -29,10 +31,14 @@ const msgSetWithdrawAddressTypeUrl =
 const msgTransferTypeUrl = "/ibc.applications.transfer.v1.MsgTransfer";
 const msgValidatorCommission =
   "/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission";
-export const msgTokenizeShares = "/lsnative.staking.v1beta1.MsgTokenizeShares";
+export const msgTransferTokenizeShareRecord =
+  "/cosmos.staking.v1beta1.MsgTransferTokenizeShareRecord";
+export const msgTokenizeShares = "/cosmos.staking.v1beta1.MsgTokenizeShares";
 export const msgRedeemTokensforShares =
-  "/lsnative.staking.v1beta1.MsgRedeemTokensforShares";
-
+  "/cosmos.staking.v1beta1.MsgRedeemTokensForShares";
+export const msgValidatorBondUrl = "/cosmos.staking.v1beta1.MsgValidatorBond";
+export const msgWithdrawTokenizeShareRecordReward =
+  "/cosmos.distribution.v1beta1.MsgWithdrawTokenizeShareRecordReward";
 function SendMsg(fromAddress, toAddress, amount, denom) {
   return {
     typeUrl: msgSendTypeUrl,
@@ -64,6 +70,16 @@ function DelegateMsg(
         denom: denom,
         amount: String(amount)
       }
+    })
+  };
+}
+
+function ValidatorBond(delegatorAddress, validatorAddress) {
+  return {
+    typeUrl: msgValidatorBondUrl,
+    value: MsgValidatorBond.fromPartial({
+      delegatorAddress: delegatorAddress,
+      validatorAddress: validatorAddress
     })
   };
 }
@@ -122,7 +138,7 @@ function SetWithDrawAddressMsg(delegatorAddress, withdrawAddress) {
   };
 }
 
-function DelegationTransferMsg(
+function TokenizeSharesMsg(
   fromAddress,
   validatorAddress,
   tokenizedShareOwner,
@@ -143,15 +159,37 @@ function DelegationTransferMsg(
   };
 }
 
-function RedeemDelegationTransferMsg(fromAddress, denom, amount) {
+function TokenizeSharesTransferMsg(recordId, sender, newOwner) {
+  return {
+    typeUrl: msgTransferTokenizeShareRecord,
+    value: MsgTransferTokenizeShareRecord.fromPartial({
+      tokenizeShareRecordId: recordId,
+      sender: sender,
+      newOwner: newOwner
+    })
+  };
+}
+
+function RedeemTokenizedSharesMsg(fromAddress, denom, amount) {
   return {
     typeUrl: msgRedeemTokensforShares,
-    value: MsgRedeemTokensforShares.fromPartial({
+    value: MsgRedeemTokensForShares.fromPartial({
       delegatorAddress: fromAddress,
       amount: {
         denom: denom,
         amount: String(amount)
       }
+    })
+  };
+}
+
+function TokenizedSharesRewardsMsg(ownerAddress, tokenId) {
+  console.log(ownerAddress, tokenId, "TokenizedSharesRewardsMsg");
+  return {
+    typeUrl: msgWithdrawTokenizeShareRecordReward,
+    value: MsgWithdrawTokenizeShareRecordReward.fromPartial({
+      ownerAddress: ownerAddress,
+      recordId: tokenId
     })
   };
 }
@@ -201,6 +239,9 @@ export {
   SetWithDrawAddressMsg,
   TransferMsg,
   ValidatorCommissionMsg,
-  DelegationTransferMsg,
-  RedeemDelegationTransferMsg
+  TokenizeSharesMsg,
+  RedeemTokenizedSharesMsg,
+  TokenizeSharesTransferMsg,
+  ValidatorBond,
+  TokenizedSharesRewardsMsg
 };

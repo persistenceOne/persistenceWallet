@@ -17,12 +17,20 @@ import {
   makeHdPath
 } from "./helper";
 import { DefaultChainInfo, IBCConfiguration } from "../config";
-import { msgRedeemTokensforShares, msgTokenizeShares } from "./protoMsgHelper";
 import {
-  MsgRedeemTokensforShares,
-  MsgTokenizeShares
-} from "../protos/lsnative/staking/v1beta1/tx";
-
+  msgRedeemTokensforShares,
+  msgTokenizeShares,
+  msgTransferTokenizeShareRecord,
+  msgValidatorBondUrl,
+  msgWithdrawTokenizeShareRecordReward
+} from "./protoMsgHelper";
+import {
+  MsgRedeemTokensForShares,
+  MsgTokenizeShares,
+  MsgTransferTokenizeShareRecord,
+  MsgValidatorBond
+} from "persistenceonejs/cosmos/staking/v1beta1/tx";
+import { MsgWithdrawTokenizeShareRecordReward } from "persistenceonejs/cosmos/distribution/v1beta1/tx";
 const {
   SigningStargateClient,
   QueryClient,
@@ -35,7 +43,7 @@ import {
   createDistributionAminoConverters,
   createGovAminoConverters,
   createIbcAminoConverters,
-  createStakingAminoConverters,
+  createStakingAminoConverters
 } from "@cosmjs/stargate";
 const tmRPC = require("@cosmjs/tendermint-rpc");
 const { TransferMsg } = require("./protoMsgHelper");
@@ -65,7 +73,13 @@ async function Transaction(wallet, signerAddress, msgs, fee, memo = "") {
       registry: new Registry([
         ...defaultRegistryTypes,
         [msgTokenizeShares, MsgTokenizeShares],
-        [msgRedeemTokensforShares, MsgRedeemTokensforShares]
+        [msgTransferTokenizeShareRecord, MsgTransferTokenizeShareRecord],
+        [msgRedeemTokensforShares, MsgRedeemTokensForShares],
+        [msgValidatorBondUrl, MsgValidatorBond],
+        [
+          msgWithdrawTokenizeShareRecordReward,
+          MsgWithdrawTokenizeShareRecordReward
+        ]
       ]),
       aminoTypes: new AminoTypes(createAminoTypes(signerAddress.split("1")[0]))
     }

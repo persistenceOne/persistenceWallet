@@ -481,3 +481,46 @@
     }
   }
 }
+
+.modal-redeem{
+  &.modal-custom .modal-dialog{
+    max-width: 750px;
+  }
+
+  .table-container {
+    overflow-y: auto;
+    max-height: 200px;
+    padding-bottom: 20px;
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th,
+    td {
+      padding: 8px 15px;
+    }
+    th {
+      padding-top: 20px;
+      background: #FFFFFF;
+    }
+    tr th{
+      color: #8D9CB5;
+      font-weight: 500;
+      font-size: 14px;
+    }
+    tr td{
+      font-size: 14px;
+      &.name{
+        font-weight: 400;
+      }
+      &.address, &.amount{
+        color: #272931;
+        font-weight: 600;
+      }
+    }
+  }
+  .table-container thead th {
+    position: sticky;
+    top: 0;
+  }
+}

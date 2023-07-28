@@ -14,6 +14,10 @@ import {
 import { LOGIN_INFO } from "../constants/localStorage";
 import { updateFee } from "../utils/helper";
 import ReactGA from "react-ga4";
+import {
+  fetchTokenizedShareRewards,
+  fetchTokenizedShares
+} from "../store/actions/tokenizeShares";
 
 const InfoRefresh = (props) => {
   const [inProgress, setInProgress] = useState(false);
@@ -37,6 +41,8 @@ const InfoRefresh = (props) => {
       props.fetchTransactions(loginInfo.address, 5, 1),
       props.fetchReceiveTransactions(loginInfo.address, 5, 1),
       props.fetchTransferableVestingAmount(loginInfo.address),
+      props.fetchTokenizedShares(loginInfo.address),
+      props.fetchTokenizedShareRewards(loginInfo.address),
       updateFee(loginInfo.address)
     ]);
   };
@@ -69,7 +75,9 @@ const actionsToProps = {
   fetchTransactions,
   fetchReceiveTransactions,
   fetchTransferableVestingAmount,
-  fetchTotalRewards
+  fetchTokenizedShares,
+  fetchTotalRewards,
+  fetchTokenizedShareRewards
 };
 
 export default connect(stateToProps, actionsToProps)(InfoRefresh);

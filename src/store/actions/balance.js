@@ -81,7 +81,7 @@ export const fetchTransferableVestingAmount = (address) => {
   return async (dispatch) => {
     dispatch(fetchBalanceProgress());
     try {
-      let xprtBalance;
+      let xprtBalance = 0;
       let vestingAmount = 0;
       let transferableAmount = 0;
       const tendermintClient = await Tendermint34Client.connect(
@@ -140,6 +140,7 @@ export const fetchTransferableVestingAmount = (address) => {
             tokenValueConversion(stringToNumber(xprtBalance))
           );
         }
+        console.log(transferableAmount, xprtBalance, "blc check");
         dispatch(fetchBalanceListSuccess(response.balances));
         const totalBalance = stringToNumber(xprtBalance);
         dispatch(fetchBalanceSuccess(tokenValueConversion(totalBalance)));

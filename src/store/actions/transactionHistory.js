@@ -15,8 +15,8 @@ import helper, { generateHash } from "../../utils/helper";
 import * as Sentry from "@sentry/browser";
 import {
   MsgTokenizeShares,
-  MsgRedeemTokensforShares
-} from "../../protos/lsnative/staking/v1beta1/tx";
+  MsgRedeemTokensForShares
+} from "persistenceonejs/cosmos/staking/v1beta1/tx";
 
 const { defaultRegistryTypes } = require("@cosmjs/stargate");
 const tendermintRPCURL = process.env.REACT_APP_TENDERMINT_RPC_ENDPOINT;
@@ -42,10 +42,10 @@ function createDefaultRegistry() {
       "/cosmos.feegrant.v1beta1.MsgGrantAllowance",
       feeGrantTx.MsgGrantAllowance
     ],
-    ["/lsnative.staking.v1beta1.MsgTokenizeShares", MsgTokenizeShares],
+    ["/cosmos.staking.v1beta1.MsgTokenizeShares", MsgTokenizeShares],
     [
-      "/lsnative.staking.v1beta1.MsgRedeemTokensforShares",
-      MsgRedeemTokensforShares
+      "/cosmos.staking.v1beta1.MsgRedeemTokensForShares",
+      MsgRedeemTokensForShares
     ],
     ["/cosmos.authz.v1beta1.MsgExec", authzTx.MsgExec],
     ["/cosmos.authz.v1beta1.MsgRevoke", authzTx.MsgRevoke]

@@ -27,12 +27,12 @@ jobs:
     - run: npm run build --if-present
       env:
         CI: false
-        REACT_APP_API_KEY: 'https://rest.testnet.persistence.one'
-        REACT_APP_TENDERMINT_RPC_ENDPOINT: 'https://rpc.testnet.persistence.one'
+        REACT_APP_API_KEY: 'https://rest.testnet2.persistence.one'
+        REACT_APP_TENDERMINT_RPC_ENDPOINT: 'https://rpc.testnet2.persistence.one'
         REACT_APP_WEBSITE_URL: 'https://test-core-1.wallet.persistence.one'
         REACT_APP_EXPLORER_API: 'https://testnet.mintscan.io/persistence-testnet'
         REACT_APP_MAIL_CHIMP_URL: 'https://one.us17.list-manage.com/subscribe/post?u=fd70c7f5c39a43acbedb49253&amp;id=7f8e2dbc48'
-        REACT_APP_CHAIN_ID: 'test-core-1'
+        REACT_APP_CHAIN_ID: 'test-core-2'
         REACT_APP_CHAIN_NAME: 'Persistence Testnet'
         REACT_APP_IBC_CONFIG: 'ibcStaging.json'
         REACT_APP_GA_TRACKING_ID: 'UA-219210130-1'
