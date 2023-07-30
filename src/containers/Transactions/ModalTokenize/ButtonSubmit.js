@@ -2,6 +2,7 @@ import React from "react";
 import Button from "../../../components/Button";
 import {
   hideTxTokenizeModal,
+  setTokenizeTxnInfo,
   setTxTokenizeShareStatus,
   submitFormData
 } from "../../../store/actions/transactions/tokenizeShares";
@@ -10,12 +11,11 @@ import { keplrSubmit } from "../../../store/actions/transactions/keplr";
 import {
   TokenizeSharesMsg,
   TokenizeSharesTransferMsg,
-  SendMsg,
-  ValidatorBond
+  SendMsg
 } from "../../../utils/protoMsgHelper";
 import {
-  closeLoader,
   setTxIno,
+  setTxName,
   txFailed
 } from "../../../store/actions/transactions/common";
 import { LOGIN_INFO } from "../../../constants/localStorage";
@@ -109,7 +109,11 @@ const ButtonSubmit = () => {
         if (pollResult) {
           await fetchApiData(loginInfo && loginInfo.address, dispatch);
           const list = await getTokenizedShares(loginInfo && loginInfo.address);
-
+          dispatch(
+            setTokenizeTxnInfo({
+              txnTokenizeHash: response.transactionHash
+            })
+          );
           console.log(list, tokenizeSharesInfo, "tokenizeSharesInfo");
           let listItem;
           if (list.length > 0) {
@@ -159,6 +163,13 @@ const ButtonSubmit = () => {
             );
 
             console.log(msg1, msg2, "msg2msg2");
+            dispatch(
+              setTxName({
+                value: {
+                  name: "tokenize"
+                }
+              })
+            );
             dispatch(
               setTxIno({
                 value: {

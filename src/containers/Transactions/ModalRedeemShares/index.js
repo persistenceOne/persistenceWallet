@@ -1,22 +1,14 @@
-import { Modal as ReactModal, Table } from "react-bootstrap";
+import { Modal as ReactModal, OverlayTrigger, Popover } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
 import Icon from "../../../components/Icon";
 import { useDispatch, useSelector } from "react-redux";
 import { hideTxRedeemSharesModal } from "../../../store/actions/transactions/redeemShares";
 import ButtonRedeem from "./ButtonRedeem";
-import { showValidatorTxModal } from "../../../store/actions/validators";
 import Memo from "./Memo";
 import { LOGIN_INFO } from "../../../constants/localStorage";
 import Avatar from "../../Staking/Validators/Avatar";
-import {
-  decimalize,
-  stringToNumber,
-  stringTruncate
-} from "../../../utils/scripts";
-import {
-  tokenValueConversion,
-  truncateToFixedDecimalPlaces
-} from "../../../utils/helper";
+import { stringTruncate } from "../../../utils/scripts";
+import { truncateToFixedDecimalPlaces } from "../../../utils/helper";
 import { txFailed } from "../../../store/actions/transactions/common";
 
 const ModalRedeemShares = () => {
@@ -109,6 +101,16 @@ const ModalRedeemShares = () => {
     dispatch(hideTxRedeemSharesModal());
   };
 
+  const popover = (
+    <Popover id="popover-basic">
+      <Popover.Content>
+        Converts previously transferred or tokenised staked assets back into
+        regular staked assets. Related staking rewards will be automatically
+        claimed.
+      </Popover.Content>
+    </Popover>
+  );
+
   return show ? (
     <ReactModal
       animation={false}
@@ -120,7 +122,18 @@ const ModalRedeemShares = () => {
       onHide={handleClose}
     >
       <ReactModal.Header closeButton>
-        <h3 className="heading">Redeeming Staked XPRT</h3>
+        <h3 className="heading">
+          Redeeming Staked XPRT{" "}
+          <OverlayTrigger
+            trigger={["hover", "focus"]}
+            placement="bottom"
+            overlay={popover}
+          >
+            <button className="icon-button info" type="button">
+              <Icon viewClass="arrow-right" icon="info" />
+            </button>
+          </OverlayTrigger>
+        </h3>
       </ReactModal.Header>
       <ReactModal.Body className="delegate-modal-body">
         <div className="form-field d-flex align-items-center mb-3">

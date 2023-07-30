@@ -7,6 +7,7 @@ import failed from "../../../assets/images/inactive.svg";
 import { hideTxResultModal } from "../../../store/actions/transactions/common";
 import { LOGIN_INFO } from "../../../constants/localStorage";
 import { fetchApiData } from "../../../utils/queries";
+import { stringTruncate } from "../../../utils/scripts";
 
 const EXPLORER_API = process.env.REACT_APP_EXPLORER_API;
 
@@ -15,7 +16,9 @@ const ModalViewTxnResponse = () => {
   const loginInfo = JSON.parse(localStorage.getItem(LOGIN_INFO));
   const dispatch = useDispatch();
   const show = useSelector((state) => state.common.modal);
+  const txName = useSelector((state) => state.common.txName.value.name);
   const response = useSelector((state) => state.common.txResponse.value);
+  const txnInfo = useSelector((state) => state.tokenizeShares.txnInfo);
   const errorResponse = useSelector((state) => state.common.error);
   const handleClose = () => {
     dispatch(hideTxResultModal());
@@ -50,15 +53,29 @@ const ModalViewTxnResponse = () => {
           <Modal.Body className="delegate-modal-body">
             <div className="result-container">
               <img src={success} alt="success-image" />
-              {loginInfo && loginInfo.loginMode === "keplr" ? (
-                <a
-                  href={`${EXPLORER_API}/txs/${response.transactionHash}`}
-                  target="_blank"
-                  className="tx-hash"
-                  rel="noopener noreferrer"
-                >
-                  Tx Hash: {response.transactionHash}
-                </a>
+              {txnInfo.txnTokenizeHash !== "" ? (
+                <div className={"mt-4"}>
+                  <div className={"mb-2"}>
+                    <p className="mb-0">Tokenizing</p>
+                    <a
+                      href={`${EXPLORER_API}/txs/${txnInfo.txnTokenizeHash}`}
+                      target="_blank"
+                      className="tx-hash"
+                      rel="noopener noreferrer"
+                    >
+                      Tx Hash: {stringTruncate(txnInfo.txnTokenizeHash, 10)}
+                    </a>
+                  </div>
+                  <p className="mb-0">Transferring</p>
+                  <a
+                    href={`${EXPLORER_API}/txs/${response.transactionHash}`}
+                    target="_blank"
+                    className="tx-hash"
+                    rel="noopener noreferrer"
+                  >
+                    Tx Hash: {stringTruncate(response.transactionHash, 10)}
+                  </a>
+                </div>
               ) : (
                 <a
                   href={`${EXPLORER_API}/txs/${response.transactionHash}`}
@@ -66,7 +83,7 @@ const ModalViewTxnResponse = () => {
                   className="tx-hash"
                   rel="noopener noreferrer"
                 >
-                  Tx Hash: {response.transactionHash}
+                  Tx Hash: {stringTruncate(response.transactionHash, 10)}
                 </a>
               )}
               <div className="buttons">

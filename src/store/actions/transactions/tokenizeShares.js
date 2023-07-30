@@ -4,7 +4,8 @@ import {
   TX_TOKENIZE_MODAL_HIDE,
   TX_TOKENIZE_MODAL_SHOW,
   TX_TOKENIZE_OWNER_ADDRESS_SET,
-  TX_TOKENIZE_SHARE_STATUS_SET
+  TX_TOKENIZE_SHARE_STATUS_SET,
+  TX_TOKENIZE_TXN_INFO_SET
 } from "../../../constants/tokenizeShares";
 import { setTxIno, setTxName } from "./common";
 import { showFeeModal } from "./fee";
@@ -40,6 +41,13 @@ export const setTxMemo = (data) => {
 export const setTxTokenizeOwnerAddress = (data) => {
   return {
     type: TX_TOKENIZE_OWNER_ADDRESS_SET,
+    data
+  };
+};
+
+export const setTokenizeTxnInfo = (data) => {
+  return {
+    type: TX_TOKENIZE_TXN_INFO_SET,
     data
   };
 };

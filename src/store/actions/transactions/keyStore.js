@@ -16,6 +16,7 @@ import {
 } from "./common";
 import helper, {
   decryptKeyStore,
+  makeHdPath,
   privateKeyReader
 } from "../../../utils/helper";
 import * as Sentry from "@sentry/browser";
@@ -32,6 +33,7 @@ import {
   showTxTokenizeModal
 } from "./tokenizeShares";
 import { store } from "../../index";
+import { fee } from "../../../utils/aminoMsgHelper";
 
 export const setTxKeyStore = (data) => {
   return {
@@ -61,11 +63,10 @@ export const hideKeyStoreModal = (data) => {
   };
 };
 
-export const keyStoreTxn = async (loginAddress) => {
+export const keyStoreTxn = async (loginAddress, msgs) => {
   const loginInfo = JSON.parse(localStorage.getItem(LOGIN_INFO));
   const password = store.getState().keyStore.password;
   const keyStoreData = store.getState().keyStore.keyStore;
-  const balance = store.getState().balance.list;
   const encryptedSeed = store.getState().common.loginInfo.encryptedSeed;
 
   let loginCoinType;
@@ -83,9 +84,6 @@ export const keyStoreTxn = async (loginAddress) => {
     store.getState().advanced.accountIndex.value
   );
   const bip39PassPhrase = store.getState().advanced.bip39PassPhrase.value;
-
-  const formData = store.getState().common.txInfo.value.data;
-  const txName = store.getState().common.txName.value.name;
 
   const fee = store.getState().fee.fee.value.fee;
   const gas = store.getState().gas.gas.value;
@@ -111,18 +109,26 @@ export const keyStoreTxn = async (loginAddress) => {
     );
   }
 
-  let result = await transactions.getTransactionResponse(
-    loginAddress,
-    formData,
-    fee,
-    gas,
+  const result = await transactions.TransactionWithMnemonic(
+    msgs,
+    fee(Math.trunc(fee), gas),
+    memo,
     mnemonic,
-    txName,
-    accountNumber,
-    accountIndex,
+    makeHdPath(accountNumber, accountIndex, loginCoinType),
     bip39PassPhrase,
-    loginCoinType
+    loginAddress
   );
+
+  // let result = await transactions.getTransactionResponse(
+  //   loginAddress,
+  //   fee,
+  //   gas,
+  //   mnemonic,
+  //   accountNumber,
+  //   accountIndex,
+  //   bip39PassPhrase,
+  //   loginCoinType
+  // );
   return result;
 };
 
