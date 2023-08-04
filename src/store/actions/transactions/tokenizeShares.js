@@ -81,3 +81,26 @@ export const submitFormData = (message) => (dispatch, getState) => {
   dispatch(hideTxTokenizeModal());
   dispatch(showFeeModal());
 };
+
+export const submitTransferFormData = (message) => (dispatch, getState) => {
+  dispatch(
+    setTxName({
+      value: {
+        name: "tokenize-transfer"
+      }
+    })
+  );
+  dispatch(
+    setTxIno({
+      value: {
+        modal: showTxTokenizeModal(),
+        data: {
+          message: message,
+          memo: getState().tokenizeShares.memo.value
+        }
+      }
+    })
+  );
+  dispatch(hideTxTokenizeModal());
+  dispatch(showFeeModal());
+};

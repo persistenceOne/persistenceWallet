@@ -65,7 +65,7 @@ const amount = (
       };
 
     case TX_SUCCESS:
-    case TX_TOKENIZE_MODAL_HIDE:
+    // case TX_TOKENIZE_MODAL_HIDE:
     case TX_RESULT_MODAL_HIDE:
       return {
         ...state,

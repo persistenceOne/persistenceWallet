@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "../../../components/Button";
 import {
   hideTxTokenizeModal,
   setTokenizeTxnInfo,
   setTxTokenizeShareStatus,
-  submitFormData
+  showTxTokenizeModal,
+  submitFormData,
+  submitTransferFormData
 } from "../../../store/actions/transactions/tokenizeShares";
 import { useDispatch, useSelector } from "react-redux";
 import { keplrSubmit } from "../../../store/actions/transactions/keplr";
@@ -25,6 +27,7 @@ import transactions from "../../../utils/transactions";
 import { fee } from "../../../utils/aminoMsgHelper";
 import { fetchApiData, pollAccountBalance } from "../../../utils/queries";
 import { getTokenizedShares } from "../../../utils/actions";
+import { showFeeModal } from "../../../store/actions/transactions/fee";
 
 const getLatestRecord = (newList, oldList) => {
   const result = newList.filter(
@@ -45,12 +48,37 @@ const ButtonSubmit = () => {
   const memo = useSelector((state) => state.tokenizeShares.memo);
   const validatorAddress = useSelector((state) => state.validators.validator);
   const toAddress = useSelector((state) => state.tokenizeShares.toAddress);
+  const txResponse = useSelector((state) => state.common.txResponse.value);
   const tokenizeShareTxStatus = useSelector(
     (state) => state.tokenizeShares.tokenizeShareTxStatus
   );
   const tokenizeSharesInfo = useSelector((state) => state.tokenizeSharesInfo);
+  const txName = useSelector((state) => state.common.txName.value.name);
 
-  const onClick = () => {
+  useEffect(() => {
+    if (
+      txResponse &&
+      txResponse.code !== undefined &&
+      txResponse.code === 0 &&
+      txName === "tokenize"
+    ) {
+      console.log(txResponse, "txResponsetxResponse");
+      transferTxn(txResponse, "keystore");
+    }
+  }, [txResponse]);
+
+  const disable =
+    amount.value === "" ||
+    stringToNumber(amount.value) === 0 ||
+    amount.error.message !== "" ||
+    validatorAddress.value === "" ||
+    validatorAddress.error.message !== "" ||
+    memo.error.message !== "" ||
+    toAddress.value === "" ||
+    toAddress.error.message !== "" ||
+    tokenizeShareTxStatus === "pending";
+
+  const onClickKeystore = () => {
     dispatch(setTxTokenizeShareStatus("pending"));
     dispatch(
       submitFormData([
@@ -65,17 +93,6 @@ const ButtonSubmit = () => {
     );
   };
 
-  const disable =
-    amount.value === "" ||
-    stringToNumber(amount.value) === 0 ||
-    amount.error.message !== "" ||
-    validatorAddress.value === "" ||
-    validatorAddress.error.message !== "" ||
-    memo.error.message !== "" ||
-    toAddress.value === "" ||
-    toAddress.error.message !== "" ||
-    tokenizeShareTxStatus === "pending";
-
   const onClickKeplr = async () => {
     dispatch(setTxTokenizeShareStatus("pending"));
     dispatch(txFailed(""));
@@ -83,7 +100,6 @@ const ButtonSubmit = () => {
     //   loginInfo && loginInfo.address,
     //   validatorAddress.value.operatorAddress
     // );
-
     const msg = TokenizeSharesMsg(
       loginInfo && loginInfo.address,
       validatorAddress.value.operatorAddress,
@@ -91,16 +107,22 @@ const ButtonSubmit = () => {
       (amount.value * DefaultChainInfo.uTokenValue).toFixed(0),
       DefaultChainInfo.currency.coinMinimalDenom
     );
-
     try {
-      console.log("msg", msg);
-      const response = await transactions.TransactionWithKeplr(
+      let response = await transactions.TransactionWithKeplr(
         [msg],
         fee(0, 250000),
         ""
       );
-      console.log("here", response);
+      transferTxn(response, "keplr");
+    } catch (e) {
+      dispatch(txFailed(e.message));
+      console.log(e, "error");
+      dispatch(setTxTokenizeShareStatus(""));
+    }
+  };
 
+  const transferTxn = async (response, type) => {
+    try {
       if (response.code !== undefined && response.code === 0) {
         const pollResult = await pollAccountBalance(
           balance,
@@ -161,28 +183,31 @@ const ButtonSubmit = () => {
               (amount.value * DefaultChainInfo.uTokenValue).toFixed(0),
               tokenizedItem[0].denom
             );
-
             console.log(msg1, msg2, "msg2msg2");
-            dispatch(
-              setTxName({
-                value: {
-                  name: "tokenize"
-                }
-              })
-            );
-            dispatch(
-              setTxIno({
-                value: {
-                  modal: hideTxTokenizeModal(),
-                  data: {
-                    message: "",
-                    memo: ""
+            if (type === "keplr") {
+              dispatch(
+                setTxIno({
+                  value: {
+                    modal: hideTxTokenizeModal(),
+                    data: {
+                      message: "",
+                      memo: ""
+                    }
                   }
-                }
-              })
-            );
+                })
+              );
+              dispatch(
+                setTxName({
+                  value: {
+                    name: "tokenize"
+                  }
+                })
+              );
+              dispatch(keplrSubmit([msg1, msg2]));
+            } else {
+              dispatch(submitTransferFormData([msg1, msg2]));
+            }
             dispatch(setTxTokenizeShareStatus("success"));
-            dispatch(keplrSubmit([msg1, msg2]));
           }
         } else {
           throw Error("something went wrong");
@@ -208,7 +233,7 @@ const ButtonSubmit = () => {
           onClick={
             loginInfo && loginInfo.loginMode === "keplr"
               ? onClickKeplr
-              : onClick
+              : onClickKeystore
           }
         />
       </div>

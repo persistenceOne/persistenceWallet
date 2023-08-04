@@ -5,7 +5,8 @@ import {
   TOKENIZED_ACTIONS_MODAL_HIDE,
   TX_REDEEM_SHARES_MODAL_HIDE,
   TX_REDEEM_SHARES_MODAL_SHOW,
-  SET_REDEEM_TX_VALIDATOR
+  SET_REDEEM_TX_VALIDATOR,
+  TX_REDEEM_SHARES_MEMO_SET
 } from "../../../constants/redeemShares";
 
 export const showTokenizedActionModal = (data) => {
@@ -43,6 +44,13 @@ export const setValidatorTxData = (data) => {
   };
 };
 
+export const setTxMemo = (data) => {
+  return {
+    type: TX_REDEEM_SHARES_MEMO_SET,
+    data
+  };
+};
+
 export const submitFormData = (message) => (dispatch, getState) => {
   dispatch(
     setTxName({
@@ -54,15 +62,14 @@ export const submitFormData = (message) => (dispatch, getState) => {
   dispatch(
     setTxIno({
       value: {
-        modal: () => {},
+        modal: showTxRedeemSharesModal(),
         data: {
           message: message,
-          amount: getState().send.amount.value,
-          list: getState().send.token.value.tokenDenom,
-          memo: getState().send.memo.value
+          memo: getState().redeemShares.memo.value
         }
       }
     })
   );
   dispatch(showFeeModal());
+  dispatch(hideTxRedeemSharesModal());
 };

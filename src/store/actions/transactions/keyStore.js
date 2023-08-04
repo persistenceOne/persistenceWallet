@@ -211,28 +211,17 @@ export const keyStoreSubmit = (loginAddress) => {
           })
         );
         if (txName === "tokenize") {
-          const pollResult = await pollAccountBalance(
-            balance,
-            loginInfo && loginInfo.address
-          );
           dispatch(closeLoader());
-          if (pollResult) {
-            dispatch(
-              fetchTransferableVestingAmount(loginInfo && loginInfo.address)
-            );
-            dispatch(hideKeyStoreModal());
-            dispatch(setTxTokenizeShareStatus("success"));
-            dispatch(showTxTokenizeModal());
-          } else {
-            dispatch(setTxTokenizeShareStatus("failed"));
-            throw Error("something went wrong");
-          }
+          dispatch(hideKeyStoreModal());
+          dispatch(showTxTokenizeModal());
+          dispatch(txResponse(result));
         } else {
           dispatch(closeLoader());
           dispatch(hideKeyStoreModal());
           dispatch(txSuccess());
           dispatch(txResponse(result));
           dispatch(showTxResultModal());
+          dispatch(setTxTokenizeShareStatus(""));
         }
       } else {
         throw Error(result.rawLog);
