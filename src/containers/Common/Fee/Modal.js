@@ -27,7 +27,7 @@ const Modal = () => {
       dispatch(setTxTokenizeShareStatus(""));
       dispatch(
         setTokenizeTxnInfo({
-          txnTokenizeHash: response.transactionHash
+          txnTokenizeHash: ""
         })
       );
     }

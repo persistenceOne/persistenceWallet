@@ -25,7 +25,10 @@ import { COIN_TYPE, ENCRYPTED_MNEMONIC } from "../../../constants/localStorage";
 import CoinType from "./CoinType";
 import { setCoinType } from "../../../store/actions/signIn/keyStore";
 import { DefaultChainInfo } from "../../../config";
-import { setTxTokenizeShareStatus } from "../../../store/actions/transactions/tokenizeShares";
+import {
+  setTokenizeTxnInfo,
+  setTxTokenizeShareStatus
+} from "../../../store/actions/transactions/tokenizeShares";
 
 const Modal = () => {
   const { t } = useTranslation();
@@ -67,6 +70,11 @@ const Modal = () => {
     dispatch(hideKeyStoreModal());
     if (txName.name === "tokenize" || txName.name === "tokenize-transfer") {
       dispatch(setTxTokenizeShareStatus(""));
+      dispatch(
+        setTokenizeTxnInfo({
+          txnTokenizeHash: ""
+        })
+      );
     }
   };
 
