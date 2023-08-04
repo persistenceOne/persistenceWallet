@@ -10,7 +10,10 @@ import Gas from "./Gas";
 import Submit from "./Submit";
 import Icon from "../../../components/Icon";
 import { FeeInfo } from "../../../config";
-import { setTxTokenizeShareStatus } from "../../../store/actions/transactions/tokenizeShares";
+import {
+  setTokenizeTxnInfo,
+  setTxTokenizeShareStatus
+} from "../../../store/actions/transactions/tokenizeShares";
 
 const Modal = () => {
   const show = useSelector((state) => state.fee.modal);
@@ -20,6 +23,14 @@ const Modal = () => {
 
   const dispatch = useDispatch();
   const handleClose = () => {
+    if (txName.name === "tokenize" || txName.name === "tokenize-transfer") {
+      dispatch(setTxTokenizeShareStatus(""));
+      dispatch(
+        setTokenizeTxnInfo({
+          txnTokenizeHash: response.transactionHash
+        })
+      );
+    }
     dispatch(
       feeChangeHandler({
         value: {
@@ -35,7 +46,7 @@ const Modal = () => {
   };
 
   const handleBack = () => {
-    if (txName.name === "tokenize") {
+    if (txName.name === "tokenize" || txName.name === "tokenize-transfer") {
       dispatch(setTxTokenizeShareStatus(""));
     }
     dispatch(txInfo.modal);

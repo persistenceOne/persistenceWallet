@@ -32,7 +32,7 @@ const ButtonRedeem = ({ tokenizedShares, rewardList }) => {
       const msg = RedeemTokenizedSharesMsg(
         loginInfo && loginInfo.address,
         item.denom,
-        item.amount
+        (item.amount * DefaultChainInfo.uTokenValue).toFixed(0)
       );
       messages.push(msg);
     });

@@ -1,4 +1,9 @@
-import { Modal as ReactModal, OverlayTrigger, Popover } from "react-bootstrap";
+import {
+  Modal as ReactModal,
+  OverlayTrigger,
+  Popover,
+  Table
+} from "react-bootstrap";
 import React, { useEffect, useState } from "react";
 import Icon from "../../../components/Icon";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,6 +22,7 @@ const ModalRedeemShares = () => {
   const [rewardList, setRewardList] = useState([]);
   const validator = useSelector((state) => state.redeemShares.validator.value);
   const show = useSelector((state) => state.redeemShares.modal);
+
   const sharesRewardsList = useSelector(
     (state) => state.tokenizeSharesInfo.sharesRewardsList
   );
@@ -29,11 +35,9 @@ const ModalRedeemShares = () => {
     ) {
       const filteredRewardsList = [];
       sharesRewardsList.forEach((share) => {
-        console.log(share, "share");
         const item = validator.list.find(
           (f) => f.recordId.toNumber() === share.recordId.toNumber()
         );
-        console.log(item, "item123");
         if (item) {
           const newObje = {
             ...item,
@@ -42,39 +46,6 @@ const ModalRedeemShares = () => {
           filteredRewardsList.push(newObje);
         }
       });
-
-      // validator.list.forEach((el) =>
-      // {
-      //
-      //   sharesRewardsList.forEach((share) => {
-      //     validator.list.find((f) => {
-      //       f.reward === share.reward
-      //     }
-      //     if (share.recordId === el.recordId) {
-      //       const newObje = {
-      //         ...el,
-      //         rewardAmount: share.reward
-      //       };
-      //
-      //       console.log(
-      //           list,
-      //       list.push(newObje);
-      //     }
-      //   });
-      // });
-
-      // const arrayFiltered = validator.list.filter((el) => {
-      //   return sharesRewardsList.some((f) => {
-      //     return f.recordId.toNumber() === el.recordId.toNumber();
-      //   });
-      // });
-      //
-      // const filteredRewardsList = sharesRewardsList.filter((el) => {
-      //   return validator.list.some((f) => {
-      //     return f.recordId.toNumber() === el.recordId.toNumber();
-      //   });
-      // });
-
       const totalCount = filteredRewardsList.reduce((accumulator, object) => {
         return accumulator + object.rewardAmount;
       }, 0);
@@ -88,7 +59,6 @@ const ModalRedeemShares = () => {
       );
       setRewardList(filteredRewardsList);
       setTotalRewards(totalCount);
-      // const totalRewards = sharesRewardsList.
     }
   }, [sharesRewardsList, validator]);
 
@@ -167,7 +137,7 @@ const ModalRedeemShares = () => {
         ) : (
           ""
         )}
-        <div className="table-container border">
+        <div className="table-container border mb-2">
           <Table borderless className="m-0">
             <thead>
               <tr>
@@ -180,14 +150,16 @@ const ModalRedeemShares = () => {
               {validator.list.length > 0 &&
                 validator.list.map((item, index) => (
                   <tr key={index}>
-                    <td className="address pl-5">
+                    <td className="address pl-5 text-secondary">
                       {stringTruncate(item.owner)}
                     </td>
-                    <td className="d-flex  name">
+                    <td className="d-flex name text-secondary">
                       <Avatar identity={validator.validatorImage} />
                       {validator.validatorName}
                     </td>
-                    <td className="text-center amount">{item.amount}</td>
+                    <td className="text-center amount text-secondary">
+                      {item.amount}
+                    </td>
                   </tr>
                 ))}
             </tbody>

@@ -1161,8 +1161,7 @@ ul li em {
   display: flex;
   display: -webkit-flex;
   align-items: center;
-  justify-content: center;
-  max-width: 500px; }
+  justify-content: center; }
 
 .memo-dropdown-section-body {
   height: auto;
