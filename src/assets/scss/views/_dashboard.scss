@@ -1341,6 +1341,9 @@
   align-items: center;
   padding: 0px 20px !important;
 
+  &.button-list{
+    padding: 0 !important;
+  }
   .show.dropdown {
     .button.button-primary {
       .icon {

@@ -10,6 +10,7 @@ import {
 import Submit from "./button";
 import AddressModal from "./AddressModal";
 import TxnModal from "./TxnModal";
+import { handleDelegationTransferModal } from "../../../../store/actions/transactions/delegationTransfer";
 
 const TokenizedShares = () => {
   const dispatch = useDispatch();
@@ -71,6 +72,17 @@ const TokenizedShares = () => {
     console.log(validator, "validator123");
   };
 
+  const handleTransfer = (validator) => {
+    dispatch(
+      setValidatorTxData({
+        value: validator,
+        error: new Error("")
+      })
+    );
+    dispatch(handleDelegationTransferModal(true));
+    console.log(validator, "validator123");
+  };
+
   const tableData = inputState.length
     ? inputState.map((validator, index) => [
         <div key={index} className="validator-name d-flex">
@@ -81,14 +93,25 @@ const TokenizedShares = () => {
           {validator.amount}
         </div>,
 
-        <div
-          className="actions-td"
-          key={index}
-          onClick={() => {
-            handleRedeem(validator);
-          }}
-        >
-          <button className="button button-primary">Redeem</button>
+        <div className="d-flex">
+          <div
+            className="actions-td button-list mr-2"
+            key={index}
+            onClick={() => {
+              handleRedeem(validator);
+            }}
+          >
+            <button className="button button-primary">Redeem</button>
+          </div>
+          <div
+            className="actions-td button-list"
+            key={index}
+            onClick={() => {
+              handleTransfer(validator);
+            }}
+          >
+            <button className="button button-primary">Transfer</button>
+          </div>
         </div>
       ])
     : [];

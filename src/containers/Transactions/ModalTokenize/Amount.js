@@ -79,7 +79,7 @@ const Amount = () => {
           className="form-control"
           min={0}
           name="amount"
-          placeholder={"Tokenize"}
+          placeholder={"Amount"}
           required={true}
           type="number"
           value={amount.value}

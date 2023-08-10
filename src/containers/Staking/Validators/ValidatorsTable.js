@@ -10,6 +10,7 @@ import {
   fetchValidatorDelegations,
   fetchValidatorRewards,
   setValidatorTxData,
+  setValidatorTxModalName,
   showValidatorTxModal
 } from "../../../store/actions/validators";
 import { LOGIN_INFO } from "../../../constants/localStorage";
@@ -25,6 +26,11 @@ const ValidatorsTable = (props) => {
       setValidatorTxData({
         value: validator,
         error: new Error("")
+      })
+    );
+    dispatch(
+      setValidatorTxModalName({
+        value: "validator-actions"
       })
     );
     dispatch(fetchValidatorDelegations(loginInfo && loginInfo.address));

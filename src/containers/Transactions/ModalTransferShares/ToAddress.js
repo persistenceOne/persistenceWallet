@@ -1,14 +1,14 @@
 import React from "react";
 import { OverlayTrigger, Popover } from "react-bootstrap";
-import Icon from "../../../../../components/Icon";
-import InputText from "../../../../../components/InputText";
+import Icon from "../../../components/Icon";
+import InputText from "../../../components/InputText";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import {
   validateAddress,
   ValidateAlphaNumeric
-} from "../../../../../utils/validations";
-import { setTxDelegationTransferAddress } from "../../../../../store/actions/transactions/delegationTransfer";
+} from "../../../utils/validations";
+import { setTxDelegationTransferAddress } from "../../../store/actions/transactions/delegationTransfer";
 
 const ToAddress = () => {
   const { t } = useTranslation();

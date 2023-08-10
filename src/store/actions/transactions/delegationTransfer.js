@@ -54,22 +54,21 @@ export const submitFormData = (message) => (dispatch, getState) => {
   dispatch(
     setTxName({
       value: {
-        name: "delegation-transfer"
+        name: "transfer-shares"
       }
     })
   );
   dispatch(
     setTxIno({
       value: {
-        modal: handleDelegationTokenizeModal(true),
+        modal: handleDelegationTransferModal(true),
         data: {
           message: message,
-          amount: getState().send.amount.value,
-          list: getState().send.token.value.tokenDenom,
-          memo: getState().send.memo.value
+          memo: getState().delegationTransfer.memo.value
         }
       }
     })
   );
+  dispatch(handleDelegationTransferModal(false));
   dispatch(showFeeModal());
 };

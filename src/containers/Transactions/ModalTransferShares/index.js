@@ -7,21 +7,22 @@ import {
 import React, { useEffect, useState } from "react";
 import Icon from "../../../components/Icon";
 import { useDispatch, useSelector } from "react-redux";
-import { hideTxRedeemSharesModal } from "../../../store/actions/transactions/redeemShares";
-import ButtonRedeem from "./ButtonRedeem";
+import { handleDelegationTransferModal } from "../../../store/actions/transactions/delegationTransfer";
+import ButtonTransfer from "./ButtonTransfer";
 import Memo from "./Memo";
 import { LOGIN_INFO } from "../../../constants/localStorage";
 import Avatar from "../../Staking/Validators/Avatar";
 import { stringTruncate } from "../../../utils/scripts";
 import { truncateToFixedDecimalPlaces } from "../../../utils/helper";
 import { txFailed } from "../../../store/actions/transactions/common";
+import ToAddress from "./ToAddress";
 
-const ModalRedeemShares = () => {
+const ModalTransferShares = () => {
   const dispatch = useDispatch();
   const [totalRewards, setTotalRewards] = useState(0);
   const [rewardList, setRewardList] = useState([]);
   const validator = useSelector((state) => state.redeemShares.validator.value);
-  const show = useSelector((state) => state.redeemShares.modal);
+  const show = useSelector((state) => state.delegationTransfer.transferModal);
 
   const sharesRewardsList = useSelector(
     (state) => state.tokenizeSharesInfo.sharesRewardsList
@@ -68,15 +69,14 @@ const ModalRedeemShares = () => {
 
   const handleClose = () => {
     dispatch(txFailed(""));
-    dispatch(hideTxRedeemSharesModal());
+    dispatch(handleDelegationTransferModal(false));
   };
 
   const popover = (
     <Popover id="popover-basic">
       <Popover.Content>
-        Converts previously transferred or tokenised staked assets back into
-        regular staked assets. Related staking rewards will be automatically
-        claimed.
+        Transfer previously tokenised staked assets into regular staked assets.
+        Related staking rewards will be automatically claimed.
       </Popover.Content>
     </Popover>
   );
@@ -93,7 +93,7 @@ const ModalRedeemShares = () => {
     >
       <ReactModal.Header closeButton>
         <h3 className="heading">
-          Redeeming Staked XPRT{" "}
+          Transferring Staked XPRT{" "}
           <OverlayTrigger
             trigger={["hover", "focus"]}
             placement="bottom"
@@ -107,8 +107,8 @@ const ModalRedeemShares = () => {
       </ReactModal.Header>
       <ReactModal.Body className="delegate-modal-body">
         <div className="form-field d-flex align-items-center mb-3">
-          <p className="label mr-3 mb-0">Selected Validator</p>
-          <div className="available-tokens text-secondary">
+          <p className="label mr-3 mb-0 text-secondary">Selected Validator</p>
+          <div className="available-tokens">
             <div className="moniker-box d-flex align-items-center">
               <Avatar
                 identity={validator.validatorImage && validator.validatorImage}
@@ -137,7 +137,7 @@ const ModalRedeemShares = () => {
         ) : (
           ""
         )}
-        <div className="table-container border mb-2">
+        <div className="table-container border mb-4">
           <Table borderless className="m-0">
             <thead>
               <tr>
@@ -165,11 +165,12 @@ const ModalRedeemShares = () => {
             </tbody>
           </Table>
         </div>
+        <ToAddress />
         {loginInfo && loginInfo.loginMode !== "keplr" ? <Memo /> : null}
         {response.error.message !== "" ? (
           <p className="form-error">{response.error.message}</p>
         ) : null}
-        <ButtonRedeem
+        <ButtonTransfer
           tokenizedShares={validator.list}
           rewardList={rewardList}
         />
@@ -180,4 +181,4 @@ const ModalRedeemShares = () => {
   );
 };
 
-export default ModalRedeemShares;
+export default ModalTransferShares;

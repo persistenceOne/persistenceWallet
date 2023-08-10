@@ -20,6 +20,7 @@ import Loader from "../../components/Loader";
 import ReactGA from "react-ga4";
 import TokenizedShares from "./Validators/TokenizedShares";
 import ModalRedeemShares from "../Transactions/ModalRedeemShares";
+import ModalTransferShares from "../Transactions/ModalTransferShares";
 
 const Staking = () => {
   const { t } = useTranslation();
@@ -38,6 +39,7 @@ const Staking = () => {
       <ModalDelegate />
       <ModalReDelegate />
       <ModalRedeemShares />
+      <ModalTransferShares />
       <ModalTokenize />
       <TokenInfo />
       <FeeModal />
@@ -95,9 +97,6 @@ const Staking = () => {
               <Tab.Pane eventKey="tokenized-shares">
                 <TokenizedShares />
               </Tab.Pane>
-              {/*<Tab.Pane eventKey="tokenized-shares">*/}
-              {/*  <TransferDelegations />*/}
-              {/*</Tab.Pane>*/}
             </Tab.Content>
           </Tab.Container>
         </div>
