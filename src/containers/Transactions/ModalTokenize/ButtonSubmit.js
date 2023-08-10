@@ -13,7 +13,8 @@ import { keplrSubmit } from "../../../store/actions/transactions/keplr";
 import {
   TokenizeSharesMsg,
   TokenizeSharesTransferMsg,
-  SendMsg
+  SendMsg,
+  ValidatorBond
 } from "../../../utils/protoMsgHelper";
 import {
   setTxIno,

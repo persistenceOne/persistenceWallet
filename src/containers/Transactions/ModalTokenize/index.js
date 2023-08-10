@@ -6,6 +6,7 @@ import Amount from "./Amount";
 import { useDispatch, useSelector } from "react-redux";
 import {
   hideTxTokenizeModal,
+  setTokenizeTxnInfo,
   setTxTokenizeAmount,
   setTxTokenizeOwnerAddress
 } from "../../../store/actions/transactions/tokenizeShares";
@@ -51,6 +52,11 @@ const ModalTokenize = (props) => {
         error: ""
       })
     );
+    dispatch(
+      setTokenizeTxnInfo({
+        txnTokenizeHash: ""
+      })
+    );
   };
 
   const handlePrevious = () => {
@@ -79,7 +85,7 @@ const ModalTokenize = (props) => {
       <ReactModal.Body className="delegate-modal-body">
         <div className="form-field">
           <p className="label">Selected Validator</p>
-          <div className="available-tokens mb-3">
+          <div className="available-tokens mb-3 text-secondary">
             {validator.description && (
               <div className="moniker-box d-flex align-items-center">
                 <Avatar

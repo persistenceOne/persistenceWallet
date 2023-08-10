@@ -195,7 +195,7 @@ const TokenInfo = (props) => {
                 ).toFixed(DefaultChainInfo.currency.coinDecimals)}
               >
                 <span className="inner-grid-icon">
-                  {props.list.length > 1 ? <ModalViewAmountDetails /> : ""}
+                  {props.list.length > 0 ? <ModalViewAmountDetails /> : ""}
                 </span>
                 <NumberView
                   value={formatNumber(

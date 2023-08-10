@@ -47,6 +47,7 @@ const ModalViewAmountDetails = (props) => {
       }
     });
   };
+
   return (
     <>
       <Modal
@@ -63,56 +64,55 @@ const ModalViewAmountDetails = (props) => {
         </Modal.Header>
         <Modal.Body className="faq-modal-body">
           <ul className="modal-list-data">
-            {props.list
-              ? ibcList.map((item, index) => {
-                  if (
-                    item.dataResponse.denom !==
-                    DefaultChainInfo.currency.coinMinimalDenom
-                  ) {
-                    if (
-                      item.dataResponse.denom === PstakeInfo.coinMinimalDenom
-                    ) {
-                      return (
-                        <li
-                          className=""
-                          key={index}
-                          title={item.dataResponse.denom}
-                        >
-                          {decimalize(
-                            item.dataResponse.amount,
-                            PstakeInfo.coinDecimals
+            {props.list && ibcList.length ? (
+              ibcList.map((item, index) => {
+                if (
+                  item.dataResponse.denom !==
+                  DefaultChainInfo.currency.coinMinimalDenom
+                ) {
+                  if (item.dataResponse.denom === PstakeInfo.coinMinimalDenom) {
+                    return (
+                      <li
+                        className=""
+                        key={index}
+                        title={item.dataResponse.denom}
+                      >
+                        {decimalize(
+                          item.dataResponse.amount,
+                          PstakeInfo.coinDecimals
+                        )}
+                        &nbsp;
+                        {helper.denomChange(
+                          item.denomResponse.denomTrace.baseDenom
+                        )}
+                      </li>
+                    );
+                  } else if (item.dataResponse.denom.startsWith("ibc")) {
+                    return (
+                      <li
+                        className=""
+                        key={index}
+                        title={item.dataResponse.denom}
+                      >
+                        <NumberView
+                          value={formatNumber(
+                            tokenValueConversion(item.dataResponse.amount)
                           )}
-                          &nbsp;
-                          {helper.denomChange(
-                            item.denomResponse.denomTrace.baseDenom
-                          )}
-                        </li>
-                      );
-                    } else  if (item.dataResponse.denom.startsWith("ibc")) {
-                      return (
-                        <li
-                          className=""
-                          key={index}
-                          title={item.dataResponse.denom}
-                        >
-                          <NumberView
-                            value={formatNumber(
-                              tokenValueConversion(item.dataResponse.amount)
-                            )}
-                          />
-                          {helper.denomChange(
-                            item.denomResponse.denomTrace.baseDenom
-                          )}{" "}
-                          ( IBC Trace path -{" "}
-                          {item.denomResponse.denomTrace.path}, denom:{" "}
-                          {item.denomResponse.denomTrace.baseDenom} ){" "}
-                          {item.dataResponse.denom}
-                        </li>
-                      );
-                    }
+                        />
+                        {helper.denomChange(
+                          item.denomResponse.denomTrace.baseDenom
+                        )}{" "}
+                        ( IBC Trace path - {item.denomResponse.denomTrace.path},
+                        denom: {item.denomResponse.denomTrace.baseDenom} ){" "}
+                        {item.dataResponse.denom}
+                      </li>
+                    );
                   }
-                })
-              : null}
+                }
+              })
+            ) : (
+              <p className="text-secondary text-center">No IBC Tokens found</p>
+            )}
           </ul>
         </Modal.Body>
       </Modal>

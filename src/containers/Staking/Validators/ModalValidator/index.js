@@ -1,7 +1,10 @@
 import React from "react";
 import { Modal as ReactModal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { hideValidatorTxModal } from "../../../../store/actions/validators";
+import {
+  hideValidatorTxModal,
+  setValidatorTxModalName
+} from "../../../../store/actions/validators";
 import { useTranslation } from "react-i18next";
 import Avatar from "../Avatar";
 import helper from "../../../../utils/helper";
@@ -17,9 +20,18 @@ const ModalValidator = () => {
   const { t } = useTranslation();
   const show = useSelector((state) => state.validators.validatorTxModal);
   const validator = useSelector((state) => state.validators.validator.value);
+  const txnModalName = useSelector(
+    (state) => state.validators.validatorModalName.value
+  );
+
   const dispatch = useDispatch();
 
   const handleClose = () => {
+    dispatch(
+      setValidatorTxModalName({
+        value: ""
+      })
+    );
     dispatch(hideValidatorTxModal());
   };
 
@@ -125,12 +137,16 @@ const ModalValidator = () => {
           >
             {t("CLAIM_REWARDS")}
           </button>
-          <button
-            onClick={() => handleRoute("Tokenize")}
-            className="button button-primary"
-          >
-            Transfer Delegations
-          </button>
+          {txnModalName === "delegator-actions" ? (
+            <button
+              onClick={() => handleRoute("Tokenize")}
+              className="button button-primary"
+            >
+              Transfer Delegations
+            </button>
+          ) : (
+            ""
+          )}
         </div>
         {helper.foundationNodeCheck(
           validator.operatorAddress && validator.operatorAddress

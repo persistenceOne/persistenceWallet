@@ -2562,6 +2562,8 @@ ul li em {
   display: -webkit-flex;
   align-items: center;
   padding: 0px 20px !important; }
+  .actions-td.button-list {
+    padding: 0 !important; }
   .actions-td .show.dropdown .button.button-primary .icon {
     transform: rotate(0deg);
     transition: transform 0.1s linear; }

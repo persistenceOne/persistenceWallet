@@ -20,7 +20,7 @@ import {
   MsgTokenizeShares
 } from "persistenceonejs/cosmos/staking/v1beta1/tx";
 import { MsgWithdrawTokenizeShareRecordReward } from "persistenceonejs/cosmos/distribution/v1beta1/tx";
-const msgSendTypeUrl = "/cosmos.bank.v1beta1.MsgSend";
+export const msgSendTypeUrl = "/cosmos.bank.v1beta1.MsgSend";
 const msgDelegateTypeUrl = "/cosmos.staking.v1beta1.MsgDelegate";
 const msgRedelegateTypeUrl = "/cosmos.staking.v1beta1.MsgBeginRedelegate";
 const msgUnbondTypeUrl = "/cosmos.staking.v1beta1.MsgUndelegate";
