@@ -7,17 +7,12 @@ import {
   showTxRedeemSharesModal,
   setValidatorTxData
 } from "../../../../store/actions/transactions/redeemShares";
-import Submit from "./button";
-import AddressModal from "./AddressModal";
-import TxnModal from "./TxnModal";
 import { handleDelegationTransferModal } from "../../../../store/actions/transactions/delegationTransfer";
 
 const TokenizedShares = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const [inputState, setInputState] = useState([]);
-  const [selectedList, setSelectedList] = useState([]);
-  const [totalAmount, setTotalAmount] = useState("0");
 
   const validators = useSelector((state) => state.validators);
 
@@ -25,8 +20,6 @@ const TokenizedShares = () => {
 
   useEffect(() => {
     let list = [];
-    console.log(validators, "-validators");
-
     if (tokenizeSharesInfo.sharesList.length > 0) {
       tokenizeSharesInfo.sharesList.forEach((share) => {
         const valInfo = validators.validators.find(

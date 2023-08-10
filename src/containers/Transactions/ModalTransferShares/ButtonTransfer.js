@@ -41,7 +41,7 @@ const ButtonTransfer = ({ tokenizedShares, rewardList }) => {
     dispatch(submitFormData(messages));
   };
 
-  const disable = tokenizedShares.length <= 0;
+  const disable = tokenizedShares.length <= 0 || toAddress.value === "";
 
   const getMessage = () => {
     let messages = [];
