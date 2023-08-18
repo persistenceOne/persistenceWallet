@@ -10,7 +10,7 @@ main = "workers-site/index.js"
 
 
 [env.testnet-staging]
-routes = ["https://test-core-1.wallet.persistence.one/*"]
+routes = ["https://test-core-2.wallet.persistence.one/*"]
 
 [env.mainnet-staging]
 routes = ["https://staging.wallet.persistence.one/*"]
