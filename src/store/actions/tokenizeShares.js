@@ -10,6 +10,7 @@ import * as Sentry from "@sentry/browser";
 import { getTokenizedShares } from "../../utils/actions";
 import { tokenValueConversion } from "../../utils/helper";
 import { decimalize, stringToNumber } from "../../utils/scripts";
+import { handleTokenizeTxButton } from "./transactions/tokenizeShares";
 
 export const fetchTokenizedSharesSuccess = (list) => {
   return {
@@ -110,26 +111,38 @@ export const fetchTokenizedShareRewards = (address) => {
   };
 };
 
-export const fetchValidatorBonds = async (address) => {
-  try {
-    console.log(address, "fetchTokenizedShareRewards clled ");
-    const rpcClient = await transactions.RpcClient();
-    const lsNativeQueryService = new LsNativeStakingQueryClient(rpcClient);
-    const response = await lsNativeQueryService.UnbondingDelegation({
-      validatorAddr:
-        "persistencevaloper1qhx8lgm9a0kfxptwgcftjt32w0a00lh5z9zf3y",
-      delegatorAddr: "persistence1lngwr8ymx3q6gtsff2h8407mawz9azp6kmut02"
-    });
-    console.log(response, "fetchValidatorBonds");
-    if (response) {
-      console.log(response, "fetchValidatorBonds");
+export const fetchValidatorBonds = (validatorAddr, dlgtAddress) => {
+  return async (dispatch) => {
+    try {
+      console.log(dlgtAddress, "fetchValidatorBonds clled ", validatorAddr);
+      const rpcClient = await transactions.RpcClient();
+      const lsNativeQueryService = new LsNativeStakingQueryClient(rpcClient);
+      const response = await lsNativeQueryService.ValidatorDelegations({
+        validatorAddr: validatorAddr
+      });
+      console.log(response, "fetchValidatorBonds response");
+      let bondStatus = false;
+      if (
+        response &&
+        response.delegationResponses &&
+        response.delegationResponses.length > 0
+      ) {
+        const responseItem = response.delegationResponses.find(
+          (item) => item.delegation.delegatorAddress === dlgtAddress
+        );
+        console.log(responseItem, "fetchValidatorBonds responseItem");
+        if (responseItem) {
+          bondStatus = responseItem.delegation.validatorBond;
+        }
+      }
+      dispatch(handleTokenizeTxButton(bondStatus));
+      return false;
+    } catch (error) {
+      console.log(error, "fetchValidatorBonds error");
+      Sentry.captureException(
+        error.response ? error.response.data.message : error.message
+      );
+      dispatch(handleTokenizeTxButton(false));
     }
-    return [];
-  } catch (error) {
-    console.log(error, "fetchValidatorBonds error");
-    Sentry.captureException(
-      error.response ? error.response.data.message : error.message
-    );
-    return [];
-  }
+  };
 };

@@ -17,6 +17,7 @@ import { useTranslation } from "react-i18next";
 import { LOGIN_INFO } from "../../../../constants/localStorage";
 import { stringToNumber } from "../../../../utils/scripts";
 import { DefaultChainInfo } from "../../../../config";
+import { fetchValidatorBonds } from "../../../../store/actions/tokenizeShares";
 
 const DelegatedValidators = (props) => {
   const { t } = useTranslation();
@@ -29,6 +30,12 @@ const DelegatedValidators = (props) => {
         value: validator,
         error: new Error("")
       })
+    );
+    dispatch(
+      fetchValidatorBonds(
+        validator.operatorAddress,
+        loginInfo && loginInfo.address
+      )
     );
     dispatch(
       setValidatorTxModalName({

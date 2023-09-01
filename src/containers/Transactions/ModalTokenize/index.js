@@ -20,7 +20,7 @@ import { fetchTokenizedSharesByAddress } from "../../../store/actions/tokenizeSh
 import { Spinner } from "../../../components/Spinner";
 import { txFailed } from "../../../store/actions/transactions/common";
 
-const ModalTokenize = (props) => {
+const ModalTokenize = () => {
   const dispatch = useDispatch();
   const validator = useSelector((state) => state.validators.validator.value);
   const show = useSelector((state) => state.tokenizeShares.modal);
@@ -31,6 +31,7 @@ const ModalTokenize = (props) => {
   const response = useSelector((state) => state.common.error);
   const loginInfo = JSON.parse(localStorage.getItem(LOGIN_INFO));
 
+  console.log(validator, "validatorvalidator123");
   useEffect(() => {
     fetchTokenizedSharesByAddress(loginInfo && loginInfo.address);
   }, []);
