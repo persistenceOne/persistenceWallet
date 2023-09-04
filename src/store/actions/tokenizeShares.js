@@ -10,6 +10,8 @@ import * as Sentry from "@sentry/browser";
 import { getTokenizedShares } from "../../utils/actions";
 import { tokenValueConversion } from "../../utils/helper";
 import { decimalize, stringToNumber } from "../../utils/scripts";
+import { handleTokenizeTxButton } from "./transactions/tokenizeShares";
+import Long from "long";
 
 export const fetchTokenizedSharesSuccess = (list) => {
   return {
@@ -110,26 +112,50 @@ export const fetchTokenizedShareRewards = (address) => {
   };
 };
 
-export const fetchValidatorBonds = async (address) => {
-  try {
-    console.log(address, "fetchTokenizedShareRewards clled ");
-    const rpcClient = await transactions.RpcClient();
-    const lsNativeQueryService = new LsNativeStakingQueryClient(rpcClient);
-    const response = await lsNativeQueryService.UnbondingDelegation({
-      validatorAddr:
-        "persistencevaloper1qhx8lgm9a0kfxptwgcftjt32w0a00lh5z9zf3y",
-      delegatorAddr: "persistence1lngwr8ymx3q6gtsff2h8407mawz9azp6kmut02"
-    });
-    console.log(response, "fetchValidatorBonds");
-    if (response) {
-      console.log(response, "fetchValidatorBonds");
+export const fetchValidatorBonds = (validatorAddr, dlgtAddress) => {
+  return async (dispatch) => {
+    try {
+      console.log(dlgtAddress, "fetchValidatorBonds clled ", validatorAddr);
+      const rpcClient = await transactions.RpcClient();
+      const lsNativeQueryService = new LsNativeStakingQueryClient(rpcClient);
+
+      let key = new Uint8Array();
+      let validatorDelegations = [];
+
+      do {
+        const response = await lsNativeQueryService.ValidatorDelegations({
+          validatorAddr: validatorAddr,
+          pagination: {
+            key: key,
+            offset: Long.fromNumber(0, true),
+            limit: Long.fromNumber(0, true),
+            countTotal: true
+          }
+        });
+        key = response.pagination.nextKey;
+        validatorDelegations.push(...response.delegationResponses);
+      } while (key.length !== 0);
+      // const response = await lsNativeQueryService.ValidatorDelegations({
+      //   validatorAddr: validatorAddr
+      // });
+      let bondStatus = false;
+      /* for loop instead of find for performance; stop iteration once we get any item as true */
+      for (let i = 0; i < validatorDelegations.length; i++) {
+        if (bondStatus) break;
+
+        const validatorDelegation = validatorDelegations[i];
+        if (validatorDelegation.delegation.validatorBond == true)
+          bondStatus = true;
+      }
+
+      dispatch(handleTokenizeTxButton(bondStatus));
+      return false;
+    } catch (error) {
+      console.log(error, "fetchValidatorBonds error");
+      Sentry.captureException(
+        error.response ? error.response.data.message : error.message
+      );
+      dispatch(handleTokenizeTxButton(false));
     }
-    return [];
-  } catch (error) {
-    console.log(error, "fetchValidatorBonds error");
-    Sentry.captureException(
-      error.response ? error.response.data.message : error.message
-    );
-    return [];
-  }
+  };
 };

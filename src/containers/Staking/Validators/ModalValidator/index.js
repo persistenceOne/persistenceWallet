@@ -19,6 +19,9 @@ import ReactGA from "react-ga4";
 const ModalValidator = () => {
   const { t } = useTranslation();
   const show = useSelector((state) => state.validators.validatorTxModal);
+  const tokenizeButtonStatus = useSelector(
+    (state) => state.tokenizeShares.tokenizeButton
+  );
   const validator = useSelector((state) => state.validators.validator.value);
   const txnModalName = useSelector(
     (state) => state.validators.validatorModalName.value
@@ -137,7 +140,7 @@ const ModalValidator = () => {
           >
             {t("CLAIM_REWARDS")}
           </button>
-          {txnModalName === "delegator-actions" ? (
+          {txnModalName === "delegator-actions" && tokenizeButtonStatus ? (
             <button
               onClick={() => handleRoute("Tokenize")}
               className="button button-primary"
@@ -148,6 +151,21 @@ const ModalValidator = () => {
             ""
           )}
         </div>
+        {txnModalName === "delegator-actions" && tokenizeButtonStatus ? (
+          <p className="amount-warning text-left">
+            <span>
+              <img
+                src="/favicons/warning_icon.png"
+                width={20}
+                className="mr-2"
+              ></img>
+            </span>
+            <b>Transfer Delegation</b> feature is in beta mode, kindly contact
+            team if you face any disturbances.
+          </p>
+        ) : (
+          ""
+        )}
         {helper.foundationNodeCheck(
           validator.operatorAddress && validator.operatorAddress
         ) ? (
