@@ -11,6 +11,7 @@ import { getTokenizedShares } from "../../utils/actions";
 import { tokenValueConversion } from "../../utils/helper";
 import { decimalize, stringToNumber } from "../../utils/scripts";
 import { handleTokenizeTxButton } from "./transactions/tokenizeShares";
+import Long from "long";
 
 export const fetchTokenizedSharesSuccess = (list) => {
   return {
@@ -117,24 +118,36 @@ export const fetchValidatorBonds = (validatorAddr, dlgtAddress) => {
       console.log(dlgtAddress, "fetchValidatorBonds clled ", validatorAddr);
       const rpcClient = await transactions.RpcClient();
       const lsNativeQueryService = new LsNativeStakingQueryClient(rpcClient);
-      const response = await lsNativeQueryService.ValidatorDelegations({
-        validatorAddr: validatorAddr
-      });
-      console.log(response, "fetchValidatorBonds response");
+
+      let key = new Uint8Array();
+      let validatorDelegations = [];
+
+      do {
+        const response = await lsNativeQueryService.ValidatorDelegations({
+          validatorAddr: validatorAddr,
+          pagination: {
+            key: key,
+            offset: Long.fromNumber(0, true),
+            limit: Long.fromNumber(0, true),
+            countTotal: true
+          }
+        });
+        key = response.pagination.nextKey;
+        validatorDelegations.push(...response.delegationResponses);
+      } while (key.length !== 0);
+      // const response = await lsNativeQueryService.ValidatorDelegations({
+      //   validatorAddr: validatorAddr
+      // });
       let bondStatus = false;
-      if (
-        response &&
-        response.delegationResponses &&
-        response.delegationResponses.length > 0
-      ) {
-        const responseItem = response.delegationResponses.find(
-          (item) => item.delegation.delegatorAddress === dlgtAddress
-        );
-        console.log(responseItem, "fetchValidatorBonds responseItem");
-        if (responseItem) {
-          bondStatus = responseItem.delegation.validatorBond;
-        }
+      /* for loop instead of find for performance; stop iteration once we get any item as true */
+      for (let i = 0; i < validatorDelegations.length; i++) {
+        if (bondStatus) break;
+
+        const validatorDelegation = validatorDelegations[i];
+        if (validatorDelegation.delegation.validatorBond == true)
+          bondStatus = true;
       }
+
       dispatch(handleTokenizeTxButton(bondStatus));
       return false;
     } catch (error) {
