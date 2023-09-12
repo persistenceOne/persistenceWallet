@@ -19,14 +19,6 @@
         "react"
     ],
     "rules": {
-        "react/prop-types": "off",
-        "indent": [
-            "error",
-            4
-        ],
-        "semi": [
-            "error",
-            "always"
-        ]
+        "react/prop-types": "off"
     }
 }

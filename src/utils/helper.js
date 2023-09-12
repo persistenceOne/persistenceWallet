@@ -25,7 +25,14 @@ import {
 } from "cosmjs-types/cosmos/vesting/v1beta1/vesting";
 import * as Sentry from "@sentry/browser";
 import {mnemonicTrim} from "./scripts";
-import {DefaultChainInfo, FeeInfo, MainNetFoundationNodes, PstakeInfo, TestNetFoundationNodes} from "../config";
+import {
+    DefaultChainInfo,
+    FeeInfo,
+    MainNetFoundationNodes,
+    PstakeInfo,
+    stkATOMInfo,
+    TestNetFoundationNodes
+} from "../config";
 
 const tendermint_1 = require("cosmjs-types/ibc/lightclients/tendermint/v1/tendermint");
 const encoding = require("@cosmjs/encoding");
@@ -123,10 +130,13 @@ function denomChange(denom) {
         return COIN_GRAVITY;
     case COIN_OSMO_DENOM:
         return COIN_OSMO;
+    case stkATOMInfo.coinMinimalDenom:
+        return stkATOMInfo.coinDenom;
     default:
         return "Unknown";
     }
 }
+
 
 
 function denomModify(amount) {
@@ -183,13 +193,13 @@ function getAccountNumber(value) {
 }
 
 export const addrToValoper = (address) => {
-    let data = encoding.Bech32.decode(address).data;
-    return encoding.Bech32.encode(valoperAddressPrefix, data);
+    let data = encoding.fromBech32(address).data;
+    return encoding.toBech32(valoperAddressPrefix, data);
 };
 
 export const valoperToAddr = (valoperAddr) => {
-    let data = encoding.Bech32.decode(valoperAddr).data;
-    return encoding.Bech32.encode(addressPrefix, data);
+    let data = encoding.fromBech32(valoperAddr).data;
+    return encoding.toBech32(addressPrefix, data);
 };
 
 export const checkValidatorAccountAddress = (validatorAddress, address) => {

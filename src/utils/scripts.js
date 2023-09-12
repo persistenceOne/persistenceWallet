@@ -82,7 +82,7 @@ export const sixDigitsNumber = (value, length = 6) => {
 
 export const isBech32Address = (address, prefix) => {
     try {
-        let decodedAddress = encoding.Bech32.decode(address);
+        let decodedAddress = encoding.fromBech32(address);
         return decodedAddress.prefix === prefix;
     } catch (e) {
         return false;

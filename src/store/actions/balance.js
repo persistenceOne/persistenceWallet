@@ -15,7 +15,7 @@ import {QueryClientImpl} from "cosmjs-types/cosmos/bank/v1beta1/query";
 import * as Sentry from '@sentry/browser';
 import {stringToNumber} from "../../utils/scripts";
 import {getAccount, tokenValueConversion} from "../../utils/helper";
-import {DefaultChainInfo} from "../../config";
+import {DefaultChainInfo, stkATOMInfo} from "../../config";
 
 const tendermintRPCURL = process.env.REACT_APP_TENDERMINT_RPC_ENDPOINT;
 
@@ -127,6 +127,9 @@ export const fetchTransferableVestingAmount = (address) => {
                                     transferableAmount = await vestingAccount.getTransferableVestingAmount(address, balance);
                                     dispatch(fetchTransferableBalanceSuccess(transferableAmount[1]));
                                     dispatch(fetchVestingBalanceSuccess(vestingAmount));
+                                }else if(item.denom === stkATOMInfo.coinMinimalDenom){
+                                    item.ibcBalance = false;
+                                    tokenList.push(item);
                                 } else {
                                     let denomText = item.denom.substr(item.denom.indexOf('/') + 1);
                                     const ibcExtension = setupIbcExtension(queryClient);

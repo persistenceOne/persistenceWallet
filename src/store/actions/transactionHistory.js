@@ -9,7 +9,7 @@ import {
     TRANSACTIONS_IN_PROGRESS
 } from "../../constants/transactionQueries";
 import {buildQuery} from "@cosmjs/tendermint-rpc/build/tendermint34/requests";
-import {Tendermint34Client} from "@cosmjs/tendermint-rpc";
+import {Tendermint37Client} from "@cosmjs/tendermint-rpc";
 import {decodeTxRaw, Registry} from "@cosmjs/proto-signing";
 import helper, {generateHash} from "../../utils/helper";
 import * as Sentry from "@sentry/browser";
@@ -65,7 +65,7 @@ export const fetchTransactions = (address, limit, pageNumber) => {
     return async dispatch => {
         dispatch(fetchTransactionsProgress());
         try {
-            const tmClient = await Tendermint34Client.connect(tendermintRPCURL);
+            const tmClient = await Tendermint37Client.connect(tendermintRPCURL);
             const txSearch = await tmClient.txSearch(txSearchParams(address, pageNumber, limit, "message.sender"));
             let txData = [];
             for (let transaction of txSearch.txs) {
@@ -151,8 +151,11 @@ export const fetchReceiveTransactions = (address, limit, pageNumber) => {
     return async dispatch => {
         dispatch(fetchReceiveTransactionsProgress());
         try {
-            const tmClient = await Tendermint34Client.connect(tendermintRPCURL);
-            const txSearch = await tmClient.txSearch(txSearchParams(address, pageNumber, limit, "transfer.recipient"));
+            const tmClient = await Tendermint37Client.connect(tendermintRPCURL);
+            const query = txSearchParams(address, pageNumber, limit, "transfer.recipient");
+            console.log(query, "query", tmClient);
+            const txSearch = await tmClient.txSearch(query);
+            console.log(txSearch, "txSearch");
             let txData = [];
             for (let transaction of txSearch.txs) {
                 const decodedTransaction = decodeTxRaw(transaction.tx);
@@ -189,7 +192,7 @@ export const fetchReceiveTransactions = (address, limit, pageNumber) => {
             Sentry.captureException(error.response
                 ? error.response.data.message
                 : error.message);
-            console.log(error.message);
+            console.log(error.message, "fetchReceiveTransactions");
         }
     };
 };
