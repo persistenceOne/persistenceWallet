@@ -91,7 +91,7 @@ export const getTokenizedShares = async (address) => {
               amount: tokenValueConversion(balance.amount),
               validatorAddress: response.record.validator,
               denom: balance.denom,
-              recordId: response.record.id,
+              recordId: Number(response.record.id),
               owner: response.record.owner
             };
             responseList.push(res);

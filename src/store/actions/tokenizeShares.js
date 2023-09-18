@@ -96,7 +96,7 @@ export const fetchTokenizedShareRewards = (address) => {
 
           const item = {
             reward: totalRewards,
-            recordId: reward.recordId
+            recordId: Number(reward.recordId)
           };
           list.push(item);
         }

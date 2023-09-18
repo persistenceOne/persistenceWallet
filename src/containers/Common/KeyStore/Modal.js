@@ -70,6 +70,7 @@ const Modal = () => {
     dispatch(hideKeyStoreModal());
     if (txName.name === "tokenize" || txName.name === "tokenize-transfer") {
       dispatch(setTxTokenizeShareStatus(""));
+      dispatch(txFailed(""));
       dispatch(
         setTokenizeTxnInfo({
           txnTokenizeHash: ""

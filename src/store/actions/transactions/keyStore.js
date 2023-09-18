@@ -187,7 +187,7 @@ export const keyStoreSubmit = (loginAddress) => {
           loginCoinType
         );
       }
-
+      console.log(formData, "formData")
       let result = await transactions.getTransactionResponse(
         loginAddress,
         formData,
@@ -200,6 +200,7 @@ export const keyStoreSubmit = (loginAddress) => {
         bip39PassPhrase,
         loginCoinType
       );
+      console.log(result, "result-1")
       if (result.code !== undefined && result.code === 0) {
         localStorage.setItem(COIN_TYPE, loginCoinType);
         dispatch(
