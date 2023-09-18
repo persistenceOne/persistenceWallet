@@ -61,7 +61,6 @@ const Submit = () => {
                         message: 'File type not supported'
                     }
                 }));
-            console.log("error");
         }
     };
 

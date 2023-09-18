@@ -63,7 +63,6 @@ const ButtonSubmit = () => {
       txResponse.code === 0 &&
       txName === "tokenize"
     ) {
-      console.log(txResponse, "txResponsetxResponse");
       transferTxn(txResponse, "keystore");
     }
   }, [txResponse]);
@@ -137,7 +136,6 @@ const ButtonSubmit = () => {
               txnTokenizeHash: response.transactionHash
             })
           );
-          console.log(list, tokenizeSharesInfo, "tokenizeSharesInfo");
           let listItem;
           if (list.length > 0) {
             const tokenizeShareResponse = list.find(
@@ -160,7 +158,6 @@ const ButtonSubmit = () => {
               shareInfo = tokenizeShareResponse1.list;
             }
           }
-          console.log(listItem, "shareInfo", shareInfo);
           let tokenizedItem;
           if (!shareInfo && listItem) {
             tokenizedItem = listItem;
@@ -171,7 +168,6 @@ const ButtonSubmit = () => {
               validatorAddress.value.operatorAddress
             );
           }
-          console.log(tokenizedItem, "uniqList");
           if (tokenizedItem) {
             const msg1 = TokenizeSharesTransferMsg(
               Number(tokenizedItem[0].recordId),
@@ -184,7 +180,6 @@ const ButtonSubmit = () => {
               (amount.value * DefaultChainInfo.uTokenValue).toFixed(0),
               tokenizedItem[0].denom
             );
-            console.log(msg1, msg2, "msg2msg2");
             if (type === "keplr") {
               dispatch(
                 setTxIno({

@@ -85,7 +85,6 @@ const Main = () => {
   useEffect(() => {
     const fetchApi = async () => {
       if (address !== null && address !== undefined) {
-        console.log(address, "fetchApi");
         await Promise.all([
           dispatch(fetchDelegationsCount(address)),
           dispatch(fetchRewards(address)),

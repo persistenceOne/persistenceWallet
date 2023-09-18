@@ -29,7 +29,6 @@ const ModalViewAmountDetails = (props) => {
       if (item.denom !== DefaultChainInfo.currency.coinMinimalDenom) {
         if (item.denom.startsWith("ibc")) {
           let denom = item.denom.substr(item.denom.indexOf("/") + 1);
-          console.log(item.denom, "denom");
           const tendermintClient = await tmRPC.Tendermint34Client.connect(
             tendermintRPCURL
           );

@@ -31,7 +31,6 @@ function SendMsg(fromAddress, toAddress, balance) {
 }
 
 const ButtonTransfer = ({ tokenizedShares, rewardList }) => {
-  console.log(tokenizedShares, "tokenizedShares123", rewardList);
   const dispatch = useDispatch();
   const loginInfo = JSON.parse(localStorage.getItem(LOGIN_INFO));
   const toAddress = useSelector((state) => state.delegationTransfer.toAddress);
@@ -59,7 +58,6 @@ const ButtonTransfer = ({ tokenizedShares, rewardList }) => {
         loginInfo.address,
         toAddress.value
       );
-      console.log(msg, "msg Number(item.recordId)")
       const blc = {
         amount: (item.amount * DefaultChainInfo.uTokenValue).toFixed(0),
         denom: item.denom
@@ -97,7 +95,6 @@ const ButtonTransfer = ({ tokenizedShares, rewardList }) => {
         }
       })
     );
-    console.log(messages, "messages1");
     dispatch(keplrSubmit(messages));
   };
 

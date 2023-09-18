@@ -18,7 +18,6 @@ import {
 import { DefaultChainInfo } from "../../../config";
 
 const ButtonRedeem = ({ tokenizedShares, rewardList }) => {
-  console.log(tokenizedShares, "tokenizedShares123", rewardList);
   const dispatch = useDispatch();
   const loginInfo = JSON.parse(localStorage.getItem(LOGIN_INFO));
 
@@ -44,10 +43,8 @@ const ButtonRedeem = ({ tokenizedShares, rewardList }) => {
 
   const onClickKeplr = () => {
     let messages = [];
-    console.log(rewardList, "rewardList1");
     rewardList.forEach((item) => {
       const msg = TokenizedSharesRewardsMsg(item.owner, item.recordId);
-      console.log(msg, "msg1234");
       messages.push(msg);
     });
     tokenizedShares.forEach((item) => {
@@ -76,7 +73,6 @@ const ButtonRedeem = ({ tokenizedShares, rewardList }) => {
         }
       })
     );
-    console.log(messages, "messages1");
     dispatch(keplrSubmit(messages));
   };
 

@@ -63,7 +63,7 @@ const ModalTransferShares = () => {
     }
   }, [sharesRewardsList, validator]);
 
-  console.log(show, "showshow", validator, sharesRewardsList);
+  console.log(show, "showshow", valdator, sharesRewardsList);
   const response = useSelector((state) => state.common.error);
   const loginInfo = JSON.parse(localStorage.getItem(LOGIN_INFO));
 

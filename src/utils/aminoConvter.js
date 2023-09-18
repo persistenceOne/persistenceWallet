@@ -1,35 +1,32 @@
-import {MsgWithdrawTokenizeShareRecordReward} from "persistenceonejs/cosmos/distribution/v1beta1/tx";
-
 export function createLSNativeAminoConverters() {
-    try {
-        return {
-            "/cosmos.staking.v1beta1.MsgTokenizeShares": {
-                aminoType: "cosmos-sdk/MsgTokenizeShares",
-                toAmino: ({
-                              delegatorAddress,
+      return {
+          "/cosmos.staking.v1beta1.MsgTokenizeShares": {
+              aminoType: "cosmos-sdk/MsgTokenizeShares",
+              toAmino: ({
+                            delegatorAddress,
+                            amount,
+                            validatorAddress,
+                            tokenizedShareOwner
+                        }) => ({
+                  delegator_address: delegatorAddress,
+                  validator_address: validatorAddress,
+                  tokenized_share_owner: tokenizedShareOwner,
+                  amount: amount
+              }),
+              fromAmino: ({
+                              delegator_address,
                               amount,
-                              validatorAddress,
-                              tokenizedShareOwner
+                              validator_address,
+                              tokenized_share_owner
                           }) => ({
-                    delegator_address: delegatorAddress,
-                    validator_address: validatorAddress,
-                    tokenized_share_owner: tokenizedShareOwner,
-                    amount: amount
-                }),
-                fromAmino: ({
-                                delegator_address,
-                                amount,
-                                validator_address,
-                                tokenized_share_owner
-                            }) => ({
-                    delegatorAddress: delegator_address,
-                    validatorAddress: validator_address,
-                    tokenizedShareOwner: tokenized_share_owner,
-                    amount: amount
-                })
-            },
-            "/cosmos.staking.v1beta1.MsgTransferTokenizeShareRecord": {
-                aminoType: "cosmos-sdk/MsgTransferTokenizeRecord",
+                  delegatorAddress: delegator_address,
+                  validatorAddress: validator_address,
+                  tokenizedShareOwner: tokenized_share_owner,
+                  amount: amount
+              })
+          },
+          "/cosmos.staking.v1beta1.MsgTransferTokenizeShareRecord": {
+              aminoType: "cosmos-sdk/MsgTransferTokenizeRecord",
                 toAmino: ({
                               tokenizeShareRecordId,
                               sender,
@@ -76,7 +73,7 @@ export function createLSNativeAminoConverters() {
                                   recordId
                               }) => ({
                         owner_address: ownerAddress,
-                        record_id: recordId.toString()
+                        record_id: recordId.toString(),
                     }),
                     fromAmino: ({
                                     owner_address,
@@ -88,7 +85,4 @@ export function createLSNativeAminoConverters() {
                 }
         }
             ;
-    } catch (e) {
-        console.log(e, "createLSNativeAminoConverters")
-    }
 }

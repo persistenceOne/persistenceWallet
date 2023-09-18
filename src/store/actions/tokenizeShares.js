@@ -36,7 +36,6 @@ export const fetchTokenizedSharesByAddress = async (address) => {
       owner: address
     });
     if (response) {
-      console.log(response, "fetchTokenizedSharesByAddress");
       return response.records.length > 0 ? response.records : [];
       // const res = {
       //   amount: tokenValueConversion(balance.amount),
@@ -74,7 +73,6 @@ export const fetchTokenizedShares = (address) => {
 export const fetchTokenizedShareRewards = (address) => {
   return async (dispatch) => {
     try {
-      console.log(address, "fetchTokenizedShareRewards clled ");
       const rpcClient = await transactions.RpcClient();
       const lsNativeQueryService = new LsNativeDistributionQueryClient(
         rpcClient
@@ -82,7 +80,6 @@ export const fetchTokenizedShareRewards = (address) => {
       const response = await lsNativeQueryService.TokenizeShareRecordReward({
         ownerAddress: address
       });
-      console.log(response, "fetchTokenizedShareRewards");
       if (response) {
         let list = [];
         for (const reward of response.rewards) {
@@ -96,11 +93,10 @@ export const fetchTokenizedShareRewards = (address) => {
 
           const item = {
             reward: totalRewards,
-            recordId: reward.recordId
+            recordId: Number(reward.recordId)
           };
           list.push(item);
         }
-        console.log(list, "fetchTokenizedShareRewards2");
         dispatch(fetchTokenizedSharesRewardsSuccess(list));
       }
     } catch (error) {
@@ -115,7 +111,6 @@ export const fetchTokenizedShareRewards = (address) => {
 export const fetchValidatorBonds = (validatorAddr, dlgtAddress) => {
   return async (dispatch) => {
     try {
-      console.log(dlgtAddress, "fetchValidatorBonds clled ", validatorAddr);
       const rpcClient = await transactions.RpcClient();
       const lsNativeQueryService = new LsNativeStakingQueryClient(rpcClient);
 

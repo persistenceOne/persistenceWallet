@@ -25,7 +25,6 @@ const Tokens = () => {
   );
   const dispatch = useDispatch();
 
-  console.log(tokenList, "tokenList");
   let tokenData = [];
 
   useEffect(() => {
@@ -63,7 +62,6 @@ const Tokens = () => {
               stringToNumber(item.amount)
             );
           } else {
-            console.log(evt.target.value, item, "Sdasfasdf");
             if (item.denom === PstakeInfo.coinMinimalDenom) {
               tokenDataObject.transferableAmount = decimalize(
                 item.amount,

@@ -34,7 +34,6 @@ export const ledgerSubmit = (loginAddress, loginMode) => {
         if (loginMode !== "ledger") {
             mnemonic = await privateKeyReader(keyStoreData.value, password.value, loginAddress, accountNumber, accountIndex, bip39PassPhrase, coinType);
         }
-        console.log(formData, "formData");
         let response = transactions.getTransactionResponse(loginAddress, formData, fee, gas, mnemonic, txName, accountNumber, accountIndex, bip39PassPhrase, coinType);
         response.then(result => {
             if (result.code !== undefined && result.code === 0) {
@@ -43,6 +42,7 @@ export const ledgerSubmit = (loginAddress, loginMode) => {
                     dispatch(hideFeeModal());
                     dispatch(showTxTokenizeModal());
                     dispatch(txResponse(result));
+                    dispatch(txFailed(""));
                 }else {
                     dispatch(closeLoader());
                     dispatch(hideFeeModal());

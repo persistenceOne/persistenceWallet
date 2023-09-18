@@ -187,7 +187,6 @@ export const keyStoreSubmit = (loginAddress) => {
           loginCoinType
         );
       }
-
       let result = await transactions.getTransactionResponse(
         loginAddress,
         formData,

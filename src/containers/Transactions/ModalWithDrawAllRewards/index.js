@@ -116,9 +116,11 @@ const ModalWithDraw = () => {
                     <Memo/>
                     : null
                 }
+                {selectedValidators.error.message !== '' ?
                 <div className="validator-limit-warning">
-                    <p className="amount-warning">{selectedValidators.error.message !== '' ? "Warning:  Recommend 3 or fewer validators to avoid potential issues." : ""}</p>
+                    <p className="amount-warning">Warning:  Recommend 3 or fewer validators to avoid potential issues.</p>
                 </div>
+                    : ""}
                 {error.error.message !== '' ?
                     <p className="form-error">{error.error.message}</p> : null}
                 <ButtonNext/>
