@@ -38,6 +38,7 @@ const ButtonTransfer = ({ tokenizedShares, rewardList }) => {
 
   const onClick = () => {
     const messages = getMessage();
+    console.log(messages, "messages")
     dispatch(submitFormData(messages));
   };
 
@@ -46,7 +47,7 @@ const ButtonTransfer = ({ tokenizedShares, rewardList }) => {
   const getMessage = () => {
     let messages = [];
     rewardList.forEach((item) => {
-      const msg = TokenizedSharesRewardsMsg(item.owner, item.recordId);
+      const msg = TokenizedSharesRewardsMsg(item.owner,item.recordId);
       messages.push(msg);
     });
 
@@ -54,10 +55,11 @@ const ButtonTransfer = ({ tokenizedShares, rewardList }) => {
 
     tokenizedShares.forEach((item) => {
       const msg = TokenizeSharesTransferMsg(
-        item.recordId,
+          item.recordId,
         loginInfo.address,
         toAddress.value
       );
+      console.log(msg, "msg Number(item.recordId)")
       const blc = {
         amount: (item.amount * DefaultChainInfo.uTokenValue).toFixed(0),
         denom: item.denom

@@ -37,7 +37,7 @@ const ModalTransferShares = () => {
       const filteredRewardsList = [];
       sharesRewardsList.forEach((share) => {
         const item = validator.list.find(
-          (f) => f.recordId.toNumber() === share.recordId.toNumber()
+          (f) => Number(f.recordId) === Number(share.recordId)
         );
         if (item) {
           const newObje = {
