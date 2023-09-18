@@ -35,7 +35,7 @@ const getLatestRecord = (newList, oldList) => {
     ({ recordId: recordId }) =>
       !oldList.some(
         ({ recordId: recordId2 }) =>
-          recordId2.toNumber() === recordId.toNumber()
+         Number(recordId2) === Number(recordId)
       )
   );
   return result;
@@ -174,7 +174,7 @@ const ButtonSubmit = () => {
           console.log(tokenizedItem, "uniqList");
           if (tokenizedItem) {
             const msg1 = TokenizeSharesTransferMsg(
-              tokenizedItem[0].recordId,
+              Number(tokenizedItem[0].recordId),
               loginInfo.address,
               toAddress.value
             );

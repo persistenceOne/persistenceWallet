@@ -45,6 +45,12 @@ import {
   createIbcAminoConverters,
   createStakingAminoConverters
 } from "@cosmjs/stargate";
+import {
+  AminoConverter
+} from "persistenceonejs/cosmos/staking/v1beta1/tx.amino"
+import {
+  AminoConverter as AminoConverterDistribution
+} from "persistenceonejs/cosmos/distribution/v1beta1/tx.amino"
 const tmRPC = require("@cosmjs/tendermint-rpc");
 const { TransferMsg } = require("./protoMsgHelper");
 const addressPrefix = DefaultChainInfo.prefix;
@@ -53,13 +59,13 @@ const configCoinType = DefaultChainInfo.coinType;
 
 const tendermintRPCURL = process.env.REACT_APP_TENDERMINT_RPC_ENDPOINT;
 
-function createAminoTypes(prefix) {
+function createAminoTypes() {
   return {
     ...createAuthzAminoConverters(),
     ...createBankAminoConverters(),
     ...createDistributionAminoConverters(),
     ...createGovAminoConverters(),
-    ...createStakingAminoConverters(prefix),
+    ...createStakingAminoConverters(),
     ...createIbcAminoConverters(),
     ...createLSNativeAminoConverters()
   };
@@ -163,6 +169,14 @@ async function TransactionWithMnemonic(
     }
     return Transaction(wallet, address, msgs, fee, memo);
   } else {
+    console.log( msgs,
+        fee,
+        memo,
+        mnemonic,
+        hdpath,
+        bip39Passphrase,
+        loginAddress,
+        prefix, "parms -txn")
     const [wallet, address] = await LedgerWallet(hdpath, prefix);
     return Transaction(wallet, address, msgs, fee, memo);
   }
