@@ -49,14 +49,6 @@ const ModalRedeemShares = () => {
       const totalCount = filteredRewardsList.reduce((accumulator, object) => {
         return accumulator + object.rewardAmount;
       }, 0);
-
-      console.log(
-        filteredRewardsList,
-        totalCount,
-        "myArrayFiltered",
-        validator,
-        sharesRewardsList
-      );
       setRewardList(filteredRewardsList);
       setTotalRewards(totalCount);
     }
