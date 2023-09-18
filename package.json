@@ -26,7 +26,7 @@
     "bootstrap": "^4.6.0",
     "buffer": "^6.0.3",
     "coingecko-api": "^1.0.10",
-    "cosmjs-types": "^0.4.1",
+    "cosmjs-types": "^0.8.0",
     "crypto-browserify": "^3.12.0",
     "https-browserify": "^1.0.0",
     "i18next": "^19.8.7",
@@ -74,9 +74,9 @@
       "not op_mini all"
     ],
     "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
     ]
   },
   "devDependencies": {

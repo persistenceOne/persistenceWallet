@@ -218,13 +218,13 @@ function getAccountNumber(value) {
 }
 
 export const addrToValoper = (address) => {
-  let data = encoding.Bech32.decode(address).data;
-  return encoding.Bech32.encode(valoperAddressPrefix, data);
+  let data = encoding.fromBech32(address).data;
+  return encoding.toBech32(valoperAddressPrefix, data);
 };
 
 export const valoperToAddr = (valoperAddr) => {
-  let data = encoding.Bech32.decode(valoperAddr).data;
-  return encoding.Bech32.encode(addressPrefix, data);
+  let data = encoding.fromBech32(valoperAddr).data;
+  return encoding.toBech32(addressPrefix, data);
 };
 
 export const checkValidatorAccountAddress = (validatorAddress, address) => {

@@ -122,8 +122,8 @@ export const ExternalChains = [
     coinType: 118
   },
   {
-    rpc: "https://rpc.osmosis-1.audit.one/",
-    rest: "https://rest.osmosis-1.audit.one/",
+    rpc: 'https://rpc.osmosis.zone',
+    rest: 'https://lsc.osmosis.zone',
     chainId: "osmosis-1",
     chainName: "Osmosis",
     portID: "transfer",
