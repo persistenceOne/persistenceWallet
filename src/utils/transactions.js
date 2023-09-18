@@ -169,14 +169,6 @@ async function TransactionWithMnemonic(
     }
     return Transaction(wallet, address, msgs, fee, memo);
   } else {
-    console.log( msgs,
-        fee,
-        memo,
-        mnemonic,
-        hdpath,
-        bip39Passphrase,
-        loginAddress,
-        prefix, "parms -txn")
     const [wallet, address] = await LedgerWallet(hdpath, prefix);
     return Transaction(wallet, address, msgs, fee, memo);
   }

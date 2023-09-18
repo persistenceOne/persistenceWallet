@@ -163,7 +163,7 @@ function TokenizeSharesTransferMsg(recordId, sender, newOwner) {
   return {
     typeUrl: msgTransferTokenizeShareRecord,
     value: MsgTransferTokenizeShareRecord.fromPartial({
-      tokenizeShareRecordId: BigInt(recordId),
+      tokenizeShareRecordId: recordId,
       sender: sender,
       newOwner: newOwner
     })
