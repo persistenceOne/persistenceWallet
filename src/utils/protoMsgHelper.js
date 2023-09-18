@@ -189,7 +189,7 @@ function TokenizedSharesRewardsMsg(ownerAddress, tokenId) {
     typeUrl: msgWithdrawTokenizeShareRecordReward,
     value: MsgWithdrawTokenizeShareRecordReward.fromPartial({
       ownerAddress: ownerAddress,
-      recordId: BigInt(tokenId)
+      recordId: tokenId
     })
   };
 }

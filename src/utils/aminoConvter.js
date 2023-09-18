@@ -1,7 +1,6 @@
 import { MsgWithdrawTokenizeShareRecordReward } from "persistenceonejs/cosmos/distribution/v1beta1/tx";
 export function createLSNativeAminoConverters() {
-  try{
-      return {
+    return {
           "/cosmos.staking.v1beta1.MsgTokenizeShares": {
               aminoType: "cosmos-sdk/MsgTokenizeShares",
               toAmino: ({
@@ -28,7 +27,7 @@ export function createLSNativeAminoConverters() {
               })
           },
           "/cosmos.staking.v1beta1.MsgTransferTokenizeShareRecord": {
-              aminoType: "cosmos-sdk/MsgTransferTokenizeShareRecord",
+              aminoType: "cosmos-sdk/MsgTransferTokenizeRecord",
               toAmino: ({
                             tokenizeShareRecordId,
                             sender,
@@ -66,13 +65,13 @@ export function createLSNativeAminoConverters() {
               })
           },
           "/cosmos.distribution.v1beta1.MsgWithdrawTokenizeShareRecordReward": {
-              aminoType: "cosmos-sdk/MsgWithdrawTokenizeShareRecordReward",
+              aminoType: "cosmos-sdk/MsgWithdrawTokenizeReward",
               toAmino: ({
                             ownerAddress,
                             recordId
                         }) => ({
                   owner_address: ownerAddress,
-                  record_id: recordId.toString()
+                  record_id: recordId.toString(),
               }),
               fromAmino: ({
                               owner_address,
@@ -83,7 +82,4 @@ export function createLSNativeAminoConverters() {
               })
           }
       };
-  }catch (e) {
-      console.log(e, "createLSNativeAminoConverters")
-  }
 }

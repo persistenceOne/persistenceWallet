@@ -14,6 +14,7 @@ import {
   setTokenizeTxnInfo,
   setTxTokenizeShareStatus
 } from "../../../store/actions/transactions/tokenizeShares";
+import {txFailed} from "../../../store/actions/transactions/common";
 
 const Modal = () => {
   const show = useSelector((state) => state.fee.modal);
@@ -25,6 +26,7 @@ const Modal = () => {
   const handleClose = () => {
     if (txName.name === "tokenize" || txName.name === "tokenize-transfer") {
       dispatch(setTxTokenizeShareStatus(""));
+      dispatch(txFailed(""));
       dispatch(
         setTokenizeTxnInfo({
           txnTokenizeHash: ""
@@ -48,6 +50,7 @@ const Modal = () => {
   const handleBack = () => {
     if (txName.name === "tokenize" || txName.name === "tokenize-transfer") {
       dispatch(setTxTokenizeShareStatus(""));
+      dispatch(txFailed(""));
     }
     dispatch(txInfo.modal);
     dispatch(hideFeeModal());

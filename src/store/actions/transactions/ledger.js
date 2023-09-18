@@ -43,6 +43,7 @@ export const ledgerSubmit = (loginAddress, loginMode) => {
                     dispatch(hideFeeModal());
                     dispatch(showTxTokenizeModal());
                     dispatch(txResponse(result));
+                    dispatch(txFailed(""));
                 }else {
                     dispatch(closeLoader());
                     dispatch(hideFeeModal());
