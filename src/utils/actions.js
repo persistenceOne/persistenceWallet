@@ -76,7 +76,6 @@ export const getTokenizedShares = async (address) => {
     const balancesResponse = await bankQueryService.AllBalances({
       address: address
     });
-    console.log(balancesResponse, "response-balancesResponse");
     const lsNativeQueryService = new LsNativeStakingQueryClient(rpcClient);
     if (balancesResponse.balances.length > 0) {
       for (const balance of balancesResponse.balances) {
@@ -85,7 +84,6 @@ export const getTokenizedShares = async (address) => {
             await lsNativeQueryService.TokenizeShareRecordByDenom({
               denom: balance.denom
             });
-          console.log(response, "response-lsNativeQueryService");
           if (response) {
             const res = {
               amount: tokenValueConversion(balance.amount),
@@ -106,7 +104,6 @@ export const getTokenizedShares = async (address) => {
         const newListCheck = newList.find(
           (filterItem) => filterItem.validatorAddress === item.validatorAddress
         );
-        console.log(newListCheck, "newListCheck");
         if (!newListCheck) {
           const uniqList = responseList.filter(
             (filterItem) =>
@@ -125,7 +122,6 @@ export const getTokenizedShares = async (address) => {
           });
         }
       });
-    console.log(responseList, "response-tokenzied", newList);
     return newList;
   } catch (e) {
     return [];

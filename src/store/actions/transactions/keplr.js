@@ -31,12 +31,8 @@ export const keplrSubmit =
         fee(0, 250000),
         ""
       );
-      console.log("here", response, txName);
-
       if (response.code !== undefined && response.code === 0) {
-        console.log("here0", txName);
         if (txName !== "send" && txName !== "ibc") {
-          console.log("here in");
           dispatch(getState().common.txInfo.value.modal);
         }
         dispatch(txSuccess());

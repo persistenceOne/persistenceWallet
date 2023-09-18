@@ -31,7 +31,6 @@ const ModalTokenize = () => {
   const response = useSelector((state) => state.common.error);
   const loginInfo = JSON.parse(localStorage.getItem(LOGIN_INFO));
 
-  console.log(validator, "validatorvalidator123");
   useEffect(() => {
     fetchTokenizedSharesByAddress(loginInfo && loginInfo.address);
   }, []);

@@ -184,7 +184,6 @@ function RedeemTokenizedSharesMsg(fromAddress, denom, amount) {
 }
 
 function TokenizedSharesRewardsMsg(ownerAddress, tokenId) {
-  console.log(ownerAddress, tokenId, "TokenizedSharesRewardsMsg");
   return {
     typeUrl: msgWithdrawTokenizeShareRecordReward,
     value: MsgWithdrawTokenizeShareRecordReward.fromPartial({

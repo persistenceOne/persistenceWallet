@@ -40,8 +40,6 @@ export const fetchDelegationsTransfer = async (address) => {
     const response = await lsNativeQueryService.TokenizeShareRecordsOwned({
       owner: address
     });
-
-    console.log(response, "response-tokenzied-owner");
   } catch (e) {
     console.log(e, "error in fetchDelegationsTransfer");
   }
