@@ -29,7 +29,6 @@ export const fetchTokenizedSharesRewardsSuccess = (list) => {
 
 export const fetchTokenizedSharesByAddress = async (address) => {
   try {
-    console.log("called123", "called");
     const rpcClient = await transactions.RpcClient();
     const lsNativeQueryService = new LsNativeStakingQueryClient(rpcClient);
     const response = await lsNativeQueryService.TokenizeShareRecordsOwned({

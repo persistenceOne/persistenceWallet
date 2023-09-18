@@ -109,7 +109,6 @@ export const fetchTransactions = (address, limit, pageNumber) => {
       const txSearch = await tmClient.txSearch(
         txSearchParams(address, pageNumber, limit, "message.sender")
       );
-      console.log(txSearch, "txSearch-se")
       let txData = [];
       for (let transaction of txSearch.txs) {
         const decodedTransaction = decodeTxRaw(transaction.tx);
@@ -203,9 +202,7 @@ export const fetchReceiveTransactions = (address, limit, pageNumber) => {
     try {
       const tmClient = await Tendermint37Client.connect(tendermintRPCURL);
       const query = txSearchParams(address, pageNumber, limit, "transfer.recipient");
-      console.log(query, "query", tmClient);
       const txSearch = await tmClient.txSearch(query);
-      console.log(txSearch, "txSearch");
       let txData = [];
       for (let transaction of txSearch.txs) {
         const decodedTransaction = decodeTxRaw(transaction.tx);
