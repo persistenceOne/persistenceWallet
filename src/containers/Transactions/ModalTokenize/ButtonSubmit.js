@@ -176,7 +176,7 @@ const ButtonSubmit = () => {
             const msg2 = SendMsg(
               loginInfo && loginInfo.address,
               toAddress.value,
-              (amount.value * DefaultChainInfo.uTokenValue).toFixed(0),
+              tokenizedItem[0].decAmount,
               tokenizedItem[0].denom
             );
             if (type === "keplr") {

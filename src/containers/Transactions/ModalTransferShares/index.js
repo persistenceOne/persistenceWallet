@@ -157,7 +157,7 @@ const ModalTransferShares = () => {
                       {validator.validatorName}
                     </td>
                     <td className="text-center amount text-secondary">
-                      {item.amount}
+                      {item.tokens}
                     </td>
                   </tr>
                 ))}
