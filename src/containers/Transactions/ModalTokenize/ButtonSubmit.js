@@ -23,7 +23,7 @@ import {
 } from "../../../store/actions/transactions/common";
 import { LOGIN_INFO } from "../../../constants/localStorage";
 import { stringToNumber, trimWhiteSpaces } from "../../../utils/scripts";
-import { DefaultChainInfo } from "../../../config";
+import { BaseGas, DefaultChainInfo } from "../../../config";
 import transactions from "../../../utils/transactions";
 import { fee } from "../../../utils/aminoMsgHelper";
 import { fetchApiData, pollAccountBalance } from "../../../utils/queries";
@@ -34,8 +34,7 @@ const getLatestRecord = (newList, oldList) => {
   const result = newList.filter(
     ({ recordId: recordId }) =>
       !oldList.some(
-        ({ recordId: recordId2 }) =>
-         Number(recordId2) === Number(recordId)
+        ({ recordId: recordId2 }) => Number(recordId2) === Number(recordId)
       )
   );
   return result;
@@ -110,7 +109,7 @@ const ButtonSubmit = () => {
     try {
       let response = await transactions.TransactionWithKeplr(
         [msg],
-        fee(0, 250000),
+        fee(0, BaseGas),
         ""
       );
       transferTxn(response, "keplr");
