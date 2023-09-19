@@ -61,7 +61,6 @@ const Homepage = () => {
                     <h3 className="heading">
                         {t("HOME_PAGE_TEXT")}
                     </h3>
-                    <p className="sub-text">{t("HOME_PAGE_SUB_TEXT")}</p>
                     <div className="buttons">
                         <button className="button button-primary" onClick={() => handleRoute('createWallet')}>
                             {t("CREATE_WALLET")}
