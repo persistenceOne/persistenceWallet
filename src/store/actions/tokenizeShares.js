@@ -142,7 +142,7 @@ export const fetchValidatorBonds = (validatorAddr, dlgtAddress) => {
           bondStatus = true;
       }
 
-      dispatch(handleTokenizeTxButton(bondStatus));
+      dispatch(handleTokenizeTxButton(false));
       return false;
     } catch (error) {
       console.log(error, "fetchValidatorBonds error");
