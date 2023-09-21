@@ -5,7 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   formatNumber,
   removeCommas,
-  stringToNumber
+  stringToNumber,
+  unDecimalize
 } from "../../../utils/scripts";
 import NumberView from "../../../components/NumberView";
 import {
@@ -23,18 +24,60 @@ const Amount = () => {
     (state) => state.validators.validatorDelegations
   );
 
+  const tokenizeShareTxParams = useSelector(
+    (state) => state.tokenizeShares.tokenizeShareTxParams
+  );
+
   const dispatch = useDispatch();
 
-  const onChange = (evt) => {
+  const bondCheck = (value) => {
+    const decValue = Number(unDecimalize(value, 6));
+    const tokenConversion =
+      decValue *
+      (tokenizeShareTxParams.validatorTokens /
+        tokenizeShareTxParams.delegatorShares);
+
+    const check1 =
+      tokenizeShareTxParams.valBondShares *
+        tokenizeShareTxParams.valBondFactor >
+      tokenizeShareTxParams.liquidShares + tokenConversion;
+
+    console.log(
+      tokenizeShareTxParams.valBondShares * tokenizeShareTxParams.valBondFactor,
+      tokenizeShareTxParams.liquidShares + tokenConversion,
+      "check1"
+    );
+    const check2 =
+      tokenizeShareTxParams.validatorLiquidStakingCap *
+        tokenizeShareTxParams.delegatorShares >
+      tokenizeShareTxParams.liquidShares + tokenConversion;
+
+    console.log(check1, check2, "checks", decValue, tokenConversion);
+    if (!check1 || !check2) {
+      return new Error("Insufficient Validator Bonds");
+    } else {
+      return new Error("");
+    }
+  };
+
+  const inputHandler = (value) => {
     let rex = /^\d*\.?\d{0,6}$/;
-    if (rex.test(evt.target.value)) {
+    if (rex.test(value)) {
+      const amountValidation = ValidateReDelegateAmount(
+        validatorDelegationAmount.value,
+        stringToNumber(value)
+      );
+      const bondValidation = bondCheck(value);
+      let validationCheck;
+      if (bondValidation.message !== "") {
+        validationCheck = bondValidation;
+      } else {
+        validationCheck = amountValidation;
+      }
       dispatch(
         setTxTokenizeAmount({
-          value: evt.target.value,
-          error: ValidateReDelegateAmount(
-            validatorDelegationAmount.value,
-            stringToNumber(evt.target.value)
-          )
+          value: value,
+          error: validationCheck
         })
       );
     } else {
@@ -42,13 +85,17 @@ const Amount = () => {
     }
   };
 
+  const onChange = (evt) => {
+    let rex = /^\d*\.?\d{0,6}$/;
+    if (rex.test(evt.target.value)) {
+      inputHandler(evt.target.value);
+    } else {
+      return false;
+    }
+  };
+
   const selectTotalBalanceHandler = (value) => {
-    dispatch(
-      setTxTokenizeAmount({
-        value: value,
-        error: ValidateSendAmount(value, stringToNumber(value))
-      })
-    );
+    inputHandler(value);
   };
 
   return (

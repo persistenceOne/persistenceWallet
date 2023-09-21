@@ -1,5 +1,6 @@
 import { QueryClientImpl as BankQueryClientImpl } from "cosmjs-types/cosmos/bank/v1beta1/query";
 import transactions from "../../utils/transactions";
+import { QueryClientImpl } from "cosmjs-types/cosmos/staking/v1beta1/query";
 import { QueryClientImpl as LsNativeStakingQueryClient } from "persistenceonejs/cosmos/staking/v1beta1/query";
 import { QueryClientImpl as LsNativeDistributionQueryClient } from "persistenceonejs/cosmos/distribution/v1beta1/query";
 import {
@@ -10,8 +11,12 @@ import * as Sentry from "@sentry/browser";
 import { getTokenizedShares } from "../../utils/actions";
 import { tokenValueConversion } from "../../utils/helper";
 import { decimalize, stringToNumber } from "../../utils/scripts";
-import { handleTokenizeTxButton } from "./transactions/tokenizeShares";
+import {
+  handleTokenizeTxButton,
+  setTokenizeTxParams
+} from "./transactions/tokenizeShares";
 import Long from "long";
+import { decodeCosmosSdkDecFromProto } from "@cosmjs/stargate";
 
 export const fetchTokenizedSharesSuccess = (list) => {
   return {
@@ -109,47 +114,62 @@ export const fetchTokenizedShareRewards = (address) => {
 
 export const fetchValidatorBonds = (validatorAddr, dlgtAddress) => {
   return async (dispatch) => {
+    let result = {
+      valBondShares: 0,
+      liquidShares: 0,
+      delegatorShares: 0,
+      valBondFactor: 0,
+      validatorTokens: 0,
+      validatorLiquidStakingCap: 0
+    };
     try {
       const rpcClient = await transactions.RpcClient();
       const lsNativeQueryService = new LsNativeStakingQueryClient(rpcClient);
 
       let key = new Uint8Array();
       let validatorDelegations = [];
+      const response = await lsNativeQueryService.Validator({
+        validatorAddr: validatorAddr
+      });
 
-      do {
-        const response = await lsNativeQueryService.ValidatorDelegations({
-          validatorAddr: validatorAddr,
-          pagination: {
-            key: key,
-            offset: Long.fromNumber(0, true),
-            limit: Long.fromNumber(0, true),
-            countTotal: true
-          }
-        });
-        key = response.pagination.nextKey;
-        validatorDelegations.push(...response.delegationResponses);
-      } while (key.length !== 0);
-      // const response = await lsNativeQueryService.ValidatorDelegations({
-      //   validatorAddr: validatorAddr
-      // });
-      let bondStatus = false;
-      /* for loop instead of find for performance; stop iteration once we get any item as true */
-      for (let i = 0; i < validatorDelegations.length; i++) {
-        if (bondStatus) break;
+      const params = await lsNativeQueryService.Params();
 
-        const validatorDelegation = validatorDelegations[i];
-        if (validatorDelegation.delegation.validatorBond == true)
-          bondStatus = true;
-      }
+      // const valBondShares = response.validator.validatorBondShares;
+      // const valBondFactor = params.params.validatorBondFactor;
+      // const delegatorShares = response.validator.delegatorShares;
+      const valBondShares = decodeCosmosSdkDecFromProto(
+        response.validator.validatorBondShares
+      ).toString();
+      const valBondFactor = decodeCosmosSdkDecFromProto(
+        params.params.validatorBondFactor
+      ).toString();
+      const delegatorShares = decodeCosmosSdkDecFromProto(
+        response.validator.delegatorShares
+      ).toString();
+      const liquidShares = decodeCosmosSdkDecFromProto(
+        response.validator.liquidShares
+      ).toString();
+      const validatorTokens = response.validator.tokens;
 
-      dispatch(handleTokenizeTxButton(bondStatus));
+      const validatorLiquidStakingCap = decodeCosmosSdkDecFromProto(
+        params.params.validatorLiquidStakingCap
+      ).toString();
+
+      result.valBondShares = Math.trunc(Number(valBondShares));
+      result.delegatorShares = Math.trunc(Number(delegatorShares));
+      result.liquidShares = Math.trunc(Number(liquidShares));
+      result.valBondFactor = Number(valBondFactor);
+      result.validatorTokens = Number(validatorTokens);
+      result.validatorLiquidStakingCap = Number(validatorLiquidStakingCap);
+
+      dispatch(setTokenizeTxParams(result));
       return false;
     } catch (error) {
       console.log(error, "fetchValidatorBonds error");
       Sentry.captureException(
         error.response ? error.response.data.message : error.message
       );
-      dispatch(handleTokenizeTxButton(false));
+      dispatch(setTokenizeTxParams(result));
     }
   };
 };
