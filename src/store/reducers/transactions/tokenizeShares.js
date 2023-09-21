@@ -10,7 +10,8 @@ import {
   TX_TOKENIZE_SHARE_STATUS_SUCCESS,
   TX_TOKENIZE_TXN_INFO_SET,
   TX_TOKENIZE_SHARE_STATUS_SET,
-  TX_TOKENIZE_BUTTON_SET
+  TX_TOKENIZE_BUTTON_SET,
+  TX_TOKENIZE_PARAMS_SET
 } from "../../../constants/tokenizeShares";
 import { UNBOND_DELEGATIONS_LIST } from "../../../constants/unbond";
 import { VALIDATOR_TX_MODAL_HIDE } from "../../../constants/validators";
@@ -177,6 +178,22 @@ const tokenizeShareTxStatus = (state = "", action) => {
   return state;
 };
 
+const result = {
+  valBondShares: 0,
+  liquidShares: 0,
+  valBondFactor: 0,
+  validatorLiquidStakingCap: 0,
+  validatorTokens: 0,
+  delegatorShares: 0
+};
+
+const tokenizeShareTxParams = (state = result, action) => {
+  if (action.type === TX_TOKENIZE_PARAMS_SET) {
+    return action.data;
+  }
+  return state;
+};
+
 export default combineReducers({
   amount,
   modal,
@@ -184,5 +201,6 @@ export default combineReducers({
   toAddress,
   tokenizeShareTxStatus,
   txnInfo,
-  tokenizeButton
+  tokenizeButton,
+  tokenizeShareTxParams
 });

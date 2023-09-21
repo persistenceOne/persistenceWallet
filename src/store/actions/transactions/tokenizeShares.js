@@ -6,7 +6,8 @@ import {
   TX_TOKENIZE_OWNER_ADDRESS_SET,
   TX_TOKENIZE_SHARE_STATUS_SET,
   TX_TOKENIZE_TXN_INFO_SET,
-  TX_TOKENIZE_BUTTON_SET
+  TX_TOKENIZE_BUTTON_SET,
+  TX_TOKENIZE_PARAMS_SET
 } from "../../../constants/tokenizeShares";
 import { setTxIno, setTxName } from "./common";
 import { showFeeModal } from "./fee";
@@ -63,6 +64,13 @@ export const setTxTokenizeShareStatus = (data) => {
 export const handleTokenizeTxButton = (data) => {
   return {
     type: TX_TOKENIZE_BUTTON_SET,
+    data
+  };
+};
+
+export const setTokenizeTxParams = (data) => {
+  return {
+    type: TX_TOKENIZE_PARAMS_SET,
     data
   };
 };
