@@ -42,17 +42,11 @@ const Amount = () => {
         tokenizeShareTxParams.valBondFactor >
       tokenizeShareTxParams.liquidShares + tokenConversion;
 
-    console.log(
-      tokenizeShareTxParams.valBondShares * tokenizeShareTxParams.valBondFactor,
-      tokenizeShareTxParams.liquidShares + tokenConversion,
-      "check1"
-    );
     const check2 =
       tokenizeShareTxParams.validatorLiquidStakingCap *
         tokenizeShareTxParams.delegatorShares >
       tokenizeShareTxParams.liquidShares + tokenConversion;
 
-    console.log(check1, check2, "checks", decValue, tokenConversion);
     if (!check1 || !check2) {
       return new Error("Insufficient Validator Bonds");
     } else {
