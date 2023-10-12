@@ -45,12 +45,8 @@ import {
   createIbcAminoConverters,
   createStakingAminoConverters
 } from "@cosmjs/stargate";
-import {
-  AminoConverter
-} from "persistenceonejs/cosmos/staking/v1beta1/tx.amino"
-import {
-  AminoConverter as AminoConverterDistribution
-} from "persistenceonejs/cosmos/distribution/v1beta1/tx.amino"
+import { AminoConverter } from "persistenceonejs/cosmos/staking/v1beta1/tx.amino";
+import { AminoConverter as AminoConverterDistribution } from "persistenceonejs/cosmos/distribution/v1beta1/tx.amino";
 const tmRPC = require("@cosmjs/tendermint-rpc");
 const { TransferMsg } = require("./protoMsgHelper");
 const addressPrefix = DefaultChainInfo.prefix;
@@ -200,81 +196,86 @@ async function MakeIBCTransferMsg(
   url,
   port = "transfer"
 ) {
-  const tendermintClient = await tmRPC.Tendermint34Client.connect(
-    tendermintRPCURL
-  );
-  const queryClient = new QueryClient(tendermintClient);
+  try {
+    const tendermintClient = await tmRPC.Tendermint34Client.connect(
+      tendermintRPCURL
+    );
+    const queryClient = new QueryClient(tendermintClient);
 
-  const ibcExtension = setupIbcExtension(queryClient);
+    const ibcExtension = setupIbcExtension(queryClient);
 
-  const finalResponse = await ibcExtension.ibc.channel
-    .clientState(port, channel)
-    .then(async (clientStateResponse) => {
-      const clientStateResponseDecoded = decodeTendermintClientStateAny(
-        clientStateResponse.identifiedClientState.clientState
-      );
-      timeoutHeight = {
-        revisionHeight:
-          clientStateResponseDecoded.latestHeight.revisionHeight.add(
-            IBCConfiguration.ibcRevisionHeightIncrement
-          ),
-        revisionNumber: clientStateResponseDecoded.latestHeight.revisionNumber
-      };
-      if (url === undefined) {
-        const consensusStateResponse =
-          await ibcExtension.ibc.channel.consensusState(
-            port,
+    const finalResponse = await ibcExtension.ibc.channel
+      .clientState(port, channel)
+      .then(async (clientStateResponse) => {
+        const clientStateResponseDecoded = decodeTendermintClientStateAny(
+          clientStateResponse.identifiedClientState.clientState
+        );
+        timeoutHeight = {
+          revisionHeight:
+            clientStateResponseDecoded.latestHeight.revisionHeight.add(
+              IBCConfiguration.ibcRevisionHeightIncrement
+            ),
+          revisionNumber: clientStateResponseDecoded.latestHeight.revisionNumber
+        };
+        if (url === undefined) {
+          const consensusStateResponse =
+            await ibcExtension.ibc.channel.consensusState(
+              port,
+              channel,
+              clientStateResponseDecoded.latestHeight.revisionNumber.toInt(),
+              clientStateResponseDecoded.latestHeight.revisionHeight.toInt()
+            );
+          const consensusStateResponseDecoded =
+            decodeTendermintConsensusStateAny(
+              consensusStateResponse.consensusState
+            );
+          const timeoutTime = Long.fromNumber(
+            consensusStateResponseDecoded.timestamp.seconds.toNumber()
+          )
+            .add(timeoutTimestamp)
+            .multiply(1000000000); //get time in nanoesconds
+          return TransferMsg(
             channel,
-            clientStateResponseDecoded.latestHeight.revisionNumber.toInt(),
-            clientStateResponseDecoded.latestHeight.revisionHeight.toInt()
+            fromAddress,
+            toAddress,
+            amount,
+            timeoutHeight,
+            timeoutTime,
+            denom,
+            port
           );
-        const consensusStateResponseDecoded = decodeTendermintConsensusStateAny(
-          consensusStateResponse.consensusState
+        } else {
+          const remoteTendermintClient = await tmRPC.Tendermint34Client.connect(
+            url
+          );
+          const latestBlockHeight = (await remoteTendermintClient.status())
+            .syncInfo.latestBlockHeight;
+          timeoutHeight.revisionHeight = Long.fromNumber(latestBlockHeight).add(
+            IBCConfiguration.ibcRemoteHeightIncrement
+          );
+          const timeoutTime = Long.fromNumber(0);
+          return TransferMsg(
+            channel,
+            fromAddress,
+            toAddress,
+            amount,
+            timeoutHeight,
+            timeoutTime,
+            denom,
+            port
+          );
+        }
+      })
+      .catch((error) => {
+        Sentry.captureException(
+          error.response ? error.response.data.message : error.message
         );
-        const timeoutTime = Long.fromNumber(
-          consensusStateResponseDecoded.timestamp.seconds.toNumber()
-        )
-          .add(timeoutTimestamp)
-          .multiply(1000000000); //get time in nanoesconds
-        return TransferMsg(
-          channel,
-          fromAddress,
-          toAddress,
-          amount,
-          timeoutHeight,
-          timeoutTime,
-          denom,
-          port
-        );
-      } else {
-        const remoteTendermintClient = await tmRPC.Tendermint34Client.connect(
-          url
-        );
-        const latestBlockHeight = (await remoteTendermintClient.status())
-          .syncInfo.latestBlockHeight;
-        timeoutHeight.revisionHeight = Long.fromNumber(latestBlockHeight).add(
-          IBCConfiguration.ibcRemoteHeightIncrement
-        );
-        const timeoutTime = Long.fromNumber(0);
-        return TransferMsg(
-          channel,
-          fromAddress,
-          toAddress,
-          amount,
-          timeoutHeight,
-          timeoutTime,
-          denom,
-          port
-        );
-      }
-    })
-    .catch((error) => {
-      Sentry.captureException(
-        error.response ? error.response.data.message : error.message
-      );
-      throw error;
-    });
-  return finalResponse;
+        throw error;
+      });
+    return finalResponse;
+  } catch (e) {
+    throw e;
+  }
 }
 
 async function RpcClient() {

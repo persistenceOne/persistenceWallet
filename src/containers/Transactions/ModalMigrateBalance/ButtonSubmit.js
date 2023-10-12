@@ -9,7 +9,6 @@ import {
   submitFormData
 } from "../../../store/actions/transactions/migrateAssets";
 import { DefaultChainInfo, PstakeInfo } from "../../../config";
-import { TokenizeSharesMsg } from "../../../utils/protoMsgHelper";
 const msgSendTypeUrl = "/cosmos.bank.v1beta1.MsgSend";
 
 const SendMsg = (fromAddress, toAddress, amount) => {
@@ -23,7 +22,7 @@ const SendMsg = (fromAddress, toAddress, amount) => {
   };
 };
 
-const ButtonMigrate = ({ selectedList }) => {
+const ButtonMigrate = () => {
   const dispatch = useDispatch();
   const { migrationTokenList, buttonStatus, toAddress } = useSelector(
     (state) => state.migrateAssets
@@ -63,18 +62,18 @@ const ButtonMigrate = ({ selectedList }) => {
     );
     console.log(msg);
     messages.push(msg);
-    if (selectedList.list.length > 0) {
-      selectedList.list.forEach(async (item) => {
-        messages.push(
-          TokenizeSharesMsg(
-            loginInfo.address,
-            item.address,
-            toAddress.value,
-            (item.amount * 1000000).toFixed(0)
-          )
-        );
-      });
-    }
+    // if (selectedList.list.length > 0) {
+    //   selectedList.list.forEach(async (item) => {
+    //     messages.push(
+    //       TokenizeSharesMsg(
+    //         loginInfo.address,
+    //         item.address,
+    //         toAddress.value,
+    //         (item.amount * 1000000).toFixed(0)
+    //       )
+    //     );
+    //   });
+    // }
 
     dispatch(submitFormData(messages));
   };
