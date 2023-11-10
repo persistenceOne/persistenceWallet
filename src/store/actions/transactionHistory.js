@@ -9,15 +9,18 @@ import {
   TRANSACTIONS_IN_PROGRESS
 } from "../../constants/transactionQueries";
 import { buildQuery } from "@cosmjs/tendermint-rpc/build/tendermint34/requests";
-import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
+import { Tendermint37Client } from "@cosmjs/tendermint-rpc";
 import { decodeTxRaw, Registry } from "@cosmjs/proto-signing";
 import helper, { generateHash } from "../../utils/helper";
 import * as Sentry from "@sentry/browser";
 import {
   MsgTokenizeShares,
-  MsgRedeemTokensForShares
+  MsgRedeemTokensForShares,
+  MsgTransferTokenizeShareRecord,
+  MsgValidatorBond,
 } from "persistenceonejs/cosmos/staking/v1beta1/tx";
-
+import { MsgWithdrawTokenizeShareRecordReward } from "persistenceonejs/cosmos/distribution/v1beta1/tx";
+import {MsgLiquidStakeLSM} from "persistenceonejs/pstake/liquidstakeibc/v1beta1/msgs";
 const { defaultRegistryTypes } = require("@cosmjs/stargate");
 const tendermintRPCURL = process.env.REACT_APP_TENDERMINT_RPC_ENDPOINT;
 const vestingTx = require("cosmjs-types/cosmos/vesting/v1beta1/tx");
@@ -48,7 +51,23 @@ function createDefaultRegistry() {
       MsgRedeemTokensForShares
     ],
     ["/cosmos.authz.v1beta1.MsgExec", authzTx.MsgExec],
-    ["/cosmos.authz.v1beta1.MsgRevoke", authzTx.MsgRevoke]
+    ["/cosmos.authz.v1beta1.MsgRevoke", authzTx.MsgRevoke],
+    [
+      "/cosmos.staking.v1beta1.MsgTransferTokenizeShareRecord",
+      MsgTransferTokenizeShareRecord
+    ],
+    [
+      "/cosmos.staking.v1beta1.MsgValidatorBond",
+      MsgValidatorBond
+    ],
+    [
+      "/cosmos.distribution.v1beta1.MsgWithdrawTokenizeShareRecordReward",
+      MsgWithdrawTokenizeShareRecordReward
+    ],
+    [
+      "/pstake.liquidstakeibc.v1beta1.MsgLiquidStakeLSM",
+      MsgLiquidStakeLSM
+    ],
   ]);
 }
 
@@ -86,7 +105,7 @@ export const fetchTransactions = (address, limit, pageNumber) => {
   return async (dispatch) => {
     dispatch(fetchTransactionsProgress());
     try {
-      const tmClient = await Tendermint34Client.connect(tendermintRPCURL);
+      const tmClient = await Tendermint37Client.connect(tendermintRPCURL);
       const txSearch = await tmClient.txSearch(
         txSearchParams(address, pageNumber, limit, "message.sender")
       );
@@ -181,10 +200,9 @@ export const fetchReceiveTransactions = (address, limit, pageNumber) => {
   return async (dispatch) => {
     dispatch(fetchReceiveTransactionsProgress());
     try {
-      const tmClient = await Tendermint34Client.connect(tendermintRPCURL);
-      const txSearch = await tmClient.txSearch(
-        txSearchParams(address, pageNumber, limit, "transfer.recipient")
-      );
+      const tmClient = await Tendermint37Client.connect(tendermintRPCURL);
+      const query = txSearchParams(address, pageNumber, limit, "transfer.recipient");
+      const txSearch = await tmClient.txSearch(query);
       let txData = [];
       for (let transaction of txSearch.txs) {
         const decodedTransaction = decodeTxRaw(transaction.tx);

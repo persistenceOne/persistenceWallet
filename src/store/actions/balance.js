@@ -140,7 +140,6 @@ export const fetchTransferableVestingAmount = (address) => {
             tokenValueConversion(stringToNumber(xprtBalance))
           );
         }
-        console.log(transferableAmount, xprtBalance, "blc check");
         dispatch(fetchBalanceListSuccess(response.balances));
         const totalBalance = stringToNumber(xprtBalance);
         dispatch(fetchBalanceSuccess(tokenValueConversion(totalBalance)));

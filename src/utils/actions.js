@@ -10,6 +10,8 @@ import { tokenValueConversion } from "./helper";
 import { DefaultChainInfo } from "../config";
 import { QueryClientImpl as BankQueryClientImpl } from "cosmjs-types/cosmos/bank/v1beta1/query";
 import { QueryClientImpl as LsNativeStakingQueryClient } from "persistenceonejs/cosmos/staking/v1beta1/query";
+import { QueryClientImpl as StakingQueryClientImpl } from "cosmjs-types/cosmos/staking/v1beta1/query";
+import { decodeCosmosSdkDecFromProto } from "@cosmjs/stargate";
 
 async function getValidatorRewards(validatorAddress) {
   const loginInfo = JSON.parse(localStorage.getItem(LOGIN_INFO));
@@ -73,10 +75,10 @@ export const getTokenizedShares = async (address) => {
     const responseList = [];
     const rpcClient = await transactions.RpcClient();
     const bankQueryService = new BankQueryClientImpl(rpcClient);
+    const stakingQueryService = new StakingQueryClientImpl(rpcClient);
     const balancesResponse = await bankQueryService.AllBalances({
       address: address
     });
-    console.log(balancesResponse, "response-balancesResponse");
     const lsNativeQueryService = new LsNativeStakingQueryClient(rpcClient);
     if (balancesResponse.balances.length > 0) {
       for (const balance of balancesResponse.balances) {
@@ -85,13 +87,27 @@ export const getTokenizedShares = async (address) => {
             await lsNativeQueryService.TokenizeShareRecordByDenom({
               denom: balance.denom
             });
-          console.log(response, "response-lsNativeQueryService");
           if (response) {
+            const validatorResponse = await stakingQueryService.Validator({
+              validatorAddr: response.record.validator
+            });
+
+            const validatorShares = decodeCosmosSdkDecFromProto(
+              validatorResponse.validator.delegatorShares
+            ).toString();
+
+            const tokens =
+              (Number(balance.amount) *
+                Number(validatorResponse.validator.tokens)) /
+              Number(validatorShares);
+
             const res = {
+              tokens: tokenValueConversion(Math.ceil(Number(tokens))),
+              decAmount: balance.amount,
               amount: tokenValueConversion(balance.amount),
               validatorAddress: response.record.validator,
               denom: balance.denom,
-              recordId: response.record.id,
+              recordId: Number(response.record.id),
               owner: response.record.owner
             };
             responseList.push(res);
@@ -106,7 +122,6 @@ export const getTokenizedShares = async (address) => {
         const newListCheck = newList.find(
           (filterItem) => filterItem.validatorAddress === item.validatorAddress
         );
-        console.log(newListCheck, "newListCheck");
         if (!newListCheck) {
           const uniqList = responseList.filter(
             (filterItem) =>
@@ -115,7 +130,7 @@ export const getTokenizedShares = async (address) => {
           let total = 0;
           if (uniqList.length > 0) {
             uniqList.forEach((item) => {
-              total += item.amount;
+              total += item.tokens;
             });
           }
           newList.push({
@@ -125,7 +140,6 @@ export const getTokenizedShares = async (address) => {
           });
         }
       });
-    console.log(responseList, "response-tokenzied", newList);
     return newList;
   } catch (e) {
     return [];

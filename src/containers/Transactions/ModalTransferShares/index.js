@@ -37,7 +37,7 @@ const ModalTransferShares = () => {
       const filteredRewardsList = [];
       sharesRewardsList.forEach((share) => {
         const item = validator.list.find(
-          (f) => f.recordId.toNumber() === share.recordId.toNumber()
+          (f) => Number(f.recordId) === Number(share.recordId)
         );
         if (item) {
           const newObje = {
@@ -63,7 +63,6 @@ const ModalTransferShares = () => {
     }
   }, [sharesRewardsList, validator]);
 
-  console.log(show, "showshow", validator, sharesRewardsList);
   const response = useSelector((state) => state.common.error);
   const loginInfo = JSON.parse(localStorage.getItem(LOGIN_INFO));
 
@@ -158,7 +157,7 @@ const ModalTransferShares = () => {
                       {validator.validatorName}
                     </td>
                     <td className="text-center amount text-secondary">
-                      {item.amount}
+                      {item.tokens}
                     </td>
                   </tr>
                 ))}

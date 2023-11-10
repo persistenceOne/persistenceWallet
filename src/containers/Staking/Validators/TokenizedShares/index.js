@@ -25,7 +25,6 @@ const TokenizedShares = () => {
         const valInfo = validators.validators.find(
           (validator) => validator.operatorAddress === share.validatorAddress
         );
-        console.log(valInfo, "valInfo", share);
         if (valInfo) {
           list.push({
             ...share,
@@ -62,7 +61,6 @@ const TokenizedShares = () => {
       })
     );
     dispatch(showTxRedeemSharesModal());
-    console.log(validator, "validator123");
   };
 
   const handleTransfer = (validator) => {
@@ -73,7 +71,6 @@ const TokenizedShares = () => {
       })
     );
     dispatch(handleDelegationTransferModal(true));
-    console.log(validator, "validator123");
   };
 
   const tableData = inputState.length

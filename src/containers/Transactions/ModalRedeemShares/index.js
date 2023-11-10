@@ -36,7 +36,7 @@ const ModalRedeemShares = () => {
       const filteredRewardsList = [];
       sharesRewardsList.forEach((share) => {
         const item = validator.list.find(
-          (f) => f.recordId.toNumber() === share.recordId.toNumber()
+          (f) => Number(f.recordId) === Number(share.recordId)
         );
         if (item) {
           const newObje = {
@@ -49,20 +49,11 @@ const ModalRedeemShares = () => {
       const totalCount = filteredRewardsList.reduce((accumulator, object) => {
         return accumulator + object.rewardAmount;
       }, 0);
-
-      console.log(
-        filteredRewardsList,
-        totalCount,
-        "myArrayFiltered",
-        validator,
-        sharesRewardsList
-      );
       setRewardList(filteredRewardsList);
       setTotalRewards(totalCount);
     }
   }, [sharesRewardsList, validator]);
 
-  console.log(show, "showshow", validator, sharesRewardsList);
   const response = useSelector((state) => state.common.error);
   const loginInfo = JSON.parse(localStorage.getItem(LOGIN_INFO));
 
@@ -158,7 +149,7 @@ const ModalRedeemShares = () => {
                       {validator.validatorName}
                     </td>
                     <td className="text-center amount text-secondary">
-                      {item.amount}
+                      {item.tokens}
                     </td>
                   </tr>
                 ))}

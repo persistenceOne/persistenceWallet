@@ -1,5 +1,6 @@
 import { QueryClientImpl as BankQueryClientImpl } from "cosmjs-types/cosmos/bank/v1beta1/query";
 import transactions from "../../utils/transactions";
+import { QueryClientImpl } from "cosmjs-types/cosmos/staking/v1beta1/query";
 import { QueryClientImpl as LsNativeStakingQueryClient } from "persistenceonejs/cosmos/staking/v1beta1/query";
 import { QueryClientImpl as LsNativeDistributionQueryClient } from "persistenceonejs/cosmos/distribution/v1beta1/query";
 import {
@@ -10,6 +11,12 @@ import * as Sentry from "@sentry/browser";
 import { getTokenizedShares } from "../../utils/actions";
 import { tokenValueConversion } from "../../utils/helper";
 import { decimalize, stringToNumber } from "../../utils/scripts";
+import {
+  handleTokenizeTxButton,
+  setTokenizeTxParams
+} from "./transactions/tokenizeShares";
+import Long from "long";
+import { decodeCosmosSdkDecFromProto } from "@cosmjs/stargate";
 
 export const fetchTokenizedSharesSuccess = (list) => {
   return {
@@ -27,14 +34,12 @@ export const fetchTokenizedSharesRewardsSuccess = (list) => {
 
 export const fetchTokenizedSharesByAddress = async (address) => {
   try {
-    console.log("called123", "called");
     const rpcClient = await transactions.RpcClient();
     const lsNativeQueryService = new LsNativeStakingQueryClient(rpcClient);
     const response = await lsNativeQueryService.TokenizeShareRecordsOwned({
       owner: address
     });
     if (response) {
-      console.log(response, "fetchTokenizedSharesByAddress");
       return response.records.length > 0 ? response.records : [];
       // const res = {
       //   amount: tokenValueConversion(balance.amount),
@@ -72,7 +77,6 @@ export const fetchTokenizedShares = (address) => {
 export const fetchTokenizedShareRewards = (address) => {
   return async (dispatch) => {
     try {
-      console.log(address, "fetchTokenizedShareRewards clled ");
       const rpcClient = await transactions.RpcClient();
       const lsNativeQueryService = new LsNativeDistributionQueryClient(
         rpcClient
@@ -80,7 +84,6 @@ export const fetchTokenizedShareRewards = (address) => {
       const response = await lsNativeQueryService.TokenizeShareRecordReward({
         ownerAddress: address
       });
-      console.log(response, "fetchTokenizedShareRewards");
       if (response) {
         let list = [];
         for (const reward of response.rewards) {
@@ -94,11 +97,10 @@ export const fetchTokenizedShareRewards = (address) => {
 
           const item = {
             reward: totalRewards,
-            recordId: reward.recordId
+            recordId: Number(reward.recordId)
           };
           list.push(item);
         }
-        console.log(list, "fetchTokenizedShareRewards2");
         dispatch(fetchTokenizedSharesRewardsSuccess(list));
       }
     } catch (error) {
@@ -110,26 +112,64 @@ export const fetchTokenizedShareRewards = (address) => {
   };
 };
 
-export const fetchValidatorBonds = async (address) => {
-  try {
-    console.log(address, "fetchTokenizedShareRewards clled ");
-    const rpcClient = await transactions.RpcClient();
-    const lsNativeQueryService = new LsNativeStakingQueryClient(rpcClient);
-    const response = await lsNativeQueryService.UnbondingDelegation({
-      validatorAddr:
-        "persistencevaloper1qhx8lgm9a0kfxptwgcftjt32w0a00lh5z9zf3y",
-      delegatorAddr: "persistence1lngwr8ymx3q6gtsff2h8407mawz9azp6kmut02"
-    });
-    console.log(response, "fetchValidatorBonds");
-    if (response) {
-      console.log(response, "fetchValidatorBonds");
+export const fetchValidatorBonds = (validatorAddr, dlgtAddress) => {
+  return async (dispatch) => {
+    let result = {
+      valBondShares: 0,
+      liquidShares: 0,
+      delegatorShares: 0,
+      valBondFactor: 0,
+      validatorTokens: 0,
+      validatorLiquidStakingCap: 0
+    };
+    try {
+      const rpcClient = await transactions.RpcClient();
+      const lsNativeQueryService = new LsNativeStakingQueryClient(rpcClient);
+
+      let key = new Uint8Array();
+      let validatorDelegations = [];
+      const response = await lsNativeQueryService.Validator({
+        validatorAddr: validatorAddr
+      });
+
+      const params = await lsNativeQueryService.Params();
+
+      // const valBondShares = response.validator.validatorBondShares;
+      // const valBondFactor = params.params.validatorBondFactor;
+      // const delegatorShares = response.validator.delegatorShares;
+      const valBondShares = decodeCosmosSdkDecFromProto(
+        response.validator.validatorBondShares
+      ).toString();
+      const valBondFactor = decodeCosmosSdkDecFromProto(
+        params.params.validatorBondFactor
+      ).toString();
+      const delegatorShares = decodeCosmosSdkDecFromProto(
+        response.validator.delegatorShares
+      ).toString();
+      const liquidShares = decodeCosmosSdkDecFromProto(
+        response.validator.liquidShares
+      ).toString();
+      const validatorTokens = response.validator.tokens;
+
+      const validatorLiquidStakingCap = decodeCosmosSdkDecFromProto(
+        params.params.validatorLiquidStakingCap
+      ).toString();
+
+      result.valBondShares = Math.trunc(Number(valBondShares));
+      result.delegatorShares = Math.trunc(Number(delegatorShares));
+      result.liquidShares = Math.trunc(Number(liquidShares));
+      result.valBondFactor = Number(valBondFactor);
+      result.validatorTokens = Number(validatorTokens);
+      result.validatorLiquidStakingCap = Number(validatorLiquidStakingCap);
+
+      dispatch(setTokenizeTxParams(result));
+      return false;
+    } catch (error) {
+      console.log(error, "fetchValidatorBonds error");
+      Sentry.captureException(
+        error.response ? error.response.data.message : error.message
+      );
+      dispatch(setTokenizeTxParams(result));
     }
-    return [];
-  } catch (error) {
-    console.log(error, "fetchValidatorBonds error");
-    Sentry.captureException(
-      error.response ? error.response.data.message : error.message
-    );
-    return [];
-  }
+  };
 };

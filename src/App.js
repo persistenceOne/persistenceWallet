@@ -27,6 +27,7 @@ import {
   fetchTokenizedShareRewards,
   fetchTokenizedShares
 } from "./store/actions/tokenizeShares";
+import ModalTerms from "./containers/TermsModal";
 
 const SENTRY_API = process.env.REACT_APP_SENTRY_API;
 const GOOGLE_ANALYTICS = process.env.REACT_APP_GA_TRACKING_ID;
@@ -85,7 +86,6 @@ const Main = () => {
   useEffect(() => {
     const fetchApi = async () => {
       if (address !== null && address !== undefined) {
-        console.log(address, "fetchApi");
         await Promise.all([
           dispatch(fetchDelegationsCount(address)),
           dispatch(fetchRewards(address)),
@@ -205,6 +205,7 @@ const Main = () => {
         })}
         <Route component={RouteNotFound} />
       </Switch>
+      <ModalTerms />
     </>
   );
 };

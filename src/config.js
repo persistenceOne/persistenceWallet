@@ -19,6 +19,8 @@ export const AccountInfo = {
   maxAccountNumber: 2147483647
 };
 
+export const BaseGas = 450000;
+
 export const PstakeInfo = {
   coinDenom: "PSTAKE",
   coinMinimalDenom:
@@ -41,7 +43,7 @@ export const stkATOMInfo = {
 };
 
 export const GasInfo = {
-  gas: 250000,
+  gas: BaseGas,
   minGas: 80000,
   maxGas: 2000000000000000000
 };
@@ -122,8 +124,8 @@ export const ExternalChains = [
     coinType: 118
   },
   {
-    rpc: "https://rpc.osmosis-1.audit.one/",
-    rest: "https://rest.osmosis-1.audit.one/",
+    rpc: "https://rpc.osmosis.zone",
+    rest: "https://lsc.osmosis.zone",
     chainId: "osmosis-1",
     chainName: "Osmosis",
     portID: "transfer",

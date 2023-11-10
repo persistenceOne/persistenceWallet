@@ -43,7 +43,6 @@ export const queryTokenizeSharesRecordId = async () => {
     const rpcClient = await transactions.RpcClient();
     const queryService = new QueryClientImpl(rpcClient);
     const response = await queryService.LastTokenizeShareRecordId({});
-    console.log(response, "response id");
     return response.toString();
   } catch (e) {
     console.log(e, "error in fetch");
@@ -74,7 +73,6 @@ export const pollAccountBalance = async (initialList, address) => {
 
 export const fetchApiData = async (address, dispatch) => {
   if (address !== null && address !== undefined) {
-    console.log(address, "fetchApi");
     await Promise.all([
       dispatch(fetchDelegationsCount(address)),
       dispatch(fetchRewards(address)),

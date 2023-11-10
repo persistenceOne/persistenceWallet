@@ -163,7 +163,7 @@ function TokenizeSharesTransferMsg(recordId, sender, newOwner) {
   return {
     typeUrl: msgTransferTokenizeShareRecord,
     value: MsgTransferTokenizeShareRecord.fromPartial({
-      tokenizeShareRecordId: recordId,
+      tokenizeShareRecordId: recordId.toString(),
       sender: sender,
       newOwner: newOwner
     })
@@ -184,7 +184,6 @@ function RedeemTokenizedSharesMsg(fromAddress, denom, amount) {
 }
 
 function TokenizedSharesRewardsMsg(ownerAddress, tokenId) {
-  console.log(ownerAddress, tokenId, "TokenizedSharesRewardsMsg");
   return {
     typeUrl: msgWithdrawTokenizeShareRecordReward,
     value: MsgWithdrawTokenizeShareRecordReward.fromPartial({

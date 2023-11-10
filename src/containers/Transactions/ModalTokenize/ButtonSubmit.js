@@ -23,7 +23,7 @@ import {
 } from "../../../store/actions/transactions/common";
 import { LOGIN_INFO } from "../../../constants/localStorage";
 import { stringToNumber, trimWhiteSpaces } from "../../../utils/scripts";
-import { DefaultChainInfo } from "../../../config";
+import { BaseGas, DefaultChainInfo } from "../../../config";
 import transactions from "../../../utils/transactions";
 import { fee } from "../../../utils/aminoMsgHelper";
 import { fetchApiData, pollAccountBalance } from "../../../utils/queries";
@@ -34,8 +34,7 @@ const getLatestRecord = (newList, oldList) => {
   const result = newList.filter(
     ({ recordId: recordId }) =>
       !oldList.some(
-        ({ recordId: recordId2 }) =>
-          recordId2.toNumber() === recordId.toNumber()
+        ({ recordId: recordId2 }) => Number(recordId2) === Number(recordId)
       )
   );
   return result;
@@ -63,7 +62,6 @@ const ButtonSubmit = () => {
       txResponse.code === 0 &&
       txName === "tokenize"
     ) {
-      console.log(txResponse, "txResponsetxResponse");
       transferTxn(txResponse, "keystore");
     }
   }, [txResponse]);
@@ -111,7 +109,7 @@ const ButtonSubmit = () => {
     try {
       let response = await transactions.TransactionWithKeplr(
         [msg],
-        fee(0, 250000),
+        fee(0, BaseGas),
         ""
       );
       transferTxn(response, "keplr");
@@ -137,7 +135,6 @@ const ButtonSubmit = () => {
               txnTokenizeHash: response.transactionHash
             })
           );
-          console.log(list, tokenizeSharesInfo, "tokenizeSharesInfo");
           let listItem;
           if (list.length > 0) {
             const tokenizeShareResponse = list.find(
@@ -160,7 +157,6 @@ const ButtonSubmit = () => {
               shareInfo = tokenizeShareResponse1.list;
             }
           }
-          console.log(listItem, "shareInfo", shareInfo);
           let tokenizedItem;
           if (!shareInfo && listItem) {
             tokenizedItem = listItem;
@@ -171,20 +167,18 @@ const ButtonSubmit = () => {
               validatorAddress.value.operatorAddress
             );
           }
-          console.log(tokenizedItem, "uniqList");
           if (tokenizedItem) {
             const msg1 = TokenizeSharesTransferMsg(
-              tokenizedItem[0].recordId,
+              Number(tokenizedItem[0].recordId),
               loginInfo.address,
               toAddress.value
             );
             const msg2 = SendMsg(
               loginInfo && loginInfo.address,
               toAddress.value,
-              (amount.value * DefaultChainInfo.uTokenValue).toFixed(0),
+              tokenizedItem[0].decAmount,
               tokenizedItem[0].denom
             );
-            console.log(msg1, msg2, "msg2msg2");
             if (type === "keplr") {
               dispatch(
                 setTxIno({

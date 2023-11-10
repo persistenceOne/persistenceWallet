@@ -16,6 +16,7 @@ import { pollAccountBalance } from "../../../utils/queries";
 import { hideKeyStoreModal } from "./keyStore";
 import { setTxTokenizeShareStatus } from "./tokenizeShares";
 import { store } from "../../index";
+import { BaseGas } from "../../../config";
 
 export const keplrSubmit =
   (messages = "") =>
@@ -28,15 +29,11 @@ export const keplrSubmit =
       const loginInfo = JSON.parse(localStorage.getItem(LOGIN_INFO));
       const response = await transactions.TransactionWithKeplr(
         messages,
-        fee(0, 250000),
+        fee(0, BaseGas),
         ""
       );
-      console.log("here", response, txName);
-
       if (response.code !== undefined && response.code === 0) {
-        console.log("here0", txName);
         if (txName !== "send" && txName !== "ibc") {
-          console.log("here in");
           dispatch(getState().common.txInfo.value.modal);
         }
         dispatch(txSuccess());

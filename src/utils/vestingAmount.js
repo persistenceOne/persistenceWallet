@@ -20,19 +20,18 @@ export const getUTOKEN_Balance = (amountList) => {
 
 export const getPeriodicVestingAmount = (account, currentEpochTime) => {
   let accountVestingAmount = getUTOKEN_Balance(
-    account.accountData.baseVestingAccount.originalVesting
+    account.baseVestingAccount.originalVesting
   );
   let freeBalance = 0;
-  const endTime = parseInt(account.accountData.baseVestingAccount.endTime);
+  const endTime = parseInt(account.baseVestingAccount.endTime);
   if (endTime >= currentEpochTime) {
-    let vestingTimes = parseInt(account.accountData.startTime);
-    for (let i = 0; i < account.accountData.vestingPeriods.length; i++) {
-      let length = parseInt(account.accountData.vestingPeriods[i]["length"]);
+    let vestingTimes = parseInt(account.startTime);
+    for (let i = 0; i < account.vestingPeriods.length; i++) {
+      let length = parseInt(account.vestingPeriods[i]["length"]);
       vestingTimes = vestingTimes + length;
       if (currentEpochTime >= vestingTimes) {
         freeBalance =
-          freeBalance +
-          getUTOKEN_Balance(account.accountData.vestingPeriods[i].amount);
+          freeBalance + getUTOKEN_Balance(account.vestingPeriods[i].amount);
       }
     }
   } else {
@@ -74,7 +73,7 @@ function getAccountVestingAmount(account, currentEpochTime) {
   switch (account.typeUrl) {
     case periodicVesting:
       accountVestingAmount = getPeriodicVestingAmount(
-        account,
+        account.accountData,
         currentEpochTime
       );
       break;

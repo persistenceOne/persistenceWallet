@@ -20,7 +20,7 @@ import { fetchTokenizedSharesByAddress } from "../../../store/actions/tokenizeSh
 import { Spinner } from "../../../components/Spinner";
 import { txFailed } from "../../../store/actions/transactions/common";
 
-const ModalTokenize = (props) => {
+const ModalTokenize = () => {
   const dispatch = useDispatch();
   const validator = useSelector((state) => state.validators.validator.value);
   const show = useSelector((state) => state.tokenizeShares.modal);

@@ -130,6 +130,10 @@
     padding-top: 20px;
     padding-bottom: 20px;
 
+    .terms{
+      text-decoration: underline;
+    }
+
     .dark-logo {
       height: 20px;
       width: 100px;
@@ -522,5 +526,79 @@
   .table-container thead th {
     position: sticky;
     top: 0;
+  }
+}
+
+.terms-modal {
+  background: #00000099;
+  backdrop-filter: blur(2px);
+  .modal-dialog {
+    max-width: 720px !important;
+  }
+
+  .modal-content {
+    border-radius: 0;
+    background: #282828 !important;
+    .heading{
+      color: #FCFCFC !important;
+      font-size: 24px;
+      font-weight: 600;
+    }
+  }
+  .modal-body{
+    padding: 0 40px;
+    .content{
+      max-height: 400px !important;
+      overflow-y: auto;
+      input[type="checkbox"] {
+        accent-color: #c73238;
+        width: 18px;
+        height: 18px;
+      }
+      .sub-heading{
+        margin-bottom: 8px;
+        color: #ECECEC;
+        span{
+          font-weight: 600;
+        }
+      }
+      .check-box{
+        display: flex;
+        align-items: center;
+        margin-bottom: 12px;
+        label{
+          margin-right: 16px;
+          margin-bottom: -4px;
+        }
+        .text{
+          color: #E0E0E0;
+          font-size: 14px;
+          margin: 0;
+        }
+      }
+    }
+    .button-primary{
+      width: 200px;
+    }
+  }
+
+  .modal-header {
+    justify-content: center;
+
+    button.close {
+      display: none;
+      top: 45px;
+      color: #94979b;
+    }
+
+    p {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 150%;
+      text-align: center;
+      color: #2E3239;
+      margin: 0;
+    }
   }
 }

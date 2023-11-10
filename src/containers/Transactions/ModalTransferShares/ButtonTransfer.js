@@ -31,13 +31,13 @@ function SendMsg(fromAddress, toAddress, balance) {
 }
 
 const ButtonTransfer = ({ tokenizedShares, rewardList }) => {
-  console.log(tokenizedShares, "tokenizedShares123", rewardList);
   const dispatch = useDispatch();
   const loginInfo = JSON.parse(localStorage.getItem(LOGIN_INFO));
   const toAddress = useSelector((state) => state.delegationTransfer.toAddress);
 
   const onClick = () => {
     const messages = getMessage();
+    console.log(messages, "messages")
     dispatch(submitFormData(messages));
   };
 
@@ -46,7 +46,7 @@ const ButtonTransfer = ({ tokenizedShares, rewardList }) => {
   const getMessage = () => {
     let messages = [];
     rewardList.forEach((item) => {
-      const msg = TokenizedSharesRewardsMsg(item.owner, item.recordId);
+      const msg = TokenizedSharesRewardsMsg(item.owner,item.recordId);
       messages.push(msg);
     });
 
@@ -54,7 +54,7 @@ const ButtonTransfer = ({ tokenizedShares, rewardList }) => {
 
     tokenizedShares.forEach((item) => {
       const msg = TokenizeSharesTransferMsg(
-        item.recordId,
+          item.recordId,
         loginInfo.address,
         toAddress.value
       );
@@ -95,7 +95,6 @@ const ButtonTransfer = ({ tokenizedShares, rewardList }) => {
         }
       })
     );
-    console.log(messages, "messages1");
     dispatch(keplrSubmit(messages));
   };
 

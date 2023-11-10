@@ -1,10 +1,12 @@
 import transactions from "../../../utils/transactions";
-import {showTxResultModal, txFailed, txInProgress, txResponse, txSuccess} from "./common";
+import {closeLoader, showTxResultModal, txFailed, txInProgress, txResponse, txSuccess} from "./common";
 import {hideFeeModal} from "./fee";
 import * as Sentry from "@sentry/browser";
 import helper, {privateKeyReader} from "../../../utils/helper";
 import {LOGIN_INFO} from "../../../constants/localStorage";
 import {DefaultChainInfo, ExternalChains} from "../../../config";
+import {setTxTokenizeShareStatus, showTxTokenizeModal} from "./tokenizeShares";
+import {hideKeyStoreModal} from "./keyStore";
 
 export const ledgerSubmit = (loginAddress, loginMode) => {
     return async (dispatch, getState) => {
@@ -34,16 +36,26 @@ export const ledgerSubmit = (loginAddress, loginMode) => {
         }
         let response = transactions.getTransactionResponse(loginAddress, formData, fee, gas, mnemonic, txName, accountNumber, accountIndex, bip39PassPhrase, coinType);
         response.then(result => {
-            if (result.code !== undefined) {
-                dispatch(hideFeeModal());
-                dispatch(txSuccess());
-                dispatch(txResponse(result));
-                dispatch(showTxResultModal());
+            if (result.code !== undefined && result.code === 0) {
+                if (txName === "tokenize") {
+                    dispatch(closeLoader());
+                    dispatch(hideFeeModal());
+                    dispatch(showTxTokenizeModal());
+                    dispatch(txResponse(result));
+                    dispatch(txFailed(""));
+                }else {
+                    dispatch(closeLoader());
+                    dispatch(hideFeeModal());
+                    dispatch(txSuccess());
+                    dispatch(txResponse(result));
+                    dispatch(showTxResultModal());
+                    dispatch(setTxTokenizeShareStatus(""));
+                }
             } else {
-                console.log(result, "final result");
+                throw Error(result.rawLog);
             }
         }).catch(error => {
-            console.log(error.message, "error.message");
+            console.log(error, "error.message");
             Sentry.captureException(error.response
                 ? error.response.data.message
                 : error.message);
