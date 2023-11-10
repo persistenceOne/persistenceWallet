@@ -534,9 +534,9 @@
 
   .modal-content {
     border-radius: 0;
-    background: #282828;
+    background: #282828 !important;
     .heading{
-      color: #FCFCFC;
+      color: #FCFCFC !important;
       font-size: 24px;
       font-weight: 600;
     }
