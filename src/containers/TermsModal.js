@@ -9,7 +9,10 @@ const ModalTerms = () => {
   const [checkAll, setCheckAll] = useState(false);
 
   useEffect(() => {
-    if (sessionStorage.getItem("terms-conditions") === "disabled") {
+    if (
+      sessionStorage.getItem("terms-conditions") === "disabled" ||
+      sessionStorage.getItem("terms-conditions") === null
+    ) {
       setShow(false);
     } else {
       setShow(true);
