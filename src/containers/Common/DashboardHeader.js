@@ -158,13 +158,29 @@ const DashboardHeader = () => {
                     {t("FAQs")}
                   </a>
                   <a
-                    className="nav-link primary-medium-color pl-2"
+                    className="nav-link primary-medium-color pl-2 pb-2"
                     href="https://notes.persistence.one/s/9l80_chis"
                     rel="noopener noreferrer"
                     target="_blank"
                     onClick={() => onClick(t("HELP"))}
                   >
                     {t("Guide")}
+                  </a>
+                  <a
+                    href="https://persistence.one/terms"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="nav-link primary-medium-color pb-2 pl-2"
+                  >
+                    Terms of Use
+                  </a>
+                  <a
+                    href="https://persistence.one/privacy"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="nav-link primary-medium-color pl-2"
+                  >
+                    Privacy Policy
                   </a>
                 </div>
               </NavDropdown>
