@@ -42,22 +42,20 @@ export const getPeriodicVestingAmount = (account, currentEpochTime) => {
 };
 
 export const getDelayedVestingAmount = (account, currentEpochTime) => {
-  const endTime = parseInt(account.accountData.baseVestingAccount.endTime);
+  const endTime = parseInt(account.baseVestingAccount.endTime);
   if (endTime >= currentEpochTime) {
-    return getUTOKEN_Balance(
-      account.accountData.baseVestingAccount.originalVesting
-    );
+    return getUTOKEN_Balance(account.baseVestingAccount.originalVesting);
   } else {
     return 0;
   }
 };
 
 export const getContinuousVestingAmount = (account, currentEpochTime) => {
-  const endTime = parseInt(account.accountData.baseVestingAccount.endTime);
-  const startTime = parseInt(account.accountData.startTime);
+  const endTime = parseInt(account.baseVestingAccount.endTime);
+  const startTime = parseInt(account.startTime);
   if (endTime >= currentEpochTime) {
     let originalVestingAmount = getUTOKEN_Balance(
-      account.accountData.baseVestingAccount.originalVesting
+      account.baseVestingAccount.originalVesting
     );
     return (
       (originalVestingAmount * (endTime - currentEpochTime)) /
