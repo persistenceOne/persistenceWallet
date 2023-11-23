@@ -21,6 +21,7 @@
 
 # dotenv environment variables file(s)
 .env
+.env.local
 
 # Build generated
 dist/
