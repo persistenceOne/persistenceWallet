@@ -5,6 +5,8 @@ const countries = [
   "BB",
   "BF",
   "CM",
+  "CD",
+  "CG",
   "GI",
   "HT",
   "IR",
@@ -22,7 +24,8 @@ const countries = [
   "UM",
   "US",
   "GB",
-  "CU"
+  "CU",
+  "CA"
 ];
 const Banner = () => {
   const [banner, setBanner] = useState(true);
@@ -45,8 +48,9 @@ const Banner = () => {
     return (
       <div className={"top-banner-section"}>
         <p style={{ color: "#FFFFFF", fontSize: "12px", margin: "0" }}>
-          <b>IMPORTANT NOTICE:</b> Starting 15/01/2024, this site won't be
-          accessible anymore from your location. See more details{" "}
+          <b>IMPORTANT NOTICE:</b> Please note that from 15 January 2024,
+          applications on the persistence.one domain will no longer be
+          accessible from your location. See more details{" "}
           <a
             className="content"
             href="https://geofence-notice.pages.dev/?ref=persistence"
