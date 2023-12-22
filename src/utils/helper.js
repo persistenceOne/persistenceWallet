@@ -256,6 +256,7 @@ export async function getAccount(address) {
     const accountResponse = await authAccountService.Account({
       address: address
     });
+    console.log(accountResponse, "accountResponse-1");
     if (
       accountResponse.account.typeUrl === "/cosmos.auth.v1beta1.BaseAccount"
     ) {
@@ -313,7 +314,7 @@ export async function getAccount(address) {
     Sentry.captureException(
       error.response ? error.response.data.message : error.message
     );
-    console.log(error.message);
+    console.log(error);
   }
 }
 

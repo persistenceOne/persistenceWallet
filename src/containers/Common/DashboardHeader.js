@@ -158,7 +158,7 @@ const DashboardHeader = () => {
                     {t("FAQs")}
                   </a>
                   <a
-                    className="nav-link primary-medium-color pb-2 pl-2"
+                    className="nav-link primary-medium-color pb-2 pl-2 pb-2"
                     href="https://notes.persistence.one/s/9l80_chis"
                     rel="noopener noreferrer"
                     target="_blank"
