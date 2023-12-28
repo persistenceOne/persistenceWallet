@@ -31,9 +31,7 @@ export const formatNumber = (v = 0, size = 3) => {
 };
 
 export const localTime = (stringData) => {
-  return moment(new Date(stringData).toString()).format(
-    "dddd MMMM Do YYYY, h:mm:ss a"
-  );
+  return moment(new Date(stringData).toString()).format("DD MMM YYYY hh:mm A");
 };
 
 export const emptyFunc = () => ({});

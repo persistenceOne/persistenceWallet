@@ -318,20 +318,25 @@
   width: 100%;
   margin: auto;
 
+  &.unbond-modal{
+    .button.button-primary {
+      padding: 0.125rem 1rem !important;
+      border-radius: 4px !important;
+    }
+  }
+  .unbonding-schedule-list-container {
+    max-height: 400px;
+    overflow: auto;
+  }
+
   .unbonding-schedule-list-header {
     display: flex;
     display: -webkit-flex;
     justify-content: space-between;
-    padding: 15px 20px;
-
-    p {
-      font-family: 'Poppins', sans-serif;
-      font-weight: 500;
-      font-size: 14px;
-      line-height: 150%;
-      margin: 0;
-      color: #8D9CB5;
-    }
+    align-items: center;
+    padding: 15px 2px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid #2E3239;
   }
 
   .unbonding-schedule-list {
@@ -339,8 +344,8 @@
     display: flex;
     display: -webkit-flex;
     justify-content: space-between;
-    padding: 10px 20px;
-
+    align-items: center;
+    padding: 10px 4px;
     &:hover {
       background: rgba(0, 0, 0, .075);
     }

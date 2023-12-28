@@ -184,7 +184,7 @@ let English = {
     RECEIVED_IBC_TOKENS: "Tokens received via IBC",
     OTHER_TOKENS: "Other Tokens",
     VIEW: "View",
-    VIEW_UNBOND_SCHEDULE: `View Unbonding ${DefaultChainInfo.currency.coinDenom} Schedule`,
+    VIEW_UNBOND_SCHEDULE: `View ${DefaultChainInfo.currency.coinDenom} Unbondings`,
     UNBONDING_AMOUNT: "Unbonding Amount",
     DATE: "Date",
     VESTING_SCHEDULE: "Vesting Schedule",
@@ -237,7 +237,7 @@ let English = {
     IBC_REWARDS: "IBC Rewards",
     DECRYPT_KEY_STORE: "Decrypt KeyStore",
     MIGRATE_TOKENS: "Migrate Tokens From 750 wallet to 118 wallet",
-    TOKENIZE_SHARE: "Tokenize Share",
+    TOKENIZE_SHARE: "Tokenize Share"
   }
 };
 

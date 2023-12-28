@@ -22,13 +22,15 @@ import {
   msgTokenizeShares,
   msgTransferTokenizeShareRecord,
   msgValidatorBondUrl,
-  msgWithdrawTokenizeShareRecordReward
+  msgWithdrawTokenizeShareRecordReward,
+  msgCancelUnbondTypeUrl
 } from "./protoMsgHelper";
 import {
   MsgRedeemTokensForShares,
   MsgTokenizeShares,
   MsgTransferTokenizeShareRecord,
-  MsgValidatorBond
+  MsgValidatorBond,
+  MsgCancelUnbondingDelegation
 } from "persistenceonejs/cosmos/staking/v1beta1/tx";
 import { MsgWithdrawTokenizeShareRecordReward } from "persistenceonejs/cosmos/distribution/v1beta1/tx";
 const {
@@ -81,7 +83,8 @@ async function Transaction(wallet, signerAddress, msgs, fee, memo = "") {
         [
           msgWithdrawTokenizeShareRecordReward,
           MsgWithdrawTokenizeShareRecordReward
-        ]
+        ],
+        [msgCancelUnbondTypeUrl, MsgCancelUnbondingDelegation]
       ]),
       aminoTypes: new AminoTypes(createAminoTypes(signerAddress.split("1")[0]))
     }
