@@ -26,6 +26,7 @@ import setWithdrawAddress from "./transactions/setWithdrawAddress";
 import delegate from "./transactions/delegate";
 import redelegate from "./transactions/redelegate";
 import unbondTx from "./transactions/unbond";
+import cancelUnbondTx from "./transactions/cancel-unbond";
 import withdrawValidatorRewards from "./transactions/withdrawValidatorRewards";
 import generateKeyStore from "./generateKeyStore";
 import changePassword from "./changePassword";
@@ -66,7 +67,8 @@ const appReducer = combineReducers({
   delegationTransfer,
   tokenizeShares,
   redeemShares,
-  tokenizeSharesInfo
+  tokenizeSharesInfo,
+  cancelUnbondTx
 });
 
 export const rootReducer = (state, action) => {

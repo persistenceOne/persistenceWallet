@@ -2,7 +2,8 @@ import { MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
 import {
   MsgBeginRedelegate,
   MsgDelegate,
-  MsgUndelegate
+  MsgUndelegate,
+  MsgCancelUnbondingDelegation
 } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 import {
   MsgSetWithdrawAddress,
@@ -24,6 +25,8 @@ export const msgSendTypeUrl = "/cosmos.bank.v1beta1.MsgSend";
 const msgDelegateTypeUrl = "/cosmos.staking.v1beta1.MsgDelegate";
 const msgRedelegateTypeUrl = "/cosmos.staking.v1beta1.MsgBeginRedelegate";
 const msgUnbondTypeUrl = "/cosmos.staking.v1beta1.MsgUndelegate";
+export const msgCancelUnbondTypeUrl =
+  "/cosmos.staking.v1beta1.MsgCancelUnbondingDelegation";
 const msgWithdrawRewardsTypeUrl =
   "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward";
 const msgSetWithdrawAddressTypeUrl =
@@ -114,6 +117,26 @@ function UnbondMsg(delegatorAddress, validatorAddress, amount) {
         denom: DefaultChainInfo.currency.coinMinimalDenom,
         amount: String(amount)
       }
+    })
+  };
+}
+
+function CancelUnbondingMsg(
+  delegatorAddress,
+  validatorAddress,
+  amount,
+  creationHeight
+) {
+  return {
+    typeUrl: msgCancelUnbondTypeUrl,
+    value: MsgCancelUnbondingDelegation.fromPartial({
+      delegatorAddress: delegatorAddress,
+      validatorAddress: validatorAddress,
+      amount: {
+        denom: DefaultChainInfo.currency.coinMinimalDenom,
+        amount: String(amount)
+      },
+      creationHeight: creationHeight
     })
   };
 }
@@ -242,5 +265,6 @@ export {
   RedeemTokenizedSharesMsg,
   TokenizeSharesTransferMsg,
   ValidatorBond,
-  TokenizedSharesRewardsMsg
+  TokenizedSharesRewardsMsg,
+  CancelUnbondingMsg
 };

@@ -1090,24 +1090,27 @@ ul li em {
 .list-modal-body {
   width: 100%;
   margin: auto; }
+  .list-modal-body.unbond-modal .button.button-primary {
+    padding: 0.125rem 1rem !important;
+    border-radius: 4px !important; }
+  .list-modal-body .unbonding-schedule-list-container {
+    max-height: 400px;
+    overflow: auto; }
   .list-modal-body .unbonding-schedule-list-header {
     display: flex;
     display: -webkit-flex;
     justify-content: space-between;
-    padding: 15px 20px; }
-    .list-modal-body .unbonding-schedule-list-header p {
-      font-family: 'Poppins', sans-serif;
-      font-weight: 500;
-      font-size: 14px;
-      line-height: 150%;
-      margin: 0;
-      color: #8D9CB5; }
+    align-items: center;
+    padding: 15px 2px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid #2E3239; }
   .list-modal-body .unbonding-schedule-list {
     width: 100%;
     display: flex;
     display: -webkit-flex;
     justify-content: space-between;
-    padding: 10px 20px; }
+    align-items: center;
+    padding: 10px 4px; }
     .list-modal-body .unbonding-schedule-list:hover {
       background: rgba(0, 0, 0, 0.075); }
     .list-modal-body .unbonding-schedule-list p {
