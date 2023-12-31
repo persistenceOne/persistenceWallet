@@ -68,12 +68,12 @@ const Banner = () => {
     <div className={!banner ? "d-none" : "top-banner-section"}>
       <a
         className="content"
-        href=" https://blog.persistence.one/2022/07/14/coin-type-migration-from-750-to-118-for-persistence-core-1-chain-xprt/"
+        href="https://blog.persistence.one/2023/12/31/how-to-cancel-xprt-unstaking-on-pwallet-and-keplr/"
         target="_blank"
         rel="noopener noreferrer"
       >
-        <b>Note:</b> as part of the Persistence v3 chain upgrade, the default
-        coin-type was changed from 750 to 118. Read all about it here.
+        <b>Note:</b> You can now cancel your XPRT unbonding process at any time
+        using pWallet. Read more here.
         <Icon viewClass="right-arrow" icon="right-arrow" />
       </a>
       <div onClick={closeBanner}>
