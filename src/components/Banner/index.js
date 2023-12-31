@@ -72,8 +72,8 @@ const Banner = () => {
         target="_blank"
         rel="noopener noreferrer"
       >
-        <b>Note:</b> You can now cancel your XPRT unbonding process at any time
-        using pWallet. Read more here.
+        You can now cancel your XPRT unbonding process at any time using
+        pWallet. Read more here.
         <Icon viewClass="right-arrow" icon="right-arrow" />
       </a>
       <div onClick={closeBanner}>
