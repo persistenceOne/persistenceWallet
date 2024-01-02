@@ -3213,14 +3213,17 @@ ul li em {
 .top-banner-section {
   background: #e50913;
   text-align: center;
-  padding: 5px 40px 5px 0;
+  padding: 7px 40px 7px 0;
   position: relative; }
+  .top-banner-section.initial-banner {
+    border-bottom: 1px solid #ff3b3b; }
   .top-banner-section .content {
     color: #FFFFFF;
     font-size: 12px;
     margin: 0; }
-    .top-banner-section .content:hover {
-      text-decoration: underline; }
+    .top-banner-section .content .link {
+      text-decoration: underline;
+      color: #FFFFFF; }
     .top-banner-section .content .icon {
       margin-left: 10px;
       fill: #FFFFFF;
@@ -3234,7 +3237,7 @@ ul li em {
     cursor: pointer;
     position: absolute;
     right: 20px;
-    top: 12px; }
+    top: 10px; }
 
 /*--------------------------------------------------------------
 # header styles

@@ -87,14 +87,18 @@
 .top-banner-section{
   background: #e50913;
   text-align: center;
-  padding: 5px 40px 5px 0;
+  padding: 7px 40px 7px 0;
   position: relative;
+  &.initial-banner{
+    border-bottom: 1px solid #ff3b3b
+  }
   .content{
     color: #FFFFFF;
     font-size: 12px;
     margin: 0;
-    &:hover{
+    .link{
       text-decoration: underline;
+      color: #FFFFFF;
     }
     .icon{
       margin-left: 10px;
@@ -112,7 +116,7 @@
     cursor: pointer;
     position: absolute;
     right: 20px;
-    top: 12px;
+    top: 10px;
   }
 
 }
