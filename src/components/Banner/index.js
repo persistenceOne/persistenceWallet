@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Icon from "../Icon";
+import { useSelector } from "react-redux";
 
 const countries = [
   "BB",
@@ -28,7 +29,8 @@ const countries = [
   "CA"
 ];
 const Banner = () => {
-  const [banner, setBanner] = useState(true);
+  const unbond = useSelector((state) => state.unbond.unbond);
+  const [banner, setBanner] = useState(false);
   const [bannerOne, setBannerOne] = useState(true);
   const workerUrl = "https://worker-geofence.auditdev.workers.dev/";
   const [country, setCountry] = useState("");
@@ -46,6 +48,11 @@ const Banner = () => {
     setBanner(false);
   };
 
+  useEffect(() => {
+    if (unbond > 0) {
+      setBanner(true);
+    }
+  }, [unbond]);
   const closeBannerOne = () => {
     setBannerOne(false);
   };
