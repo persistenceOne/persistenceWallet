@@ -35,6 +35,7 @@ export const fetchUnbondDelegationsList = (list) => {
 };
 
 export const fetchUnbondDelegations = (address) => {
+  console.log("called-unbond", address);
   return async (dispatch) => {
     try {
       dispatch(fetchUnbondDelegationsProgress());
@@ -65,6 +66,8 @@ export const fetchUnbondDelegations = (address) => {
             dispatch(
               fetchUnbondDelegationsSuccess(tokenValueConversion(totalUnbond))
             );
+          } else {
+            dispatch(fetchUnbondDelegationsSuccess(0));
           }
         })
         .catch((error) => {

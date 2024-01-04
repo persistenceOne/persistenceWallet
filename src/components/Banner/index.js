@@ -78,8 +78,8 @@ const Banner = () => {
         </div>
         <div className={!bannerOne ? "d-none" : "top-banner-section"}>
           <p className="content">
-            Users being affected by geo-blocking can continue to access their
-            tokens via Keplr, Cosmostation, or Leap wallet. Learn more{" "}
+            Users affected by geo-blocking are suggested to transfer their
+            tokens to a new Keplr, Cosmostation, or Leap wallet. Learn more{" "}
             <a
               className={"link"}
               href="https://blog.persistence.one/2023/12/28/how-to-transfer-staked-xprt-from-pwallet-to-keplr-leap-wallet-instantly/"
@@ -102,8 +102,8 @@ const Banner = () => {
         className={!bannerOne ? "d-none" : "top-banner-section initial-banner"}
       >
         <p className="content">
-          Users being affected by geo-blocking can continue to access their
-          tokens via Keplr, Cosmostation, or Leap wallet. Learn more{" "}
+          Users affected by geo-blocking are suggested to transfer their tokens
+          to a new Keplr, Cosmostation, or Leap wallet. Learn more{" "}
           <a
             className={"link"}
             href="https://blog.persistence.one/2023/12/28/how-to-transfer-staked-xprt-from-pwallet-to-keplr-leap-wallet-instantly/"

@@ -122,7 +122,7 @@ const ModalViewUnbondDetails = (props) => {
         onClick={handleModal}
         title={`View Unbonding ${DefaultChainInfo.currency.coinDenom} Schedule`}
       >
-        {t("VIEW")}
+        Cancel Unbonding
       </span>
     </>
   );

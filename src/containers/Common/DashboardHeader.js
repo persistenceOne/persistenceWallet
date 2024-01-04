@@ -150,16 +150,16 @@ const DashboardHeader = () => {
                 <div className="info p-3">
                   <a
                     className="nav-link primary-medium-color pb-2 pl-2"
-                    href="https://blog.persistence.one/coin-type-migration-faqs/"
+                    href="https://t.me/PersistenceOneChat"
                     rel="noopener noreferrer"
                     target="_blank"
                     onClick={() => onClick(t("HELP"))}
                   >
-                    {t("FAQs")}
+                    Contact
                   </a>
                   <a
                     className="nav-link primary-medium-color pb-2 pl-2 pb-2"
-                    href="https://notes.persistence.one/s/9l80_chis"
+                    href="https://blog.persistence.one/category/guides/"
                     rel="noopener noreferrer"
                     target="_blank"
                     onClick={() => onClick(t("HELP"))}

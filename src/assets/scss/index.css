@@ -226,7 +226,6 @@ body {
     font-family: "Poppins", sans-serif;
     font-weight: 500;
     font-size: 12px;
-    line-height: 150%;
     color: #2e3239; }
 .form-field .info-data.empty {
   color: #e50a2a; }
@@ -552,7 +551,7 @@ body {
 
 .inner-grid {
   display: inline-block;
-  width: 50px;
+  max-width: 150px;
   text-align: center; }
 
 .view-button {
@@ -560,10 +559,12 @@ body {
   font-weight: 600;
   font-size: 12px;
   line-height: 180%;
-  text-decoration-line: underline;
-  color: #5f646c;
+  color: #FCFCFC;
   cursor: pointer;
-  padding: 0 5px; }
+  padding: 5px 10px;
+  background: #e50913;
+  border-radius: 4px;
+  margin-right: 4px; }
 
 .amount-warning {
   background-color: #f5f7f9;
@@ -2285,16 +2286,17 @@ ul li em {
     display: -webkit-flex;
     align-items: center;
     justify-content: center;
-    padding: 20px 30px;
+    padding: 20px 40px;
     border: 1px solid;
     border-radius: 6px; }
-    .token-info-section .info-box:nth-child(2) {
-      margin: 0 20px; }
+    .token-info-section .info-box:last-child {
+      margin: 0 0 0 30px; }
     .token-info-section .info-box .line {
       display: flex;
       display: -webkit-flex;
       justify-content: space-between;
-      padding-bottom: 10px; }
+      padding-bottom: 10px;
+      align-items: center; }
       .token-info-section .info-box .line:nth-child(3) {
         padding-bottom: 0; }
       .token-info-section .info-box .line .info-heading {
@@ -2316,7 +2318,6 @@ ul li em {
       .token-info-section .info-box .line .value {
         font-weight: 600;
         font-size: 14px;
-        line-height: 150%;
         text-align: right;
         font-family: 'Poppins', sans-serif; }
       .token-info-section .info-box .line .value.rewards .text {
@@ -2327,9 +2328,10 @@ ul li em {
         background: rgba(29, 158, 97, 0.15);
         color: #1D9E61;
         font-size: 12px;
-        padding: 3px 10px;
+        padding: 5px 10px;
         display: inline !important;
-        margin: 0px 5px; }
+        margin: 0px 4px;
+        border-radius: 4px; }
     .token-info-section .info-box .inner-box {
       flex: 1; }
     .token-info-section .info-box .line .value {

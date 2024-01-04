@@ -37,7 +37,9 @@ const ToAddress = () => {
 
   const popover = (
     <Popover id="popover">
-      <Popover.Content>{t("RECIPIENT_ADDRESS_EXAMPLE")}</Popover.Content>
+      <Popover.Content>
+        New address that will receive staked XPRT tokens
+      </Popover.Content>
     </Popover>
   );
   return (
@@ -58,7 +60,7 @@ const ToAddress = () => {
         <InputText
           className="form-control"
           name="address"
-          placeholder="Enter Recipient's address"
+          placeholder="Enter Destination address"
           required={true}
           type="text"
           autofocus={false}

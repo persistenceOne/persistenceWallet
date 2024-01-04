@@ -90,7 +90,7 @@ export const addressLogin = (history) => {
       );
       sessionStorage.setItem("terms-conditions", "enabled");
       localStorage.setItem(LOGIN_INFO, JSON.stringify(loginInfo));
-      history.push("/dashboard/wallet");
+      history.push("/dashboard/staking");
       window.location.reload();
     } else {
       dispatch(

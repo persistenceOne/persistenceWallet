@@ -307,7 +307,6 @@ body {
       font-family: "Poppins", sans-serif;
       font-weight: 500;
       font-size: 12px;
-      line-height: 150%;
       color: #2e3239;
     }
   }
@@ -749,7 +748,7 @@ body {
 
 .inner-grid {
   display: inline-block;
-  width: 50px;
+  max-width: 150px;
   text-align: center;
 }
 
@@ -758,10 +757,12 @@ body {
   font-weight: 600;
   font-size: 12px;
   line-height: 180%;
-  text-decoration-line: underline;
-  color: #5f646c;
+  color: #FCFCFC;
   cursor: pointer;
-  padding: 0 5px;
+  padding: 5px 10px;
+  background: #e50913;
+  border-radius: 4px;
+  margin-right: 4px;
 }
 
 .amount-warning {
