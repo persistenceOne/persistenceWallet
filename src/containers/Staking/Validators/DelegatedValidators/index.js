@@ -18,13 +18,13 @@ import { LOGIN_INFO } from "../../../../constants/localStorage";
 import { stringToNumber } from "../../../../utils/scripts";
 import { DefaultChainInfo } from "../../../../config";
 import { fetchValidatorBonds } from "../../../../store/actions/tokenizeShares";
+import { showTxTokenizeModal } from "../../../../store/actions/transactions/tokenizeShares";
 
 const DelegatedValidators = (props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const loginInfo = JSON.parse(localStorage.getItem(LOGIN_INFO));
   const handleModal = (name, validator) => {
-    dispatch(showValidatorTxModal());
     dispatch(
       setValidatorTxData({
         value: validator,
@@ -37,18 +37,29 @@ const DelegatedValidators = (props) => {
         loginInfo && loginInfo.address
       )
     );
-    dispatch(
-      setValidatorTxModalName({
-        value: "delegator-actions"
-      })
-    );
+
     dispatch(fetchValidatorDelegations(loginInfo && loginInfo.address));
-    dispatch(
-      fetchValidatorRewards(
-        loginInfo && loginInfo.address,
-        validator.operatorAddress
-      )
-    );
+    if (name === "TransferXprt") {
+      dispatch(
+        setValidatorTxModalName({
+          value: "transfer-xprt"
+        })
+      );
+      dispatch(showTxTokenizeModal());
+    } else {
+      dispatch(
+        setValidatorTxModalName({
+          value: "delegator-actions"
+        })
+      );
+      dispatch(showValidatorTxModal());
+      dispatch(
+        fetchValidatorRewards(
+          loginInfo && loginInfo.address,
+          validator.operatorAddress
+        )
+      );
+    }
   };
 
   const columns = [
@@ -113,6 +124,12 @@ const DelegatedValidators = (props) => {
           )}
         </div>,
         <div className="actions-td" key={index}>
+          <button
+            onClick={() => handleModal("TransferXprt", validator.data)}
+            className="button button-primary mr-2"
+          >
+            Transfer staked XPRT
+          </button>
           <button
             onClick={() => handleModal("ModalActions", validator.data)}
             className="button button-primary"

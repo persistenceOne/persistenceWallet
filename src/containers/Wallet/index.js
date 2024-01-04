@@ -1,5 +1,5 @@
 import React from "react";
-import {OverlayTrigger, Popover, Tab, Tabs} from "react-bootstrap";
+import { OverlayTrigger, Popover, Tab, Tabs } from "react-bootstrap";
 import Send from "../Transactions/Send/index";
 import Receive from "./Receive";
 import Transactions from "./TransactionsHistory/index";
@@ -16,68 +16,56 @@ import ModalViewTxnResponse from "../Common/ModalViewTxnResponse";
 import ReactGA from "react-ga4";
 
 const Wallet = () => {
+  const popoverMemo = (
+    <Popover id="popover-memo">
+      <Popover.Content>This is experimental feature right now.</Popover.Content>
+    </Popover>
+  );
 
-    const popoverMemo = (
-        <Popover id="popover-memo">
-            <Popover.Content>
-                This is experimental feature right now.
-            </Popover.Content>
-        </Popover>
-    );
+  const ibcTitle = <p>IBC Send</p>;
 
-    const ibcTitle = (
-        <p>
-            IBC
-            <OverlayTrigger trigger={['hover', 'focus']}
-                placement="bottom"
-                overlay={popoverMemo}>
-                <button className="icon-button info" type="button"><Icon
-                    viewClass="arrow-right"
-                    icon="exclamation"/></button>
-            </OverlayTrigger>
-        </p>
-    );
+  const onClick = (key) => {
+    ReactGA.event({
+      category: key,
+      action: `Clicked on ${key} Tab`
+    });
+  };
 
-    const onClick = (key) => {
-        ReactGA.event({
-            category: key,
-            action: `Clicked on ${key} Tab`
-        });
-    };
-
-    return (
-        <>
-            <Loader/>
-            <KeyStoreModal/>
-            <FeeModal/>
-            <ModalWithdraw/>
-            <ModalSetWithdrawAddress/>
-            <ModalViewTxnResponse/>
-            <div className="wallet-main-section">
-                <TokenInfo/>
-                <div className="tabs-section">
-                    <Tabs defaultActiveKey="Send" id="uncontrolled-tab-example" onSelect={onClick}>
-                        <Tab eventKey="Send" title="Send">
-                            <Send/>
-                        </Tab>
-                        <Tab eventKey="IBC" title={ibcTitle} tabClassName="ibc-tab">
-                            <SendIbc/>
-                        </Tab>
-                        <Tab eventKey="Receive" title="Receive">
-                            <Receive/>
-                        </Tab>
-                        <Tab eventKey="Transactions" title="Transactions">
-                            <Transactions/>
-                        </Tab>
-
-                    </Tabs>
-                    <div>
-                        <InfoRefresh/>
-                    </div>
-                </div>
-
-            </div>
-        </>
-    );
+  return (
+    <>
+      <Loader />
+      <KeyStoreModal />
+      <FeeModal />
+      <ModalWithdraw />
+      <ModalSetWithdrawAddress />
+      <ModalViewTxnResponse />
+      <div className="wallet-main-section">
+        <TokenInfo />
+        <div className="tabs-section">
+          <Tabs
+            defaultActiveKey="Send"
+            id="uncontrolled-tab-example"
+            onSelect={onClick}
+          >
+            <Tab eventKey="Send" title="Send">
+              <Send />
+            </Tab>
+            <Tab eventKey="IBC" title={ibcTitle} tabClassName="ibc-tab">
+              <SendIbc />
+            </Tab>
+            <Tab eventKey="Receive" title="Receive">
+              <Receive />
+            </Tab>
+            <Tab eventKey="Transactions" title="Transactions">
+              <Transactions />
+            </Tab>
+          </Tabs>
+          <div>
+            <InfoRefresh />
+          </div>
+        </div>
+      </div>
+    </>
+  );
 };
 export default Wallet;

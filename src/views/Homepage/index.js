@@ -49,19 +49,10 @@ const Homepage = () => {
               >
                 {t("SIGN_IN")}
               </NavLink>
-              <a
-                className="nav-link"
-                href="https://persistence.one/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {" "}
-                {t("LEARN_MORE")}
-              </a>
               <li className="nav-item link">
                 <a
                   className="nav-link primary-medium-color"
-                  href="https://notes.persistence.one/s/9l80_chis"
+                  href="https://t.me/PersistenceOneChat"
                   rel="noopener noreferrer"
                   target="_blank"
                 >

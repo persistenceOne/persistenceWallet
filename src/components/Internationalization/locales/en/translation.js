@@ -71,7 +71,7 @@ let English = {
     TOTAL_BALANCE: "Total Balance",
     DELEGATED: "Delegated",
     DELEGATABLE: "Delegatable",
-    CURRENT_PRICE: `Current Price per ${DefaultChainInfo.currency.coinDenom}`,
+    CURRENT_PRICE: `Current Price`,
     CURRENT_VALUE: "Current Value",
     AMOUNT_UNDER_VESTING: "Vesting Balance",
     TRANSFERABLE_AMOUNT: "Transferable Amount",

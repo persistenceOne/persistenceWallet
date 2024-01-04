@@ -225,7 +225,7 @@ export const keyStoreLogin = (
       })
     );
     sessionStorage.setItem("terms-conditions", "enabled");
-    history.push("/dashboard/wallet");
+    history.push("/dashboard/staking");
     window.location.reload();
   };
 };

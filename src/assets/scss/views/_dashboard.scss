@@ -789,13 +789,13 @@
     display: -webkit-flex;
     align-items: center;
     justify-content: center;
-    padding: 20px 30px;
+    padding: 20px 40px;
     border: 1px solid;
     border-radius: 6px;
 
-    &:nth-child(2) {
+    &:last-child {
       //padding: 0px 20px;
-      margin: 0 20px;
+      margin: 0 0 0 30px;
     }
 
     .line {
@@ -803,6 +803,7 @@
       display: -webkit-flex;
       justify-content: space-between;
       padding-bottom: 10px;
+      align-items: center;
 
       &:nth-child(3) {
         padding-bottom: 0;
@@ -837,7 +838,6 @@
       .value {
         font-weight: 600;
         font-size: 14px;
-        line-height: 150%;
         text-align: right;
         font-family: 'Poppins', sans-serif;
       }
@@ -854,9 +854,10 @@
           background: rgba(29, 158, 97, 0.15);
           color: #1D9E61;
           font-size: 12px;
-          padding: 3px 10px;
+          padding: 5px 10px;
           display: inline !important;
-          margin: 0px 5px;
+          margin: 0px 4px;
+          border-radius: 4px;
         }
       }
     }

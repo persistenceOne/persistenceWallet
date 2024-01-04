@@ -174,18 +174,7 @@ const TokenInfo = (props) => {
         <div className="token-info info-box">
           <div className="inner-box">
             <div className="line">
-              <p className="key">
-                Total
-                <OverlayTrigger
-                  trigger={["hover", "focus"]}
-                  placement="bottom"
-                  overlay={popoverTotal}
-                >
-                  <button className="icon-button info" type="button">
-                    <Icon viewClass="arrow-right" icon="info" />
-                  </button>
-                </OverlayTrigger>
-              </p>
+              <p className="key">Total Amount</p>
               <p
                 className="value"
                 title={(
@@ -194,9 +183,6 @@ const TokenInfo = (props) => {
                   props.unbond
                 ).toFixed(DefaultChainInfo.currency.coinDecimals)}
               >
-                <span className="inner-grid-icon">
-                  {props.list.length > 0 ? <ModalViewAmountDetails /> : ""}
-                </span>
                 <NumberView
                   value={formatNumber(
                     props.delegations + props.balance + props.unbond
@@ -206,63 +192,14 @@ const TokenInfo = (props) => {
               </p>
             </div>
             <div className="line">
-              <p className="key">{t("CURRENT_PRICE")}</p>
+              <p className="key">XPRT Price</p>
               <p className="value">
                 <span className="inner-grid-icon" />
                 $<NumberView value={formatNumber(props.tokenPrice)} />
               </p>
             </div>
             <div className="line">
-              <p className="key">{t("CURRENT_VALUE")}</p>
-              <p className="value">
-                <span className="inner-grid-icon" />
-                $
-                <NumberView
-                  value={formatNumber(
-                    (props.delegations + props.balance + props.unbond) *
-                      props.tokenPrice
-                  )}
-                />
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="price-info info-box">
-          <div className="inner-box">
-            <div className="line">
-              <p className="key">
-                Vesting
-                <OverlayTrigger
-                  trigger={["hover", "focus"]}
-                  placement="bottom"
-                  overlay={popoverVesting}
-                >
-                  <button className="icon-button info" type="button">
-                    <Icon viewClass="arrow-right" icon="info" />
-                  </button>
-                </OverlayTrigger>
-              </p>
-              <p className="value" title={props.vestingAmount}>
-                <span className="inner-grid-icon">
-                  {props.vestingAmount > 0 ? <ModalViewVestingDetails /> : ""}
-                </span>
-                <NumberView value={formatNumber(props.vestingAmount)} />{" "}
-                {DefaultChainInfo.currency.coinDenom}
-              </p>
-            </div>
-            <div className="line">
-              <p className="key">
-                Transferable
-                <OverlayTrigger
-                  trigger={["hover", "focus"]}
-                  placement="bottom"
-                  overlay={popoverTransferable}
-                >
-                  <button className="icon-button info" type="button">
-                    <Icon viewClass="arrow-right" icon="info" />
-                  </button>
-                </OverlayTrigger>
-              </p>
+              <p className="key">Available Amount</p>
               <p className="value" title={props.transferableAmount.toFixed(6)}>
                 <span className="inner-grid-icon" />
                 <NumberView
@@ -271,34 +208,86 @@ const TokenInfo = (props) => {
                 {DefaultChainInfo.currency.coinDenom}
               </p>
             </div>
-            <div className="line">
-              <p className="key">
-                {t("DELEGATABLE")}
-                <OverlayTrigger
-                  trigger={["hover", "focus"]}
-                  placement="bottom"
-                  overlay={popoverDelegatable}
-                >
-                  <button className="icon-button info" type="button">
-                    <Icon viewClass="arrow-right" icon="info" />
-                  </button>
-                </OverlayTrigger>
-              </p>
-              <p className="value" title={props.balance.toFixed(6)}>
-                <span className="inner-grid-icon" />
-                <NumberView value={formatNumber(props.balance)} />{" "}
-                {DefaultChainInfo.currency.coinDenom}
-              </p>
-            </div>
           </div>
         </div>
+        {/*<div className="price-info info-box">*/}
+        {/*  <div className="inner-box">*/}
+        {/*    <div className="line">*/}
+        {/*      <p className="key">*/}
+        {/*        Vesting*/}
+        {/*        <OverlayTrigger*/}
+        {/*          trigger={["hover", "focus"]}*/}
+        {/*          placement="bottom"*/}
+        {/*          overlay={popoverVesting}*/}
+        {/*        >*/}
+        {/*          <button className="icon-button info" type="button">*/}
+        {/*            <Icon viewClass="arrow-right" icon="info" />*/}
+        {/*          </button>*/}
+        {/*        </OverlayTrigger>*/}
+        {/*      </p>*/}
+        {/*      <p className="value" title={props.vestingAmount}>*/}
+        {/*        <span className="inner-grid-icon">*/}
+        {/*          {props.vestingAmount > 0 ? <ModalViewVestingDetails /> : ""}*/}
+        {/*        </span>*/}
+        {/*        <NumberView value={formatNumber(props.vestingAmount)} />{" "}*/}
+        {/*        {DefaultChainInfo.currency.coinDenom}*/}
+        {/*      </p>*/}
+        {/*    </div>*/}
+        {/*    <div className="line">*/}
+        {/*      <p className="key">*/}
+        {/*        Transferable*/}
+        {/*        <OverlayTrigger*/}
+        {/*          trigger={["hover", "focus"]}*/}
+        {/*          placement="bottom"*/}
+        {/*          overlay={popoverTransferable}*/}
+        {/*        >*/}
+        {/*          <button className="icon-button info" type="button">*/}
+        {/*            <Icon viewClass="arrow-right" icon="info" />*/}
+        {/*          </button>*/}
+        {/*        </OverlayTrigger>*/}
+        {/*      </p>*/}
+        {/*      <p className="value" title={props.transferableAmount.toFixed(6)}>*/}
+        {/*        <span className="inner-grid-icon" />*/}
+        {/*        <NumberView*/}
+        {/*          value={formatNumber(props.transferableAmount)}*/}
+        {/*        />{" "}*/}
+        {/*        {DefaultChainInfo.currency.coinDenom}*/}
+        {/*      </p>*/}
+        {/*    </div>*/}
+        {/*    <div className="line">*/}
+        {/*      <p className="key">*/}
+        {/*        {t("DELEGATABLE")}*/}
+        {/*        <OverlayTrigger*/}
+        {/*          trigger={["hover", "focus"]}*/}
+        {/*          placement="bottom"*/}
+        {/*          overlay={popoverDelegatable}*/}
+        {/*        >*/}
+        {/*          <button className="icon-button info" type="button">*/}
+        {/*            <Icon viewClass="arrow-right" icon="info" />*/}
+        {/*          </button>*/}
+        {/*        </OverlayTrigger>*/}
+        {/*      </p>*/}
+        {/*      <p className="value" title={props.balance.toFixed(6)}>*/}
+        {/*        <span className="inner-grid-icon" />*/}
+        {/*        <NumberView value={formatNumber(props.balance)} />{" "}*/}
+        {/*        {DefaultChainInfo.currency.coinDenom}*/}
+        {/*      </p>*/}
+        {/*    </div>*/}
+        {/*  </div>*/}
+        {/*</div>*/}
         <div className="rewards-info info-box">
           <div className="inner-box">
             <div className="line">
-              <p className="key">{t("DELEGATED")}</p>
-              <p className="value" title={props.delegations}>
-                <span className="inner-grid">
-                  {props.delegationStatus ? <ModalViewDelegationDetails /> : ""}
+              <p className="key">Staked Amount</p>
+              <p
+                className="value rewards d-flex align-items-center"
+                title={props.delegations}
+              >
+                <span
+                  onClick={() => handleRewards("rewards")}
+                  className="claim inner-grid"
+                >
+                  Claim Rewards
                 </span>
                 <span>
                   {" "}
@@ -307,24 +296,24 @@ const TokenInfo = (props) => {
                 </span>
               </p>
             </div>
+            {/*<div className="line">*/}
+            {/*  <p className="key">{t("REWARDS")}</p>*/}
+            {/*  <p className="value rewards">*/}
+            {/*    <span*/}
+            {/*      onClick={() => handleRewards("rewards")}*/}
+            {/*      className="claim inner-grid"*/}
+            {/*    >*/}
+            {/*      {t("CLAIM")}*/}
+            {/*    </span>*/}
+            {/*    <span title={props.rewards[0]}>*/}
+            {/*      <NumberView value={formatNumber(props.rewards[0])} />{" "}*/}
+            {/*      {DefaultChainInfo.currency.coinDenom}*/}
+            {/*    </span>*/}
+            {/*  </p>*/}
+            {/*</div>*/}
             <div className="line">
-              <p className="key">{t("REWARDS")}</p>
-              <p className="value rewards">
-                <span
-                  onClick={() => handleRewards("rewards")}
-                  className="claim inner-grid"
-                >
-                  {t("CLAIM")}
-                </span>
-                <span title={props.rewards[0]}>
-                  <NumberView value={formatNumber(props.rewards[0])} />{" "}
-                  {DefaultChainInfo.currency.coinDenom}
-                </span>
-              </p>
-            </div>
-            <div className="line">
-              <p className="key">{t("UNBONDING")}</p>
-              <p className="value">
+              <p className="key">Unbonding Amount</p>
+              <p className="value d-flex align-items-center">
                 <span className="inner-grid">
                   {props.unbond > 0 ? <ModalViewUnbondDetails /> : ""}
                 </span>

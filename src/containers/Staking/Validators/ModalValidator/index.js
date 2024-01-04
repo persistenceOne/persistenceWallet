@@ -63,6 +63,7 @@ const ModalValidator = () => {
       dispatch(showTxTokenizeModal());
     }
   };
+
   return (
     <ReactModal
       animation={false}
@@ -142,7 +143,7 @@ const ModalValidator = () => {
               onClick={() => handleRoute("Tokenize")}
               className="button button-primary"
             >
-              Transfer Delegations
+              Transfer staked XPRT
             </button>
           ) : (
             ""

@@ -27,7 +27,10 @@ const ModalTokenize = () => {
   const tokenizeShareTxStatus = useSelector(
     (state) => state.tokenizeShares.tokenizeShareTxStatus
   );
-  const { t } = useTranslation();
+  const txnModalName = useSelector(
+    (state) => state.validators.validatorModalName.value
+  );
+
   const response = useSelector((state) => state.common.error);
   const loginInfo = JSON.parse(localStorage.getItem(LOGIN_INFO));
 
@@ -75,11 +78,13 @@ const ModalTokenize = () => {
       onHide={handleClose}
     >
       <ReactModal.Header closeButton>
-        <div className="previous-section txn-header">
-          <button className="button" onClick={() => handlePrevious()}>
-            <Icon viewClass="arrow-right" icon="left-arrow" />
-          </button>
-        </div>
+        {txnModalName !== "transfer-xprt" ? (
+          <div className="previous-section txn-header">
+            <button className="button" onClick={() => handlePrevious()}>
+              <Icon viewClass="arrow-right" icon="left-arrow" />
+            </button>
+          </div>
+        ) : null}
         <h3 className="heading">Transferring Staked XPRT</h3>
       </ReactModal.Header>
       <ReactModal.Body className="delegate-modal-body">
