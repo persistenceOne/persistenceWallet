@@ -134,7 +134,7 @@ const DelegatedValidators = (props) => {
             onClick={() => handleModal("ModalActions", validator.data)}
             className="button button-primary"
           >
-            Actions
+            Other Actions
           </button>
         </div>
       ])
