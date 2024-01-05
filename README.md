@@ -17,3 +17,4 @@ node: '16.1.0'
 ```
 
 Requires Blockchain Rest Client CORS and RPC client CORS (under `.persistenceCore/config/app.toml`) to be disabled/ configured accordingly.
+
