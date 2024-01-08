@@ -16,7 +16,7 @@ jobs:
         with:
           path: ./artifact
           service: pinata
-          pinataKey: d43b3d2f82df4141bbf9
-          pinataSecret: f53b53d24479b0081425aed4d1fd5ef3e9e4acb5f37c68b4aca11cadae44bd77
+          pinataKey: ${{ secrets.PINATA_API_KEY }}
+          pinataSecret: ${{ secrets.PINATA_API_SECRET }}
           pinName: Readme Test
           verbose: true
