@@ -20,7 +20,6 @@ jobs:
       - run: git config --global url."https://github.com/".insteadOf ssh://git@github.com/
       - run: npm ci
       - run: npm run build --if-present
-      - uses: actions/checkout@v3
       - name: Upload to IPFS
         uses: aquiladev/ipfs-action@v0.3.1
         with:
