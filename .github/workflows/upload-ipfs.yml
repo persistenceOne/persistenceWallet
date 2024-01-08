@@ -1,8 +1,8 @@
 name: "Upload IPFS Readme"
 on:
   push:
-    branches:
-      - 'ipfs'
+    tag:
+      - 'v*'
 
 jobs:
   upload-ipfs:
@@ -18,5 +18,5 @@ jobs:
           service: pinata
           pinataKey: ${{ secrets.PINATA_API_KEY }}
           pinataSecret: ${{ secrets.PINATA_API_SECRET }}
-          pinName: Readme Test
+          pinName: echo "pWallet ${{ github.event.tag.name }}"
           verbose: true
