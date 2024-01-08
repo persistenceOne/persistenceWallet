@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Route, Switch, useHistory, withRouter } from "react-router-dom";
+import {
+  HashRouter,
+  Route,
+  Switch,
+  useHistory,
+  withRouter
+} from "react-router-dom";
 import DashboardWallet from "./views/DashboardWallet";
 import Homepage from "./views/Homepage";
 import DashboardStaking from "./views/Staking";
@@ -168,43 +174,45 @@ const Main = () => {
       ) : (
         ""
       )}
-      <Switch>
-        <Route
-          key="/"
-          exact
-          component={
-            JSON.parse(window.localStorage.getItem(LOGIN_INFO)) === null ||
-            address === undefined ||
-            address === null ||
-            address === ""
-              ? withRouter(Homepage)
-              : withRouter(DashboardWallet)
-          }
-          path="/"
-        />
-        {routes.map((route) => {
-          if (route.private) {
+      <HashRouter>
+        <Switch>
+          <Route
+            key="/"
+            exact
+            component={
+              JSON.parse(window.localStorage.getItem(LOGIN_INFO)) === null ||
+              address === undefined ||
+              address === null ||
+              address === ""
+                ? withRouter(Homepage)
+                : withRouter(DashboardWallet)
+            }
+            path="/"
+          />
+          {routes.map((route) => {
+            if (route.private) {
+              return (
+                <PrivateRoute
+                  key={route.path}
+                  exact
+                  component={withRouter(route.component)}
+                  path={route.path}
+                />
+              );
+            }
+
             return (
-              <PrivateRoute
+              <Route
                 key={route.path}
                 exact
                 component={withRouter(route.component)}
                 path={route.path}
               />
             );
-          }
-
-          return (
-            <Route
-              key={route.path}
-              exact
-              component={withRouter(route.component)}
-              path={route.path}
-            />
-          );
-        })}
-        <Route component={RouteNotFound} />
-      </Switch>
+          })}
+          <Route component={RouteNotFound} />
+        </Switch>
+      </HashRouter>
       <ModalTerms />
     </>
   );
