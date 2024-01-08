@@ -39,7 +39,7 @@ jobs:
         service: pinata
         pinataKey: ${{ secrets.PINATA_API_KEY }}
         pinataSecret: ${{ secrets.PINATA_API_SECRET }}
-        pinName: pWallet ${{ github.event.release.name }}
+        pinName: pWallet ${{ github.event.release.name }} - Release
     - name: Publish
       uses: cloudflare/wrangler-action@1.3.0
       with:

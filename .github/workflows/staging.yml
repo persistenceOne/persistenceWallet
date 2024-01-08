@@ -37,6 +37,14 @@ jobs:
         REACT_APP_IBC_CONFIG: 'ibcStaging.json'
         REACT_APP_GA_TRACKING_ID: 'UA-219210130-1'
         REACT_APP_SENTRY_API: ''
+    - name: Upload to IPFS
+      uses: aquiladev/ipfs-action@v0.3.1
+      with:
+        path: ./build
+        service: pinata
+        pinataKey: ${{ secrets.PINATA_API_KEY }}
+        pinataSecret: ${{ secrets.PINATA_API_SECRET }}
+        pinName: pWallet ${{ github.event.release.name }} - Testnet Staging
     - name: Publish
       uses: cloudflare/wrangler-action@1.3.0
       with:
@@ -73,6 +81,14 @@ jobs:
         REACT_APP_IBC_CONFIG: 'ibcMainnet.json'
         REACT_APP_GA_TRACKING_ID: 'UA-219210130-1'
         REACT_APP_SENTRY_API: 'https://a31c61f5ce774e0791ffdc3b830b406c@o1083089.ingest.sentry.io/6092403'
+    - name: Upload to IPFS
+      uses: aquiladev/ipfs-action@v0.3.1
+      with:
+        path: ./build
+        service: pinata
+        pinataKey: ${{ secrets.PINATA_API_KEY }}
+        pinataSecret: ${{ secrets.PINATA_API_SECRET }}
+        pinName: pWallet ${{ github.event.release.name }} - Mainnet Staging
     - name: Publish
       uses: cloudflare/wrangler-action@1.3.0
       with:
