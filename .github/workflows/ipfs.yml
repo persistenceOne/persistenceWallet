@@ -27,4 +27,4 @@ jobs:
           service: pinata
           pinataKey: ${{ secrets.PINATA_API_KEY }}
           pinataSecret: ${{ secrets.PINATA_API_SECRET }}
-          pinName: echo "pWallet ${{ github.event.tag.name }}"
+          pinName: pWallet ${{ github.ref_name }}
