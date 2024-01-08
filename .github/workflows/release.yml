@@ -37,3 +37,17 @@ jobs:
       with:
         apiToken: ${{ secrets.CF_API_TOKEN }}
         environment: 'release'
+
+  upload-ipfs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Upload to IPFS
+        uses: aquiladev/ipfs-action@v0.3.1
+        id: upload
+        with:
+          path: ./build
+          service: pinata
+          pinataKey: ${{ secrets.PINATA_API_KEY }}
+          pinataSecret: ${{ secrets.PINATA_API_SECRET }}
+          pinName: echo "pWallet ${{ github.event.release.name }}"
