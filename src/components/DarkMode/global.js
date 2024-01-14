@@ -11,10 +11,13 @@ export const GlobalStyles = createGlobalStyle`
     .navbar-light .navbar-nav .active>.nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show>.nav-link{
     color: ${({ theme }) => theme.navItemActiveColor};
     }
-   .txns-container .MuiPaper-root, .token-info-section .info-box{
+   .txns-container .MuiPaper-root, .token-info-section .info-box, .wallet-main-section .send-container, .wallet-main-section .receive-container{
     background-color: ${({ theme }) => theme.tableBackground} !important;
     border: 1px solid ${({ theme }) => theme.tableBorderColor} !important;
    }
+    .txns-container {
+      background-color: ${({ theme }) => theme.tableBackground} !important;
+    }
    // .validators-section table{
    //  border: 1px solid ${({ theme }) => theme.tableBorderColor} !important;
    //  }
@@ -22,29 +25,24 @@ export const GlobalStyles = createGlobalStyle`
     border-bottom: 1px solid ${({ theme }) =>
       theme.tableBorderColor} !important;
     }
-    
     .wallet-main-section .tabs-section .nav-tabs, .validators-section .main-header{
-      border: 1px solid ${({ theme }) => theme.tableBorderColor} !important;  
-    }
-    .wallet-main-section .tabs-section .nav-tabs .nav-link:not(:last-child),
-    .validators-section .main-header .left .nav-pills .nav-item:not(:last-child){
-      border-right: 1px solid ${({ theme }) =>
-        theme.tableBorderColor} !important;
+      border: 1px solid ${({ theme }) => theme.tableBorderColor} !important;
+      //border-bottom: 0px !important;
+      background-color: ${({ theme }) => theme.tableBackground} !important;
     }
     .wallet-main-section .send-container, .wallet-main-section .receive-container{
     border: 1px solid ${({ theme }) => theme.tableBorderColor} !important;  
+      border-top: 0px !important;
     }
     .wallet-main-section .tabs-section .nav-tabs .nav-link.active,
     .validators-section .main-header .left .nav-pills .nav-link.active, 
     .validators-section .main-header .left .nav-pills .show > .nav-link{
         color: ${({ theme }) => theme.activeTabTextColor};
     }
-    .wallet-main-section .tabs-section .nav-tabs .nav-link:focus, 
-    .wallet-main-section .tabs-section .nav-tabs .nav-link:hover,
     .wallet-main-section .tabs-section .nav-tabs .nav-link.active,
     .validators-section .main-header .left .nav-pills .nav-link.active, 
     .validators-section .main-header .left .nav-pills .show > .nav-link{
-    border-bottom: 2px solid ${({ theme }) => theme.activeTabBorderColor};
+    border-bottom: 3px solid ${({ theme }) => theme.activeTabBorderColor};
     }
     .wallet-main-section .txns-container table thead th, .validators-section table thead th{
         border-color: ${({ theme }) => theme.tableRowBorder};
@@ -79,7 +77,7 @@ export const GlobalStyles = createGlobalStyle`
     color: ${({ theme }) => theme.labelColor} !important;
     }
     .modal-content{
-        background-color: ${({ theme }) => theme.tableBackground} !important; 
+        background-color: ${({ theme }) => theme.modalContent} !important; 
     }
     .modal-custom .modal-header, .create-wallet-modal.seed .modal-header .heading{
      color: ${({ theme }) => theme.lineValueColor};
@@ -209,13 +207,20 @@ export const GlobalStyles = createGlobalStyle`
        color: ${({ theme }) => theme.lineValueColor};
     }
     .modal-header button.close{
-     color: ${({ theme }) => theme.lineValueColor};
+     color: ${({ theme }) => theme.modalCloseButton};
     }
     .available-tokens .info-data{
       color: ${({ theme }) => theme.lineValueColor};
     }
     .header .profile-section .profile-dropdown .copy-button .icon, .copy-button .icon{
       fill:${({ theme }) => theme.copyIconColor};
+    }
+    .header .profile-section .profile-dropdown .profile-item{
+      color: ${({ theme }) => theme.dropdownItemColor};
+    }
+    .header .profile-section .profile-item .icon{
+      stroke:${({ theme }) => theme.copyIconColor};
+      fill: transparent !important;
     }
     .fee-container .fee-box{
      background: ${({ theme }) => theme.feeBoxBackground};
@@ -237,4 +242,20 @@ export const GlobalStyles = createGlobalStyle`
    .modal-content .form-check label{
      color: ${({ theme }) => theme.selectIconColor};
    }
+    .notice-banner-section .notice-banner{
+      background-color: ${({ theme }) => theme.tableBackground} !important;
+    }
+
+    .notice-banner-section .title-text{
+      color: ${({ theme }) => theme.infoHeadingColor};
+    }
+    .notice-banner-section .sub-text , .notice-banner-section .link {
+      color: ${({ theme }) => theme.lineValueColor}
+    }
+    .notice-banner-section  .icon-close{
+      fill: ${({ theme }) => theme.closeIconColor}
+    }
+    .button.button-secondary{
+      color: ${({ theme }) => theme.buttonSecondary} !important;
+    }
 `;
