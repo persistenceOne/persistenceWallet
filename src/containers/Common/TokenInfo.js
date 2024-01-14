@@ -188,7 +188,9 @@ const TokenInfo = (props) => {
                     props.delegations + props.balance + props.unbond
                   )}
                 />
-                {DefaultChainInfo.currency.coinDenom}
+                <span className={"denom"}>
+                  {DefaultChainInfo.currency.coinDenom}
+                </span>
               </p>
             </div>
             <div className="line p-0">
@@ -198,7 +200,10 @@ const TokenInfo = (props) => {
                 <NumberView
                   value={formatNumber(props.transferableAmount)}
                 />{" "}
-                {DefaultChainInfo.currency.coinDenom}
+                <span className={"denom"}>
+                  {" "}
+                  {DefaultChainInfo.currency.coinDenom}
+                </span>
               </p>
             </div>
           </div>
@@ -285,7 +290,10 @@ const TokenInfo = (props) => {
                 <span>
                   {" "}
                   <NumberView value={formatNumber(props.delegations)} />{" "}
-                  {DefaultChainInfo.currency.coinDenom}
+                  <span className={"denom"}>
+                    {" "}
+                    {DefaultChainInfo.currency.coinDenom}
+                  </span>
                 </span>
               </p>
             </div>
@@ -312,7 +320,9 @@ const TokenInfo = (props) => {
                 </span>
                 <span title={props.unbond}>
                   <NumberView value={formatNumber(props.unbond)} />
-                  {DefaultChainInfo.currency.coinDenom}
+                  <span className={"denom"}>
+                    {DefaultChainInfo.currency.coinDenom}
+                  </span>
                 </span>
               </p>
             </div>

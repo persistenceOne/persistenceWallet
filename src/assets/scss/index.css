@@ -2417,6 +2417,9 @@ ul li em {
         font-size: 14px;
         text-align: right;
         font-family: 'Poppins', sans-serif; }
+        .token-info-section .info-box .line .value .denom {
+          font-weight: 400;
+          color: #787878; }
       .token-info-section .info-box .line .value.rewards .text {
         color: #4FBE89;
         text-decoration: underline; }
