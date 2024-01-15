@@ -174,6 +174,12 @@ const Main = () => {
       )}
       <HashRouter>
         <Switch>
+          <Route path="/dashboard/wallet">
+            <Redirect to="/#/dashboard/wallet" />
+          </Route>
+          <Route path="/dashboard/staking">
+            <Redirect to="/#/dashboard/staking" />
+          </Route>
           <Route
             key="/"
             exact
