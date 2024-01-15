@@ -82,9 +82,9 @@ const TokenizedShares = () => {
         <div className="voting" key={index}>
           {validator.amount}
         </div>,
-        <div className="d-flex" key={index}>
+        <div className="actions-td" key={index}>
           <div
-            className="actions-td button-list mr-2"
+            className=" button-list mr-2"
             onClick={() => {
               handleRedeem(validator);
             }}
@@ -92,7 +92,7 @@ const TokenizedShares = () => {
             <button className="button button-primary">Redeem</button>
           </div>
           <div
-            className="actions-td button-list"
+            className=" button-list"
             key={index}
             onClick={() => {
               handleTransfer(validator);

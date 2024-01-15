@@ -14,6 +14,7 @@ import KeyStoreModal from "../Common/KeyStore/Modal";
 import Loader from "../../components/Loader";
 import ModalViewTxnResponse from "../Common/ModalViewTxnResponse";
 import ReactGA from "react-ga4";
+import BannerNotice from "../Common/banner-notice";
 
 const Wallet = () => {
   const popoverMemo = (
@@ -40,6 +41,8 @@ const Wallet = () => {
       <ModalSetWithdrawAddress />
       <ModalViewTxnResponse />
       <div className="wallet-main-section">
+        <BannerNotice />
+
         <TokenInfo />
         <div className="tabs-section">
           <Tabs

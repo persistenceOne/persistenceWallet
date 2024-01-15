@@ -188,24 +188,22 @@ const TokenInfo = (props) => {
                     props.delegations + props.balance + props.unbond
                   )}
                 />
-                {DefaultChainInfo.currency.coinDenom}
+                <span className={"denom"}>
+                  {DefaultChainInfo.currency.coinDenom}
+                </span>
               </p>
             </div>
-            <div className="line">
-              <p className="key">XPRT Price</p>
-              <p className="value">
-                <span className="inner-grid-icon" />
-                $<NumberView value={formatNumber(props.tokenPrice)} />
-              </p>
-            </div>
-            <div className="line">
+            <div className="line p-0">
               <p className="key">Available Amount</p>
               <p className="value" title={props.transferableAmount.toFixed(6)}>
                 <span className="inner-grid-icon" />
                 <NumberView
                   value={formatNumber(props.transferableAmount)}
                 />{" "}
-                {DefaultChainInfo.currency.coinDenom}
+                <span className={"denom"}>
+                  {" "}
+                  {DefaultChainInfo.currency.coinDenom}
+                </span>
               </p>
             </div>
           </div>
@@ -292,7 +290,10 @@ const TokenInfo = (props) => {
                 <span>
                   {" "}
                   <NumberView value={formatNumber(props.delegations)} />{" "}
-                  {DefaultChainInfo.currency.coinDenom}
+                  <span className={"denom"}>
+                    {" "}
+                    {DefaultChainInfo.currency.coinDenom}
+                  </span>
                 </span>
               </p>
             </div>
@@ -311,7 +312,7 @@ const TokenInfo = (props) => {
             {/*    </span>*/}
             {/*  </p>*/}
             {/*</div>*/}
-            <div className="line">
+            <div className="line p-0">
               <p className="key">Unbonding Amount</p>
               <p className="value d-flex align-items-center">
                 <span className="inner-grid">
@@ -319,7 +320,9 @@ const TokenInfo = (props) => {
                 </span>
                 <span title={props.unbond}>
                   <NumberView value={formatNumber(props.unbond)} />
-                  {DefaultChainInfo.currency.coinDenom}
+                  <span className={"denom"}>
+                    {DefaultChainInfo.currency.coinDenom}
+                  </span>
                 </span>
               </p>
             </div>

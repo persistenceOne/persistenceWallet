@@ -5,16 +5,15 @@ import GenerateKeyStore from "../../containers/GenerateKeyStore";
 import ChangeKeyStorePassword from "../../containers/ChangeKeyStorePassword";
 
 const DashboardStaking = () => {
-
-    return (
-        <div className="main-section">
-            <DashboardHeader/>
-            <GenerateKeyStore/>
-            <ChangeKeyStorePassword/>
-            <div className="content-section container">
-                <Staking/>
-            </div>
-        </div>
-    );
+  return (
+    <div className="main-section">
+      <DashboardHeader />
+      <GenerateKeyStore />
+      <ChangeKeyStorePassword />
+      <div className="content-section container">
+        <Staking />
+      </div>
+    </div>
+  );
 };
 export default DashboardStaking;

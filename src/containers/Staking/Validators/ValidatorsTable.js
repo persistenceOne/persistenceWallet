@@ -131,13 +131,13 @@ const ValidatorsTable = (props) => {
         </span>,
         <div className="" key={index}>
           {helper.isActive(validator.data) ? (
-            <span className="icon-box" title="active">
-              <img src={activeIcon} alt="activeIcon" />
-            </span>
+            <div className="status-symbol active" title="active">
+              <p>Active</p>
+            </div>
           ) : (
-            <span className="icon-box" title="Inactive">
-              <img src={inActiveIcon} alt="inActiveIcon" />
-            </span>
+            <div className="status-symbol inactive" title="active">
+              <p>In-Active</p>
+            </div>
           )}
         </div>,
         <div className="actions-td" key={index}>

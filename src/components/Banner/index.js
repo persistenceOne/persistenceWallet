@@ -26,12 +26,12 @@ const countries = [
   "US",
   "GB",
   "CU",
-  "CA"
+  "CA",
+  "IN"
 ];
 const Banner = () => {
   const unbond = useSelector((state) => state.unbond.unbond);
   const [banner, setBanner] = useState(false);
-  const [bannerOne, setBannerOne] = useState(true);
   const workerUrl = "https://worker-geofence.auditdev.workers.dev/";
   const [country, setCountry] = useState("");
 
@@ -53,9 +53,6 @@ const Banner = () => {
       setBanner(true);
     }
   }, [unbond]);
-  const closeBannerOne = () => {
-    setBannerOne(false);
-  };
 
   if (countries.includes(country)) {
     return (
@@ -76,47 +73,11 @@ const Banner = () => {
             </a>
           </p>
         </div>
-        <div className={!bannerOne ? "d-none" : "top-banner-section"}>
-          <p className="content">
-            Users affected by geo-blocking are suggested to transfer their
-            tokens to a new Keplr, Cosmostation, or Leap wallet. Learn more{" "}
-            <a
-              className={"link"}
-              href="https://blog.persistence.one/2023/12/28/how-to-transfer-staked-xprt-from-pwallet-to-keplr-leap-wallet-instantly/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              here.
-            </a>
-          </p>
-          <div onClick={closeBannerOne}>
-            <Icon viewClass="close" icon="close" />
-          </div>
-        </div>
       </div>
     );
   }
   return (
     <div>
-      <div
-        className={!bannerOne ? "d-none" : "top-banner-section initial-banner"}
-      >
-        <p className="content">
-          Users affected by geo-blocking are suggested to transfer their tokens
-          to a new Keplr, Cosmostation, or Leap wallet. Learn more{" "}
-          <a
-            className={"link"}
-            href="https://blog.persistence.one/2023/12/28/how-to-transfer-staked-xprt-from-pwallet-to-keplr-leap-wallet-instantly/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            here.
-          </a>
-        </p>
-        <div onClick={closeBannerOne}>
-          <Icon viewClass="close" icon="close" />
-        </div>
-      </div>
       <div className={!banner ? "d-none" : "top-banner-section"}>
         <p className="content">
           You can now cancel your XPRT unbonding process at any time using

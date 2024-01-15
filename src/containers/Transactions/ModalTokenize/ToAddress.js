@@ -38,7 +38,7 @@ const ToAddress = () => {
   const popover = (
     <Popover id="popover">
       <Popover.Content>
-        New address that will receive staked XPRT tokens
+        New wallet address that will receive your staked XPRT tokens
       </Popover.Content>
     </Popover>
   );
@@ -46,7 +46,7 @@ const ToAddress = () => {
     <>
       <div className="form-field">
         <p className="label info">
-          Wallet Address
+          Destination Wallet Address
           <OverlayTrigger
             trigger={["hover", "focus"]}
             placement="bottom"

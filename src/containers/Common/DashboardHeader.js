@@ -8,16 +8,17 @@ import Darktheme from "../DarkTheme";
 import MobileSidebar from "./MobileSidebar";
 import transactions from "../../utils/transactions";
 import { userLogout } from "../../store/actions/logout";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { showKeyStoreMnemonicModal } from "../../store/actions/generateKeyStore";
 import { LOGIN_INFO, THEME } from "../../constants/localStorage";
-import { stringTruncate } from "../../utils/scripts";
+import { formatNumber, stringTruncate } from "../../utils/scripts";
 import { makeHdPath } from "../../utils/helper";
 import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
 import ReactGA from "react-ga4";
 import { DefaultChainInfo, ExternalChains } from "../../config";
 import Banner from "../../components/Banner";
 import { keyStoreLogin } from "../../store/actions/signIn/keyStore";
+import NumberView from "../../components/NumberView";
 
 const DashboardHeader = () => {
   const { t } = useTranslation();
@@ -25,7 +26,7 @@ const DashboardHeader = () => {
   const history = useHistory();
   const loginInfo = JSON.parse(localStorage.getItem(LOGIN_INFO));
   const [activeWallet, setActiveWallet] = useState("");
-
+  const tokenPrice = useSelector((state) => state.tokenPrice.tokenPrice);
   useEffect(() => {
     const localTheme = window.localStorage.getItem(THEME);
     if (localTheme === "light") {
@@ -112,15 +113,18 @@ const DashboardHeader = () => {
 
           <Nav className="ml-auto" onClick={() => onClick(t("DASHBOARD"))}>
             <li className="nav-item link mobile-nav-item">
-              <NavLink
-                className="nav-link primary-medium-color"
-                to="/dashboard/wallet"
+              <div
+                className="nav-link primary-medium-color price"
+                title={"XPRT Price"}
               >
-                <div className="icon-box">
-                  <Icon viewClass="icon" icon="wallet" />
-                </div>
-                {t("WALLET")}
-              </NavLink>
+                <img
+                  src={"/images/tokens/xprt.png"}
+                  alt={"logo"}
+                  width={20}
+                  className="mr-1"
+                />
+                $<NumberView value={formatNumber(tokenPrice)} />
+              </div>
             </li>
             <li className="nav-item link mobile-nav-item">
               <NavLink
@@ -132,6 +136,17 @@ const DashboardHeader = () => {
                   <Icon viewClass="icon" icon="staking" />
                 </div>
                 {t("STAKING")}
+              </NavLink>
+            </li>
+            <li className="nav-item link mobile-nav-item">
+              <NavLink
+                className="nav-link primary-medium-color"
+                to="/dashboard/wallet"
+              >
+                <div className="icon-box">
+                  <Icon viewClass="icon" icon="wallet" />
+                </div>
+                {t("WALLET")}
               </NavLink>
             </li>
             <li className="nav-item link help-section">
@@ -147,49 +162,62 @@ const DashboardHeader = () => {
                 id="basic-nav-dropdown"
                 className="profile-dropdown"
               >
-                <div className="info p-3">
+                <div className="info">
                   <a
-                    className="nav-link primary-medium-color pb-2 pl-2"
+                    className="profile-item primary-medium-color pb-2 pl-2"
                     href="https://t.me/PersistenceOneChat"
                     rel="noopener noreferrer"
                     target="_blank"
                     onClick={() => onClick(t("HELP"))}
                   >
                     Contact
+                    <Icon viewClass="copy" icon="new-tab" />
                   </a>
                   <a
-                    className="nav-link primary-medium-color pb-2 pl-2 pb-2"
+                    className="profile-item primary-medium-color pb-2 pl-2 pb-2"
                     href="https://blog.persistence.one/category/guides/"
                     rel="noopener noreferrer"
                     target="_blank"
                     onClick={() => onClick(t("HELP"))}
                   >
                     {t("Guide")}
+                    <Icon viewClass="copy" icon="new-tab" />
                   </a>
                   <a
-                    className="nav-link primary-medium-color pb-2 pl-2"
+                    className="profile-item primary-medium-color pb-2 pl-2"
                     href="https://persistence.one/terms"
                     rel="noopener noreferrer"
                     target="_blank"
                     onClick={() => onClick(t("Terms of Use"))}
                   >
                     {t("Terms of Use")}
+                    <Icon viewClass="copy" icon="new-tab" />
                   </a>
                   <a
-                    className="nav-link primary-medium-color pl-2"
+                    className="profile-item primary-medium-color pl-2"
                     href="https://persistence.one/privacy"
                     rel="noopener noreferrer"
                     target="_blank"
                     onClick={() => onClick(t("Privacy Policy"))}
                   >
                     {t("Privacy Policy")}
+                    <Icon viewClass="copy" icon="new-tab" />
                   </a>
                 </div>
               </NavDropdown>
             </li>
             <li className="profile-section">
               <NavDropdown
-                title={ProfileIcon}
+                title={
+                  <div className="d-flex align-items-center">
+                    <span>
+                      {stringTruncate(
+                        loginInfo !== null && loginInfo && loginInfo?.address
+                      )}
+                    </span>
+                    <Copy id={loginInfo && loginInfo?.address} />
+                  </div>
+                }
                 id="basic-nav-dropdown"
                 className="profile-dropdown"
               >
@@ -208,90 +236,13 @@ const DashboardHeader = () => {
                       ""
                     )}
                   </p>
-                  {loginInfo !== null &&
-                  loginInfo &&
-                  loginInfo?.keyStoreLogin ? (
-                    <div className="address-list">
-                      <div
-                        className={`${
-                          activeWallet === "118" ? "active" : ""
-                        } address-box`}
-                        onClick={() =>
-                          handleAddressChange(loginInfo?.coin118Response, "118")
-                        }
-                      >
-                        <div className="address keystore">
-                          <div className="d-flex align-items-center">
-                            <span>
-                              {stringTruncate(
-                                loginInfo && loginInfo?.coin118Response?.address
-                              )}
-                            </span>
-                          </div>
-                          {activeWallet === "118" ? (
-                            <Icon viewClass="success" icon="success-small" />
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                        <p className="wallet-path">
-                          <span>{t("Path")}: </span>
-                          {loginInfo && loginInfo?.coin118Response?.walletPath}
-                        </p>
-                      </div>
-                      <div
-                        className={`${
-                          activeWallet === "750" ? "active" : ""
-                        } address-box`}
-                        onClick={() =>
-                          handleAddressChange(loginInfo?.coin750Response, "750")
-                        }
-                      >
-                        <div className="address keystore">
-                          <div className="d-flex align-items-center">
-                            <span>
-                              {stringTruncate(
-                                loginInfo && loginInfo?.coin750Response?.address
-                              )}
-                            </span>
-                          </div>
-                          {activeWallet === "750" ? (
-                            <Icon viewClass="success" icon="success-small" />
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                        <p className="wallet-path">
-                          <span>{t("Path")}: </span>
-                          {loginInfo && loginInfo?.coin750Response?.walletPath}
-                        </p>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="address-list">
-                      <div className="address-box">
-                        <div className="address-box">
-                          <div className="address">
-                            <span>
-                              {stringTruncate(
-                                loginInfo !== null &&
-                                  loginInfo &&
-                                  loginInfo?.address
-                              )}
-                            </span>
-                            <Copy id={loginInfo && loginInfo?.address} />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-                <div className="dropdown-footer">
-                  <p onClick={closeWallet} className="link-close">
-                    {t("LOGOUT")}
-                  </p>
-                  <p onClick={handleKeyStore} className="generate-keystore">
+                  <p onClick={handleKeyStore} className="profile-item">
+                    <Icon viewClass="copy" icon="add" />
                     {t("GENERATE_KEYSTORE")}
+                  </p>
+                  <p onClick={closeWallet} className="profile-item">
+                    <Icon viewClass="copy" icon="logout" />
+                    Disconnect
                   </p>
                 </div>
               </NavDropdown>
