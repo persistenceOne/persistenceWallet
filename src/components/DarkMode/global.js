@@ -218,7 +218,7 @@ export const GlobalStyles = createGlobalStyle`
     .header .profile-section .profile-dropdown .profile-item{
       color: ${({ theme }) => theme.dropdownItemColor};
     }
-    .header .profile-section .profile-item .icon{
+    .header .profile-section .profile-item .icon, .header .help-section .profile-item .icon{
       stroke:${({ theme }) => theme.copyIconColor};
       fill: transparent !important;
     }

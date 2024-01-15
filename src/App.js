@@ -83,17 +83,15 @@ const Main = () => {
   } else {
     address = loginInfo && loginInfo.address;
   }
-
+  const page = location.pathname;
   useEffect(() => {
-    const page = location.pathname;
-    console.log(page, "page-tt");
     if (page === "/dashboard/wallet") {
       history.push("/#/dashboard/wallet");
     } else if (page === "/dashboard/staking") {
       history.push("/#/dashboard/staking");
     }
     trackPage(page);
-  }, [location]);
+  }, [page]);
 
   useEffect(() => {
     const fetchApi = async () => {

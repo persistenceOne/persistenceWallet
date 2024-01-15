@@ -115,26 +115,26 @@ const ModalValidator = () => {
         <div className="buttons-group">
           <button
             onClick={() => handleRoute("Delegate")}
-            className="button button-primary"
+            className="button button-secondary"
           >
             {t("DELEGATE")}
           </button>
 
           <button
-            className="button button-primary"
+            className="button button-secondary"
             onClick={() => handleRoute("Redelegate")}
           >
             {t("REDELEGATE")}
           </button>
           <button
             onClick={() => handleRoute("Unbond")}
-            className="button button-primary"
+            className="button button-secondary"
           >
             {t("UNBOND")}
           </button>
           <button
             onClick={() => handleRoute("Withdraw")}
-            className="button button-primary"
+            className="button button-secondary"
           >
             {t("CLAIM_REWARDS")}
           </button>

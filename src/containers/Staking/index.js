@@ -15,6 +15,7 @@ import Loader from "../../components/Loader";
 import ModalRedeemShares from "../Transactions/ModalRedeemShares";
 import ModalTransferShares from "../Transactions/ModalTransferShares";
 import StakingTabs from "./StakingTabs";
+import BannerNotice from "../Common/banner-notice";
 
 const Staking = () => {
   return (
@@ -26,6 +27,7 @@ const Staking = () => {
       <ModalRedeemShares />
       <ModalTransferShares />
       <ModalTokenize />
+      <BannerNotice />
       <TokenInfo />
       <FeeModal />
       <KeyStoreModal />

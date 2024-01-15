@@ -557,6 +557,9 @@
         border: 1px solid;
         padding: 0;
         border-radius: 0px;
+        position: absolute;
+        left: 0 !important;
+        right: 0 !important;
       }
       .profile-item{
         cursor: pointer;
@@ -567,9 +570,10 @@
         display: block;
         margin: 0;
         .icon{
-          width: 16px;
-          height: 16px;
-          margin-right: 6px;
+          width: 12px;
+          height: 12px;
+          margin-left: 2px;
+          margin-bottom: 3px;
         }
       }
       }
@@ -633,7 +637,7 @@
         padding: 0;
         border-radius: 0px;
         position: absolute;
-        //top: 0px !important;
+        top: 54px !important;
         left:0 !important;
         //margin: 0px !important;
         right: 0 !important;
@@ -1496,7 +1500,7 @@
       align-items: center;
       flex-wrap: wrap;
 
-      .button-primary {
+      .button-primary, .button-secondary {
         margin: 5px;
       }
 

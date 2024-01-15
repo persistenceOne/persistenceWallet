@@ -26,12 +26,12 @@ const countries = [
   "US",
   "GB",
   "CU",
-  "CA"
+  "CA",
+  "IN"
 ];
 const Banner = () => {
   const unbond = useSelector((state) => state.unbond.unbond);
   const [banner, setBanner] = useState(false);
-  const [bannerOne, setBannerOne] = useState(true);
   const workerUrl = "https://worker-geofence.auditdev.workers.dev/";
   const [country, setCountry] = useState("");
 
@@ -53,9 +53,6 @@ const Banner = () => {
       setBanner(true);
     }
   }, [unbond]);
-  const closeBannerOne = () => {
-    setBannerOne(false);
-  };
 
   if (countries.includes(country)) {
     return (

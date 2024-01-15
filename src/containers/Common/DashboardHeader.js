@@ -171,6 +171,7 @@ const DashboardHeader = () => {
                     onClick={() => onClick(t("HELP"))}
                   >
                     Contact
+                    <Icon viewClass="copy" icon="new-tab" />
                   </a>
                   <a
                     className="profile-item primary-medium-color pb-2 pl-2 pb-2"
@@ -180,6 +181,7 @@ const DashboardHeader = () => {
                     onClick={() => onClick(t("HELP"))}
                   >
                     {t("Guide")}
+                    <Icon viewClass="copy" icon="new-tab" />
                   </a>
                   <a
                     className="profile-item primary-medium-color pb-2 pl-2"
@@ -189,6 +191,7 @@ const DashboardHeader = () => {
                     onClick={() => onClick(t("Terms of Use"))}
                   >
                     {t("Terms of Use")}
+                    <Icon viewClass="copy" icon="new-tab" />
                   </a>
                   <a
                     className="profile-item primary-medium-color pl-2"
@@ -198,6 +201,7 @@ const DashboardHeader = () => {
                     onClick={() => onClick(t("Privacy Policy"))}
                   >
                     {t("Privacy Policy")}
+                    <Icon viewClass="copy" icon="new-tab" />
                   </a>
                 </div>
               </NavDropdown>

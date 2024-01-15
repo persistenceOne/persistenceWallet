@@ -26,7 +26,7 @@ body {
 
 .button.button-primary {
   background: #C73238;
-  font-weight: bold;
+  font-weight: 600;
   font-size: 16px;
   color: #FCFCFC;
   border-color: #C73238;
@@ -38,11 +38,11 @@ body {
 
 .button.button-secondary {
   background: transparent;
-  font-weight: bold;
+  font-weight: 600;
   font-size: 16.5455px;
   padding: 0.375rem 1.2rem;
   border-color: #C73238;
-  border-radius: 0; }
+  border-radius: 6px; }
 
 .flex-center {
   display: flex;
@@ -137,7 +137,7 @@ body {
   padding: 24px;
   color: #313238; }
 .modal-custom .modal-header .heading {
-  font-weight: 600;
+  font-weight: 500;
   font-size: 18px;
   line-height: 27px;
   font-family: "Poppins", sans-serif;
@@ -2186,7 +2186,10 @@ ul li em {
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
     border: 1px solid;
     padding: 0;
-    border-radius: 0px; }
+    border-radius: 0px;
+    position: absolute;
+    left: 0 !important;
+    right: 0 !important; }
   .header .help-section .profile-dropdown .profile-item {
     cursor: pointer;
     padding: 10px 20px !important;
@@ -2196,9 +2199,10 @@ ul li em {
     display: block;
     margin: 0; }
     .header .help-section .profile-dropdown .profile-item .icon {
-      width: 16px;
-      height: 16px;
-      margin-right: 6px; }
+      width: 12px;
+      height: 12px;
+      margin-left: 2px;
+      margin-bottom: 3px; }
 .header .profile-section {
   cursor: auto !important;
   display: flex;
@@ -2248,6 +2252,7 @@ ul li em {
       padding: 0;
       border-radius: 0px;
       position: absolute;
+      top: 54px !important;
       left: 0 !important;
       right: 0 !important; }
       .header .profile-section .profile-dropdown .dropdown-menu .qr-box {
@@ -2812,7 +2817,7 @@ ul li em {
     display: -webkit-flex;
     align-items: center;
     flex-wrap: wrap; }
-    .actions-modal .actions-modal-body .buttons-group .button-primary {
+    .actions-modal .actions-modal-body .buttons-group .button-primary, .actions-modal .actions-modal-body .buttons-group .button-secondary {
       margin: 5px; }
     .actions-modal .actions-modal-body .buttons-group .btn-group {
       margin: 5px; }
