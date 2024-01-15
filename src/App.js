@@ -79,14 +79,13 @@ const Main = () => {
 
   address = loginInfo && loginInfo.address;
   const page = location.pathname;
-  useEffect(() => {
-    if (page === "/dashboard/wallet") {
-      history.push("/#/dashboard/wallet");
-    } else if (page === "/dashboard/staking") {
-      history.push("/#/dashboard/staking");
-    }
-    trackPage(page);
-  }, [page]);
+
+  if (page === "/dashboard/wallet") {
+    console.log(page, "page-1");
+    history.push("/#/dashboard/wallet");
+  } else if (page === "/dashboard/staking") {
+    history.push("/#/dashboard/staking");
+  }
 
   useEffect(() => {
     const fetchApi = async () => {
