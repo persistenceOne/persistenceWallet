@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   HashRouter,
+  Redirect,
   Route,
   Switch,
   useHistory,
@@ -80,12 +81,13 @@ const Main = () => {
   address = loginInfo && loginInfo.address;
   const page = location.pathname;
 
-  if (page === "/dashboard/wallet") {
-    console.log(page, "page-1");
-    history.push("/#/dashboard/wallet");
-  } else if (page === "/dashboard/staking") {
-    history.push("/#/dashboard/staking");
-  }
+  useEffect(() => {
+    if (window.location.pathname === "/dashboard/wallet") {
+      window.location.replace("/#/dashboard/wallet");
+    } else if (window.location.pathname === "/dashboard/staking") {
+      window.location.replace("/#/dashboard/staking");
+    }
+  }, []);
 
   useEffect(() => {
     const fetchApi = async () => {
@@ -174,12 +176,6 @@ const Main = () => {
       )}
       <HashRouter>
         <Switch>
-          <Route path="/dashboard/wallet">
-            <Redirect to="/#/dashboard/wallet" />
-          </Route>
-          <Route path="/dashboard/staking">
-            <Redirect to="/#/dashboard/staking" />
-          </Route>
           <Route
             key="/"
             exact
