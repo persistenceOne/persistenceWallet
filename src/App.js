@@ -81,6 +81,7 @@ const Main = () => {
   const page = location.pathname;
 
   if (page === "/dashboard/wallet") {
+    console.log(page, "page-1");
     history.push("/#/dashboard/wallet");
   } else if (page === "/dashboard/staking") {
     history.push("/#/dashboard/staking");
