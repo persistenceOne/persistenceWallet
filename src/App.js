@@ -76,13 +76,8 @@ const Main = () => {
   const dispatch = useDispatch();
 
   let address;
-  const version = loginInfo && loginInfo.version;
-  if (version == null || packageJson.version !== version) {
-    localStorage.clear();
-    history.push("/");
-  } else {
-    address = loginInfo && loginInfo.address;
-  }
+
+  address = loginInfo && loginInfo.address;
   const page = location.pathname;
   useEffect(() => {
     if (page === "/dashboard/wallet") {
