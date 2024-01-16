@@ -149,21 +149,6 @@ const ModalValidator = () => {
             ""
           )}
         </div>
-        {txnModalName === "delegator-actions" ? (
-          <p className="amount-warning text-left">
-            <span>
-              <img
-                src="/favicons/warning_icon.png"
-                width={20}
-                className="mr-2"
-              ></img>
-            </span>
-            <b>Transfer Delegation</b> feature is in beta mode, kindly contact
-            team if you face any disturbances.
-          </p>
-        ) : (
-          ""
-        )}
         {helper.foundationNodeCheck(
           validator.operatorAddress && validator.operatorAddress
         ) ? (

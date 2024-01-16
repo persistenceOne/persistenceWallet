@@ -92,7 +92,7 @@ const ModalTransferShares = () => {
     >
       <ReactModal.Header closeButton>
         <h3 className="heading">
-          Transferring Staked XPRT{" "}
+          Transfer staked XPRT{" "}
           <OverlayTrigger
             trigger={["hover", "focus"]}
             placement="bottom"
