@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   HashRouter,
-  Redirect,
   Route,
   Switch,
   useHistory,
@@ -81,13 +80,7 @@ const Main = () => {
   address = loginInfo && loginInfo.address;
   const page = location.pathname;
 
-  useEffect(() => {
-    if (window.location.pathname === "/dashboard/wallet") {
-      window.location.replace("/#/dashboard/wallet");
-    } else if (window.location.pathname === "/dashboard/staking") {
-      window.location.replace("/#/dashboard/staking");
-    }
-  }, []);
+  const isIpfs = process.env.REACT_APP_IPFS === "true";
 
   useEffect(() => {
     const fetchApi = async () => {
@@ -174,21 +167,48 @@ const Main = () => {
       ) : (
         ""
       )}
-      <HashRouter>
+      {isIpfs ? (
+        <HashRouter>
+          <Switch>
+            <Route
+              key="/"
+              exact
+              component={
+                JSON.parse(window.localStorage.getItem(LOGIN_INFO)) === null ||
+                address === undefined ||
+                address === null ||
+                address === ""
+                  ? withRouter(Homepage)
+                  : withRouter(DashboardWallet)
+              }
+              path="/"
+            />
+            {routes.map((route) => {
+              if (route.private) {
+                return (
+                  <PrivateRoute
+                    key={route.path}
+                    exact
+                    component={withRouter(route.component)}
+                    path={route.path}
+                  />
+                );
+              }
+
+              return (
+                <Route
+                  key={route.path}
+                  exact
+                  component={withRouter(route.component)}
+                  path={route.path}
+                />
+              );
+            })}
+            <Route component={RouteNotFound} />
+          </Switch>
+        </HashRouter>
+      ) : (
         <Switch>
-          <Route
-            key="/"
-            exact
-            component={
-              JSON.parse(window.localStorage.getItem(LOGIN_INFO)) === null ||
-              address === undefined ||
-              address === null ||
-              address === ""
-                ? withRouter(Homepage)
-                : withRouter(DashboardWallet)
-            }
-            path="/"
-          />
           {routes.map((route) => {
             if (route.private) {
               return (
@@ -210,9 +230,22 @@ const Main = () => {
               />
             );
           })}
+          <Route
+            key="/"
+            exact
+            component={
+              JSON.parse(window.localStorage.getItem(LOGIN_INFO)) === null ||
+              address === undefined ||
+              address === null ||
+              address === ""
+                ? withRouter(Homepage)
+                : withRouter(DashboardWallet)
+            }
+            path="/"
+          />
           <Route component={RouteNotFound} />
         </Switch>
-      </HashRouter>
+      )}
       <ModalTerms />
     </>
   );
