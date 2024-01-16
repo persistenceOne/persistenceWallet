@@ -559,14 +559,15 @@ body {
 
 .view-button {
   font-family: "Poppins", sans-serif;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 12px;
   line-height: 180%;
-  color: #FCFCFC;
+  color: #0F0F0F;
   cursor: pointer;
   padding: 5px 10px;
-  background: #C73238;
-  border-radius: 4px;
+  background: transparent;
+  border: 1px solid #C73238;
+  border-radius: 6px;
   margin-right: 4px; }
 
 .amount-warning {
@@ -2156,6 +2157,8 @@ ul li em {
   display: flex;
   display: -webkit-flex;
   align-items: center; }
+  .header .nav-item.theme-item {
+    display: none !important; }
   .header .nav-item .nav-link {
     display: flex;
     display: -webkit-flex;
@@ -2215,7 +2218,7 @@ ul li em {
   .header .profile-section .profile-dropdown {
     padding: 10px 0 !important; }
     .header .profile-section .profile-dropdown .dropdown-toggle {
-      border: 1px solid #DDE1E6;
+      border: 1px solid #C73238;
       border-radius: 6px;
       padding: 6px 16px !important;
       cursor: pointer; }
@@ -2397,7 +2400,7 @@ ul li em {
       display: flex;
       display: -webkit-flex;
       justify-content: space-between;
-      padding-bottom: 10px;
+      padding-bottom: 16px;
       align-items: center; }
       .token-info-section .info-box .line:nth-child(3) {
         padding-bottom: 0; }
@@ -2577,6 +2580,8 @@ ul li em {
       text-align: center; }
   .validators-section table tr:first-child td {
     padding-top: 30px; }
+  .validators-section table .voting .sub-text {
+    font-size: 12px; }
 
 .delegate-modal .delegate-modal-body {
   padding: 10px 30px 30px 30px; }
@@ -3324,29 +3329,29 @@ ul li em {
     fill: #2E3239; }
 
 .top-banner-section {
-  background: #e50913;
+  background: #FEE2D5;
   text-align: center;
   padding: 7px 40px 7px 0;
   position: relative; }
   .top-banner-section.initial-banner {
-    border-bottom: 1px solid #ff3b3b; }
+    border-bottom: 1px solid #FEE2D5; }
   .top-banner-section .content {
-    color: #FFFFFF;
+    color: #DB2438;
     font-size: 12px;
     margin: 0; }
     .top-banner-section .content .link {
       text-decoration: underline;
-      color: #FFFFFF; }
+      color: #DB2438 !important; }
     .top-banner-section .content .icon {
       margin-left: 10px;
-      fill: #FFFFFF;
+      fill: #DB2438;
       width: 16px; }
     .top-banner-section .content .logo {
       width: 16px;
       margin-right: 10px; }
   .top-banner-section .icon-close {
     width: 10px;
-    fill: #FFFFFF;
+    fill: #DB2438;
     cursor: pointer;
     position: absolute;
     right: 20px;

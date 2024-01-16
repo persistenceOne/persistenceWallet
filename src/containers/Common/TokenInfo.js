@@ -183,11 +183,8 @@ const TokenInfo = (props) => {
                   props.unbond
                 ).toFixed(DefaultChainInfo.currency.coinDecimals)}
               >
-                <NumberView
-                  value={formatNumber(
-                    props.delegations + props.balance + props.unbond
-                  )}
-                />
+                {formatNumber(props.delegations + props.balance + props.unbond)}{" "}
+                {""}
                 <span className={"denom"}>
                   {DefaultChainInfo.currency.coinDenom}
                 </span>
@@ -197,9 +194,7 @@ const TokenInfo = (props) => {
               <p className="key">Available Amount</p>
               <p className="value" title={props.transferableAmount.toFixed(6)}>
                 <span className="inner-grid-icon" />
-                <NumberView
-                  value={formatNumber(props.transferableAmount)}
-                />{" "}
+                {formatNumber(props.transferableAmount)}{" "}
                 <span className={"denom"}>
                   {" "}
                   {DefaultChainInfo.currency.coinDenom}
@@ -278,18 +273,20 @@ const TokenInfo = (props) => {
             <div className="line">
               <p className="key">Staked Amount</p>
               <p
-                className="value rewards d-flex align-items-center"
+                className="value d-flex align-items-center"
                 title={props.delegations}
               >
-                <span
-                  onClick={() => handleRewards("rewards")}
-                  className="claim inner-grid"
-                >
-                  Claim Rewards
+                <span className="inner-grid">
+                  <span
+                    onClick={() => handleRewards("rewards")}
+                    className="view-button"
+                  >
+                    Claim Rewards
+                  </span>
                 </span>
                 <span>
                   {" "}
-                  <NumberView value={formatNumber(props.delegations)} />{" "}
+                  {formatNumber(props.delegations)}
                   <span className={"denom"}>
                     {" "}
                     {DefaultChainInfo.currency.coinDenom}
@@ -297,21 +294,6 @@ const TokenInfo = (props) => {
                 </span>
               </p>
             </div>
-            {/*<div className="line">*/}
-            {/*  <p className="key">{t("REWARDS")}</p>*/}
-            {/*  <p className="value rewards">*/}
-            {/*    <span*/}
-            {/*      onClick={() => handleRewards("rewards")}*/}
-            {/*      className="claim inner-grid"*/}
-            {/*    >*/}
-            {/*      {t("CLAIM")}*/}
-            {/*    </span>*/}
-            {/*    <span title={props.rewards[0]}>*/}
-            {/*      <NumberView value={formatNumber(props.rewards[0])} />{" "}*/}
-            {/*      {DefaultChainInfo.currency.coinDenom}*/}
-            {/*    </span>*/}
-            {/*  </p>*/}
-            {/*</div>*/}
             <div className="line p-0">
               <p className="key">Unbonding Amount</p>
               <p className="value d-flex align-items-center">
@@ -319,7 +301,7 @@ const TokenInfo = (props) => {
                   {props.unbond > 0 ? <ModalViewUnbondDetails /> : ""}
                 </span>
                 <span title={props.unbond}>
-                  <NumberView value={formatNumber(props.unbond)} />
+                  {formatNumber(props.unbond)}
                   <span className={"denom"}>
                     {DefaultChainInfo.currency.coinDenom}
                   </span>

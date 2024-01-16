@@ -26,8 +26,7 @@ const countries = [
   "US",
   "GB",
   "CU",
-  "CA",
-  "IN"
+  "CA"
 ];
 const Banner = () => {
   const unbond = useSelector((state) => state.unbond.unbond);

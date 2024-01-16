@@ -123,12 +123,17 @@ const DashboardHeader = () => {
                   width={20}
                   className="mr-1"
                 />
-                $<NumberView value={formatNumber(tokenPrice)} />
+                ${formatNumber(tokenPrice)}
               </div>
             </li>
             <li className="nav-item link mobile-nav-item">
               <NavLink
-                className="nav-link primary-medium-color"
+                className={`nav-link primary-medium-color ${
+                  window.location.pathname === "/dashboard/staking" ||
+                  window.location.pathname === "/"
+                    ? "active"
+                    : ""
+                }`}
                 onClick={() => onClick(t("STAKING"))}
                 to="/dashboard/staking"
               >
@@ -247,7 +252,7 @@ const DashboardHeader = () => {
                 </div>
               </NavDropdown>
             </li>
-            <li className="nav-item link">
+            <li className="nav-item link theme-item">
               <Darktheme />
             </li>
           </Nav>

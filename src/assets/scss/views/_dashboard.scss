@@ -510,7 +510,9 @@
     display: flex;
     display: -webkit-flex;
     align-items: center;
-
+    &.theme-item{
+      display: none!important;
+    }
     .nav-link {
       display: flex;
       display: -webkit-flex;
@@ -593,7 +595,7 @@
     .profile-dropdown {
       padding: 10px 0 !important;
       .dropdown-toggle {
-        border: 1px solid #DDE1E6;
+        border: 1px solid #C73238;
         border-radius: 6px;
         padding: 6px 16px !important;
         cursor: pointer;
@@ -844,7 +846,7 @@
       display: flex;
       display: -webkit-flex;
       justify-content: space-between;
-      padding-bottom: 10px;
+      padding-bottom: 16px;
       align-items: center;
 
       &:nth-child(3) {
@@ -1130,6 +1132,9 @@
           padding-top: 30px;
         }
       }
+    }
+    .voting .sub-text{
+      font-size: 12px;
     }
   }
 }
