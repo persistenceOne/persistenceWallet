@@ -179,7 +179,7 @@ const Main = () => {
                 address === null ||
                 address === ""
                   ? withRouter(Homepage)
-                  : withRouter(DashboardWallet)
+                  : withRouter(DashboardStaking)
               }
               path="/"
             />
@@ -194,7 +194,6 @@ const Main = () => {
                   />
                 );
               }
-
               return (
                 <Route
                   key={route.path}
@@ -239,7 +238,7 @@ const Main = () => {
               address === null ||
               address === ""
                 ? withRouter(Homepage)
-                : withRouter(DashboardWallet)
+                : withRouter(DashboardStaking)
             }
             path="/"
           />

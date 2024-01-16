@@ -85,24 +85,24 @@
 
 
 .top-banner-section{
-  background: #e50913;
+  background: #FEE2D5;
   text-align: center;
   padding: 7px 40px 7px 0;
   position: relative;
   &.initial-banner{
-    border-bottom: 1px solid #ff3b3b
+    border-bottom: 1px solid #FEE2D5
   }
   .content{
-    color: #FFFFFF;
+    color: #DB2438;
     font-size: 12px;
     margin: 0;
     .link{
       text-decoration: underline;
-      color: #FFFFFF;
+      color: #DB2438 !important;
     }
     .icon{
       margin-left: 10px;
-      fill: #FFFFFF;
+      fill: #DB2438;
       width: 16px;
     }
     .logo{
@@ -112,7 +112,7 @@
   }
   .icon-close{
     width: 10px;
-    fill: #FFFFFF;
+    fill: #DB2438;
     cursor: pointer;
     position: absolute;
     right: 20px;

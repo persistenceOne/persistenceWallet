@@ -103,23 +103,26 @@ const ValidatorsTable = (props) => {
         </div>,
         <div className="voting" key={index}>
           {parseFloat((validator.data.tokens * Math.pow(10, -6)).toFixed())}
-          {helper.isActive(validator.data)
-            ? `(${parseFloat(
-                (
-                  (validator.data.tokens * 100) /
-                  props.activeValidatorsTokens
-                ).toString()
-              )
-                .toFixed(6)
-                .toLocaleString()}%)`
-            : `(${parseFloat(
-                (
-                  (validator.data.tokens * 100) /
-                  props.inActiveValidatorsTokens
-                ).toString()
-              )
-                .toFixed(6)
-                .toLocaleString()}%)`}
+          <p className={"sub-text"}>
+            {" "}
+            {helper.isActive(validator.data)
+              ? `(${parseFloat(
+                  (
+                    (validator.data.tokens * 100) /
+                    props.activeValidatorsTokens
+                  ).toString()
+                )
+                  .toFixed(6)
+                  .toLocaleString()}%)`
+              : `(${parseFloat(
+                  (
+                    (validator.data.tokens * 100) /
+                    props.inActiveValidatorsTokens
+                  ).toString()
+                )
+                  .toFixed(6)
+                  .toLocaleString()}%)`}
+          </p>
         </div>,
         <span className="voting" key={index}>
           {`${parseFloat(
@@ -145,7 +148,7 @@ const ValidatorsTable = (props) => {
             onClick={() => handleModal("ModalActions", validator.data)}
             className="button button-primary"
           >
-            Actions
+            Manage
           </button>
         </div>
       ])
