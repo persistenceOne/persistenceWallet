@@ -43,7 +43,7 @@ const StakingTabs = () => {
                       eventKey="delegated"
                       onClick={() => onClick("delegated")}
                     >
-                      My staked XPRT
+                      My Staked XPRT
                     </Nav.Link>
                   </Nav.Item>
                   <Nav.Item>

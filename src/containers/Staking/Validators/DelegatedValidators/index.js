@@ -81,7 +81,7 @@ const DelegatedValidators = (props) => {
     },
     {
       name: "delegatedAmount",
-      label: `${t("DELEGATED_AMOUNT")}(${DefaultChainInfo.currency.coinDenom})`,
+      label: `Delegated ${DefaultChainInfo.currency.coinDenom}`,
       options: {
         sortCompare: (order) => {
           return (obj1, obj2) => {
