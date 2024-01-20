@@ -16,7 +16,7 @@ const BannerNotice = () => {
             </p>
             <p className={"sub-text"}>
               Users affected by geo-blocking are suggested to transfer their
-              tokens to a new Keplr, Cosmostation, or Leap wallet.{" "}
+              tokens to a new Keplr, Leap wallet.{" "}
             </p>
           </div>
           <div className={"right"}>
