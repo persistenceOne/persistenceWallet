@@ -19,7 +19,7 @@ export const AccountInfo = {
   maxAccountNumber: 2147483647
 };
 
-export const BaseGas = 450000;
+export const BaseGas = 750000;
 
 export const PstakeInfo = {
   coinDenom: "PSTAKE",
