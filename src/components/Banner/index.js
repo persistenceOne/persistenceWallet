@@ -58,7 +58,7 @@ const Banner = () => {
       <div>
         <div className={"top-banner-section initial-banner"}>
           <p className="content">
-            <b>IMPORTANT NOTICE:</b> Please note that from 1 February 2024,
+            <b>IMPORTANT NOTICE:</b> Please note that from 1 March 2024,
             applications on the persistence.one domain will no longer be
             accessible from your location. See more details{" "}
             <a
