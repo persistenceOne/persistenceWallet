@@ -938,6 +938,18 @@ ul li em {
     font-size: 14px;
     margin: 0; }
 
+.ibc-rewards-box {
+  height: 150px;
+  overflow: auto;
+  margin-bottom: 16px;
+  border: 1px solid #6c757d82;
+  border-radius: 6px;
+  padding: 10px; }
+  .ibc-rewards-box .available-tokens {
+    margin-bottom: 12px !important; }
+    .ibc-rewards-box .available-tokens:last-child {
+      margin: 0 !important; }
+
 /*--------------------------------------------------------------
 # main styles
 --------------------------------------------------------------*/

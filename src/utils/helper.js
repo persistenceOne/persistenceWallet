@@ -490,27 +490,131 @@ export const truncateToFixedDecimalPlaces = (num, decimalPlaces = 6) => {
 export const getDenomFromMinimalDenom = (denom) => {
   switch (denom) {
     case "uxprt":
-      return { denom: "XPRT", tokenImg: "/images/tokens/xprt.png" };
+      return {
+        denom: "XPRT",
+        tokenImg: "/images/tokens/xprt.png",
+        decimals: 6
+      };
     case "uatom":
-      return { denom: "ATOM", tokenImg: "/images/tokens/atom.svg" };
+      return {
+        denom: "ATOM",
+        tokenImg: "/images/tokens/atom.svg",
+        decimals: 6
+      };
     case PstakeInfo.baseDenom:
-      return { denom: "PSTAKE", tokenImg: "/images/tokens/pstake.png" };
+      return {
+        denom: "PSTAKE",
+        tokenImg: "/images/tokens/pstake.png",
+        decimals: 18
+      };
     case "ugraviton":
-      return { denom: "GRAVITON", tokenImg: "/images/tokens/grav.svg" };
+      return {
+        denom: "GRAVITON",
+        tokenImg: "/images/tokens/grav.svg",
+        decimals: 6
+      };
     case "uosmo":
-      return { denom: "OSMO", tokenImg: "/images/tokens/osmo.svg" };
+      return {
+        denom: "OSMO",
+        tokenImg: "/images/tokens/osmo.svg",
+        decimals: 6
+      };
     case stkATOMInfo.coinMinimalDenom:
-      return { denom: "STKATOM", tokenImg: "/images/tokens/stkatom.svg" };
+      return {
+        denom: "STKATOM",
+        tokenImg: "/images/tokens/stkatom.svg",
+        decimals: 6
+      };
     case "arebus":
-      return { denom: "REBUS", tokenImg: "/images/tokens/rebus.png" };
+      return {
+        denom: "REBUS",
+        tokenImg: "/images/tokens/rebus.png",
+        decimals: 6
+      };
     case "aevmos":
-      return { denom: "EVMOS", tokenImg: "/images/tokens/evmos.png" };
+      return {
+        denom: "EVMOS",
+        tokenImg: "/images/tokens/evmos.png",
+        decimals: 18
+      };
     case "ucmdx":
-      return { denom: "CMDX", tokenImg: "/images/tokens/cmdx.png" };
+      return {
+        denom: "CMDX",
+        tokenImg: "/images/tokens/cmdx.png",
+        decimals: 6
+      };
     case "ucmst":
-      return { denom: "CMST", tokenImg: "/images/tokens/cmst.png" };
+      return {
+        denom: "CMST",
+        tokenImg: "/images/tokens/cmst.png",
+        decimals: 6
+      };
+    case "adydx":
+      return {
+        denom: "DYDX",
+        tokenImg: "/images/tokens/ibc.png",
+        decimals: 18
+      };
+    case "uusdc":
+      return {
+        denom: "USDC",
+        tokenImg: "/images/tokens/ibc.png",
+        decimals: 18
+      };
+    case "uusdt":
+      return {
+        denom: "USDT",
+        tokenImg: "/images/tokens/ibc.png",
+        decimals: 18
+      };
+    case "ustars":
+      return {
+        denom: "STARS",
+        tokenImg: "/images/tokens/ibc.png",
+        decimals: 6
+      };
+    case "stk/uatom":
+      return {
+        denom: "stkATOM",
+        tokenImg: "/images/tokens/ibc.png",
+        decimals: 6
+      };
+    case "stk/uosmo":
+      return {
+        denom: "stkOSMO",
+        tokenImg: "/images/tokens/ibc.png",
+        decimals: 6
+      };
+    case "stk/adydx":
+      return {
+        denom: "stkDYDX",
+        tokenImg: "/images/tokens/ibc.png",
+        decimals: 18
+      };
+    case "stk/ustars":
+      return {
+        denom: "stkDYDX",
+        tokenImg: "/images/tokens/ibc.png",
+        decimals: 6
+      };
+    case "stk/uhuahua":
+      return {
+        denom: "stkHUAHUA",
+        tokenImg: "/images/tokens/ibc.png",
+        decimals: 6
+      };
+    case "stk/ubld":
+      return {
+        denom: "stkBLD",
+        tokenImg: "/images/tokens/ibc.png",
+        decimals: 6
+      };
     default:
-      return { denom: "Unknown", tokenImg: "/images/tokens/ibc.svg" };
+      return {
+        denom: "Unknown",
+        tokenImg: "/images/tokens/ibc.svg",
+        decimals: 6
+      };
   }
 };
 

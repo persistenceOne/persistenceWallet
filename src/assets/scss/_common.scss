@@ -1267,3 +1267,18 @@ ul li em {
     margin:0;
   }
 }
+
+.ibc-rewards-box{
+  height: 150px;
+  overflow: auto;
+  margin-bottom: 16px;
+  border: 1px solid #6c757d82;
+  border-radius: 6px;
+  padding: 10px;
+  .available-tokens{
+    margin-bottom: 12px !important;
+    &:last-child{
+      margin: 0 !important;
+    }
+  }
+}
