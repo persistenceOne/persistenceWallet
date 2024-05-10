@@ -138,8 +138,8 @@ export const ExternalChains = [
     coinType: 118
   },
   {
-    rpc: "https://rpc.cosmos.audit.one/",
-    rest: "https://rest.cosmos.audit.one/",
+    rpc: "https://cosmos-rpc.polkachu.com/",
+    rest: "https://cosmos-rest.staketab.org/",
     chainId: "cosmoshub-4",
     chainName: "Cosmos",
     currency: {
