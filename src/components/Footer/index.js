@@ -79,7 +79,7 @@ const Footer = () => {
                 {socialList.map((item, index) => (
                   <OverlayTrigger
                     key={index}
-                    placement="bottom"
+                    placement="top"
                     overlay={
                       <Tooltip id={`tooltip-${item.iconName}}`}>
                         {item.tooltip}
