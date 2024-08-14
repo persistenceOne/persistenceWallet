@@ -57,7 +57,7 @@ const Footer = () => {
             <div className={"d-flex"}>
               <p className="copy-rights mb-sm-0">Developed by Persistence</p>
               <a
-                href="https://persistence.one/terms"
+                href="https://persistence.one/termsofuse"
                 target="_blank"
                 rel="noreferrer"
                 className={"copy-rights ml-2 terms"}

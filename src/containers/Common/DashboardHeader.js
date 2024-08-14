@@ -190,7 +190,7 @@ const DashboardHeader = () => {
                   </a>
                   <a
                     className="profile-item primary-medium-color pb-2 pl-2"
-                    href="https://persistence.one/terms"
+                    href="https://persistence.one/termsofuse"
                     rel="noopener noreferrer"
                     target="_blank"
                     onClick={() => onClick(t("Terms of Use"))}
