@@ -68,7 +68,7 @@ const ModalTerms = () => {
                 I have read and understood, and hereby agree to be legally bound
                 as a ‘User’ to all the terms contained in the{" "}
                 <a
-                  href="https://persistence.one/terms"
+                  href="https://persistence.one/termsofuse"
                   target="_blank"
                   rel="noreferrer"
                   className={"underline"}
@@ -103,7 +103,7 @@ const ModalTerms = () => {
               <p className={"text"}>
                 I declare that I am not an Excluded Person as defined in the{" "}
                 <a
-                  href="https://persistence.one/terms"
+                  href="https://persistence.one/termsofuse"
                   target="_blank"
                   rel="noreferrer"
                   className={"underline"}
@@ -129,7 +129,7 @@ const ModalTerms = () => {
                 I agree that my use and continued use of this site is subject to
                 my continued agreement to the prevailing{" "}
                 <a
-                  href="https://persistence.one/terms"
+                  href="https://persistence.one/termsofuse"
                   target="_blank"
                   rel="noreferrer"
                   className={"underline"}
