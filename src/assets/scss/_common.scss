@@ -28,11 +28,11 @@ body {
 }
 
 .button.button-primary {
-  background: #C73238;
+  background: #E59636;
   font-weight: 600;
   font-size: 16px;
   color: #FCFCFC;
-  border-color: #C73238;
+  border-color: #E59636;
   padding: 0.375rem 1.2rem;
   border-radius: 6px;
 }
@@ -46,14 +46,14 @@ body {
   font-weight: 600;
   font-size: 16.5455px;
   padding: 0.375rem 1.2rem;
-  border-color: #C73238;
-  border-radius: 6px;
+  border-color: #E59636;
+  border-radius: 6px
 }
 
 .flex-center {
   display: flex;
   display: -webkit-flex;
-  align-items: center;
+  align-items: center ;
   justify-content: center;
 }
 
@@ -162,7 +162,7 @@ body {
   }
 
   input[type="radio"]:checked + label:before {
-    background-color: #e50913;
+    background-color: #E59636;
   }
 
   *,
@@ -329,12 +329,12 @@ body {
 }
 
 .not-matched {
-  box-shadow: 0 0 0 0.2rem #e509134d !important;
+  box-shadow: 0 0 0 0.2rem #E596364d !important;
 }
 
 .button-link {
   font-weight: 500;
-  color: #e50913;
+  color: #E59636;
   cursor: pointer;
   text-decoration: underline;
   display: inline;
@@ -376,7 +376,7 @@ body {
   font-size: 18px;
   line-height: 150%;
   text-align: center;
-  color: #e50913;
+  color: #E59636;
 }
 
 .navbar-nav .nav-link {
@@ -509,7 +509,7 @@ body {
     border: 1px solid #e3e5f4;
 
     &:focus {
-      border-color: #e50913;
+      border-color: #E59636;
       box-shadow: none;
     }
   }
@@ -569,7 +569,7 @@ body {
 .validator-item .state.inactive,
 .inactive-icon-box {
   background: #e51f0c33;
-  color: #e50913;
+  color: #E59636;
   font-size: 12px;
   padding: 0px 7px;
   display: inline;
@@ -651,7 +651,7 @@ body {
   }
 
   .fee-box.active {
-    background: #e50913;
+    background: #E59636;
 
     p {
       color: #ffffff;
@@ -741,7 +741,7 @@ body {
   font-weight: 600;
   text-decoration: underline;
   margin-bottom: 30px;
-  color: #e50913;
+  color: #E59636;
 }
 
 .inner-grid-icon {
@@ -765,7 +765,7 @@ body {
   cursor: pointer;
   padding: 5px 10px;
   background: transparent;
-  border: 1px solid #C73238;
+  border: 1px solid #E59636;
   border-radius: 6px;
   margin-right: 4px;
 }
@@ -836,13 +836,13 @@ body {
 }
 
 .delegation-rank.active {
-  background: #e50913;
+  background: #E59636;
   color: #fff;
 }
 
 .delegation-rank.inactive {
-  color: #e50913;
-  background: #e509130f;
+  color: #E59636;
+  background: #E596360f;
 }
 
 .fetching:after {
@@ -1186,7 +1186,7 @@ ul li em {
     height: 1.2rem;
   }
   &.light {
-    color: #e50913 !important;
+    color: #E59636 !important;
   }
 }
 
@@ -1194,7 +1194,7 @@ ul li em {
   position: relative;
   .notice-banner {
     border-radius: 6px;
-    border-left: 5px red solid;
+    border-left: 5px #E59636 solid;
     margin-top: 16px;
     padding: 12px 24px;
     .content {
@@ -1219,7 +1219,7 @@ ul li em {
         .link{
           font-size: 12px;
           font-weight: 400;
-          border: 1px solid red;
+          border: 1px solid #E59636;
           border-radius: 6px;
           padding: 4px 16px;
           &:hover{

@@ -61,7 +61,7 @@
         span {
           font-weight: 500;
           font-size: 48px;
-          color: #E50913;
+          color: #E59636;
         }
       }
     }
@@ -131,7 +131,7 @@
         line-height: 150%;
         cursor: pointer;
         text-align: center;
-        color: #E50913;
+        color: #E59636;
       }
     }
 
@@ -238,13 +238,13 @@
       }
 
       .custom-control-input:checked ~ .custom-control-label::before {
-        border-color: #E50913;
-        background-color: #E50913;
+        border-color: #E59636;
+        background-color: #E59636;
       }
 
       .custom-control-input:focus ~ .custom-control-label::before {
-        box-shadow: 0 0 0 0.2rem #e5091354;
-        border-color: #e5091354 !important;
+        box-shadow: 0 0 0 0.2rem #E5963654;
+        border-color: #E5963654 !important;
       }
     }
 
