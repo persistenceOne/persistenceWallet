@@ -38,7 +38,7 @@ const ToAddress = () => {
   const popover = (
     <Popover id="popover">
       <Popover.Content>
-        New wallet address that will receive your staked XPRT tokens
+        New wallet address that will receive your staked XPRT tokens. Do not transfer to a Centralised Exchange address - tokens will be lost
       </Popover.Content>
     </Popover>
   );
