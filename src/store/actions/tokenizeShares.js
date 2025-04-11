@@ -17,6 +17,7 @@ import {
 } from "./transactions/tokenizeShares";
 import Long from "long";
 import { decodeCosmosSdkDecFromProto } from "@cosmjs/stargate";
+import Decimal from 'decimal.js';
 
 export const fetchTokenizedSharesSuccess = (list) => {
   return {
@@ -84,13 +85,15 @@ export const fetchTokenizedShareRewards = (address) => {
       const response = await lsNativeQueryService.TokenizeShareRecordReward({
         ownerAddress: address
       });
+      console.log(response, "response-response-rewards")
       if (response) {
         let list = [];
         for (const reward of response.rewards) {
           const totalRewards = reward.reward.reduce((accumulator, object) => {
-            const rewards = decimalize(object?.amount);
+            const value = new Decimal(object?.amount);
+            const result = value.div('1e18');
             const fixedRewardsResponse = tokenValueConversion(
-              stringToNumber(parseInt(rewards))
+              stringToNumber(parseInt(result.toString()))
             );
             return accumulator + fixedRewardsResponse;
           }, 0);
