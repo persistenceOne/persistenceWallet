@@ -21,6 +21,7 @@ import {
   MsgTokenizeShares
 } from "persistenceonejs/cosmos/staking/v1beta1/tx";
 import { MsgWithdrawTokenizeShareRecordReward } from "persistenceonejs/cosmos/distribution/v1beta1/tx";
+import Decimal from "decimal.js";
 export const msgSendTypeUrl = "/cosmos.bank.v1beta1.MsgSend";
 const msgDelegateTypeUrl = "/cosmos.staking.v1beta1.MsgDelegate";
 const msgRedelegateTypeUrl = "/cosmos.staking.v1beta1.MsgBeginRedelegate";
@@ -194,13 +195,14 @@ function TokenizeSharesTransferMsg(recordId, sender, newOwner) {
 }
 
 function RedeemTokenizedSharesMsg(fromAddress, denom, amount) {
+  const value = new Decimal(amount);
   return {
     typeUrl: msgRedeemTokensforShares,
     value: MsgRedeemTokensForShares.fromPartial({
       delegatorAddress: fromAddress,
       amount: {
         denom: denom,
-        amount: String(amount)
+        amount: value.trunc().toString()
       }
     })
   };
