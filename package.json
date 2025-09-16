@@ -8,22 +8,22 @@
     "@cosmjs/ledger-amino": "^0.31.1",
     "@cosmjs/math": "^0.31.1",
     "@cosmjs/proto-signing": "^0.31.1",
-    "@cosmjs/stargate": "^0.31.1",
-    "@cosmjs/tendermint-rpc": "^0.31.1",
+    "@cosmjs/stargate": "^0.36.0",
+    "@cosmjs/tendermint-rpc": "^0.36.0",
     "@ledgerhq/hw-transport-webusb": "^5.53.1",
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
-    "@sentry/browser": "^6.17.4",
-    "@sentry/react": "^6.17.4",
+    "@sentry/browser": "^10.12.0",
+    "@sentry/react": "^10.12.0",
     "@sentry/tracing": "^6.17.4",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "@types/create-hash": "^1.2.2",
     "@types/secp256k1": "^4.0.1",
-    "axios": "^0.21.1",
+    "axios": "1.12.0",
     "bip39": "^3.0.2",
-    "bootstrap": "^4.6.0",
+    "bootstrap": "5.0.0",
     "buffer": "^6.0.3",
     "coingecko-api": "^1.0.10",
     "cosmjs-types": "^0.8.0",
@@ -59,8 +59,9 @@
     "styled-components": "^5.1.1",
     "typescript": "^3.2.1",
     "url": "^0.11.0",
+    "vm-browserify": "^1.1.2",
     "web-vitals": "^1.0.1",
-    "webpack": "^5.0.0"
+    "webpack": "5.94.0"
   },
   "scripts": {
     "start": "react-app-rewired start",
@@ -83,6 +84,6 @@
   },
   "devDependencies": {
     "long": "^5.2.0",
-    "react-app-rewired": "^2.1.11"
+    "react-app-rewired": "^2.2.1"
   }
 }
