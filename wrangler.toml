@@ -1,6 +1,7 @@
 name = "persistence-wallet"
-account_id = "1b234fd75823c727716b84645046a3ff"
+type = "webpack"
 compatibility_date = "2024-01-01"
+account_id = "1b234fd75823c727716b84645046a3ff"
 main = "workers-site/index.js"
 site = {bucket = "./build"}
 workers_dev = false
