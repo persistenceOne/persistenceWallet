@@ -1,12 +1,9 @@
 name = "persistence-wallet"
-type = "webpack"
-compatibility_date = "2022-08-01"
 account_id = "1b234fd75823c727716b84645046a3ff"
-zone_id = '000fde296cba847a78e918414382ba7a'
-usage_model = 'bundled'
-compatibility_flags = []
-site = {bucket = "./build"}
+compatibility_date = "2024-01-01"
 main = "workers-site/index.js"
+site = {bucket = "./build"}
+workers_dev = false
 
 
 [env.testnet-staging]
