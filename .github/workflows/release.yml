@@ -65,3 +65,4 @@ jobs:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           environment: "release"
+          wranglerVersion: "3"
