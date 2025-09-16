@@ -29,6 +29,34 @@ module.exports = function override(config, env) {
       "process/browser": require.resolve("process/browser")
     });
   config.resolve.extensions = [...config.resolve.extensions, ".ts", ".js"];
+  
+  // Optimize bundle size
+  config.optimization = {
+    ...config.optimization,
+    splitChunks: {
+      chunks: 'all',
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all',
+        },
+        crypto: {
+          test: /[\\/]node_modules[\\/](@cosmjs|crypto-browserify|elliptic|secp256k1|bip39)[\\/]/,
+          name: 'crypto',
+          chunks: 'all',
+          priority: 10,
+        },
+        material: {
+          test: /[\\/]node_modules[\\/](@material-ui|mui-datatables)[\\/]/,
+          name: 'material',
+          chunks: 'all',
+          priority: 9,
+        }
+      }
+    }
+  };
+  
   config.plugins = [
     ...config.plugins,
     new webpack.ProvidePlugin({
