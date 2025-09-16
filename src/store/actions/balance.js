@@ -111,24 +111,6 @@ export const fetchTransferableVestingAmount = (address) => {
             const denomResponse = getDenomFromMinimalDenom(item.denom);
             item.tokenImage = denomResponse.tokenImg;
             tokenList.push(item);
-          } else {
-            if (item.denom.startsWith("ibc")) {
-              let denomText = item.denom.substr(item.denom.indexOf("/") + 1);
-              const ibcExtension = setupIbcExtension(queryClient);
-              let ibcDenomeResponse =
-                await ibcExtension.ibc.transfer.denomTrace(denomText);
-              const denomResponse = getDenomFromMinimalDenom(
-                ibcDenomeResponse.denomTrace?.baseDenom
-              );
-              let transeDenomData = {
-                denom: item.denom,
-                denomTrace: ibcDenomeResponse.denomTrace,
-                amount: item.amount,
-                ibcBalance: true,
-                tokenImage: denomResponse.tokenImg
-              };
-              tokenList.push(transeDenomData);
-            }
           }
         }
         const account = await getAccount(address);
