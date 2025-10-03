@@ -116,6 +116,6 @@ export const keplrLogin = (history) => {
     );
     sessionStorage.setItem("terms-conditions", "enabled");
     history.push("/dashboard/staking");
-    window.location.reload();
+    // window.location.reload();
   };
 };

@@ -23,3 +23,4 @@ const I18nProvider = ({ children }) => {
 };
 
 export default I18nProvider;
+

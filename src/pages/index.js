@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 import Homepage from '../views/Homepage';
 import DashboardStaking from '../views/Staking';
 import { useSelector } from 'react-redux';
 import { LOGIN_INFO } from '../constants/localStorage';
 
 export default function Home() {
-  const router = useRouter();
   const [isClient, setIsClient] = useState(false);
   const address = useSelector(state => state.address?.value);
 
@@ -26,6 +24,7 @@ export default function Home() {
     return <div>Loading...</div>;
   }
 
+  console.log(isLoggedIn, "isLoggedInisLoggedIn", isClient,address )
   // If logged in, show dashboard, otherwise show homepage
   return isLoggedIn ? <DashboardStaking /> : <Homepage />;
 }
