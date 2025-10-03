@@ -1,11 +1,11 @@
 import {stringToNumber} from "./scripts";
 import {DefaultChainInfo} from "../config";
 
-const restAPI = process.env.REACT_APP_API_KEY;
-const tendermintRPC = process.env.REACT_APP_TENDERMINT_RPC_ENDPOINT;
-const chainID = process.env.REACT_APP_CHAIN_ID;
-const chainName = process.env.REACT_APP_CHAIN_NAME;
-const websiteURL = process.env.REACT_APP_WEBSITE_URL;
+const restAPI = process.env.NEXT_PUBLIC_API_KEY;
+const tendermintRPC = process.env.NEXT_PUBLIC_TENDERMINT_RPC_ENDPOINT;
+const chainID = process.env.NEXT_PUBLIC_CHAIN_ID;
+const chainName = process.env.NEXT_PUBLIC_CHAIN_NAME;
+const websiteURL = process.env.NEXT_PUBLIC_WEBSITE_URL;
 const coinName = DefaultChainInfo.currency.coinDenom;
 const coinDenom = DefaultChainInfo.currency.coinMinimalDenom;
 const prefix = DefaultChainInfo.prefix;

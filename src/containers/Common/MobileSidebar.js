@@ -4,11 +4,11 @@ import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import MenuIcon from "@material-ui/icons/Menu";
-import { NavLink } from "react-router-dom";
+import Link from "next/link";
 import Icon from "../../components/Icon";
 import { useTranslation } from "react-i18next";
 
-const EXPLORER_API = process.env.REACT_APP_EXPLORER_API;
+const EXPLORER_API = process.env.NEXT_PUBLIC_EXPLORER_API;
 
 const MobileSidebar = () => {
   const { t } = useTranslation();
@@ -40,9 +40,9 @@ const MobileSidebar = () => {
     >
       <List className="mobile-sidebar-container">
         <li className="nav-item link">
-          <NavLink
+          <Link
             className="nav-link primary-medium-color"
-            to="/dashboard/wallet"
+            href="/dashboard"
           >
             <div className="icon-container">
               <div className="icon-box">
@@ -50,12 +50,12 @@ const MobileSidebar = () => {
               </div>
             </div>
             {t("WALLET")}
-          </NavLink>
+          </Link>
         </li>
         <li className="nav-item link">
-          <NavLink
+          <Link
             className="nav-link primary-medium-color"
-            to="/#dashboard/staking"
+            href="/staking"
           >
             <div className="icon-container">
               <div className="icon-box">
@@ -63,7 +63,7 @@ const MobileSidebar = () => {
               </div>
             </div>
             {t("STAKING")}
-          </NavLink>
+          </Link>
         </li>
         <li className="nav-item link">
           <a

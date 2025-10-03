@@ -20,7 +20,7 @@ import ReactGA from "react-ga4";
 import { DefaultChainInfo, PstakeInfo } from "../../config";
 import { LOGIN_INFO } from "../../constants/localStorage";
 import { keyStoreLogin } from "../../store/actions/signIn/keyStore";
-import { useHistory } from "react-router-dom";
+import { useRouter } from "next/router";
 import Copy from "../../components/Copy";
 import ModalMigrateBalance from "../Transactions/ModalMigrateBalance";
 import { tokenValueConversion } from "../../utils/helper";
@@ -30,7 +30,7 @@ const TokenInfo = (props) => {
   const dispatch = useDispatch();
   const tokenList = useSelector((state) => state.balance.tokenList);
   const loginInfo = JSON.parse(localStorage.getItem(LOGIN_INFO));
-  const history = useHistory();
+  const router = useRouter();
   const [activeWallet, setActiveWallet] = useState("");
 
   useEffect(() => {

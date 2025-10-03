@@ -2,14 +2,14 @@ import React from 'react';
 import Button from "../../../../components/Button";
 import {useDispatch} from "react-redux";
 import {addressLogin} from "../../../../store/actions/signIn/address";
-import {useHistory} from "react-router-dom";
+import {useRouter} from "next/router";
 
 const ButtonSubmit = () => {
-    const history = useHistory();
+    const router = useRouter();
     const dispatch = useDispatch();
 
     const onClick = () => {
-        dispatch(addressLogin(history));
+        dispatch(addressLogin(router));
     };
 
     return (

@@ -23,7 +23,7 @@ import { sortTokensByDenom } from "../../utils/validations";
 import { DefaultChainInfo, PstakeInfo } from "../../config";
 import { QueryClient, setupIbcExtension } from "@cosmjs/stargate";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
-const tendermintRPCURL = process.env.REACT_APP_TENDERMINT_RPC_ENDPOINT;
+const tendermintRPCURL = process.env.NEXT_PUBLIC_TENDERMINT_RPC_ENDPOINT;
 
 export const fetchRewardsProgress = () => {
   return {

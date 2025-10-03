@@ -28,7 +28,7 @@ import {
   stkATOMInfo
 } from "../../config";
 
-const tendermintRPCURL = process.env.REACT_APP_TENDERMINT_RPC_ENDPOINT;
+const tendermintRPCURL = process.env.NEXT_PUBLIC_TENDERMINT_RPC_ENDPOINT;
 
 export const fetchBalanceProgress = () => {
   return {

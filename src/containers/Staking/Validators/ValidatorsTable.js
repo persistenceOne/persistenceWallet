@@ -1,8 +1,7 @@
 import React from "react";
 import helper from "../../../utils/helper";
 import Avatar from "./Avatar";
-import activeIcon from "../../../assets/images/active.svg";
-import inActiveIcon from "../../../assets/images/inactive.svg";
+// Icons referenced directly in JSX
 import DataTable from "../../../components/DataTable";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";

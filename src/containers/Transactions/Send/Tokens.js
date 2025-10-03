@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import { useTranslation } from "react-i18next";
+import Image from 'next/image';
 import { Decimal } from "@cosmjs/math";
 import {
   decimalize,
@@ -104,10 +105,11 @@ const Tokens = () => {
             ) {
               return (
                 <MenuItem key={index + 1} className="" value={item.denom}>
-                  <img
+                  <Image
                     src={item.tokenImage}
                     alt={"logo"}
                     width={20}
+                    height={20}
                     className="mr-2"
                   />
                   {denomChange(item.denom) === "Unknown"
@@ -128,10 +130,11 @@ const Tokens = () => {
               );
               return (
                 <MenuItem key={index + 1} className="" value={item.denom}>
-                  <img
+                  <Image
                     src={item.tokenImage}
                     alt={"logo"}
                     width={20}
+                    height={20}
                     className="mr-2"
                   />
                   {helper.denomChange(item.denomTrace.baseDenom)} (

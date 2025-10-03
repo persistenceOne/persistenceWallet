@@ -9,7 +9,7 @@ import ReactGA from "react-ga4";
 import { DefaultChainInfo, PstakeInfo } from "../../../config";
 const tmRPC = require("@cosmjs/tendermint-rpc");
 const { QueryClient, setupIbcExtension } = require("@cosmjs/stargate");
-const tendermintRPCURL = process.env.REACT_APP_TENDERMINT_RPC_ENDPOINT;
+const tendermintRPCURL = process.env.NEXT_PUBLIC_TENDERMINT_RPC_ENDPOINT;
 
 const ModalViewAmountDetails = (props) => {
   const { t } = useTranslation();

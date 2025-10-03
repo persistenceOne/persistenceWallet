@@ -9,11 +9,14 @@ i18n
     .init({
         // we init with resources
         resources: {
-            English: English,
+            en: {
+                translations: English.translations
+            }
         },
 
-        fallbackLng: "English",
-        debug: true,
+        lng: "en",
+        fallbackLng: "en",
+        debug: false,
 
         // have a common namespace used around the full app
         ns: ["translations"],
@@ -22,7 +25,11 @@ i18n
         keySeparator: false, // we use content as keys
 
         interpolation: {
-            escapeValue: true
+            escapeValue: false // React already escapes values
+        },
+
+        react: {
+            useSuspense: false // Disable suspense for SSR compatibility
         }
     });
 

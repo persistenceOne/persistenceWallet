@@ -2,9 +2,9 @@ import {LOGIN_INFO} from "../constants/localStorage";
 import {mnemonicTrim, stringToNumber} from "./scripts";
 import {tokenValueConversion} from "./helper";
 import {DefaultChainInfo, GasInfo} from "../config";
+import {safeGetJSON} from "./localStorage";
 
 const bip39 = require("bip39");
-const loginInfo = JSON.parse(localStorage.getItem(LOGIN_INFO));
 
 export const ValidateSendAmount = (amount, value) => {
     if (stringToNumber(amount ) < value) {
@@ -18,6 +18,7 @@ export const ValidateFee = (transferableAmount, feeValue, type, amount, tokenDen
         type === "withdrawMultiple" || type === "withdrawAddress" || type === "withdrawValidatorRewards" || type === "redelegate" || type === "unbond"
     );
 
+    const loginInfo = safeGetJSON(LOGIN_INFO);
     const vestingDelegationCheck = (
         loginInfo && loginInfo.account === "vesting" && type === "delegate"
     );

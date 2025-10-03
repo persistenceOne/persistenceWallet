@@ -1,7 +1,7 @@
 import React from "react";
-import {NavLink} from 'react-router-dom';
+import Link from 'next/link';
 import {Nav, Navbar} from "react-bootstrap";
-import logo from "../assets/images/logo_bold.svg";
+import Image from 'next/image';
 import {useTranslation} from "react-i18next";
 
 const RouteNotFound = () => {
@@ -10,9 +10,9 @@ const RouteNotFound = () => {
         <div className="home-page pageError">
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
                 <div className="container">
-                    <Navbar.Brand><NavLink to="/dashboard/wallet">
-                        <img src={logo} alt="logo"/>
-                    </NavLink></Navbar.Brand>
+                    <Navbar.Brand><Link href="/dashboard">
+                        <Image src="/images/logo_bold.svg" alt="logo" width={120} height={40}/>
+                    </Link></Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="ml-auto">

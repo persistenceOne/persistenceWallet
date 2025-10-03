@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import MailchimpSubscribe from "react-mailchimp-subscribe";
 import {Button, Spinner} from "react-bootstrap";
 
-let mailURl = process.env.REACT_APP_MAIL_CHIMP_URL;
+let mailURl = process.env.NEXT_PUBLIC_MAIL_CHIMP_URL;
 
 function simulateNetworkRequest() {
     return new Promise((resolve) => setTimeout(resolve, 500));

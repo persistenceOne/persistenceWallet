@@ -1,6 +1,6 @@
 import {Modal} from 'react-bootstrap';
 import React, {useState} from 'react';
-import chrome from "../../assets/images/chrome.svg";
+import Image from 'next/image';
 import {useTranslation} from "react-i18next";
 
 const ModalKeplrInstall = () => {
@@ -27,7 +27,7 @@ const ModalKeplrInstall = () => {
                         <a className="chrome-link"
                             href="https://chrome.google.com/webstore/detail/keplr/dmkamcknogkgcdfhhbddcghachkejeap"
                             rel="noopener noreferrer" target="_blank">
-                            <img src={chrome} alt="chrome"/>
+                            <Image src="/images/chrome.svg" alt="chrome" width={48} height={48}/>
                             <p>{t("INSTALL_CHROME")}</p>
                         </a>
                     </div>

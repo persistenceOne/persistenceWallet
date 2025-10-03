@@ -4079,11 +4079,11 @@ ul li em {
 }
 
 .dark-mode .header .navbar .header-logo {
-  background: url(../../../src/assets/images/logo_bold.svg) no-repeat;
+  background: url(/images/logo_bold.svg) no-repeat;
 }
 
 .light-mode .header .navbar .header-logo {
-  background: url(../../../src/assets/images/logo_bold_dark.svg) no-repeat;
+  background: url(/images/logo_bold_dark.svg) no-repeat;
 }
 
 .dashboard .navbar-expand-lg .navbar-nav, .dashboard .navbar-nav {

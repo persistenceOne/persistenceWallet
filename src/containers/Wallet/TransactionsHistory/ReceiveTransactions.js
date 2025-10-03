@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import moment from 'moment';
 import helper, {tokenValueConversion} from "../../../utils/helper";
 import Icon from "../../../components/Icon";
-import loader from "../../../assets/images/loader.svg";
+import Image from 'next/image';
 import {fetchReceiveTransactions} from "../../../store/actions/transactionHistory";
 import {connect} from "react-redux";
 import DataTable from "../../../components/DataTable";
@@ -13,7 +13,7 @@ import {formatNumber, stringTruncate} from "../../../utils/scripts";
 import NumberView from "../../../components/NumberView";
 import {LOGIN_INFO} from "../../../constants/localStorage";
 import {DefaultChainInfo} from "../../../config";
-const EXPLORER_API = process.env.REACT_APP_EXPLORER_API;
+const EXPLORER_API = process.env.NEXT_PUBLIC_EXPLORER_API;
 const ReceiveTransactions = (props) => {
     const loginInfo = JSON.parse(localStorage.getItem(LOGIN_INFO));
 
@@ -144,7 +144,7 @@ const ReceiveTransactions = (props) => {
 
     if (props.inProgress && props.list.length) {
         return <div className="transaction-loader">
-            <img src={loader} alt="loader" className="loader"/>
+            <Image src="/images/loader.svg" alt="loader" className="loader" width={50} height={50}/>
         </div>;
     }
 

@@ -8,7 +8,7 @@ import {
 } from "../../../../store/actions/signIn/keyStore";
 import Icon from "../../../../components/Icon";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router-dom";
+import { useRouter } from "next/router";
 import { QueryClientImpl } from "cosmjs-types/cosmos/bank/v1beta1/query";
 import { QueryClientImpl as StakingQueryClientImpl } from "cosmjs-types/cosmos/staking/v1beta1/query";
 import { DefaultChainInfo } from "../../../../config";
@@ -20,7 +20,7 @@ import { createProtobufRpcClient, QueryClient } from "@cosmjs/stargate";
 import vestingAccount from "../../../../utils/vestingAmount";
 import transactions from "../../../../utils/transactions";
 import Lodash from "lodash";
-const tendermintRPCURL = process.env.REACT_APP_TENDERMINT_RPC_ENDPOINT;
+const tendermintRPCURL = process.env.NEXT_PUBLIC_TENDERMINT_RPC_ENDPOINT;
 
 const fetchBalance = async (address) => {
   try {
@@ -118,7 +118,7 @@ export const fetchUnbondDelegations = async (address) => {
 };
 const ModalAddress = () => {
   const { t } = useTranslation();
-  const history = useHistory();
+  const router = useRouter();
   const show = useSelector((state) => state.signInKeyStore.keyStoreResultModal);
   const response = useSelector((state) => state.signInKeyStore.response.value);
   const [balanceLoading, setBalanceLoading] = useState(false);

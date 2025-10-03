@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Nav, Navbar, NavLink } from "react-bootstrap";
-import logo from "../../assets/images/logo_bold.svg";
-import dark_icon from "../../assets/images/dark_icon.svg";
+import Image from 'next/image';
 import ModalCreateWallet from "../../containers/CreateWallet/ModalCreateWallet";
 import Footer from "../../components/Footer";
 import { useTranslation } from "react-i18next";
@@ -35,7 +34,7 @@ const Homepage = () => {
         <div className="container">
           <Navbar.Brand>
             <Nav.Link>
-              <img src={logo} alt="logo" />
+              <Image src="/images/logo_bold.svg" alt="logo" width={120} height={40} />
             </Nav.Link>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -82,7 +81,7 @@ const Homepage = () => {
             {/*</p>*/}
           </div>
           <p className="border-logo">
-            <img src={dark_icon} alt="dark-icon" />
+            <Image src="/images/dark_icon.svg" alt="dark-icon" width={24} height={24} />
           </p>
         </div>
       </div>

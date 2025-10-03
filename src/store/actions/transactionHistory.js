@@ -27,7 +27,7 @@ import {
   MsgRedeem
 } from "persistenceonejs/pstake/liquidstakeibc/v1beta1/msgs";
 const { defaultRegistryTypes } = require("@cosmjs/stargate");
-const tendermintRPCURL = process.env.REACT_APP_TENDERMINT_RPC_ENDPOINT;
+const tendermintRPCURL = process.env.NEXT_PUBLIC_TENDERMINT_RPC_ENDPOINT;
 const vestingTx = require("cosmjs-types/cosmos/vesting/v1beta1/tx");
 const tx_7 = require("cosmjs-types/ibc/core/channel/v1/tx");
 const authzTx = require("cosmjs-types/cosmos/authz/v1beta1/tx");

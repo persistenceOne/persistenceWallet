@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Icon from "../../components/Icon";
-import { NavLink, useHistory } from "react-router-dom";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { Nav, Navbar, NavDropdown } from "react-bootstrap";
+import Image from 'next/image';
 import Copy from "../../components/Copy";
 import { useTranslation } from "react-i18next";
 import Darktheme from "../DarkTheme";
@@ -23,7 +25,7 @@ import NumberView from "../../components/NumberView";
 const DashboardHeader = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const history = useHistory();
+  const router = useRouter();
   const loginInfo = JSON.parse(localStorage.getItem(LOGIN_INFO));
   const [activeWallet, setActiveWallet] = useState("");
   const tokenPrice = useSelector((state) => state.tokenPrice.tokenPrice);
@@ -108,7 +110,7 @@ const DashboardHeader = () => {
             <MobileSidebar />
           </div>
           <Navbar.Brand>
-            <NavLink to="/dashboard/wallet" className="header-logo"></NavLink>
+            <Link href="/dashboard" className="header-logo"></Link>
           </Navbar.Brand>
 
           <Nav className="ml-auto" onClick={() => onClick(t("DASHBOARD"))}>
@@ -117,17 +119,18 @@ const DashboardHeader = () => {
                 className="nav-link primary-medium-color price"
                 title={"XPRT Price"}
               >
-                <img
+                <Image
                   src={"/images/tokens/xprt.png"}
                   alt={"logo"}
                   width={20}
+                  height={20}
                   className="mr-1"
                 />
                 ${formatNumber(tokenPrice)}
               </div>
             </li>
             <li className="nav-item link mobile-nav-item">
-              <NavLink
+              <Link
                 className={`nav-link primary-medium-color ${
                   window.location.pathname === "/dashboard/staking" ||
                   window.location.pathname === "/"
@@ -135,24 +138,24 @@ const DashboardHeader = () => {
                     : ""
                 }`}
                 onClick={() => onClick(t("STAKING"))}
-                to="/dashboard/staking"
+                href="/staking"
               >
                 <div className="icon-box">
                   <Icon viewClass="icon" icon="staking" />
                 </div>
                 {t("STAKING")}
-              </NavLink>
+              </Link>
             </li>
             <li className="nav-item link mobile-nav-item">
-              <NavLink
+              <Link
                 className="nav-link primary-medium-color"
-                to="/dashboard/wallet"
+                href="/dashboard"
               >
                 <div className="icon-box">
                   <Icon viewClass="icon" icon="wallet" />
                 </div>
                 {t("WALLET")}
-              </NavLink>
+              </Link>
             </li>
             <li className="nav-item link help-section">
               <NavDropdown

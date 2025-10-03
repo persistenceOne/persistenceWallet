@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import symbol_defs from '../../assets/images/icons.svg';
+const symbol_defs = "/images/icon-symbols.svg";
 
 export default class Icon extends Component {
     render() {

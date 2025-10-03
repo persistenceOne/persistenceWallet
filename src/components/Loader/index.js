@@ -1,7 +1,7 @@
 import React from 'react';
-import loaderImage from "../../assets/images/loader.svg";
 import {Modal} from "react-bootstrap";
 import {useSelector} from "react-redux";
+import Image from 'next/image';
 
 const Loader = () => {
     const inProgress = useSelector(state => state.common.inProgress);
@@ -14,7 +14,7 @@ const Loader = () => {
             centered
             className="loader"
         >
-            <img src={loaderImage} alt="loader"/>
+            <Image src="/images/loader.svg" alt="loader" width={50} height={50}/>
         </Modal>
     );
 };

@@ -2,14 +2,14 @@ import React from 'react';
 import Button from "../../../../components/Button";
 import {useDispatch} from "react-redux";
 import {ledgerLogin} from "../../../../store/actions/signIn/ledger";
-import {useHistory} from "react-router-dom";
+import {useRouter} from "next/router";
 
 const ButtonContinue = () => {
-    const history = useHistory();
+    const router = useRouter();
     const dispatch = useDispatch();
 
     const onClick = () => {
-        dispatch(ledgerLogin(history));
+        dispatch(ledgerLogin(router));
     };
 
     return (

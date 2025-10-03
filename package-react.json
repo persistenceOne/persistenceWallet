@@ -2,14 +2,6 @@
   "name": "pwallet",
   "version": "3.1.1",
   "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "build:ipfs": "PUBLIC_URL=. next build",
-    "export": "next export"
-  },
   "dependencies": {
     "@cosmjs/crypto": "^0.32.3",
     "@cosmjs/encoding": "^0.32.3",
@@ -24,9 +16,12 @@
     "@sentry/browser": "^10.12.0",
     "@sentry/react": "^10.12.0",
     "@sentry/tracing": "^6.17.4",
-    "@svgr/webpack": "^8.1.0",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "@types/create-hash": "^1.2.2",
+    "@types/secp256k1": "^4.0.1",
     "axios": "1.12.0",
-    "babel-plugin-styled-components": "^2.1.4",
     "bip39": "^3.0.2",
     "bootstrap": "5.0.0",
     "buffer": "^6.0.3",
@@ -41,39 +36,54 @@
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "mui-datatables": "^3.7.6",
-    "next": "^14.0.0",
     "persistenceonejs": "^2.3.0-rc1",
     "prettier": "^2.8.8",
     "process": "^0.11.10",
     "qrcode.react": "^1.0.1",
     "querystring-es3": "^0.2.1",
-    "react": "^18.3.1",
+    "react": "^17.0.1",
     "react-bootstrap": "^1.4.3",
     "react-copy-to-clipboard": "^5.0.3",
-    "react-dom": "^18.3.1",
+    "react-dom": "^17.0.1",
     "react-ga4": "^1.4.1",
     "react-i18next": "^11.8.6",
-    "react-is": "^19.2.0",
     "react-mailchimp-subscribe": "^2.1.0",
     "react-redux": "^7.2.2",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "5.0.1",
     "react-select": "^5.2.2",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
-    "sass": "^1.93.2",
     "stream-browserify": "^3.0.0",
     "styled-components": "^5.1.1",
-    "typescript": "^5.0.0",
+    "typescript": "^3.2.1",
     "url": "^0.11.0",
     "vm-browserify": "^1.1.2",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "^1.0.1",
+    "webpack": "5.94.0"
+  },
+  "scripts": {
+    "start": "react-app-rewired start",
+    "build:ipfs": "PUBLIC_URL=. react-app-rewired build",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-app-rewired eject"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ]
   },
   "devDependencies": {
-    "@types/node": "^20.0.0",
-    "@types/react": "^18.0.0",
-    "@types/react-dom": "^18.0.0",
-    "eslint": "^8.0.0",
-    "eslint-config-next": "^14.0.0",
-    "long": "^5.2.0"
+    "long": "^5.2.0",
+    "react-app-rewired": "^2.2.1"
   }
 }

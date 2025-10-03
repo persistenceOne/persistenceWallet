@@ -2,14 +2,13 @@ import { Modal } from "react-bootstrap";
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import success from "../../../assets/images/success.svg";
-import failed from "../../../assets/images/inactive.svg";
+import Image from 'next/image';
 import { hideTxResultModal } from "../../../store/actions/transactions/common";
 import { LOGIN_INFO } from "../../../constants/localStorage";
 import { fetchApiData } from "../../../utils/queries";
 import { stringTruncate } from "../../../utils/scripts";
 
-const EXPLORER_API = process.env.REACT_APP_EXPLORER_API;
+const EXPLORER_API = process.env.NEXT_PUBLIC_EXPLORER_API;
 
 const ModalViewTxnResponse = () => {
   const { t } = useTranslation();
@@ -52,7 +51,7 @@ const ModalViewTxnResponse = () => {
           </Modal.Header>
           <Modal.Body className="delegate-modal-body">
             <div className="result-container">
-              <img src={success} alt="success-image" />
+              <Image src="/images/success.svg" alt="success-image" width={64} height={64} />
               {txnInfo.txnTokenizeHash !== "" ? (
                 <div className={"mt-4"}>
                   <div className={"mb-2"}>
@@ -102,7 +101,7 @@ const ModalViewTxnResponse = () => {
           </Modal.Header>
           <Modal.Body className="delegate-modal-body">
             <div className="result-container">
-              <img src={failed} alt="success-image" />
+              <Image src="/images/inactive.svg" alt="success-image" width={64} height={64} />
               <>
                 <p>
                   {response.rawLog ===

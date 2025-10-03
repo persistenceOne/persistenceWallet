@@ -1,6 +1,5 @@
 import React from 'react';
 import {Form} from "react-bootstrap";
-import './index.css';
 import {emptyFunc} from "../../utils/scripts";
 
 const InputText = ({

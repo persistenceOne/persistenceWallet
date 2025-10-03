@@ -3,7 +3,7 @@ import {Accordion, AccordionContext, Card, Form, Modal, useAccordionToggle,} fro
 import wallet from "../../../utils/wallet";
 import Icon from "../../../components/Icon";
 import GeneratePrivateKey from "./GeneratePrivateKey";
-import {useHistory} from "react-router-dom";
+import {useRouter} from "next/router";
 import {useTranslation} from "react-i18next";
 import {useDispatch} from "react-redux";
 import {addressLogin, setAddress} from "../../../store/actions/signIn/address";
@@ -12,7 +12,7 @@ import {AccountInfo} from "../../../config";
 
 const AdvanceMode = (props) => {
     const {t} = useTranslation();
-    const history = useHistory();
+    const router = useRouter();
     const [show, setShow] = useState(true);
     const [advanceForm, setAdvanceForm] = useState(true);
     const [responseShow, setResponseShow] = useState(false);
@@ -71,7 +71,7 @@ const AdvanceMode = (props) => {
                 message: ''
             }
         }));
-        dispatch(addressLogin(history, response.address));
+        dispatch(addressLogin(router, response.address));
     };
     const handlePrevious = (formName) => {
         if (formName === "advanceForm") {

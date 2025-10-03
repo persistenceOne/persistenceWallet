@@ -4,14 +4,14 @@ import ValidatorsTable from "./ValidatorsTable";
 import {connect} from "react-redux";
 import {useTranslation} from "react-i18next";
 import ReactGA from "react-ga4";
-import loader from "../../../assets/images/loader.svg";
+import Image from 'next/image';
 
 const Validators = (props) => {
     const {t} = useTranslation();
 
     if (props.inProgress) {
         return <div className="transaction-loader">
-            <img src={loader} alt="loader" className="loader"/>
+            <Image src="/images/loader.svg" alt="loader" className="loader" width={50} height={50}/>
         </div>;
     }
 

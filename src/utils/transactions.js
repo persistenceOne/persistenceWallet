@@ -52,10 +52,10 @@ import { AminoConverter as AminoConverterDistribution } from "persistenceonejs/c
 const tmRPC = require("@cosmjs/tendermint-rpc");
 const { TransferMsg } = require("./protoMsgHelper");
 const addressPrefix = DefaultChainInfo.prefix;
-const configChainID = process.env.REACT_APP_CHAIN_ID;
+const configChainID = process.env.NEXT_PUBLIC_CHAIN_ID;
 const configCoinType = DefaultChainInfo.coinType;
 
-const tendermintRPCURL = process.env.REACT_APP_TENDERMINT_RPC_ENDPOINT;
+const tendermintRPCURL = process.env.NEXT_PUBLIC_TENDERMINT_RPC_ENDPOINT;
 
 function createAminoTypes() {
   return {

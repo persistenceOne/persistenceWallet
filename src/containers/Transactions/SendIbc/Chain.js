@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { setTxIbcSendChainInfo } from "../../../store/actions/transactions/sendIbc";
 import { IBCChainInfos, TestIBCChainInfos } from "../../../config";
 
-const IBC_CONF = process.env.REACT_APP_IBC_CONFIG;
+const IBC_CONF = process.env.NEXT_PUBLIC_IBC_CONFIG;
 
 const Chain = () => {
   const { t } = useTranslation();
