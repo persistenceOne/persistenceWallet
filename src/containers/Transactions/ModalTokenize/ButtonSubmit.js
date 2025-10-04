@@ -28,7 +28,6 @@ import transactions from "../../../utils/transactions";
 import { fee } from "../../../utils/aminoMsgHelper";
 import { fetchApiData, pollAccountBalance } from "../../../utils/queries";
 import { getTokenizedShares } from "../../../utils/actions";
-import { showFeeModal } from "../../../store/actions/transactions/fee";
 
 const getLatestRecord = (newList, oldList) => {
   const result = newList.filter(
@@ -69,7 +68,8 @@ const ButtonSubmit = () => {
   const disable =
     amount.value === "" ||
     stringToNumber(amount.value) === 0 ||
-    amount.error.message !== "" ||
+    (amount.error.message !== undefined &&
+      amount.error.message !== "") ||
     validatorAddress.value === "" ||
     validatorAddress.error.message !== "" ||
     memo.error.message !== "" ||

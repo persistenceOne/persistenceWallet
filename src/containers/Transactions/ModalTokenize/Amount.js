@@ -61,17 +61,17 @@ const Amount = () => {
         validatorDelegationAmount.value,
         stringToNumber(value)
       );
-      const bondValidation = bondCheck(value);
-      let validationCheck;
-      if (bondValidation.message !== "") {
-        validationCheck = bondValidation;
-      } else {
-        validationCheck = amountValidation;
-      }
+      // const bondValidation = bondCheck(value);
+      // let validationCheck;
+      // if (bondValidation.message !== "") {
+      //   validationCheck = bondValidation;
+      // } else {
+      //   validationCheck = amountValidation;
+
       dispatch(
         setTxTokenizeAmount({
           value: value,
-          error: validationCheck
+          error: amountValidation
         })
       );
     } else {

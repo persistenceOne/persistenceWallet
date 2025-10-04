@@ -85,7 +85,7 @@ export const keyStoreTxn = async (loginAddress, msgs) => {
   );
   const bip39PassPhrase = store.getState().advanced.bip39PassPhrase.value;
 
-  const fee = store.getState().fee.fee.value.fee;
+  const feeData = store.getState().fee.fee.value.fee;
   const gas = store.getState().gas.gas.value;
 
   let mnemonic = "";
@@ -111,8 +111,8 @@ export const keyStoreTxn = async (loginAddress, msgs) => {
 
   const result = await transactions.TransactionWithMnemonic(
     msgs,
-    fee(Math.trunc(fee), gas),
-    memo,
+    fee(Math.trunc(feeData), gas),
+    "",
     mnemonic,
     makeHdPath(accountNumber, accountIndex, loginCoinType),
     bip39PassPhrase,
@@ -164,7 +164,7 @@ export const keyStoreSubmit = (loginAddress) => {
       const formData = getState().common.txInfo.value.data;
       const txName = getState().common.txName.value.name;
 
-      const fee = getState().fee.fee.value.fee;
+      const feeData = getState().fee.fee.value.fee;
       const gas = getState().gas.gas.value;
 
       let mnemonic = "";
@@ -190,7 +190,7 @@ export const keyStoreSubmit = (loginAddress) => {
       let result = await transactions.getTransactionResponse(
         loginAddress,
         formData,
-        fee,
+        feeData,
         gas,
         mnemonic,
         txName,
