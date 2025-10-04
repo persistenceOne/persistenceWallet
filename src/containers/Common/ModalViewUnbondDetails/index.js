@@ -22,7 +22,6 @@ const ModalViewUnbondDetails = (props) => {
   const unbondAmount = useSelector((state) => state.unbond.unbond);
   const show = useSelector((state) => state.cancelUnbondTx.modal);
   const response = useSelector((state) => state.common.error);
-  console.log(props.list, "unbond-list");
   const { t } = useTranslation();
   const handleClose = () => {
     dispatch(hideTxCancelUnbondModal());

@@ -11,6 +11,7 @@ import transactions from "../../utils/transactions";
 import { QueryClientImpl } from "cosmjs-types/cosmos/distribution/v1beta1/query";
 import ActionHelper from "../../utils/actions";
 import { QueryClientImpl as StakingQueryClientImpl } from "cosmjs-types/cosmos/staking/v1beta1/query";
+import { QueryClientImpl as IBCQueryClientImpl } from "persistenceonejs/ibc/applications/transfer/v1/query";
 import * as Sentry from "@sentry/browser";
 import { decimalize, stringToNumber } from "../../utils/scripts";
 import {
@@ -21,8 +22,6 @@ import {
 import Lodash from "lodash";
 import { sortTokensByDenom } from "../../utils/validations";
 import { DefaultChainInfo, PstakeInfo } from "../../config";
-import { QueryClient, setupIbcExtension } from "@cosmjs/stargate";
-import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 const tendermintRPCURL = process.env.REACT_APP_TENDERMINT_RPC_ENDPOINT;
 
 export const fetchRewardsProgress = () => {
@@ -77,28 +76,22 @@ export const fetchTotalRewards = (address) => {
       dispatch(fetchRewardsProgress());
       const rpcClient = await transactions.RpcClient();
       const distributionQueryService = new QueryClientImpl(rpcClient);
-      const tendermintClient = await Tendermint34Client.connect(
-        tendermintRPCURL
-      );
-      const queryClient = new QueryClient(tendermintClient);
       await distributionQueryService
         .DelegationTotalRewards({
           delegatorAddress: address
         })
         .then(async (delegatorRewardsResponse) => {
           if (delegatorRewardsResponse.total.length) {
-            console.log(delegatorRewardsResponse, "delegatorRewardsResponse");
             let allTokensRewards = [];
             for (const token of delegatorRewardsResponse.total) {
               if (token.denom.startsWith("ibc")) {
                 let denomText = token.denom.substring(
                   token.denom.indexOf("/") + 1
                 );
-                const ibcExtension = setupIbcExtension(queryClient);
-                let ibcDenomeResponse =
-                  await ibcExtension.ibc.transfer.denomTrace(denomText);
+                const ibcQueryClientService = new IBCQueryClientImpl(rpcClient);
+                const ibcDenomeResponse = await ibcQueryClientService.Denom({ hash:denomText});
                 const denomResponse = getDenomFromMinimalDenom(
-                  ibcDenomeResponse.denomTrace?.baseDenom
+                  ibcDenomeResponse.denom?.base
                 );
                 const decimalizedValue = decimalize(token.amount, 18);
                 const rewards = decimalize(
@@ -180,7 +173,7 @@ export const fetchTotalRewards = (address) => {
           Sentry.captureException(
             error.response ? error.response.data.message : error.message
           );
-          console.log(
+          console.log(error,
             error.response ? error.response.data.message : error.message
           );
         });

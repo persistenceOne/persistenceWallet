@@ -134,8 +134,8 @@ const Tokens = () => {
                     width={20}
                     className="mr-2"
                   />
-                  {helper.denomChange(item.denomTrace.baseDenom)} (
-                  {item.denomTrace.path})
+                  {helper.denomChange(item.denomTrace.base)} (
+                  {item.denomTrace.trace[0].channelId})
                 </MenuItem>
               );
             }

@@ -116,10 +116,10 @@ const Tokens = () => {
                     width={20}
                     className="mr-2"
                   />
-                  {denomChange(item.denomTrace.baseDenom) === "Unknown"
+                  {denomChange(item.denomTrace.base) === "Unknown"
                     ? stringTruncate(item.denom, 5)
-                    : denomChange(item.denomTrace.baseDenom)}
-                  ({item.denomTrace.path})
+                    : denomChange(item.denomTrace.base)}
+                  ({item.denomTrace.trace[0].channelId})
                 </MenuItem>
               );
             }

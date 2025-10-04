@@ -17,7 +17,6 @@ const ButtonSubmit = ({ entry, validatorAddress, type, list }) => {
   const memo = useSelector((state) => state.cancelUnbondTx.memo);
 
   const onClick = () => {
-    console.log(entry, validatorAddress, "clicked");
     let msgs = [];
     if (type === "individual") {
       msgs.push(
@@ -50,7 +49,6 @@ const ButtonSubmit = ({ entry, validatorAddress, type, list }) => {
   const disable = memo.error.message !== "";
 
   const onClickKeplr = () => {
-    console.log(entry, validatorAddress, "clicked");
     let msgs = [];
     if (type === "individual") {
       msgs.push(

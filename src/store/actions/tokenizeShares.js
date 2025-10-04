@@ -83,7 +83,6 @@ export const fetchTokenizedShareRewards = (address) => {
       const response = await lsNativeQueryService.TokenizeShareRecordReward({
         ownerAddress: address
       });
-      console.log(response, "response-response-rewards")
       if (response) {
         let list = [];
         for (const reward of response.rewards) {

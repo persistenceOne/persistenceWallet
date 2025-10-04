@@ -46,7 +46,6 @@ export const fetchDelegationsTransfer = async (address) => {
 };
 
 export const fetchDelegationsCount = (address) => {
-  fetchDelegationsTransfer(address);
   return async (dispatch) => {
     try {
       const rpcClient = await transactions.RpcClient();
