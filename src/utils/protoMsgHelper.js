@@ -36,10 +36,10 @@ const msgTransferTypeUrl = "/ibc.applications.transfer.v1.MsgTransfer";
 const msgValidatorCommission =
   "/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission";
 export const msgTransferTokenizeShareRecord =
-  "/cosmos.staking.v1beta1.MsgTransferTokenizeShareRecord";
-export const msgTokenizeShares = "/cosmos.staking.v1beta1.MsgTokenizeShares";
+  "/gaia.liquid.v1beta1.MsgTransferTokenizeShareRecord";
+export const msgTokenizeShares = "/gaia.liquid.v1beta1.MsgTokenizeShares";
 export const msgRedeemTokensforShares =
-  "/cosmos.staking.v1beta1.MsgRedeemTokensForShares";
+  "/gaia.liquid.v1beta1.MsgRedeemTokensForShares";
 export const msgValidatorBondUrl = "/cosmos.staking.v1beta1.MsgValidatorBond";
 export const msgWithdrawTokenizeShareRecordReward =
   "/cosmos.distribution.v1beta1.MsgWithdrawTokenizeShareRecordReward";

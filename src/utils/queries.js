@@ -1,6 +1,6 @@
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { createProtobufRpcClient, QueryClient } from "@cosmjs/stargate";
-import { QueryClientImpl } from "persistenceonejs/cosmos/staking/v1beta1/query";
+import { QueryClientImpl } from "persistenceonejs/gaia/liquid/v1beta1/query";
 import { QueryClientImpl as BankQueryClient } from "cosmjs-types/cosmos/bank/v1beta1/query";
 import transactions from "./transactions";
 import { PollingConfig } from "../config";
