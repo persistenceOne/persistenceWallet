@@ -27,6 +27,7 @@ import {
   DefaultChainInfo,
   stkATOMInfo
 } from "../../config";
+import { QueryClientImpl as IBCQueryClientImpl } from "persistenceonejs/ibc/applications/transfer/v1/query";
 
 const tendermintRPCURL = process.env.REACT_APP_TENDERMINT_RPC_ENDPOINT;
 
@@ -111,6 +112,24 @@ export const fetchTransferableVestingAmount = (address) => {
             const denomResponse = getDenomFromMinimalDenom(item.denom);
             item.tokenImage = denomResponse.tokenImg;
             tokenList.push(item);
+          } else {
+            if (item.denom.startsWith("ibc")) {
+              let denomText = item.denom.substr(item.denom.indexOf("/") + 1);
+              const ibcQueryClientService = new IBCQueryClientImpl(rpcClient);
+              const ibcDenomeResponse = await ibcQueryClientService.Denom({ hash:denomText});
+              const denomResponse = getDenomFromMinimalDenom(
+                ibcDenomeResponse.denom?.base
+              );
+
+              let transeDenomData = {
+                denom: item.denom,
+                denomTrace: ibcDenomeResponse.denom,
+                amount: item.amount,
+                ibcBalance: true,
+                tokenImage: denomResponse.tokenImg
+              };
+              tokenList.push(transeDenomData);
+            }
           }
         }
         const account = await getAccount(address);
@@ -129,6 +148,7 @@ export const fetchTransferableVestingAmount = (address) => {
         dispatch(
           fetchVestingBalanceSuccess(tokenValueConversion(vestingAmount))
         );
+        console.log(tokenList, "tokenList")
         dispatch(fetchTokenListSuccess(tokenList));
       } else {
         dispatch(fetchTransferableBalanceSuccess(0));

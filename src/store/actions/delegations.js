@@ -6,7 +6,7 @@ import {
 import Lodash from "lodash";
 import transactions from "../../utils/transactions";
 import { QueryClientImpl as StakingQueryClient } from "cosmjs-types/cosmos/staking/v1beta1/query";
-import { QueryClientImpl as LsNativeStakingQueryClient } from "persistenceonejs/cosmos/staking/v1beta1/query";
+import { QueryClientImpl as LsNativeStakingQueryClient } from "persistenceonejs/gaia/liquid/v1beta1/query";
 import * as Sentry from "@sentry/browser";
 import { stringToNumber } from "../../utils/scripts";
 import { tokenValueConversion } from "../../utils/helper";
@@ -46,7 +46,6 @@ export const fetchDelegationsTransfer = async (address) => {
 };
 
 export const fetchDelegationsCount = (address) => {
-  fetchDelegationsTransfer(address);
   return async (dispatch) => {
     try {
       const rpcClient = await transactions.RpcClient();

@@ -20,7 +20,6 @@ const StakingTabs = () => {
     }
   }, [delegations]);
 
-  console.log(activeTab, "activeTab--11");
   const onClick = (name) => {
     setActiveTab(name);
   };

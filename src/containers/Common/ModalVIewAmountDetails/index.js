@@ -1,12 +1,13 @@
 import { Modal } from "react-bootstrap";
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import helper, { tokenValueConversion } from "../../../utils/helper";
+import helper, { getDenomFromMinimalDenom, tokenValueConversion } from "../../../utils/helper";
 import { useTranslation } from "react-i18next";
 import { decimalize, formatNumber } from "../../../utils/scripts";
 import NumberView from "../../../components/NumberView";
 import ReactGA from "react-ga4";
 import { DefaultChainInfo, PstakeInfo } from "../../../config";
+import { QueryClientImpl as IBCQueryClientImpl } from "persistenceonejs/ibc/applications/transfer/v1/query";
 const tmRPC = require("@cosmjs/tendermint-rpc");
 const { QueryClient, setupIbcExtension } = require("@cosmjs/stargate");
 const tendermintRPCURL = process.env.REACT_APP_TENDERMINT_RPC_ENDPOINT;
@@ -32,11 +33,9 @@ const ModalViewAmountDetails = (props) => {
           const tendermintClient = await tmRPC.Tendermint34Client.connect(
             tendermintRPCURL
           );
-          const queryClient = new QueryClient(tendermintClient);
-          const ibcExtension = setupIbcExtension(queryClient);
-          let ibcDenomeResponse = await ibcExtension.ibc.transfer.denomTrace(
-            denom
-          );
+          const ibcQueryClientService = new IBCQueryClientImpl(tendermintClient);
+          const ibcDenomeResponse = await ibcQueryClientService.Denom({ hash:denom});
+
           let data = {
             dataResponse: item,
             denomResponse: ibcDenomeResponse
@@ -82,7 +81,7 @@ const ModalViewAmountDetails = (props) => {
                         )}
                         &nbsp;
                         {helper.denomChange(
-                          item.denomResponse.denomTrace.baseDenom
+                          item.denomResponse.denomTrace.base
                         )}
                       </li>
                     );
@@ -99,10 +98,10 @@ const ModalViewAmountDetails = (props) => {
                           )}
                         />
                         {helper.denomChange(
-                          item.denomResponse.denomTrace.baseDenom
+                          item.denomResponse.denomTrace.base
                         )}{" "}
-                        ( IBC Trace path - {item.denomResponse.denomTrace.path},
-                        denom: {item.denomResponse.denomTrace.baseDenom} ){" "}
+                        ( IBC Trace path - {item.denomResponse.denomTrace.trace[0].channelId},
+                        denom: {item.denomResponse.denomTrace.base} ){" "}
                         {item.dataResponse.denom}
                       </li>
                     );

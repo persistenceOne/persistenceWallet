@@ -1,6 +1,6 @@
 import { DirectSecp256k1HdWallet, Registry } from "@cosmjs/proto-signing";
 import Long from "long";
-import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
+import { Tendermint37Client } from "@cosmjs/tendermint-rpc";
 import {
   AminoTypes,
   createProtobufRpcClient,
@@ -200,7 +200,7 @@ async function MakeIBCTransferMsg(
   port = "transfer"
 ) {
   try {
-    const tendermintClient = await tmRPC.Tendermint34Client.connect(
+    const tendermintClient = await tmRPC.Tendermint37Client.connect(
       tendermintRPCURL
     );
     const queryClient = new QueryClient(tendermintClient);
@@ -248,7 +248,7 @@ async function MakeIBCTransferMsg(
             port
           );
         } else {
-          const remoteTendermintClient = await tmRPC.Tendermint34Client.connect(
+          const remoteTendermintClient = await tmRPC.Tendermint37Client.connect(
             url
           );
           const latestBlockHeight = (await remoteTendermintClient.status())
@@ -282,7 +282,7 @@ async function MakeIBCTransferMsg(
 }
 
 async function RpcClient() {
-  const tendermintClient = await Tendermint34Client.connect(tendermintRPCURL);
+  const tendermintClient = await Tendermint37Client.connect(tendermintRPCURL);
   const queryClient = new QueryClient(tendermintClient);
   return createProtobufRpcClient(queryClient);
 }

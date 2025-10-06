@@ -50,15 +50,15 @@ function createDefaultRegistry() {
       "/cosmos.feegrant.v1beta1.MsgGrantAllowance",
       feeGrantTx.MsgGrantAllowance
     ],
-    ["/cosmos.staking.v1beta1.MsgTokenizeShares", MsgTokenizeShares],
+    ["/gaia.liquid.v1beta1.MsgTokenizeShares", MsgTokenizeShares],
     [
-      "/cosmos.staking.v1beta1.MsgRedeemTokensForShares",
+      "/gaia.liquid.v1beta1.MsgRedeemTokensForShares",
       MsgRedeemTokensForShares
     ],
     ["/cosmos.authz.v1beta1.MsgExec", authzTx.MsgExec],
     ["/cosmos.authz.v1beta1.MsgRevoke", authzTx.MsgRevoke],
     [
-      "/cosmos.staking.v1beta1.MsgTransferTokenizeShareRecord",
+      "/gaia.liquid.v1beta1.MsgTransferTokenizeShareRecord",
       MsgTransferTokenizeShareRecord
     ],
     ["/cosmos.staking.v1beta1.MsgValidatorBond", MsgValidatorBond],

@@ -1,7 +1,5 @@
-import { QueryClientImpl as BankQueryClientImpl } from "cosmjs-types/cosmos/bank/v1beta1/query";
 import transactions from "../../utils/transactions";
-import { QueryClientImpl } from "cosmjs-types/cosmos/staking/v1beta1/query";
-import { QueryClientImpl as LsNativeStakingQueryClient } from "persistenceonejs/cosmos/staking/v1beta1/query";
+import { QueryClientImpl as LsNativeStakingQueryClient } from "persistenceonejs/gaia/liquid/v1beta1/query";
 import { QueryClientImpl as LsNativeDistributionQueryClient } from "persistenceonejs/cosmos/distribution/v1beta1/query";
 import {
   TOKENIZE_SHARES_FETCH_SUCCESS,
@@ -85,7 +83,6 @@ export const fetchTokenizedShareRewards = (address) => {
       const response = await lsNativeQueryService.TokenizeShareRecordReward({
         ownerAddress: address
       });
-      console.log(response, "response-response-rewards")
       if (response) {
         let list = [];
         for (const reward of response.rewards) {

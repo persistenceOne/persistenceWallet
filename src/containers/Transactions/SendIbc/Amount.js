@@ -93,7 +93,7 @@ const Amount = () => {
                                     <span
                                         className="value">
                                         <NumberView value={formatNumber(token.transferableAmount)}/>
-                                        &nbsp;{helper.denomChange(token.tokenItem.denomTrace.baseDenom)}
+                                        &nbsp;{helper.denomChange(token.tokenItem.denomTrace.base)}
                                     </span>
                                 </span>
                                 :
@@ -103,9 +103,9 @@ const Amount = () => {
                                         <Popover id="popover-memo">
                                             <Popover.Content>
                                                 {`${token.transferableAmount.toLocaleString()} 
-                                            ${helper.denomChange(token.tokenItem.denomTrace.baseDenom)}
-                                            ( IBC Trace path - ${token.tokenItem.denomTrace.path}, 
-                                            denom: ${token.tokenItem.denomTrace.baseDenom}), ${token.tokenDenom}` }
+                                            ${helper.denomChange(token.tokenItem.denomTrace.base)}
+                                            ( IBC Trace path - ${token.tokenItem.denomTrace.trace[0].channelId}, 
+                                            denom: ${token.tokenItem.denomTrace.base}), ${token.tokenDenom}` }
                                             </Popover.Content>
                                         </Popover>
                                     }>
@@ -116,7 +116,7 @@ const Amount = () => {
                                         </span>
                                         <span className="value">
                                             <NumberView value={formatNumber(token.transferableAmount)}/>
-                                            {helper.denomChange(token.tokenItem.denomTrace.baseDenom)}
+                                            {helper.denomChange(token.tokenItem.denomTrace.base)}
                                         </span>
                                     </span>
                                 </OverlayTrigger>
