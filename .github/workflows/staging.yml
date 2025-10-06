@@ -88,7 +88,7 @@ jobs:
       - run: npm run build:ipfs --if-present
         env:
           CI: false
-git          REACT_APP_API_KEY: "https://persistence-api.polkachu.com"
+          REACT_APP_API_KEY: "https://persistence-api.polkachu.com"
           REACT_APP_TENDERMINT_RPC_ENDPOINT: "https://persistence-rpc.polkachu.com"
           REACT_APP_WEBSITE_URL: "https://staging.wallet.persistence.one"
           REACT_APP_EXPLORER_API: "https://www.mintscan.io/persistence"

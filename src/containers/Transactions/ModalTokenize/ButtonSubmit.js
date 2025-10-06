@@ -122,7 +122,6 @@ const ButtonSubmit = () => {
 
   const transferTxn = async (response, type) => {
     try {
-      console.log(response, type,"transferTxn");
       if (response.code !== undefined && response.code === 0) {
         const pollResult = await pollAccountBalance(
           balance,
