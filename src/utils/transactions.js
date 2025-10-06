@@ -70,6 +70,7 @@ function createAminoTypes() {
 }
 
 async function Transaction(wallet, signerAddress, msgs, fee, memo = "") {
+  console.log(wallet, signerAddress, msgs, fee, memo, "Transaction-params")
   const cosmJS = await SigningStargateClient.connectWithSigner(
     tendermintRPCURL,
     wallet,
