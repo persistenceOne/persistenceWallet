@@ -26,7 +26,7 @@ export function createLSNativeAminoConverters() {
       })
     },
     "/gaia.liquid.v1beta1.MsgTransferTokenizeShareRecord": {
-      aminoType: "cosmos-sdk/MsgTransferTokenizeRecord",
+      aminoType: "cosmos-sdk/MsgTransferTokenizeShareRecord",
       toAmino: ({ tokenizeShareRecordId, sender, newOwner }) => ({
         tokenize_share_record_id: tokenizeShareRecordId.toString(),
         sender: sender,
@@ -50,7 +50,7 @@ export function createLSNativeAminoConverters() {
       })
     },
     "/cosmos.distribution.v1beta1.MsgWithdrawTokenizeShareRecordReward": {
-      aminoType: "cosmos-sdk/MsgWithdrawTokenizeReward",
+      aminoType: "cosmos-sdk/MsgWithdrawTokenizeShareRecordReward",
       toAmino: ({ ownerAddress, recordId }) => ({
         owner_address: ownerAddress,
         record_id: recordId.toString()
