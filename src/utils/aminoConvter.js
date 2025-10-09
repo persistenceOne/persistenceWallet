@@ -50,7 +50,7 @@ export function createLSNativeAminoConverters() {
       })
     },
     "/cosmos.distribution.v1beta1.MsgWithdrawTokenizeShareRecordReward": {
-      aminoType: "cosmos-sdk/MsgWithdrawTokenizeShareRecordReward",
+      aminoType: "cosmos-sdk/distr/MsgWithdrawTokenizeShareRecordReward",
       toAmino: ({ ownerAddress, recordId }) => ({
         owner_address: ownerAddress,
         record_id: recordId.toString()
