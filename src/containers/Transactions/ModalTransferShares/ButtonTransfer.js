@@ -37,7 +37,7 @@ const ButtonTransfer = ({ tokenizedShares, rewardList }) => {
 
   const onClick = () => {
     const messages = getMessage();
-    console.log(messages, "messages")
+    console.log(messages, "messages-transfer")
     dispatch(submitFormData(messages));
   };
 
@@ -45,34 +45,50 @@ const ButtonTransfer = ({ tokenizedShares, rewardList }) => {
 
   const getMessage = () => {
     let messages = [];
-    rewardList.forEach((item) => {
-      const msg = TokenizedSharesRewardsMsg(item.owner,item.recordId);
-      messages.push(msg);
-    });
-
-    let blcList = [];
-
-    tokenizedShares.forEach((item) => {
-      const msg = TokenizeSharesTransferMsg(
+    const ledgerApp = localStorage.getItem("ledgerAppName");
+    if(loginInfo && loginInfo.loginMode === "keplr" || ledgerApp !== "Persistence"){
+      rewardList.forEach((item) => {
+        const msg = TokenizedSharesRewardsMsg(item.owner,item.recordId);
+        messages.push(msg);
+      });
+      let blcList = [];
+      tokenizedShares.forEach((item) => {
+        const blc = {
+          amount: (item.amount * DefaultChainInfo.uTokenValue).toFixed(0),
+          denom: item.denom
+        };
+        blcList.push(blc);
+        const msg = TokenizeSharesTransferMsg(
           item.recordId,
-        loginInfo.address,
-        toAddress.value
+          loginInfo.address,
+          toAddress.value
+        );
+        messages.push(msg);
+      });
+      const sendMsg = SendMsg(
+        loginInfo && loginInfo.address,
+        toAddress.value,
+        blcList
       );
-      const blc = {
-        amount: (item.amount * DefaultChainInfo.uTokenValue).toFixed(0),
-        denom: item.denom
-      };
-      blcList.push(blc);
-      messages.push(msg);
-    });
-
-    const sendMsg = SendMsg(
-      loginInfo && loginInfo.address,
-      toAddress.value,
-      blcList
-    );
-    messages.push(sendMsg);
-    return messages;
+      messages.push(sendMsg);
+      return messages;
+    } else {
+      let blcList = [];
+      tokenizedShares.forEach((item) => {
+        const blc = {
+          amount: (item.amount * DefaultChainInfo.uTokenValue).toFixed(0),
+          denom: item.denom
+        };
+        blcList.push(blc);
+      });
+      const sendMsg = SendMsg(
+        loginInfo && loginInfo.address,
+        toAddress.value,
+        blcList
+      );
+      messages.push(sendMsg);
+      return messages;
+    }
   };
 
   const onClickKeplr = () => {

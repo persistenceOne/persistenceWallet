@@ -94,6 +94,7 @@ export const fetchTransferableVestingAmount = (address) => {
       const response = await stakingQueryService.AllBalances({
         address: address
       });
+      console.log(response, "response-balances")
       if (response.balances.length) {
         let tokenList = [];
         for (let i = 0; i < response.balances.length; i++) {
