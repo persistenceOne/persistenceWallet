@@ -35,7 +35,7 @@ const ButtonRedeem = ({ tokenizedShares, rewardList }) => {
       );
       messages.push(msg);
     });
-    console.log(messages, "messages");
+    console.log(messages, "messages1");
     dispatch(submitFormData(messages));
   };
 
