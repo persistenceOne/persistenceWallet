@@ -45,8 +45,8 @@ const ButtonTransfer = ({ tokenizedShares, rewardList }) => {
 
   const getMessage = () => {
     let messages = [];
-    const ledgerApp = localStorage.getItem("ledgerAppName");
-    if(loginInfo && loginInfo.loginMode === "keplr" || ledgerApp !== "Persistence"){
+    // const ledgerApp = localStorage.getItem("ledgerAppName");
+    // if(loginInfo && loginInfo.loginMode === "keplr" || ledgerApp !== "Persistence"){
       rewardList.forEach((item) => {
         const msg = TokenizedSharesRewardsMsg(item.owner,item.recordId);
         messages.push(msg);
@@ -72,23 +72,23 @@ const ButtonTransfer = ({ tokenizedShares, rewardList }) => {
       );
       messages.push(sendMsg);
       return messages;
-    } else {
-      let blcList = [];
-      tokenizedShares.forEach((item) => {
-        const blc = {
-          amount: (item.amount * DefaultChainInfo.uTokenValue).toFixed(0),
-          denom: item.denom
-        };
-        blcList.push(blc);
-      });
-      const sendMsg = SendMsg(
-        loginInfo && loginInfo.address,
-        toAddress.value,
-        blcList
-      );
-      messages.push(sendMsg);
-      return messages;
-    }
+    // } else {
+    //   let blcList = [];
+    //   tokenizedShares.forEach((item) => {
+    //     const blc = {
+    //       amount: (item.amount * DefaultChainInfo.uTokenValue).toFixed(0),
+    //       denom: item.denom
+    //     };
+    //     blcList.push(blc);
+    //   });
+    //   const sendMsg = SendMsg(
+    //     loginInfo && loginInfo.address,
+    //     toAddress.value,
+    //     blcList
+    //   );
+    //   messages.push(sendMsg);
+    //   return messages;
+    // }
   };
 
   const onClickKeplr = () => {

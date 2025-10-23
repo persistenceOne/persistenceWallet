@@ -200,13 +200,13 @@ const ButtonSubmit = () => {
               );
               dispatch(keplrSubmit([msg1, msg2]));
             } else {
-              const ledgerApp = localStorage.getItem("ledgerAppName");
-              if(ledgerApp === "Persistence"){
-                // persistence ledger facing some issues on some txns
-                dispatch(submitTransferFormData([msg2]));
-              }else {
+              // const ledgerApp = localStorage.getItem("ledgerAppName");
+              // if(ledgerApp === "Persistence"){
+              //   persistence ledger facing some issues on some txns
+                // dispatch(submitTransferFormData([msg2]));
+              // }else {
                 dispatch(submitTransferFormData([msg1, msg2]));
-              }
+              // }
             }
             dispatch(setTxTokenizeShareStatus("success"));
           }
