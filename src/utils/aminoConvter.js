@@ -1,7 +1,7 @@
 export function createLSNativeAminoConverters() {
   return {
     "/gaia.liquid.v1beta1.MsgTokenizeShares": {
-      aminoType: "cosmos-sdk/MsgTokenizeShares",
+      aminoType: "gaia/MsgTokenizeShares",
       toAmino: ({
         delegatorAddress,
         amount,
@@ -26,7 +26,7 @@ export function createLSNativeAminoConverters() {
       })
     },
     "/gaia.liquid.v1beta1.MsgTransferTokenizeShareRecord": {
-      aminoType: "cosmos-sdk/MsgTransferTokenizeShareRecord",
+      aminoType: "gaia/MsgTransferTokenizeShareRecord",
       toAmino: ({ tokenizeShareRecordId, sender, newOwner }) => ({
         tokenize_share_record_id: tokenizeShareRecordId.toString(),
         sender: sender,
@@ -39,7 +39,7 @@ export function createLSNativeAminoConverters() {
       })
     },
     "/gaia.liquid.v1beta1.MsgRedeemTokensForShares": {
-      aminoType: "cosmos-sdk/MsgRedeemTokensForShares",
+      aminoType: "gaia/MsgRedeemTokensForShares",
       toAmino: ({ delegatorAddress, amount }) => ({
         delegator_address: delegatorAddress,
         amount: amount
