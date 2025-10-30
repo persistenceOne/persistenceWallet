@@ -110,7 +110,7 @@ export const IBCChainInfos = [
 
 export const ExternalChains = [
   {
-    rpc: "https://rpc.core.persistence.one/",
+    rpc: "https://persistence-rpc.polkachu.com/",
     rest: "https://rest.core.persistence.one/",
     chainId: "core-1",
     chainName: "Persistence",
