@@ -6,7 +6,6 @@ import helper, {privateKeyReader} from "../../../utils/helper";
 import {LOGIN_INFO} from "../../../constants/localStorage";
 import {DefaultChainInfo, ExternalChains} from "../../../config";
 import {setTxTokenizeShareStatus, showTxTokenizeModal} from "./tokenizeShares";
-import {hideKeyStoreModal} from "./keyStore";
 
 export const ledgerSubmit = (loginAddress, loginMode) => {
     return async (dispatch, getState) => {
