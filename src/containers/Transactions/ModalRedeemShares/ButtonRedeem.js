@@ -41,6 +41,7 @@ const ButtonRedeem = ({ tokenizedShares, rewardList }) => {
 
   const disable = tokenizedShares.length <= 0;
 
+  const SAFE_AMOUNT= 0.00001
   const onClickKeplr = () => {
     let messages = [];
     rewardList.forEach((item) => {
@@ -51,7 +52,7 @@ const ButtonRedeem = ({ tokenizedShares, rewardList }) => {
       const msg = RedeemTokenizedSharesMsg(
         loginInfo && loginInfo.address,
         item.denom,
-        (item.amount * DefaultChainInfo.uTokenValue).toFixed(0)
+        ((Number(item.amount) > 0.001 ? Number(item.amount) - SAFE_AMOUNT : Number(item.amount)) * DefaultChainInfo.uTokenValue).toFixed(0)
       );
       messages.push(msg);
     });
